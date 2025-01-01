@@ -25,6 +25,6 @@
             </div>
         </div>
 
-        <p class="text-xs">&copy; {{ date('Y') }} Rutas Del Mar. All rights reserved.</p>
+        <p class="text-xs">&copy; {{ date('Y') }} Bolsos Luxe. All rights reserved.</p>
     </div>
 </div>

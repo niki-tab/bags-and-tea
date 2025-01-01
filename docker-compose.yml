@@ -5,31 +5,31 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: laravel_seafood_app
+    container_name: backend_luxury_bag_app
     working_dir: /var/www/html
     volumes:
       - .:/var/www/html
     networks:
-      - laravel-seafood-app
+      - laravel-luxury-bag-app
 
   web:
     image: nginx:alpine
-    container_name: nginx
+    container_name: luxury_bag_nginx
     ports:
       - "8080:80"
     volumes:
       - .:/var/www/html
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     networks:
-      - laravel-seafood-app
+      - laravel-luxury-bag-app
     depends_on:
       - app
 
   db:
     image: mysql:5.7
-    container_name: mysql_seafood_app
+    container_name: mysql_luxury_bag_app
     environment:
-      MYSQL_DATABASE: seafood-app-db
+      MYSQL_DATABASE: luxury-bag-app-db
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_USER: laravel
       MYSQL_PASSWORD: secret
@@ -38,10 +38,10 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - laravel-seafood-app
+      - laravel-luxury-bag-app
 
 networks:
-  laravel-seafood-app:
+  laravel-luxury-bag-app:
 
 volumes:
   dbdata:

@@ -2,7 +2,7 @@
 
 return [
 
-    'company-name' => 'Rutas Del Mar',
+    'company-name' => 'Bolsos Luxe',
     'menu-option-1' => 'Home',
     'menu-option-2' => 'Products',
     'menu-option-3' => 'Carrito',
