@@ -3,7 +3,7 @@
 return [
     'hero_title' => 'Bolsos Vintage de Marca',
     'hero_subtitle' => 'Sin intermediarios',
-    'shop_now' => 'Compra Ahora',
+    'shop_now' => 'Compra Ahora y obten un 10% de descuento',
     'about_title' => 'Sobre Nosotros',
     'about_description_1' => 'Nos comprometemos a a traer los mejores bolsos',
     'about_description_2' => '¡Disfruta de bolsos de marca vintage',

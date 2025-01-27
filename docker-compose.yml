@@ -5,31 +5,31 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: backend_luxury_bag_app
+    container_name: laravel_bags_and_tea_app
     working_dir: /var/www/html
     volumes:
       - .:/var/www/html
     networks:
-      - laravel-luxury-bag-app
+      - laravel-bags-and-tea-network
 
   web:
     image: nginx:alpine
-    container_name: luxury_bag_nginx
+    container_name: bags_and_tea_nginx
     ports:
       - "8080:80"
     volumes:
       - .:/var/www/html
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     networks:
-      - laravel-luxury-bag-app
+      - laravel-bags-and-tea-network
     depends_on:
       - app
 
   db:
     image: mysql:5.7
-    container_name: mysql_luxury_bag_app
+    container_name: bags_and_tea_mysql
     environment:
-      MYSQL_DATABASE: luxury-bag-app-db
+      MYSQL_DATABASE: bags-and-tea-db
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_USER: laravel
       MYSQL_PASSWORD: secret
@@ -38,10 +38,10 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - laravel-luxury-bag-app
+      - laravel-bags-and-tea-network
 
 networks:
-  laravel-luxury-bag-app:
+  laravel-bags-and-tea-network:
 
 volumes:
   dbdata:
