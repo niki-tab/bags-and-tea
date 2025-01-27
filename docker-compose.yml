@@ -5,12 +5,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: laravel_bags_and_tea_app
+    container_name: bags_and_tea_laravel
     working_dir: /var/www/html
     volumes:
       - .:/var/www/html
     networks:
-      - laravel-bags-and-tea-network
+      - bags-and-tea-network
 
   web:
     image: nginx:alpine
@@ -21,7 +21,7 @@ services:
       - .:/var/www/html
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     networks:
-      - laravel-bags-and-tea-network
+      - bags-and-tea-network
     depends_on:
       - app
 
@@ -38,10 +38,10 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - laravel-bags-and-tea-network
+      - bags-and-tea-network
 
 networks:
-  laravel-bags-and-tea-network:
+  bags-and-tea-network:
 
 volumes:
   dbdata:
