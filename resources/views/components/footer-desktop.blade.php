@@ -1,4 +1,4 @@
-<div class="hidden md:grid bg-theme-color-2 text-white pt-12 mt-4">
+<div class="hidden md:grid bg-main-theme-color text-white pt-12 mt-4">
     <nav class="items-center justify-center">
         <ul class="flex justify-center space-x-8 text-xl font-medium">
             <li><a href="/shop" class="text-text-color-1 hover:text-gray-900">Shop</a></li>
