@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
 
 
       FakeEnvironmentSeeder::class,
+      ArticleTableSeeder::class,
 
       
     ]);

@@ -26,5 +26,6 @@ Route::group(['prefix' => 'blog'], function () {
     });
 
     Route::get('/articles/all', [Src\Blog\Articles\Infrastructure\GetAllArticlesController::class, '__invoke']);
+    Route::post('/articles/create', [Src\Blog\Articles\Infrastructure\PostCreateArticleController::class, '__invoke']);
 
 });
