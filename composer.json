@@ -12,6 +12,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.5",
+        "ramsey/uuid": "^4.7",
         "spatie/laravel-translatable": "^6.8"
     },
     "require-dev": {

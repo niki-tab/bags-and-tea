@@ -9,13 +9,14 @@ use Illuminate\Support\Str;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
-class UserFactory extends Factory
+class UserModelFactory extends Factory
 {
     /**
      * The current password being used by the factory.
      */
     protected static ?string $password;
 
+    protected $model = \Src\Authorization\Users\Domain\UserModel::class;
     /**
      * Define the model's default state.
      *

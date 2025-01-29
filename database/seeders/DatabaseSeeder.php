@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
 
       FakeEnvironmentSeeder::class,
       ArticleTableSeeder::class,
+      RoleTableSeeder::class,
+      UserTableSeeder::class
 
       
     ]);
