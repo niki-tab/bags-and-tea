@@ -40,6 +40,6 @@ Route::group(['prefix' => 'blog'], function () {
 
     });
 
-    Route::post('/articles/create', [Src\Blog\Articles\Infrastructure\PostCreateArticleController::class, '__invoke']);
+    Route::post('/articles/create-or-update', [Src\Blog\Articles\Infrastructure\PostCreateOrUpdateArticleController::class, '__invoke']);
 
 });
