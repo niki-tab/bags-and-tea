@@ -3,11 +3,13 @@ namespace Src\Blog\Articles\Model;
 
 use Ramsey\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ArticleModel extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTranslations;
+    
     protected $table = 'blog_articles';
     public $incrementing = false;
     protected $primaryKey = 'id';
@@ -41,6 +43,8 @@ class ArticleModel extends Model
         'updated_at',
     ];
 
+    public $translatable = ['title', 'slug', 'body', 'meta_title', 'meta_description', 'meta_keywords'];
+
     protected static function boot()
     {
         parent::boot();
@@ -52,10 +56,28 @@ class ArticleModel extends Model
             }
   
         });
+
     }
 
     protected static function newFactory()
     {
         return \Database\Factories\ArticleModelFactory::new();
     }
+
+    public function getTranslatedAttributes(string $locale = 'en'): array
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->getTranslation('title', $locale),
+            'slug' => $this->getTranslation('slug', $locale),
+            'body' => $this->getTranslation('body', $locale),
+            'state' => $this->state,
+            'meta_title' => $this->getTranslation('meta_title', $locale),
+            'meta_description' => $this->getTranslation('meta_description', $locale),
+            'meta_keywords' => $this->getTranslation('meta_keywords', $locale),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ];
+    }
+    
 }

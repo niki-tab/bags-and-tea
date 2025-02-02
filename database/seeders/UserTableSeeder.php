@@ -28,5 +28,14 @@ class UserTableSeeder extends Seeder
             'password'       =>  Hash::make("Bagsandtea2025!"),
 
         ]);
+
+        $user1 = UserModel::create([
+            'name'           => 'Nicolás',
+            'email'          => 'nicolas.tabares.tech@gmail.com',
+            'remember_token' => Str::random(60),
+            'email_verified_at' => Carbon::now(),
+            'password'       =>  Hash::make("Bagsandtea2025!"),
+
+        ]);
     }
 }

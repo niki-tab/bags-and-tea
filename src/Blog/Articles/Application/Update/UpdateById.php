@@ -22,16 +22,20 @@ final class UpdateById
         string $meta_title,
         string $meta_description,
         string $meta_keywords,
+        string $language,
     ): ArticleModel {
 
 
-        $articleModel->title = $title;
-        $articleModel->slug = $slug;
-        $articleModel->body = $body;
+        // Use setTranslation to set translatable fields
+        $articleModel->setTranslation('title', $language, $title);
+        $articleModel->setTranslation('slug', $language, $slug);
+        $articleModel->setTranslation('body', $language, $body);
+        $articleModel->setTranslation('meta_title', $language, $meta_title);
+        $articleModel->setTranslation('meta_description', $language, $meta_description);
+        $articleModel->setTranslation('meta_keywords', $language, $meta_keywords);
+
+        // Non-translatable fields
         $articleModel->state = $status;
-        $articleModel->meta_title = $meta_title;
-        $articleModel->meta_description = $meta_description;
-        $articleModel->meta_keywords = $meta_keywords;
 
         $articleModel->save();
 

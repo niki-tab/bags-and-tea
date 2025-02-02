@@ -24,6 +24,8 @@ class PostCreateOrUpdateArticleController extends ApiController
             return $this->errorResponse(Response::HTTP_BAD_REQUEST,400 ,$validateRequest["errors"]);
         }
 
+        $language = $request->header('x-lang') ?? 'es';
+
         $articleId = (string) request()->id;
         $articletitle = (string) request()->title;
         $articleslug = (string) request()->slug;
@@ -47,6 +49,7 @@ class PostCreateOrUpdateArticleController extends ApiController
                 $articleMetaTitle,
                 $articleMetaDescription,
                 $articleMetaKeywords,
+                $language,
             );
 
         }else{
@@ -61,6 +64,7 @@ class PostCreateOrUpdateArticleController extends ApiController
                 $articleMetaTitle,
                 $articleMetaDescription,
                 $articleMetaKeywords,
+                $language,
             );
             
         }
