@@ -13,7 +13,7 @@ use Src\Shared\Infrastructure\Controller\ApiController;
 //class GetAllArticlesController extends ApiController
 class GetArticleController extends ApiController
 {
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request, $articleId): Response
     {   
         
         $validateRequest = $this->validateRequest($request);
@@ -23,9 +23,7 @@ class GetArticleController extends ApiController
         }
 
         $language = $request->header('x-lang') ?? 'es';
-        $articleId = $request->body('articleId');
 
-        //$allArticles = ArticleModel::all();
         $article = ArticleModel::where('id', $articleId)->first()->map->getTranslatedAttributes($language);
 
         $response = $article;
@@ -49,21 +47,7 @@ class GetArticleController extends ApiController
             return ['errors' => $headerValidator->errors()->toArray()];
         }
 
-        $data = $request->request->all();
-
-        $rules = [
-            'articleId' => 'required|string',
-        ];
-
-        $bodyValidator = Validator::make($data, $rules);
-
-
-        if ($bodyValidator->fails()) {
-           
-            return ['errors' => $bodyValidator->errors()->toArray()];
-        }
-
-        return $bodyValidator->validated();
+        return $headerValidator->validated();
 
     }
 }
