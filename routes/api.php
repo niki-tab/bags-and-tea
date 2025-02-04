@@ -36,6 +36,7 @@ Route::group(['prefix' => 'blog'], function () {
     Route::middleware(['auth:sanctum'])->group(function (){
 
         Route::get('/articles/all', [Src\Blog\Articles\Infrastructure\GetAllArticlesController::class, '__invoke']);
+        Route::get('/articles/{articleId}', [Src\Blog\Articles\Infrastructure\GetArticleController::class, '__invoke']);
         Route::post('/articles/create-or-update', [Src\Blog\Articles\Infrastructure\PostCreateOrUpdateArticleController::class, '__invoke']);        
 
     });
