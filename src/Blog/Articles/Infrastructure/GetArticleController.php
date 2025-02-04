@@ -24,7 +24,7 @@ class GetArticleController extends ApiController
 
         $language = $request->header('x-lang') ?? 'es';
 
-        $article = ArticleModel::where('id', $articleId)->first()->map->getTranslatedAttributes($language);
+        $article = ArticleModel::where('id', $articleId)->first()->getTranslatedAttributes($language);
 
         $response = $article;
 
