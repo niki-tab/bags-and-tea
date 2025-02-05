@@ -30,7 +30,7 @@ class PostCreateOrUpdateArticleController extends ApiController
         $articletitle = (string) request()->title;
         $articleslug = (string) request()->slug;
         $articlebody = (string) request()->body;
-        $articleStatus = (string) request()->status ?? "draft";
+        $articleStatus = (string) request()->state ?? "draft";
         $articleMetaTitle = (string) request()->metaTitle ?? "";
         $articleMetaDescription = (string) request()->metaDescription ?? "";
         $articleMetaKeywords = (string) request()->metaKeywords ?? "";
