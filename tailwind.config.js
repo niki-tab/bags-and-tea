@@ -11,8 +11,10 @@ export default {
         'button-color-1': '#0284c7', // If you need to override or customize
         'main-theme-color': '#9D7764',
         'secondary-theme-color-2': '#FFDE21',
-        'theme-color-2': '#BC9E88',
-        'background-color-1': '#DEC8B8',
+        'theme-color-1': '#FFE8CA',
+        'theme-color-2': '#A47864',
+        'background-color-1': '#FFE8CA',
+        'background-color-2': '#A47864',
         'button-color-1': '#091235',
         'button-color-1-hover': '#FFDE21',
         'text-color-1': '#F0F0E5',
@@ -22,6 +24,7 @@ export default {
       },
       fontFamily: {
         serif: ['Merriweather', 'serif'],
+        robotoCondensed: ['"Roboto Condensed"', 'sans-serif'],
       },
     },
   },
