@@ -36,6 +36,10 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.locale'], function ()
         return view('pages/shop');
     })->name('shop.show.es')->where('locale', 'es');
 
+    Route::get('/blog', function () {
+        return view('pages/blog/blog');
+    })->name('blog.show.es')->where('locale', 'es');
+
     Route::get('/shop', function () {
         return view('pages/shop');
     })->name('shop.show.en')->where('locale', 'en');
@@ -64,7 +68,9 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.locale'], function ()
         return view('pages/contact');
     })->name('contact.send.en')->where('locale', 'en');
 
-
+    Route::get('/blog', function () {
+        return view('pages/blog/blog');
+    })->name('blog.show.es')->where('locale', 'es');
     
     
     Route::get('/', [HomeController::class, 'index'])->name('home.show');

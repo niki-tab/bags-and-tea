@@ -30,7 +30,7 @@
 
         <!-- Centered Image -->
         <div class="absolute left-1/2 top-[-20%] w-1/8 h-[120%] bg-white transform -translate-x-1/2">
-            <img src="{{ asset('images/logo/bags_and_tea_logo.png') }}" class="mx-16 my-4 w-36 h-22"> 
+            <img src="{{ asset('images/logo/logo_header.svg') }}" class="mx-16 my-4 w-36 h-22"> 
         </div>
 
     </div>
