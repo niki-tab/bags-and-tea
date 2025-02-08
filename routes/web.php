@@ -71,6 +71,14 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.locale'], function ()
     Route::get('/blog', function () {
         return view('pages/blog/blog');
     })->name('blog.show.es')->where('locale', 'es');
+
+    Route::get('/blog/articulo/{articleSlug}', function () {
+        return view('pages/blog/articles/show');
+    })->name('article.show.es')->where('locale', 'es');
+
+    Route::get('/blog/article/{articleSlug}', function () {
+        return view('pages/blog/articles/show');
+    })->name('article.show.en')->where('locale', 'en');
     
     
     Route::get('/', [HomeController::class, 'index'])->name('home.show');
