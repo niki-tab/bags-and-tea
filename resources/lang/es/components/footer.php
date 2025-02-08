@@ -9,9 +9,9 @@ return [
     'footer-option-4' => 'BLOG',
     'footer-option-5' => 'CONTACTO',
     'footer-option-6' => 'FAQs',
-    'subfooter-option-1' => 'Privacy',
+    'subfooter-option-1' => 'Privacidad',
     'subfooter-option-2' => 'Cookies',
-    'subfooter-option-3' => 'Legal Notice',
+    'subfooter-option-3' => 'Nota Legal',
     'button-sell-your-bag' => 'VENDE TU BOLSO',
 
 ];
