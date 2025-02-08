@@ -4,7 +4,7 @@
             <h1 class="text-6xl mx-auto inline-block">{{$articleNotFoundText}}</h1>
         @else
             <h1 class="text-6xl mx-auto inline-block">{{$articleTitle}}</h1>
-            <div class = "mt-20" style="text-align: justify;">{!! $articleBody !!}</div>
+            <div class = "mt-20 text-justify">{!! $articleBody !!}</div>
         @endif
     </div>
 </div>
