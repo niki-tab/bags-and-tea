@@ -1,7 +1,10 @@
-<div class="container mx-auto px-4 py-8">
-    @if(!$articleExists)
-        <h1>{{$articleNotFoundText}}</h1>
-    @else
-        <h1>{{$articleTitle}}</h1>
-    @endif
+<div class="flex items-center justify-center">
+    <div class="px-32 text-center">
+        @if(!$articleExists)
+            <h1 class="text-6xl mx-auto inline-block">{{$articleNotFoundText}}</h1>
+        @else
+            <h1 class="text-6xl mx-auto inline-block">{{$articleTitle}}</h1>
+            <div class = "mt-20">{!! $articleBody !!}</div>
+        @endif
+    </div>
 </div>

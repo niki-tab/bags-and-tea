@@ -34,6 +34,7 @@ class ShowArticle extends Component
 
     public $test;
     public $articleTitle;
+    public $articleBody;
 
     public bool $articleExists;
     public string $articleNotFoundText;
@@ -45,12 +46,15 @@ class ShowArticle extends Component
         $this->lang = app()->getLocale();
 
         //$article = ArticleModel::where('slug->es', $articleSlug)->first();
-        $article = ArticleModel::where("slug->{$this->lang}", $articleSlug)->first();
+
+        $article = ArticleModel::where("slug->".$this->lang, $articleSlug)
+                                    ->first();
 
         if($article){
             
             $this->articleExists = true;
             $this->articleTitle = $article->title;
+            $this->articleBody = $article->body;
 
         }else{
 
