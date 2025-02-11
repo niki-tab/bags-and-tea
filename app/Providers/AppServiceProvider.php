@@ -13,6 +13,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         Livewire::component('blog/articles/show', \Src\Blog\Articles\Frontend\ShowArticle::class);
+        Livewire::component('blog/show', \Src\Blog\Articles\Frontend\ShowAllArticle::class);
     }
 
     /**

@@ -44,7 +44,7 @@
             <a href="#" class="flex-1 text-center text-black font-robotoCondensed text-lg font-medium hover:text-blue-500">{{ trans('components/header.menu-option-3') }}</a>
             <a href="#" class="flex-1 text-center text-black font-robotoCondensed text-lg font-medium hover:text-blue-500">{{ trans('components/header.menu-option-4') }}</a>
             <a href="#" class="flex-1 text-center text-black font-robotoCondensed text-lg font-medium hover:text-blue-500">{{ trans('components/header.menu-option-5') }}</a>
-            <a href="#" class="flex-1 text-center text-black font-robotoCondensed text-lg font-medium hover:text-blue-500">{{ trans('components/header.menu-option-6') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'blog.show.en-es' : 'blog.show.en-es', ['locale' => app()->getLocale()]) }}" class="flex-1 text-center text-black font-robotoCondensed text-lg font-medium hover:text-blue-500">{{ trans('components/header.menu-option-6') }}</a>
             <a href="#" class="flex-1 text-center text-black font-robotoCondensed text-lg font-medium hover:text-blue-500">{{ trans('components/header.menu-option-7') }}</a>
         </nav>
     </div>
