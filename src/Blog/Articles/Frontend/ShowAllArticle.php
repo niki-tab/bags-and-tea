@@ -17,7 +17,7 @@ class ShowAllArticle extends Component
         
         $this->lang = app()->getLocale();
 
-        $articleModel = ArticleModel::all();
+        $articleModel = ArticleModel::where('state', 'published')->get();
 
         $this->allArticles = $articleModel;
         //$article = ArticleModel::where("slug->".$this->lang, $articleSlug)->first();
