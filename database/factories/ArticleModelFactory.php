@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-
 use Ramsey\Uuid\Uuid;
+
+use Src\Blog\Articles\Model\ArticleModel;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
@@ -30,5 +31,22 @@ class ArticleModelFactory extends Factory
             'meta_keywords' => fake()->sentence(),
             'is_visible' => fake()->boolean(),
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (ArticleModel $article) {
+            $article->setTranslation('title', 'en', $this->faker->word);
+            $article->setTranslation('title', 'es', $this->faker->word);
+            $article->setTranslation('slug', 'en', $this->faker->slug);
+            $article->setTranslation('slug', 'es', $this->faker->slug);
+            $article->setTranslation('body', 'en', $this->faker->paragraph);
+            $article->setTranslation('body', 'es', $this->faker->paragraph);
+            $article->setTranslation('meta_title', 'en', $this->faker->sentence);
+            $article->setTranslation('meta_title', 'es', $this->faker->sentence);
+            $article->setTranslation('meta_description', 'en', $this->faker->sentence);
+            $article->setTranslation('meta_description', 'es', $this->faker->sentence);
+            $article->save(); // Save after setting translations
+        });
     }
 }
