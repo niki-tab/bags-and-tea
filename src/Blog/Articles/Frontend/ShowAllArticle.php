@@ -40,7 +40,22 @@ class ShowAllArticle extends Component
 
         }
 
+        $this->setSeo();
 
+        
+    }
+
+    public function setSeo(){
+
+        seo()
+        ->title(trans('components/article-all-show.page-seo-title'), env('APP_NAME'))
+        ->description(trans('components/article-all-show.page-seo-description'))
+        ->images(
+            env('APP_LOGO_1_PATH'),
+                env('APP_LOGO_2_PATH'),
+        );
+
+        
         
     }
 
