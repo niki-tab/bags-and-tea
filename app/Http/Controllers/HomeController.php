@@ -13,7 +13,7 @@ class HomeController extends Controller
 
         $featuredProducts = ProductModel::where('featured', true)->get();
 
-        $this->setSeo();
+        //$this->setSeo();
 
         return view('home', compact('featuredProducts'));
 

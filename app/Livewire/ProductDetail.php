@@ -42,7 +42,7 @@ class ProductDetail extends Component
         
         if($this->product){
 
-            $this->setSeo();
+            //$this->setSeo();
 
             $productId = $this->product->id;
             $this->productSizeVariations = ProductSizeVariationModel::where("product_id", $productId)->with('producQuantityVariations')->get();
