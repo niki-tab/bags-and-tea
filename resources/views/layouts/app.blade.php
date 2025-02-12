@@ -6,7 +6,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="alternate" href="{{ url()->current() }}" hreflang="{{app()->getLocale()}}">
-    <title>{{ config('app.name', 'Seafood Shop') }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="icon" href="{{ asset("images/icons/favicon.ico") }}" type="image/x-icon">

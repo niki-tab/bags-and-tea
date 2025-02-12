@@ -7,3 +7,5 @@
     @livewire('blog/show')
 
 @endsection
+
+@metadata
