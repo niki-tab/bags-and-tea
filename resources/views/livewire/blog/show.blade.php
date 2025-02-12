@@ -12,7 +12,7 @@
                         class="w-full h-48 object-cover">
                     <div class="p-6">
                         <h2 class="text-xl font-semibold mb-2">{{ $article->title }}</h2>
-                        <p class="text-gray-600 text-sm mb-4">{{ Str::limit($article->body, 100) }}</p>
+                        <p class="text-gray-600 text-sm mb-4">{{ Str::limit(strip_tags($article->body), 100) }}</p>
                         <a href="{{ route(app()->getLocale() === 'es' ? 'article.show.es' : 'article.show.en', ['articleSlug' => $article->slug, 'locale' => app()->getLocale()]) }}" 
                         class="text-blue-600 font-semibold hover:underline">
                             Read more →
