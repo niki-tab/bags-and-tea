@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@metadata
+
 @section('content')
-@livewire('blog/show')
+
+    @livewire('blog/show')
+
 @endsection
