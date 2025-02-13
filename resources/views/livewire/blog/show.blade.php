@@ -7,7 +7,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($allArticles as $article)
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                    <img src="{{ $article->image_url ?? 'https://source.unsplash.com/400x250/?blog' }}" 
+                    <img src="{{ $article->main_image ?? 'https://source.unsplash.com/400x250/?blog' }}" 
                         alt="{{ $article->title }}" 
                         class="w-full h-48 object-cover">
                     <div class="p-6">
