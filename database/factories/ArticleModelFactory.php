@@ -26,6 +26,7 @@ class ArticleModelFactory extends Factory
             'slug' => fake()->slug(),
             'state' => fake()->randomElement(['draft', 'published', 'archived']),
             'body' => fake()->paragraph(),
+            'main_image' => fake()->imageUrl(),
             'meta_title' => fake()->sentence(),
             'meta_description' => fake()->sentence(),
             'meta_keywords' => fake()->sentence(),

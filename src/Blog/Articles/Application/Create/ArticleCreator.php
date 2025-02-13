@@ -33,6 +33,11 @@ final class ArticleCreator
 
         // Non-translatable fields
         $article->id = $id;
+        
+        if($status == "live"){
+            $status == "published";
+        }
+
         $article->state = $status;
 
 

@@ -35,6 +35,11 @@ final class UpdateById
         $articleModel->setTranslation('meta_keywords', $language, $meta_keywords);
 
         // Non-translatable fields
+        
+        if($status == "live"){
+            $status == "published";
+        }
+
         $articleModel->state = $status;
 
         $articleModel->save();
