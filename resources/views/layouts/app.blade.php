@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="icon" href="{{ asset("images/icons/favicon.ico") }}" type="image/x-icon">
+    <meta name="google-site-verification" content="8Zu5brHcw0lALxaJKOZYyom4xhWaB9sQosfv9xwyfes" />
     @livewireStyles
 </head>
 <body class="min-h-screen flex flex-col bg-broken-white-color">
