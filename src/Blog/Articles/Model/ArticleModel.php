@@ -73,6 +73,7 @@ class ArticleModel extends Model
             'title' => $this->getTranslation('title', $locale),
             'slug' => $this->getTranslation('slug', $locale),
             'body' => $this->getTranslation('body', $locale),
+            'main_image' => $this->main_image,
             'state' => $this->state,
             'meta_title' => $this->getTranslation('meta_title', $locale),
             'meta_description' => $this->getTranslation('meta_description', $locale),
