@@ -17,6 +17,7 @@ final class UpdateById
         ArticleModel $articleModel,
         string $title,
         string $slug,
+        string $mainImage,
         string $body,
         string $status,
         string $meta_title,
@@ -41,6 +42,7 @@ final class UpdateById
         }
 
         $articleModel->state = $status;
+        $articleModel->main_image = $mainImage;
 
         $articleModel->save();
 

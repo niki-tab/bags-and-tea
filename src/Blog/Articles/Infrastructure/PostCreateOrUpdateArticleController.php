@@ -29,6 +29,7 @@ class PostCreateOrUpdateArticleController extends ApiController
         $articleId = (string) request()->id;
         $articletitle = (string) request()->title;
         $articleslug = (string) request()->slug;
+        $articleMainImage = (string) request()->mainImage ?? "";
         $articlebody = (string) request()->body;
         $articleStatus = (string) request()->state ?? "draft";
         $articleMetaTitle = (string) request()->metaTitle ?? "";
@@ -44,6 +45,7 @@ class PostCreateOrUpdateArticleController extends ApiController
                 $article,
                 $articletitle,
                 $articleslug,
+                $articleMainImage,
                 $articlebody,
                 $articleStatus,
                 $articleMetaTitle,
@@ -59,6 +61,7 @@ class PostCreateOrUpdateArticleController extends ApiController
                 $articleId,
                 $articletitle,
                 $articleslug,
+                $articleMainImage,
                 $articlebody,
                 $articleStatus,
                 $articleMetaTitle,

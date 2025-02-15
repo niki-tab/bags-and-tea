@@ -12,6 +12,7 @@ final class ArticleCreator
         string $id,
         string $title,
         string $slug,
+        string $mainImage,
         string $body,
         string $status,
         string $meta_title,
@@ -39,6 +40,7 @@ final class ArticleCreator
         }
 
         $article->state = $status;
+        $article->main_image = $mainImage;
 
 
         $article->save();
