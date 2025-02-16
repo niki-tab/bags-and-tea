@@ -33,6 +33,7 @@ class ShowArticle extends Component
     public $lang;
 
     public $test;
+    public $articleModel;
     public $articleTitle;
     public $articleBody;
 
@@ -45,16 +46,18 @@ class ShowArticle extends Component
         
         $this->lang = app()->getLocale();
 
-        //$article = ArticleModel::where('slug->es', $articleSlug)->first();
-
         $article = ArticleModel::where("slug->".$this->lang, $articleSlug)
                                     ->first();
+
+        $this->articleModel = $article;
 
         if($article){
             
             $this->articleExists = true;
             $this->articleTitle = $article->title;
             $this->articleBody = $article->body;
+
+            $this->setSeo();
 
         }else{
 
@@ -158,31 +161,17 @@ class ShowArticle extends Component
 
     public function setSeo(){
 
-        $productName = strtolower($this->product->name);
-        $productFoodType = $this->product->food_type;
-
-        if($this->lang == "en"){
+        if($this->articleModel){
 
             seo()
-            ->title($productFoodType.": ".$productName, env('APP_NAME'))
-            ->description('Buy fresh '.$productName.' from our marketplace with delivery in less than 24 hours. Support oyster farmers and fishers while enjoying sustainable seafood at the best price with Rutas Del Mar!')
-            ->images(
-                env('APP_LOGO_1_PATH'),
-                    env('APP_LOGO_2_PATH'),
-            );
-
-        }else{
-
-            seo()
-            ->title($productFoodType.": ".$productName, env('APP_NAME'))
-            ->description('Compra '.$productName.' frescas en nuestro marketplace con entrega en menos de 24 horas. Apoya a los ostricultores y pescadores mientras disfrutas de mariscos sostenibles al mejor precio con Rutas Del Mar!')
-            ->images(
-                env('APP_LOGO_1_PATH'),
-                    env('APP_LOGO_2_PATH'),
-            );
+                ->title($this->articleModel->meta_title, env('APP_NAME'))
+                ->description($this->articleModel->meta_description)
+                ->images(
+                    env('APP_LOGO_1_PATH'),
+                        env('APP_LOGO_2_PATH'),
+                );
 
         }
-
         
         
     }
