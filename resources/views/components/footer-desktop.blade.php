@@ -3,7 +3,7 @@
     
 </div>
 <div class="relative w-full h-[500px] bg-background-color-3">
-    <div class="absolute w-[94%] h-[620px] bg-background-color-2 left-1/2 transform -translate-x-1/2 bottom-[0] flex">
+    <div class="absolute w-[94%] h-[620px] bg-background-color-1 left-1/2 transform -translate-x-1/2 bottom-[0] flex">
     <div class="w-2/5 flex flex-col justify-center items-center h-full">
         <img src="{{ asset('images/logo/logo_footer.svg') }}" class="w-64 h-64 mb-12">    
         <!-- Rounded Button Below -->

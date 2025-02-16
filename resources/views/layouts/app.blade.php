@@ -12,7 +12,7 @@
     <meta name="google-site-verification" content="8Zu5brHcw0lALxaJKOZYyom4xhWaB9sQosfv9xwyfes" />
     @livewireStyles
 </head>
-<body class="min-h-screen flex flex-col bg-broken-white-color">
+<body class="min-h-screen flex flex-col bg-white">
     @livewireScripts
     <header class="z-10">
         <x-header-desktop/>

@@ -10,5 +10,6 @@ return [
     'menu-option-5' => 'About us',
     'menu-option-6' => 'Blog',
     'menu-option-7' => 'Contact',
+    'button-sell-your-bag' => 'Sell your bag',
 
 ];
