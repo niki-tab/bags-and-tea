@@ -13,5 +13,10 @@ return [
     'subfooter-option-2' => 'Cookies',
     'subfooter-option-3' => 'Legal Notice',
     'button-sell-your-bag' => 'SELL YOUR BAG',
+    'text-newsletter-title' => 'Join our exclusive circle.',
+    'text-newsletter-description' => 'Be the first to discover new collections, unique pieces, and special offers on our handbags through our newsletter.',
+    'placeholder-input-subscribe-to-newsletter' => 'Introduce your email...',
+    'button-subscribe-to-newsletter' => 'Subscribe',
+    
 
 ];

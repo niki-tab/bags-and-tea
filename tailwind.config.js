@@ -21,7 +21,7 @@ export default {
         'background-color-4': '#F7F0ED',
         'button-color-1': '#091235',
         'button-color-1-hover': '#FFDE21',
-        'color-1': '#F0F0E5',
+        'color-1': '#CB8176',
         'color-2': '#482626',
         'color-3': '#C12637',
         'color-4': '#F7F0ED',
