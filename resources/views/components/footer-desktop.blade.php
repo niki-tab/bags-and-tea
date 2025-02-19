@@ -22,17 +22,18 @@
             
             <!-- Ensure the image is centered properly -->
             <div class="flex justify-center items-center">
-                <img src="{{ asset('images/icons/RRSS_insta_b_3.svg') }}" class="w-8 h-8 mr-3">  
-                <img src="{{ asset('images/icons/RRSS_facebook_b_2.svg') }}" class="w-8 h-8 ml-3">  
+                <img src="{{ asset('images/icons/RRSS_insta_b_3.svg') }}" class="w-8 h-8 mr-3 cursor-pointer">  
+                <img src="{{ asset('images/icons/RRSS_facebook_b_2.svg') }}" class="w-8 h-8 ml-3 cursor-pointer">  
                   
             </div>
         </nav>
     </div>
     <div class="w-2/5 flex justify-center items-center">
         <div class="w-1/2 flex flex-col items-start">
-            <h2 class="font-robotoCondensed text-xl font-bold">{{ trans('components/footer.text-newsletter-title') }}</h2>
+            <p class="font-robotoCondensed text-xl font-bold">{{ trans('components/footer.text-newsletter-title') }}</p>
             <p class="mt-2 leading-loose">{{ trans('components/footer.text-newsletter-description') }}</p>
-            <input type="text" class="h-10 w-full my-10 bg-transparent border-b border-color-2 placeholder-color-2 placeholder-font-robotoCondensed pl-4" placeholder="{{ trans('components/footer.placeholder-input-subscribe-to-newsletter') }}">
+            <input type="text" class="font-robotoCondensed h-10 w-full my-10 bg-transparent border-b border-color-2 placeholder-color-2 placeholder-font-robotoCondensed pl-4" 
+                placeholder="{{ trans('components/footer.placeholder-input-subscribe-to-newsletter') }}">
             <div class="w-full flex justify-center">
             <a href="#" class="border border-color-2 py-1 px-6 font-robotoCondensed bg-background-color-1 text-color-2 rounded-full text-lg font-regular hover:bg-blue-600 transition">
                 {{ trans('components/footer.button-subscribe-to-newsletter') }}

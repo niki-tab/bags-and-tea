@@ -5,11 +5,11 @@ return [
     'company-name' => 'Bags & Tea',
     'menu-option-1' => 'Certifica tu bolso',
     'menu-option-2' => 'Compramos tu bolso',
-    'menu-option-3' => 'Compramos tu bolso',
-    'menu-option-4' => 'Nuestros bolsos',
-    'menu-option-5' => 'Nosotros',
-    'menu-option-6' => 'Blog',
-    'menu-option-7' => 'Contacto',
+    'menu-option-3' => 'Nuestros bolsos',
+    'menu-option-4' => 'Nosotros',
+    'menu-option-5' => 'Blog',
+    'menu-option-6' => 'Contacto',
     'button-sell-your-bag' => 'Vende tu bolso',
+    'placeholder-input-search-product' => 'Buscar por marca, artículo...',
 
 ];
