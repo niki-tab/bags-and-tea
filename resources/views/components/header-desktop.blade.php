@@ -60,12 +60,12 @@
 
     </div>
     <div class="h-24 bg-background-color-4 flex items-center px-40">
-        <nav class="flex justify-between items-center bg-background-color-4 p-4 pb-0 w-full">
+        <nav class="flex justify-between items-center bg-background-color-4 p-4 pb-0 pt-0 w-full">
             <a href="#" class="cursor-pointer flex-1 text-center text-color-2 font-robotoCondensed text-lg font-medium hover:text-color-3">{{ trans('components/header.menu-option-1') }}</a>
             <a href="#" class="cursor-pointer flex-1 text-center text-color-2 font-robotoCondensed text-lg font-medium hover:text-color-3">{{ trans('components/header.menu-option-2') }}</a>
             <a href="#" class="cursor-pointer flex-1 text-center text-color-2 font-robotoCondensed text-lg font-medium hover:text-color-3">{{ trans('components/header.menu-option-3') }}</a>
             <a href="#" class="cursor-pointer flex-1 text-center text-color-2 font-robotoCondensed text-lg font-medium hover:text-color-3">{{ trans('components/header.menu-option-4') }}</a>
-            <a href="{{ route(app()->getLocale() === 'es' ? 'blog.show.en-es' : 'blog.show.en-es', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('blog.show.en-es') ? 'text-white bg-background-color-3' : 'text-color-2' }} h-20 flex-1 flex items-center justify-center text-color-2 font-robotoCondensed text-lg font-medium hover:text-color-3">{{ trans('components/header.menu-option-5') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'blog.show.en-es' : 'blog.show.en-es', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('blog.show.en-es') ? 'text-white bg-background-color-3' : 'text-color-2' }} h-24 flex-1 flex items-center justify-center text-color-2 font-robotoCondensed text-lg font-medium hover:text-color-3">{{ trans('components/header.menu-option-5') }}</a>
             <a href="#" class="cursor-pointer flex-1 text-center text-color-2 font-robotoCondensed text-lg font-medium hover:text-color-3">{{ trans('components/header.menu-option-6') }}</a>
         </nav>
     </div>
