@@ -17,7 +17,6 @@
         <h1 class="text-3xl font-bold mb-4">{{ trans('pages/home.about_title') }}</h1>
         <h2 class="text-lg mb-8">{{ trans('pages/home.about_description_1') }}</h2>
         <h2 class="text-lg mb-8 font-bold">{{ trans('pages/home.about_description_2') }}</h2>
-        <a href="{{ route(app()->getLocale() === 'es' ? 'contact.send.es' : 'contact.send.en', ['locale' => app()->getLocale()]) }}" class="bg-button-color-1 text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-sky-800 hover:text-button-color-1-hover">{{ trans('pages/home.contact_us') }}</a>
     </div>
 </section>
 
