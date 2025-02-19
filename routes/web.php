@@ -75,6 +75,46 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.locale'], function ()
     Route::get('/blog/article/{articleSlug}', function () {
         return view('pages/blog/articles/show');
     })->name('article.show.en')->where('locale', 'en');
+
+    Route::get('/contacto', function () {
+        return view('pages/blog/show');
+    })->name('contact.show.es')->where('locale', 'es');
+
+    Route::get('/contact', function () {
+        return view('pages/blog/show');
+    })->name('contact.show.en')->where('locale', 'en');
+
+    Route::get('/quienes-somos', function () {
+        return view('pages/blog/show');
+    })->name('about-us.show.es')->where('locale', 'es');
+
+    Route::get('/about-us', function () {
+        return view('pages/blog/show');
+    })->name('about-us.show.en')->where('locale', 'en');
+
+    Route::get('/nuestros-bolsos', function () {
+        return view('pages/blog/show');
+    })->name('our-bags.show.es')->where('locale', 'es');
+
+    Route::get('/our-bags', function () {
+        return view('pages/blog/show');
+    })->name('our-bags.show.en')->where('locale', 'en');
+
+    Route::get('/compramos-tu-bolso', function () {
+        return view('pages/blog/show');
+    })->name('we-buy-your-bag.show.es')->where('locale', 'es');
+
+    Route::get('/we-buy-your-bag', function () {
+        return view('pages/blog/show');
+    })->name('we-buy-your-bag.show.en')->where('locale', 'en');
+
+    Route::get('/certifica-tu-bolso', function () {
+        return view('pages/blog/show');
+    })->name('certify-your-bag.show.es')->where('locale', 'es');
+
+    Route::get('/certify-your-bag', function () {
+        return view('pages/blog/show');
+    })->name('certify-your-bag.show.en')->where('locale', 'en');
     
     
     Route::get('/', [HomeController::class, 'index'])->name('home.show');

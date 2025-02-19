@@ -1,7 +1,7 @@
-<div>
+<div class="hidden md:block">
     <div class="h-12 bg-background-color-1 pl-32 flex">
         <div class="flex-1 flex gap-4 pt-2">
-            <img src="{{ asset('images/icons/RRSS_insta_b.svg') }}" class="w-8 h-8 cursor-pointer">    
+            <img src="{{ asset('images/icons/RRSS_insta_b_5.svg') }}" class="w-8 h-8 cursor-pointer">    
             <img src="{{ asset('images/icons/RRSS_facebook_b.svg') }}" class="w-8 h-8 cursor-pointer">
         </div>
         <div class="flex-1 flex items-center justify-center">
@@ -33,15 +33,15 @@
 
             <!-- Right Column with Two Inner Columns -->
             <div class="w-1/2 bg-background-color-4 flex items-center">
-                <a href="#" class="px-8 h-9 py-2 font-robotoCondensed bg-background-color-2 text-white rounded-full text-sm font-regular hover:bg-blue-600 transition">
+                <a href="#" class="px-8 h-9 py-2 font-robotoCondensed bg-background-color-2 text-white rounded-full text-sm font-regular hover:bg-background-color-3 transition">
                     {{ trans('components/header.button-sell-your-bag') }}
                 </a>
                 <div class="ml-10 w-1/3 bg-background-color-4 flex items-center justify-center">
                     <div class="flex-1 flex justify-center">
-                        <img src="{{ asset('images/icons/icon_user_avatar_header.svg') }}" class="w-8 h-8">
+                        <img src="{{ asset('images/icons/icon_user_avatar_header.svg') }}" class="w-8 h-8 cursor-pointer">
                     </div>
                     <div class="flex-1 flex justify-center">
-                        <img src="{{ asset('images/icons/icon_cart_header.svg') }}" class="w-8 h-8">
+                        <img src="{{ asset('images/icons/icon_cart_header.svg') }}" class="w-8 h-8 cursor-pointer">
                     </div>
                     <span class="flex-1 flex justify-center text-center">ESP</span>
                 </div>
@@ -59,14 +59,14 @@
     <div class="w-full border-t-2 border-t-theme-color-1">
 
     </div>
-    <div class="h-24 bg-background-color-4 flex items-center px-40">
+    <div class="h-24 bg-background-color-4 flex items-center px-40 pt-4">
         <nav class="flex justify-between items-center bg-background-color-4 p-4 pb-0 pt-0 w-full">
-            <a href="#" class="cursor-pointer flex-1 text-center text-color-2 font-robotoCondensed text-lg font-medium hover:text-color-3">{{ trans('components/header.menu-option-1') }}</a>
-            <a href="#" class="cursor-pointer flex-1 text-center text-color-2 font-robotoCondensed text-lg font-medium hover:text-color-3">{{ trans('components/header.menu-option-2') }}</a>
-            <a href="#" class="cursor-pointer flex-1 text-center text-color-2 font-robotoCondensed text-lg font-medium hover:text-color-3">{{ trans('components/header.menu-option-3') }}</a>
-            <a href="#" class="cursor-pointer flex-1 text-center text-color-2 font-robotoCondensed text-lg font-medium hover:text-color-3">{{ trans('components/header.menu-option-4') }}</a>
-            <a href="{{ route(app()->getLocale() === 'es' ? 'blog.show.en-es' : 'blog.show.en-es', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('blog.show.en-es') ? 'text-white bg-background-color-3' : 'text-color-2' }} h-24 flex-1 flex items-center justify-center text-color-2 font-robotoCondensed text-lg font-medium hover:text-color-3">{{ trans('components/header.menu-option-5') }}</a>
-            <a href="#" class="cursor-pointer flex-1 text-center text-color-2 font-robotoCondensed text-lg font-medium hover:text-color-3">{{ trans('components/header.menu-option-6') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'certify-your-bag.show.es' : 'certify-your-bag.show.es', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('certify-your-bag.show.es') ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-20 flex-1 flex items-center justify-center text-color-2 font-robotoCondensed text-lg font-medium hover:text-color-3 pb-4">{{ trans('components/header.menu-option-1') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('we-buy-your-bag.show.es') ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-20 flex-1 flex items-center justify-center text-color-2 font-robotoCondensed text-lg font-medium hover:text-color-3 pb-4">{{ trans('components/header.menu-option-2') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'our-bags.show.es' : 'our-bags.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('our-bags.show.es') ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-20 flex-1 flex items-center justify-center text-color-2 font-robotoCondensed text-lg font-medium hover:text-color-3 pb-4">{{ trans('components/header.menu-option-3') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'about-us.show.es' : 'about-us.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('about-us.show.es') ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-20 flex-1 flex items-center justify-center text-color-2 font-robotoCondensed text-lg font-medium hover:text-color-3 pb-4">{{ trans('components/header.menu-option-4') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'blog.show.en-es' : 'blog.show.en-es', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('blog.show.en-es') ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-20 flex-1 flex items-center justify-center text-color-2 font-robotoCondensed text-lg font-medium hover:text-color-3 pb-4">{{ trans('components/header.menu-option-5') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'contact.show.es' : 'contact.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('contact.show.es') ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-20 flex-1 flex items-center justify-center text-color-2 font-robotoCondensed text-lg font-medium hover:text-color-3 pb-4">{{ trans('components/header.menu-option-6') }}</a>
         </nav>
     </div>
 
