@@ -115,6 +115,18 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.locale'], function ()
     Route::get('/certify-your-bag', function () {
         return view('pages/blog/show');
     })->name('certify-your-bag.show.en')->where('locale', 'en');
+
+    Route::get('/login', function () {
+        return view('pages/blog/show');
+    })->name('login.show.en-es')->where('locale', 'en|es');
+
+    Route::get('/carrito', function () {
+        return view('pages/blog/show');
+    })->name('cart.edit.es')->where('locale', 'es');
+
+    Route::get('/cart', function () {
+        return view('pages/blog/show');
+    })->name('cart.edit.en')->where('locale', 'en');
     
     
     Route::get('/', [HomeController::class, 'index'])->name('home.show');

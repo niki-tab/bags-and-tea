@@ -23,12 +23,12 @@ class SetLocale
         $locale = $request->segment(1);
 
         if (in_array($locale, ['en', 'es'])) {
-            App::setLocale($locale);
+            //App::setLocale($locale);
         } else {
-            $locale = 'es';
-            return redirect("/$locale" . $request->getRequestUri());
+            //$locale = 'es';
+            //return redirect("/$locale" . $request->getRequestUri());
         }
-        App::setLocale("es");
+        //App::setLocale("es");
         return $next($request);
 
     }
