@@ -7,7 +7,7 @@
     <div class="w-2/5 flex flex-col justify-center items-center h-full">
         <img src="{{ asset('images/logo/bags_and_tea_logo_2.svg') }}" class="w-64 h-64 mb-12">    
         <!-- Rounded Button Below -->
-        <a href="#" class="mb-24 px-12 py-2 font-robotoCondensed bg-background-color-2 text-color-4 rounded-full text-lg font-bold hover:bg-blue-600 transition">
+        <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="mb-24 px-12 pt-2 pb-1.5 font-robotoCondensed bg-background-color-2 text-color-4 rounded-full text-lg font-regular hover:bg-background-color-5 transition">
             {{ trans('components/footer.button-sell-your-bag') }}
         </a>
     </div>
@@ -22,7 +22,7 @@
             
             <!-- Ensure the image is centered properly -->
             <div class="flex justify-center items-center">
-                <img src="{{ asset('images/icons/RRSS_insta_b_3.svg') }}" class="w-8 h-8 mr-3 cursor-pointer">  
+                <img src="{{ asset('images/icons/RRSS_insta_b_5.svg') }}" class="w-8 h-8 mr-3 cursor-pointer">  
                 <img src="{{ asset('images/icons/RRSS_facebook_b_2.svg') }}" class="w-8 h-8 ml-3 cursor-pointer">  
                   
             </div>
@@ -44,9 +44,9 @@
     </div>
     <div class="absolute w-full h-12 bg-background-color-2 left-1/2 transform -translate-x-1/2 bottom-8 flex items-center">
         <nav class="flex justify-between items-center gap-4 py-4 w-2/5 mx-auto">
-            <a href="#" class="flex-1 text-center text-color-1 font-robotoCondensed text-lg font-medium hover:text-blue-500">{{ trans('components/footer.subfooter-option-1') }}</a>
-            <a href="#" class="flex-1 text-center text-color-1 font-robotoCondensed text-lg font-medium hover:text-blue-500">{{ trans('components/footer.subfooter-option-2') }}</a>
-            <a href="#" class="flex-1 text-center text-color-1 font-robotoCondensed text-lg font-medium hover:text-blue-500">{{ trans('components/footer.subfooter-option-3') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'privacy.show.es' : 'privacy.show.en', ['locale' => app()->getLocale()]) }}" class="flex-1 text-center text-color-1 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.subfooter-option-1') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'cookies.show.en-es' : 'cookies.show.en-es', ['locale' => app()->getLocale()]) }}" class="flex-1 text-center text-color-1 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.subfooter-option-2') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'legal-notice.show.es' : 'legal-notice.show.en', ['locale' => app()->getLocale()]) }}" class="flex-1 text-center text-color-1 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.subfooter-option-3') }}</a>
         </nav>
     </div>
 </div>

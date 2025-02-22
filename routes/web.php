@@ -127,6 +127,26 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
     Route::get('/cart', function () {
         return view('pages/blog/show');
     })->name('cart.edit.en')->where('locale', 'en');
+
+    Route::get('/privacidad', function () {
+        return view('pages/blog/show');
+    })->name('privacy.show.es')->where('locale', 'es');
+
+    Route::get('/privacy', function () {
+        return view('pages/blog/show');
+    })->name('privacy.show.en')->where('locale', 'en');
+
+    Route::get('/cookies', function () {
+        return view('pages/blog/show');
+    })->name('cookies.show.en-es')->where('locale', 'en|es');
+
+    Route::get('/aviso-legal', function () {
+        return view('pages/blog/show');
+    })->name('legal-notice.show.es')->where('locale', 'es');
+
+    Route::get('/legal-notice', function () {
+        return view('pages/blog/show');
+    })->name('legal-notice.show.en')->where('locale', 'en');
     
     
     Route::get('/', [HomeController::class, 'index'])->name('home.show.en-es');
