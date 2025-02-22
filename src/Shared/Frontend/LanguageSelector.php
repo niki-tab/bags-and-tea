@@ -8,6 +8,8 @@ class LanguageSelector extends Component
 {
     public $currentLanguage;
     public $currentRouteName;
+    public $routeSpanish;
+    public $routeEnglish;
 
     public function mount()
     {
@@ -16,11 +18,31 @@ class LanguageSelector extends Component
         
         $locale = request()->segment(1);
 
-        if (in_array($locale, ['en'])) {
-            app()->setLocale('en');
+        $isMultiLanguage = str_ends_with($this->currentRouteName, '.en-es');
+
+        if ($isMultiLanguage) {
+
+            $this->routeSpanish = $this->currentRouteName;
+            $this->routeEnglish = $this->currentRouteName;
+            
         } else {
-            app()->setLocale('es');
+
+            $routeParts = explode('.', $this->currentRouteName);
+
+            // Remove the last element
+            array_pop($routeParts);
+    
+            $this->routeSpanish  = $routeParts;
+            $this->routeSpanish[] = "es";
+            $this->routeSpanish = implode('.', $this->routeSpanish);
+            
+            $this->routeEnglish  = $routeParts;
+            $this->routeEnglish[] = "en";
+            $this->routeEnglish = implode('.', $this->routeEnglish);
+
         }
+
+
         
     }
 
@@ -28,9 +50,7 @@ class LanguageSelector extends Component
     {
         $this->currentLanguage = $this->currentLanguage === 'en' ? 'es' : 'en';
 
-        app()->setLocale($this->currentLanguage);
-
-        return redirect()->route($this->currentRouteName, ['locale' => $this->currentLanguage]);
+        //return redirect()->route($newRouteName, ['locale' => $this->currentLanguage]);
     }
 
     public function render()

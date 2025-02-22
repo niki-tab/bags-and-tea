@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Illuminate\Support\Facades\App;
-class SetLocale
+class SetLanguage
 {
     /**
      * Handle an incoming request.
@@ -22,13 +22,18 @@ class SetLocale
         
         $locale = $request->segment(1);
 
-        if (in_array($locale, ['en', 'es'])) {
-            //App::setLocale($locale);
-        } else {
-            //$locale = 'es';
-            //return redirect("/$locale" . $request->getRequestUri());
+        if (session()->has('language')) {
+            
+            session(['language' => $locale]);
+            app()->setLocale(locale: $locale);
+
+        }else{
+
+            session(['language' => $locale]);
+            app()->setLocale(locale: $locale);
+
         }
-        //App::setLocale("es");
+        
         return $next($request);
 
     }

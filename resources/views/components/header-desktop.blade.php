@@ -28,16 +28,16 @@
         <div class="flex w-full bg-background-color-4">
             <!-- Left Column -->
             <div class="w-1/2 ">
-                Left Content
+                
             </div>
 
             <!-- Right Column with Two Inner Columns -->
             <div class="w-1/2 bg-background-color-4 flex items-center">
-                <a href="#" class="px-8 h-9 py-2 font-robotoCondensed bg-background-color-2 text-white rounded-full text-sm font-regular hover:bg-background-color-3 transition">
+                <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="px-8 h-9 py-2 font-robotoCondensed bg-background-color-2 text-white rounded-full text-sm font-regular hover:bg-background-color-3 transition">
                     {{ trans('components/header.button-sell-your-bag') }}
-                </a>
-                <div class="ml-10 w-1/3 bg-background-color-4 flex items-center justify-center">
-                    <div class="flex-1 flex justify-center">
+    </a>
+                <div class="ml-10 bg-background-color-4 flex items-center justify-center">
+                    <div class="flex-1 flex justify-center px-1">
                         <a href="{{ route(app()->getLocale() === 'es' ? 'login.show.en-es' : 'login.show.en-es', ['locale' => app()->getLocale()]) }}">
                             <img src="{{ request()->routeIs('login.show.en-es') ? asset('images/icons/icon_user_avatar_header_clicked.svg') : asset('images/icons/icon_user_avatar_header.svg') }}" 
                                 class="w-8 h-8 cursor-pointer"
@@ -45,7 +45,7 @@
                                 onmouseout="this.src='{{ request()->routeIs('login.show.en-es') ? asset('images/icons/icon_user_avatar_header_clicked.svg') : asset('images/icons/icon_user_avatar_header.svg') }}'">
                         </a>
                     </div>
-                    <div class="flex-1 flex justify-center">
+                    <div class="flex-1 flex justify-center px-1">
                         <a href="{{ route(app()->getLocale() === 'es' ? 'cart.edit.es' : 'cart.edit.en', ['locale' => app()->getLocale()]) }}">
                             <img src="{{ request()->routeIs('cart.edit.es') || request()->routeIs('cart.edit.en') ? asset('images/icons/icon_cart_header_clicked.svg') : asset('images/icons/icon_cart_header.svg') }}" 
                                 class="w-8 h-8 cursor-pointer"
@@ -53,7 +53,10 @@
                                 onmouseout="this.src='{{ request()->routeIs('cart.edit.es') || request()->routeIs('cart.edit.en') ? asset('images/icons/icon_cart_header_clicked.svg') : asset('images/icons/icon_cart_header.svg') }}'">
                         </a>
                     </div>
-                    @livewire('shared/language-selector')
+                    <div class="flex-1 flex justify-center mr-12 pt-1">
+                        @livewire('shared/language-selector')
+                    </div>
+                    
                 </div>
             </div>
         </div>
