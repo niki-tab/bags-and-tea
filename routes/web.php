@@ -76,14 +76,6 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
         return view('pages/blog/articles/show');
     })->name('article.show.en')->where('locale', 'en');
 
-    Route::get('/contacto', function () {
-        return view('pages/blog/show');
-    })->name('contact.show.es')->where('locale', 'es');
-
-    Route::get('/contact', function () {
-        return view('pages/blog/show');
-    })->name('contact.show.en')->where('locale', 'en');
-
     Route::get('/quienes-somos', function () {
         return view('pages/blog/show');
     })->name('about-us.show.es')->where('locale', 'es');
@@ -147,6 +139,14 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
     Route::get('/legal-notice', function () {
         return view('pages/blog/show');
     })->name('legal-notice.show.en')->where('locale', 'en');
+
+    Route::get('/preguntas-frecuentes', function () {
+        return view('pages/blog/show');
+    })->name('faq.show.es')->where('locale', 'es');
+
+    Route::get('/frequently-asked-questions', function () {
+        return view('pages/blog/show');
+    })->name('faq.show.en')->where('locale', 'en');
     
     
     Route::get('/', [HomeController::class, 'index'])->name('home.show.en-es');
