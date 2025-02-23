@@ -10,6 +10,8 @@ class LanguageSelector extends Component
     public $currentRouteName;
     public $routeSpanish;
     public $routeEnglish;
+    public $paramsSpanish;
+    public $paramsEnglish;
 
     public function mount()
     {
@@ -24,7 +26,7 @@ class LanguageSelector extends Component
 
             $this->routeSpanish = $this->currentRouteName;
             $this->routeEnglish = $this->currentRouteName;
-            
+
         } else {
 
             $routeParts = explode('.', $this->currentRouteName);
@@ -42,6 +44,13 @@ class LanguageSelector extends Component
 
         }
 
+        if($this->currentRouteName == "article.show.es" || $this->currentRouteName == "article.show.en"){
+            $this->paramsSpanish = ["locale" => "es", 'articleSlug' => request()->route('articleSlug')];
+            $this->paramsEnglish = ["locale" => "en", 'articleSlug' => request()->route('articleSlug')];
+        }else{
+            $this->paramsSpanish = ["locale" => "es"];
+            $this->paramsEnglish = ["locale" => "en"];
+        }
 
         
     }
