@@ -26,7 +26,7 @@ class ArticleModelFactory extends Factory
             'slug' => fake()->slug(),
             'state' => fake()->randomElement(['draft', 'published', 'archived']),
             'body' => fake()->paragraph(),
-            'main_image' => fake()->imageUrl(),
+            'main_image' => fake()->randomElement(['https://storage.bagsandtea.com/blog/WhatsApp%20Image%202025-02-18%20at%2017.00.54.jpeg', 'https://storage.bagsandtea.com/blog/IMG_20220624_192743.jpg', 'https://storage.bagsandtea.com/blog/00pp-bolso-bandolera-saint-laurent-loulou-modelo-grande-en-cuero-acolchado-con-motivos-de-espigas-negro.jpg']),
             'meta_title' => fake()->sentence(),
             'meta_description' => fake()->sentence(),
             'meta_keywords' => fake()->sentence(),

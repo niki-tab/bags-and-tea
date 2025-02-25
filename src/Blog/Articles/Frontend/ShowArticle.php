@@ -11,30 +11,9 @@ use App\Models\ProducSizeVariationQuantityVariationPriceModel;
 
 class ShowArticle extends Component
 {
-    public $product;
-
-    public $productSizeVariations;
-
-    public $productQuantityVariations;
-
-    public $productHasQuantityVariation;
-
-    public $productSizeQuantityVariationsPrice;
-    
-    public $selectedSize;
-
-    public $quantityOptions;
-
-    public $specificQuantity = 1;
-    public $selectedQuantity;
-
-    public $selectedQuantityId;
-    public $specificPrice = 5;
-    public $lang;
-
-    public $test;
     public $articleModel;
     public $articleTitle;
+    public $articleMainImage;
     public $articleBody;
 
     public bool $articleExists;
@@ -55,6 +34,7 @@ class ShowArticle extends Component
             
             $this->articleExists = true;
             $this->articleTitle = $article->title;
+            $this->articleMainImage = $article->main_image;
             $this->articleBody = $article->body;
 
             $this->setSeo();

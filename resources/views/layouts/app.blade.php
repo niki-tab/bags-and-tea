@@ -11,19 +11,20 @@
     <link rel="icon" href="{{ asset("images/icons/favicon.ico") }}" type="image/x-icon">
     <meta name="google-site-verification" content="8Zu5brHcw0lALxaJKOZYyom4xhWaB9sQosfv9xwyfes" />
     @livewireStyles
+    @yield('styles')
 </head>
-<body class="min-h-screen flex flex-col bg-white">
+<body class="min-h-screen flex flex-col">
     @livewireScripts
     <header class="z-10">
         <x-header-desktop/>
         <x-header-mobile/>
     </header>
 
-    <main class="flex-grow container mx-auto z-0 mt-24">
+    <main class="flex-grow container mx-auto z-0 pb-12 @yield('main-tag-class', 'bg-white')">
         @yield('content')
     </main>
 
-    <footer class="mt-12">
+    <footer class="">
         <x-footer-desktop />
         <x-footer-mobile />
     </footer>
