@@ -15,6 +15,7 @@ class ShowArticle extends Component
     public $articleTitle;
     public $articleMainImage;
     public $articleBody;
+    public $lang;
 
     public bool $articleExists;
     public string $articleNotFoundText;
@@ -29,7 +30,7 @@ class ShowArticle extends Component
                                     ->first();
 
         $this->articleModel = $article;
-
+        
         if($article){
             
             $this->articleExists = true;

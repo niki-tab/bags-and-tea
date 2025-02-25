@@ -1,8 +1,4 @@
 <div class="relative hidden md:block @yield('footer-desktop-class', 'bg-white')">
-    <div class="w-full h-[165px] @yield('footer-desktop-class', 'bg-white')">
-        <!-- Brown Div (Overlapping the Orange Div) -->
-        
-    </div>
     <div class="relative">
         <div class="relative w-[94%] h-[440px] bg-background-color-1 left-1/2 transform -translate-x-1/2 bottom-[0] flex z-10">
     
