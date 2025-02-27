@@ -8,6 +8,7 @@
                 <h1 class="font-robotoCondensed font-medium text-6xl mx-auto inline-block">{{$articleNotFoundText}}</h1>
             @else
                 <h1 class="font-robotoCondensed font-medium text-6xl mx-auto inline-block">{{$articleTitle}}</h1>
+                <img src="{{ asset($articleMainImage) }}" class="h-[520px] w-full">
                 <div class = "mt-20 text-justify">{!! $articleBody !!}</div>
             @endif
         </div>
