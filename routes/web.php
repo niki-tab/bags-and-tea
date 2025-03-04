@@ -48,13 +48,13 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
         return view('pages/product-detail');
     })->name('product.show.en')->where('locale', 'en');
 
-    Route::get('/carrito', function () {
+    /*Route::get('/carrito', function () {
         return view('pages/cart');
     })->name('cart.show.es')->where('locale', 'es');
 
     Route::get('/cart', function () {
         return view('pages/cart');
-    })->name('cart.show.en')->where('locale', 'en');
+    })->name('cart.show.en')->where('locale', 'en');*/
 
     Route::get('/contacto', function () {
         return view('pages/we_buy_your_bag/show');
@@ -112,13 +112,13 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
         return view('pages/we_buy_your_bag/show');
     })->name('login.show.en-es')->where('locale', 'en|es');
 
-    /*Route::get('/carrito', function () {
+    Route::get('/carrito', function () {
         return view('pages/we_buy_your_bag/show');
     })->name('cart.edit.es')->where('locale', 'es');
 
     Route::get('/cart', function () {
         return view('pages/we_buy_your_bag/show');
-    })->name('cart.edit.en')->where('locale', 'en');*/
+    })->name('cart.edit.en')->where('locale', 'en');
 
     Route::get('/privacidad', function () {
         return view('pages/we_buy_your_bag/show');
