@@ -64,13 +64,9 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
         return view('pages/we_buy_your_bag/show');
     })->name('contact.send.en')->where('locale', 'en');
 
-    Route::get('/bloge', function () {
-        return view('pages/blog/show');
-    })->name('blog.show.en')->where('locale', 'en');
-
     Route::get('/blog', function () {
         return view('pages/blog/show');
-    })->name('blog.show.es')->where('locale', 'es');
+    })->name('blog.show.en-es')->where('locale', 'en|es');
 
     Route::get('/blog/articulo/{articleSlug}', function () {
         return view('pages/blog/articles/show');
