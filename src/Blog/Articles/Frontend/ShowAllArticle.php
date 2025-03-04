@@ -31,7 +31,7 @@ class ShowAllArticle extends Component
                                         });
 
         $this->allArticles = $articleModel;
-        dd($this->allArticles);
+        
         //$article = ArticleModel::where("slug->".$this->lang, $articleSlug)->first();
 
         if($this->allArticles){
