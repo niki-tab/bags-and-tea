@@ -93,11 +93,11 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
     })->name('our-bags.show.en')->where('locale', 'en');
 
     Route::get('/compramos-tu-bolso', function () {
-        return view('pages/blog/show');
+        return view('pages/we_buy_your_bag/show');
     })->name('we-buy-your-bag.show.es')->where('locale', 'es');
 
     Route::get('/we-buy-your-bag', function () {
-        return view('pages/blog/show');
+        return view('pages/we_buy_your_bag/show');
     })->name('we-buy-your-bag.show.en')->where('locale', 'en');
 
     Route::get('/certifica-tu-bolso', function () {

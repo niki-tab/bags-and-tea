@@ -1,0 +1,5 @@
+@extends('layouts.app')
+<meta name="robots" content="noindex, nofollow" />
+@section('content')
+        hola
+@endsection
