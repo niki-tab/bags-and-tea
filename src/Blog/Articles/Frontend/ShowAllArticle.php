@@ -27,10 +27,7 @@ class ShowAllArticle extends Component
                                         ->get()
                                         ->map->getTranslatedAttributes($this->lang)
                                         ->filter(function ($article) {
-                                            // Check if any of the translated fields are not empty
-                                            return !empty(array_filter($article, function($value) {
-                                                return !empty($value);
-                                            }));
+                                            return !empty($article['slug']);
                                         });
 
         $this->allArticles = $articleModel;
