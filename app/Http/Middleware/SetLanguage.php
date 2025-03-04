@@ -20,7 +20,7 @@ class SetLanguage
             return $next($request); // Skip the language prefix for Livewire routes
         }
         
-        $locale = $request->segment(1);
+        /*$locale = $request->segment(1);
 
         if (session()->has('language')) {
             
@@ -32,7 +32,7 @@ class SetLanguage
             session(['language' => $locale]);
             app()->setLocale(locale: $locale);
 
-        }
+        }*/
         
         return $next($request);
 
