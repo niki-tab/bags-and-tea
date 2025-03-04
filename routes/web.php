@@ -27,7 +27,7 @@ use App\Http\Controllers\TestController;
 // Add Livewire routes without locale prefix
 
 
-Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function () {
+Route::group(['prefix' => '{locale}'], function () {
     
     /*Route::get('/shop', function () {
         return view('pages/shop');
