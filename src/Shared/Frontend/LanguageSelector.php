@@ -43,16 +43,15 @@ class LanguageSelector extends Component
             $this->routeEnglish = implode('.', $this->routeEnglish);
 
         }
-        /*
+
         if($this->currentRouteName == "article.show.es" || $this->currentRouteName == "article.show.en"){
             $this->paramsSpanish = ["locale" => "es", 'articleSlug' => request()->route('articleSlug')];
             $this->paramsEnglish = ["locale" => "en", 'articleSlug' => request()->route('articleSlug')];
         }else{
             $this->paramsSpanish = ["locale" => "es"];
             $this->paramsEnglish = ["locale" => "en"];
-        }*/
-        $this->paramsSpanish = ["locale" => "es"];
-        $this->paramsEnglish = ["locale" => "en"];
+        }
+
         
     }
 

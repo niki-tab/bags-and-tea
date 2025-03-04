@@ -11,7 +11,12 @@
         
         <div x-show="open" 
              class="absolute right-0 mt-2 w-24 rounded-md shadow-lg bg-background-color-4 ring-1 ring-black ring-opacity-5">
-
+            <div class="py-1">
+                <a href="{{ route($routeEnglish, $paramsEnglish) }}" 
+                   class="text-color-2 block px-4 py-2 text-sm hover:bg-gray-100">EN</a>
+                <a href="{{ route($routeSpanish, $paramsSpanish) }}" 
+                   class="text-color-2 block px-4 py-2 text-sm hover:bg-gray-100">ES</a>
+            </div>
         </div>
     </button>
 </div>
