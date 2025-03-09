@@ -27,6 +27,7 @@ export default {
         'color-3': '#C12637',
         'color-4': '#F7F0ED',
         'color-5': '#CA2530',
+        'color-6': '#A47864',
         'text-color-1-hover': '#FFDE21',
         'broken-white-color': '#F1F0EB',
         //'button-color-1': '#091235',
