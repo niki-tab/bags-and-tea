@@ -17,10 +17,15 @@ class ShowAllArticle extends Component
         
         $this->lang = app()->getLocale();
 
+
         $articleModel = ArticleModel::where('state', 'live')
                                         ->orWhere('state', 'published')
-                                        ->orderBy('created_at')
-                                        ->get();
+                                        ->orderBy('created_at', 'asc')
+                                        ->get()
+                                        ->map->getTranslatedAttributes($this->lang)
+                                        ->filter(function ($article) {
+                                            return !empty($article['slug']);
+                                        });
 
         $this->allArticles = $articleModel;
         
