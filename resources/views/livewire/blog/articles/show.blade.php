@@ -4,11 +4,11 @@
             @if(!$articleExists)
                 <h1 class="font-robotoCondensed font-medium text-6xl mx-auto inline-block">{{$articleNotFoundText}}</h1>
             @else
-                <div class="mb-10">
+                <div class="mb-6">
                     <h1 class="font-robotoCondensed font-medium text-6xl mx-auto inline-block">{{$articleTitle}}</h1>
                     <p class="mt-10 ml-0 pl-0 font-robotoCondensed text-base text-color-6"><a href="*">Autenticidad</a>  &nbsp;&nbsp;-&nbsp;&nbsp;  <a href="*">Moda</a></p>
                 </div>
-                <img src="{{ asset($articleMainImage) }}" class="h-[520px] w-full">
+                <img src="{{ asset($articleMainImage) }}" class="h-[520px] w-full border border-color-6">
                 <div class = "mt-20 text-justify">{!! $articleBody !!}</div>
             @endif
         </div>
