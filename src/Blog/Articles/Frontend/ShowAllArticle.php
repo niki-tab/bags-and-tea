@@ -19,11 +19,7 @@ class ShowAllArticle extends Component
 
         $articleModel = ArticleModel::where('state', 'live')
                                         ->orWhere('state', 'published')
-                                        ->get();
-
-        $articleModel = ArticleModel::where('state', 'live')
-                                        ->orWhere('state', 'published')
-                                        ->orderBy('created_at', 'desc')
+                                        ->orderBy('created_at', 'asc')
                                         ->get()
                                         ->map->getTranslatedAttributes($this->lang)
                                         ->filter(function ($article) {
