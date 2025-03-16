@@ -5,7 +5,7 @@
             <img src="{{ asset('images/icons/RRSS_facebook_b.svg') }}" class="w-5 h-5 cursor-pointer">
         </div>
         <div class="flex-1 flex items-center justify-center">
-            <p class="text-theme-color-2 font-robotoCondensed font-bold">¿1ª compra? -15% con el código WELCOME15</p>
+            <p class="text-theme-color-2 font-robotoCondensed font-bold">{{ trans('components/header.banner-text') }}</p>
         </div>
         
     </div>

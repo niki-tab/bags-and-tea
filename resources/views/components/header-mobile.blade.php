@@ -1,5 +1,8 @@
-<div class="md:hidden bg-background-color-4 text-white h-[100px] fixed top-0 w-full mb-20">
-    <div class="h-4 w-full bg-background-color-1"> 
+<div class="md:hidden bg-background-color-4 text-white h-[110px] fixed top-0 w-full mb-20">
+    <div class="h-8 w-full bg-background-color-1 flex items-center justify-center"> 
+        <div class="animate-marquee inline-block">
+            <p class="text-theme-color-2 font-robotoCondensed font-medium text-sm">{{ trans('components/header.banner-text') }}</p>
+        </div>
     </div>    
     <div class="flex justify-between items-center"> 
         <!-- Logo (on the left) -->

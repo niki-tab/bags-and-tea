@@ -11,5 +11,6 @@ return [
     'menu-option-6' => 'Contact',
     'button-sell-your-bag' => 'Sell your bag',
     'placeholder-input-search-product' => 'Search by brand, item...',
+    'banner-text' => 'Looking for your perfect handbag? We’re building the site just for you to find it!'
 
 ];
