@@ -1,30 +1,49 @@
-<div class="md:hidden bg-button-color-1 text-white p-4 mt-4">
-    <div class="container mx-auto text-center">
-        <div class="col-span-4 text-center mt-4">
-                <img src="{{ asset("images/logo/logo_new_01.png") }}" alt="logo" width="210" height="78" class="mx-auto block"></img>
+<div class="md:hidden relative items-center justify-content">
+    <div class="bg-white h-[160px]">
+        
+    </div>
+    <div class="bg-background-color-3 h-[1320px]">
+        
+    </div>
+    <div class="bg-background-color-1 h-[1480px] absolute bottom-0 w-11/12 inset-x-0 mx-auto">
+        <img src="{{ asset('images/logo/bags_and_tea_logo_2.svg') }}" class="w-64 h-64 mt-6 mx-auto">    
+        <!-- Rounded Button Below -->
+        <div class="flex justify-center">
+            <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="py-3 px-16 font-robotoCondensed bg-background-color-2 text-color-4 rounded-full text-lg font-regular hover:bg-background-color-5 transition mx-auto">
+            {{ trans('components/footer.button-sell-your-bag') }}
+            </a>
         </div>
-        <div class="grid grid-cols-4 gap-2 mt-8 mb-8"> 
-            <!-- Column 1 -->
-            <div class="col-span-2 text-left ml-12">
-                <h4 class="font-bold text-sm mb-2">Sobre Nosotros</h4>
-                <a href="/quienes-somos" class="block hover:underline text-xs">¿Quienes somos?</a>
-            </div>
-
-            <!-- Column 2 -->
-            <div class="col-span-2 text-left mx-auto">
-                <h4 class="font-bold text-sm mb-2">Más información</h4>
-                <a href="/contacto" class="block hover:underline text-xs">Escríbenos</a>
+        <div class="w-11/12 flex flex-col items-start mb-16 mx-auto mt-14 bg-[#D29289] p-10">
+            <p class="text-color-2 font-robotoCondensed text-xl font-bold">{{ trans('components/footer.text-newsletter-title') }}</p>
+            <p class="mt-2 leading-loose">{{ trans('components/footer.text-newsletter-description') }}</p>
+            <input type="text" class="font-robotoCondensed h-8 w-full mt-6 mb-6 bg-transparent border-b border-color-2 placeholder-color-2 placeholder-font-robotoCondensed pl-4 focus:outline-none focus:ring-0" 
+                placeholder="{{ trans('components/footer.placeholder-input-subscribe-to-newsletter') }}">
+            <div class="w-full flex justify-center pt-4">
+                <a href="#" class="border-2 border-color-2 py-1 px-6 font-robotoCondensed bg-[#D29289] text-color-2 rounded-full text-lg font-medium hover:bg-background-color-2 hover:text-white transition">
+                    {{ trans('components/footer.button-subscribe-to-newsletter') }}
+                </a>
             </div>
         </div>
-        <div class="grid grid-cols-1 gap-1 mt-8 mb-8"> 
-            <!-- Column 1 -->
-            <div class="col-span-3 text-left ml-12">
-                <h4 class="font-bold text-sm mb-2">Contacto</h4>
-                 <a href="tel:+34606986218" class="block hover:underline text-xs">+34 606986218</a>
-                <a href="mailto:nicolas.tabares@rutasdelmar.com" class="block hover:underline text-xs">nicolas.tabares@rutasdelmar.com</a>
-            </div>
+        <nav class="flex flex-col space-y-10 w-full mt-10">
+            <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-1') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'our-bags.show.es' : 'our-bags.show.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-2') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'about-us.show.es' : 'about-us.show.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-3') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'blog.show.en-es' : 'blog.show.en-es', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-4') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'contact.send.es' : 'contact.send.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-5') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'privacy.show.es' : 'privacy.show.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-6') }}</a>
+            <!-- Ensure the image is centered properly -->
+        </nav>
+        <div class="flex gap-4 justify-center items-center mt-14">
+            <a href=""><img src="{{ asset('images/icons/RRSS_insta_b_5.svg') }}" class="w-7 h-7 cursor-pointer"></a>  
+            <a target="_blank" href="https://www.vinted.es/member/250362636-bagsandtea"><img src="{{ asset('images/icons/icon_vinted.svg') }}" class="w-7 h-7 cursor-pointer"></a>
+            <a target="_blank" href="https://es.vestiairecollective.com/profile/30176798/?sortBy=relevance&tab=items-for-sale"><img src="{{ asset('images/icons/icon_vestaire_collective.svg') }}" class="w-7 h-7 cursor-pointer"></a>
         </div>
-
-        <p class="text-xs">&copy; {{ date('Y') }} Bolsos Luxe. All rights reserved.</p>
+    </div>
+    <div class="bg-background-color-2 h-16 absolute bottom-14 w-full flex">
+        <nav class="flex justify-between items-center gap-2 py-4 mx-auto w-full">
+            <a href="{{ route(app()->getLocale() === 'es' ? 'privacy.show.es' : 'privacy.show.en', ['locale' => app()->getLocale()]) }}" class="flex-1 text-center text-color-1 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.subfooter-option-1') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'cookies.show.en-es' : 'cookies.show.en-es', ['locale' => app()->getLocale()]) }}" class="flex-1 text-center text-color-1 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.subfooter-option-2') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'legal-notice.show.es' : 'legal-notice.show.en', ['locale' => app()->getLocale()]) }}" class="flex-1 text-center text-color-1 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.subfooter-option-3') }}</a>
+        </nav>
     </div>
 </div>

@@ -18,17 +18,17 @@
                     <a href="{{ route(app()->getLocale() === 'es' ? 'contact.send.es' : 'contact.send.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-5') }}</a>
                     <a href="{{ route(app()->getLocale() === 'es' ? 'privacy.show.es' : 'privacy.show.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-6') }}</a>
                     <!-- Ensure the image is centered properly -->
-                    <div class="flex justify-center items-center pt-4">
-                        <img src="{{ asset('images/icons/RRSS_insta_b_5.svg') }}" class="w-8 h-8 mr-3 cursor-pointer">  
-                        <img src="{{ asset('images/icons/RRSS_facebook_b_2.svg') }}" class="w-8 h-8 ml-3 cursor-pointer">  
-                        
+                    <div class="flex justify-center items-center pt-4 gap-4">
+                        <a href=""><img src="{{ asset('images/icons/RRSS_insta_b_5.svg') }}" class="w-8 h-8 cursor-pointer"></a>  
+                        <a target="_blank" href="https://www.vinted.es/member/250362636-bagsandtea"><img src="{{ asset('images/icons/icon_vinted.svg') }}" class="w-8 h-8 cursor-pointer"></a>
+                        <a target="_blank" href="https://es.vestiairecollective.com/profile/30176798/?sortBy=relevance&tab=items-for-sale"><img src="{{ asset('images/icons/icon_vestaire_collective.svg') }}" class="w-8 h-8 cursor-pointer"></a>
                     </div>
                 </nav>
             </div>
             <div class="w-2/5 flex justify-center items-center">
                 <div class="w-1/2 flex flex-col items-start mb-20">
-                    <p class="font-robotoCondensed text-xl font-bold">{{ trans('components/footer.text-newsletter-title') }}</p>
-                    <p class="mt-2 leading-loose">{{ trans('components/footer.text-newsletter-description') }}</p>
+                    <p class="text-color-2 font-robotoCondensed text-xl font-bold">{{ trans('components/footer.text-newsletter-title') }}</p>
+                    <p class="text-color-2 mt-2 leading-loose">{{ trans('components/footer.text-newsletter-description') }}</p>
                     <input type="text" class="font-robotoCondensed h-8 w-full mt-6 mb-6 bg-transparent border-b border-color-2 placeholder-color-2 placeholder-font-robotoCondensed pl-4 focus:outline-none focus:ring-0" 
                         placeholder="{{ trans('components/footer.placeholder-input-subscribe-to-newsletter') }}">
                     <div class="w-full flex justify-center pt-4">
