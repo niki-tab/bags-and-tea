@@ -1,6 +1,6 @@
 <div class="relative">
     <div class="flex items-center justify-center w-full">
-        <div class="pt-12 px-32 text-center z-20 bg-white w-3/4 h-full pb-[380px]">
+        <div class="pt-12 px-8 md:px-32 text-center z-20 bg-white w-full md:w-3/4 h-full pb-[380px]">
             @if(!$articleExists)
                 <h1 class="font-robotoCondensed font-medium text-6xl mx-auto inline-block">{{$articleNotFoundText}}</h1>
             @else

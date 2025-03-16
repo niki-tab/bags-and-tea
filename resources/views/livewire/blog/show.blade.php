@@ -1,5 +1,5 @@
 <div class="flex items-center justify-center">
-    <div class="px-32 text-center">
+    <div class="mt-4 md:mt-12 px-8 md:px-32 text-center">
         <h1 class="text-6xl mx-auto inline-block">{{trans('components/article-all-show.page-title')}}</h1>
         @if(!$allArticles)
             <h1 class="text-6xl mx-auto inline-block">{{$articlesNotFoundText}}</h1>

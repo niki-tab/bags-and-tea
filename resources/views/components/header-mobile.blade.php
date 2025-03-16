@@ -1,4 +1,4 @@
-<div class="md:hidden bg-background-color-4 text-white h-[100px] fixed top-0 w-full">
+<div class="md:hidden bg-background-color-4 text-white h-[100px] fixed top-0 w-full mb-20">
     <div class="h-4 w-full bg-background-color-1"> 
     </div>    
     <div class="flex justify-between items-center"> 

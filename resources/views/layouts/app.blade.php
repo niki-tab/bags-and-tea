@@ -22,7 +22,7 @@
         <x-header-mobile/>
     </header>
 
-    <main class="flex-grow container mx-auto z-0 pb-12 @yield('main-tag-class', 'bg-white')">
+    <main class="mt-32 md:mt-0 flex-grow container mx-auto z-0 pb-12 @yield('main-tag-class', 'bg-white')">
         @yield('content')
     </main>
 
