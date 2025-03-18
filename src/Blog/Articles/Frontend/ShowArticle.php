@@ -36,7 +36,7 @@ class ShowArticle extends Component
             $this->articleExists = true;
             $this->articleTitle = $article->title;
             $this->articleMainImage = $article->main_image;
-            $this->articleBody = $article->body;
+            $this->articleBody = $this->removeEmptyPTags($article->body);
 
             $this->setSeo();
 
@@ -161,4 +161,40 @@ class ShowArticle extends Component
     {
         return view('livewire.blog/articles/show');
     }
+
+    function removeEmptyPTags($html)
+    {
+        // Return early if no HTML or no <p> tags
+        if (empty($html) || strpos($html, '<p') === false) {
+            return $html;
+        }
+
+        // Load HTML into DOMDocument
+        $doc = new \DOMDocument();
+        // Silence warnings from malformed HTML with @, add encoding to prevent UTF-8 issues
+        @$doc->loadHTML('<?xml encoding="utf-8" ?>' . $html);
+
+        // Get all <p> tags
+        $pTags = $doc->getElementsByTagName('p');
+
+        // Iterate backwards to safely remove nodes
+        for ($i = $pTags->length - 1; $i >= 0; $i--) {
+            $p = $pTags->item($i);
+            // Check if the <p> is empty (no text, only whitespace, or nbsp)
+            $content = trim($p->textContent);
+            if ($content === '' || $content === ' ') {
+                $p->parentNode->removeChild($p);
+            }
+        }
+
+        // Extract the cleaned HTML, removing DOCTYPE and <html><body> wrappers
+        $body = $doc->getElementsByTagName('body')->item(0);
+        $cleanedHtml = '';
+        foreach ($body->childNodes as $node) {
+            $cleanedHtml .= $doc->saveHTML($node);
+        }
+
+        return $cleanedHtml;
+    }
+
 }
