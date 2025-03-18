@@ -9,6 +9,40 @@ body {
     font-family: 'Merriweather', serif;
 }
 
+@layer components {
+    .article-content p {
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 18px;
+        color: #3A3F42;
+        margin-bottom: 16px;
+    }
+    .article-content h2 {
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 40px;
+        color: #3A3F42;
+        margin-left: 40px;
+        margin-bottom: 30px;
+    }
+    .article-content h3 {
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 30px;
+        color: #3A3F42;
+        margin-left: 40px;
+        margin-bottom: 30px;
+    }
+    .article-content h4 {
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 24px;
+        color: #3A3F42;
+        margin-left: 40px;
+        margin-bottom: 30px;
+    }
+    .article-content a {
+        color: #A47864;
+        
+    }
+}
+
 @keyframes marquee {
     0% {
         transform: translateX(100%);
@@ -21,3 +55,4 @@ body {
 .animate-marquee {
     animation: marquee 15s linear infinite; /* Adjust duration (15s) as needed */
 }
+
