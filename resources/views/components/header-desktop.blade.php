@@ -1,11 +1,8 @@
 <div class="hidden md:block">
-    <div class="h-9 bg-background-color-1 pl-32 flex">
-        <div class="flex-1 flex gap-4 pt-2">
-            <img src="{{ asset('images/icons/RRSS_insta_b_5.svg') }}" class="w-5 h-5 cursor-pointer pt-[1px]">    
-            <img src="{{ asset('images/icons/RRSS_facebook_b.svg') }}" class="w-5 h-5 cursor-pointer">
-        </div>
-        <div class="flex-1 flex items-center justify-center">
-            <p class="text-theme-color-2 font-robotoCondensed font-bold">{{ trans('components/header.banner-text') }}</p>
+    <div class="h-9 bg-[#D29289] pl-32 flex">
+        <div class="flex-1 flex items-center justify-center animate-marquee-desktop inline-block">
+            <p class="text-theme-color-2 font-robotoCondensed font-regular">{{ trans('components/header.banner-text') }}</p>
+            <p class="ml-60 text-theme-color-2 font-robotoCondensed font-regular">{{ trans('components/header.banner-text') }}</p>
         </div>
         
     </div>
@@ -62,9 +59,9 @@
         </div>
 
         <!-- Centered Image -->
-        <div class="absolute left-1/2 top-[-20%] w-1/8 h-[120%] bg-background-color-4 transform -translate-x-1/2">
+        <div class="absolute left-1/2 w-1/8 transform -translate-x-1/2">
             <a href="{{ url(app()->getLocale() === 'es' ? '/es' : '/en') }}">  
-                <img src="{{ asset('images/logo/bags_and_tea_logo.svg') }}" class="mx-16 my-2 h-16 cursor-pointer"> 
+                <img src="{{ asset('images/logo/bags_and_tea_logo_new.svg') }}" class="mx-16 my-4 h-9 cursor-pointer"> 
             </a>
         </div>
 
