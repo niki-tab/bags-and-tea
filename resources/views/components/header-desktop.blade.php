@@ -1,10 +1,12 @@
 <div class="hidden md:block">
-    <div class="h-9 bg-[#D29289] pl-32 flex">
-        <div class="flex-1 flex items-center justify-center animate-marquee-desktop inline-block">
-            <p class="text-theme-color-2 font-robotoCondensed font-regular">{{ trans('components/header.banner-text') }}</p>
-            <p class="ml-60 text-theme-color-2 font-robotoCondensed font-regular">{{ trans('components/header.banner-text') }}</p>
+    <div class="h-9 bg-[#D29289] pl-32 overflow-hidden">
+        <div class="w-full h-full flex">
+            <div class="animate-marquee whitespace-nowrap my-auto">
+                <p class="text-theme-color-2 font-robotoCondensed font-regular">
+                    {{ trans('components/header.banner-text') }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ trans('components/header.banner-text') }}
+                </p>
+            </div>
         </div>
-        
     </div>
     <div class="relative flex w-full h-16">
 
