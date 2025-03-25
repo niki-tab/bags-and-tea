@@ -4,8 +4,8 @@
             @if(!$articleExists)
                 <h1 class="font-robotoCondensed font-medium text-6xl mx-auto inline-block">{{$articleNotFoundText}}</h1>
             @else
-                <div class="mb-6 inline-block text-left">
-                    <h1 class="font-robotoCondensed font-medium text-6xl mx-auto inline-block text-[#3A3F42]">{{$articleTitle}}</h1>
+                <div class="mb-6 inline-block text-center">
+                    <h1 class="font-robotoCondensed font-medium text-6xl mx-auto inline-block text-[#3A3F42] [letter-spacing:-2px]">{{$articleTitle}}</h1>
                     <p class="mt-10 ml-0 pl-0 font-robotoCondensed text-base text-color-6"><a href="*">Autenticidad</a>  &nbsp;&nbsp;-&nbsp;&nbsp;  <a href="*">Moda</a></p>
                 </div>
                 <img src="{{ asset($articleMainImage) }}" class="h-[520px] w-full border border-color-6">
