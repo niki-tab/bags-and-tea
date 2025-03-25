@@ -1,18 +1,18 @@
 <?php
 
 return [
-    'hero_title' => 'Fresh seafood and fish, straight from the ocean to your table in less than 24 hours',
-    'hero_subtitle' => 'Directly from the sea to your door at peak freshness: king crabs, oysters, scallops, and much more.',
-    'shop_now' => 'Shop Now',
+    'hero_title' => 'Vintage Brand Bags',
+    'hero_subtitle' => 'No Middlemen',
+    'shop_now' => 'Shop Now and Get 10% Off',
     'about_title' => 'About Us',
-    'about_description_1' => 'We are committed to delivering the finest seafood from the ocean directly to your home, restaurant, or market. With a focus on freshness and reliability, our innovative logistics ensure we bring high-quality national and international products in less than 24 hours.',
-    'about_description_2' => 'Enjoy the taste of the sea, always fresh and within reach!',
+    'about_description_1' => 'We are committed to bringing the best bags',
+    'about_description_2' => 'Enjoy vintage brand bags',
     'contact_us' => 'Contact Us',
     'featured_products' => 'Featured Seafood and Fish',
     'view_product' => 'View Product',
     'label-product-origin' => 'Origin:',
-    'label-product-fresh-stock' => 'Fresh Stock:',
+    'label-product-fresh-stock' => 'Stock:',
     'label-product-price-from' => 'From:',
-    'label-product-stock-available' => 'In stock',
-    'label-product-no-stock-available' => 'Out of stock',
+    'label-product-stock-available' => 'In Stock',
+    'label-product-no-stock-available' => 'Out of Stock',
 ];
