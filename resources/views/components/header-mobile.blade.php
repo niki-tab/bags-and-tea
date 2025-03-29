@@ -19,19 +19,21 @@
         </div>
         <div class="flex items-center gap-3 mt-5 mr-6">
             <a href="{{ route(app()->getLocale() === 'es' ? 'login.show.en-es' : 'login.show.en-es', ['locale' => app()->getLocale()]) }}">
-                <img src="{{ request()->routeIs('login.show.en-es') ? asset('images/icons/icon_user_avatar_header_clicked.svg') : asset('images/icons/mobile_search_icon.svg') }}" 
+                <img src="{{ request()->routeIs('login.show.en-es') ? asset('images/icons/mobile_search_icon_clicked.svg') : asset('images/icons/mobile_search_icon.svg') }}" 
                     class="w-6 h-6 cursor-pointer"
-                    onmouseover="this.src='{{ request()->routeIs('login.show.en-es') ? asset('images/icons/icon_user_avatar_header_clicked.svg') : asset('images/icons/icon_user_avatar_header_hover.svg') }}'"
-                    onmouseout="this.src='{{ request()->routeIs('login.show.en-es') ? asset('images/icons/icon_user_avatar_header_clicked.svg') : asset('images/icons/mobile_search_icon.svg') }}'">
+                    onmouseover="this.src='{{ request()->routeIs('login.show.en-es') ? asset('images/icons/mobile_search_icon_clicked.svg') : asset('images/icons/mobile_search_icon_clicked.svg') }}'"
+                    onmouseout="this.src='{{ request()->routeIs('login.show.en-es') ? asset('images/icons/mobile_search_icon_clicked.svg') : asset('images/icons/mobile_search_icon.svg') }}'">
             </a>
             <a class="mb-1" href="{{ route(app()->getLocale() === 'es' ? 'cart.edit.es' : 'cart.edit.en', ['locale' => app()->getLocale()]) }}">
-                <img src="{{ request()->routeIs('cart.edit.es') || request()->routeIs('cart.edit.en') ? asset('images/icons/icon_cart_header_clicked.svg') : asset('images/icons/mobile_cart_icon.svg') }}" 
+                <img src="{{ request()->routeIs('cart.edit.es') || request()->routeIs('cart.edit.en') ? asset('images/icons/mobile_cart_icon_clicked.svg') : asset('images/icons/mobile_cart_icon.svg') }}" 
                     class="w-8 h-8 cursor-pointer"
-                    onmouseover="this.src='{{ request()->routeIs('cart.edit.es') || request()->routeIs('cart.edit.en') ? asset('images/icons/icon_cart_header_clicked.svg') : asset('images/icons/icon_cart_header_hover.svg') }}'"
-                    onmouseout="this.src='{{ request()->routeIs('cart.edit.es') || request()->routeIs('cart.edit.en') ? asset('images/icons/icon_cart_header_clicked.svg') : asset('images/icons/mobile_cart_icon.svg') }}'">
+                    onmouseover="this.src='{{ request()->routeIs('cart.edit.es') || request()->routeIs('cart.edit.en') ? asset('images/icons/mobile_cart_icon_clicked.svg') : asset('images/icons/mobile_cart_icon_clicked.svg') }}'"
+                    onmouseout="this.src='{{ request()->routeIs('cart.edit.es') || request()->routeIs('cart.edit.en') ? asset('images/icons/mobile_cart_icon_clicked.svg') : asset('images/icons/mobile_cart_icon.svg') }}'">
             </a>
             <button id="hamburgerMenu" class="focus:outline-none">
-                <img src="{{ asset('images/icons/mobile_burguer_menu_icon.svg') }}" alt="hamburger menu" width="25">
+                <img src="{{ asset('images/icons/mobile_burguer_menu_icon.svg') }}" alt="hamburger menu" width="25"
+                onmouseover="this.src='{{ asset('images/icons/mobile_burguer_menu_icon_clicked.svg') }}'"
+                onmouseout="this.src='{{ asset('images/icons/mobile_burguer_menu_icon.svg') }}'">
             </button>
         </div>
     </div>
