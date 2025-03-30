@@ -23,37 +23,35 @@ class ShowArticle extends Component
 
     public function mount($articleSlug)
     {   
-        
         $this->lang = app()->getLocale();
-
-        $article = ArticleModel::where("slug->".$this->lang, $articleSlug)
-                                    ->first();
-
-        $this->articleModel = $article;
         
-        if($article){
+        $article = ArticleModel::where('slug', 'like', '%' . $articleSlug . '%')->first();
+
+        if ($article) {
+            $correctSlug = $article->getTranslation('slug', $this->lang);
             
+            // If current slug doesn't match the correct one, redirect
+            if ($articleSlug !== $correctSlug) {
+                return redirect()->route('article.show.' . $this->lang, [
+                    'articleSlug' => $correctSlug,
+                    'locale' => $this->lang
+                ]);
+            }
+
+            $this->articleModel = $article;
             $this->articleExists = true;
             $this->articleTitle = $article->title;
             $this->articleMainImage = $article->main_image;
             $this->articleBody = $this->removeEmptyPTags($article->body);
-
             $this->setSeo();
-
-        }else{
-
+        } else {
             $this->articleNotFoundTextTranslations = [
                 "en" => trans('components/article-show.label-article-not-found'), 
                 "es" => trans('components/article-show.label-article-not-found')
             ];
-
             $this->articleExists = false;
             $this->articleNotFoundText = $this->articleNotFoundTextTranslations[$this->lang];
-
         }
-
-
-        
     }
 
     public function updateSelectedSize($value)
