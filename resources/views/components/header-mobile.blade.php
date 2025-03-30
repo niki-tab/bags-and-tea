@@ -37,6 +37,23 @@
             </button>
         </div>
     </div>
+        
+    <div id="hamburgerMenuOptions" class="hidden bg-background-color-4 w-full py-4 mt-4">
+        <div class="relative w-4/5 mx-auto mb-4">
+            <img src="{{ asset('images/icons/vector_search_icon.svg') }}" 
+                    class="absolute left-5 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" 
+                    alt="Search Icon">
+            <input type="text" class="pl-12 placeholder:font-robotoCondensed placeholder:text-color-2  placeholder:font-light w-full p-2 bg-white text-color-2 rounded-full border border-gray-300 font-robotoCondensed" placeholder="{{ trans('components/header.placeholder-input-search-product') }}">
+        </div>
+        <div class="space-y-4 mt-8">
+            <a href="{{ route(app()->getLocale() === 'es' ? 'certify-your-bag.show.es' : 'certify-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('certify-your-bag.show.es') || request()->routeIs('certify-your-bag.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-lg hover:underline pb-2 font-robotoCondensed ml-12">{{ trans('components/header.menu-option-1') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('we-buy-your-bag.show.es') || request()->routeIs('we-buy-your-bag.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-lg hover:underline pb-2 font-robotoCondensed ml-12">{{ trans('components/header.menu-option-2') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'our-bags.show.es' : 'our-bags.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('our-bags.show.es') || request()->routeIs('our-bags.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-lg hover:underline pb-2 font-robotoCondensed ml-12">{{ trans('components/header.menu-option-3') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'about-us.show.es' : 'about-us.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('about-us.show.es') || request()->routeIs('about-us.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-lg hover:underline pb-2 font-robotoCondensed ml-12">{{ trans('components/header.menu-option-4') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'blog.show.en-es' : 'blog.show.en-es', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('blog.show.en-es') || request()->routeIs('article.show.es') || request()->routeIs('article.show.es') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-lg hover:underline pb-2 font-robotoCondensed ml-12">{{ trans('components/header.menu-option-5') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'contact.send.es' : 'contact.send.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('contact.send.es') || request()->routeIs('contact.send.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-lg hover:underline pb-2 font-robotoCondensed ml-12">{{ trans('components/header.menu-option-6') }}</a>
+        </div>
+    </div>
 </div>
 <script>
     // JavaScript to toggle the menu
@@ -48,4 +65,11 @@
             menu.classList.add('hidden');
         }
     });
+        
+    
+    document.getElementById('hamburgerMenu').addEventListener('click', function() {
+        const menu = document.getElementById('hamburgerMenuOptions');
+        menu.classList.toggle('hidden');
+    });
+
 </script>
