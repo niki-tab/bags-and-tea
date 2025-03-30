@@ -74,5 +74,28 @@ body {
     .animate-marquee {
         animation: marquee-mobile 20s linear infinite;
     }
+
+    .article-content h2 {
+        
+        font-size: 30px;
+        word-spacing: 0px; 
+        white-space: normal;
+        
+    }
+
+    .article-content h3 {
+        font-size: 26px;
+        word-spacing: 0px; 
+        white-space: normal;
+
+    }
+    .article-content h4 {
+        font-size: 22px;
+        white-space: normal;
+        
+
+    }
+    
+    
 }
 
