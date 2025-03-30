@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\WeBuyYourBagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,13 +93,9 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
         return view('pages/we_are_under_construction/show');
     })->name('our-bags.show.en')->where('locale', 'en');
 
-    Route::get('/compramos-tu-bolso', function () {
-        return view('pages/we_buy_your_bag/show');
-    })->name('we-buy-your-bag.show.es')->where('locale', 'es');
+    Route::get('/compramos-tu-bolso',[WeBuyYourBagController::class, 'index'])->name('we-buy-your-bag.show.es')->where('locale', 'es');
 
-    Route::get('/we-buy-your-bag', function () {
-        return view('pages/we_buy_your_bag/show');
-    })->name('we-buy-your-bag.show.en')->where('locale', 'en');
+    Route::get('/we-buy-your-bag',[WeBuyYourBagController::class, 'index'])->name('we-buy-your-bag.show.en')->where('locale', 'en');
 
     Route::get('/certifica-tu-bolso', function () {
         return view('pages/we_are_under_construction/show');
