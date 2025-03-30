@@ -57,11 +57,11 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
     })->name('cart.show.en')->where('locale', 'en');*/
 
     Route::get('/contacto', function () {
-        return view('pages/we_buy_your_bag/show');
+        return view('pages/we_are_under_construction/show');
     })->name('contact.send.es')->where('locale', 'es');
 
     Route::get('/contact', function () {
-        return view('pages/we_buy_your_bag/show');
+        return view('pages/we_are_under_construction/show');
     })->name('contact.send.en')->where('locale', 'en');
 
     Route::get('/blog', function () {
@@ -77,19 +77,19 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
     })->name('article.show.en')->where('locale', 'en');
 
     Route::get('/quienes-somos', function () {
-        return view('pages/we_buy_your_bag/show');
+        return view('pages/we_are_under_construction/show');
     })->name('about-us.show.es')->where('locale', 'es');
 
     Route::get('/about-us', function () {
-        return view('pages/we_buy_your_bag/show');
+        return view('pages/we_are_under_construction/show');
     })->name('about-us.show.en')->where('locale', 'en');
 
     Route::get('/nuestros-bolsos', function () {
-        return view('pages/we_buy_your_bag/show');
+        return view('pages/we_are_under_construction/show');
     })->name('our-bags.show.es')->where('locale', 'es');
 
     Route::get('/our-bags', function () {
-        return view('pages/we_buy_your_bag/show');
+        return view('pages/we_are_under_construction/show');
     })->name('our-bags.show.en')->where('locale', 'en');
 
     Route::get('/compramos-tu-bolso', function () {
@@ -101,51 +101,51 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
     })->name('we-buy-your-bag.show.en')->where('locale', 'en');
 
     Route::get('/certifica-tu-bolso', function () {
-        return view('pages/we_buy_your_bag/show');
+        return view('pages/we_are_under_construction/show');
     })->name('certify-your-bag.show.es')->where('locale', 'es');
 
     Route::get('/certify-your-bag', function () {
-        return view('pages/we_buy_your_bag/show');
+        return view('pages/we_are_under_construction/show');
     })->name('certify-your-bag.show.en')->where('locale', 'en');
 
     Route::get('/login', function () {
-        return view('pages/we_buy_your_bag/show');
+        return view('pages/we_are_under_construction/show');
     })->name('login.show.en-es')->where('locale', 'en|es');
 
     Route::get('/carrito', function () {
-        return view('pages/we_buy_your_bag/show');
+        return view('pages/we_are_under_construction/show');
     })->name('cart.edit.es')->where('locale', 'es');
 
     Route::get('/cart', function () {
-        return view('pages/we_buy_your_bag/show');
+        return view('pages/we_are_under_construction/show');
     })->name('cart.edit.en')->where('locale', 'en');
 
     Route::get('/privacidad', function () {
-        return view('pages/we_buy_your_bag/show');
+        return view('pages/we_are_under_construction/show');
     })->name('privacy.show.es')->where('locale', 'es');
 
     Route::get('/privacy', function () {
-        return view('pages/we_buy_your_bag/show');
+        return view('pages/we_are_under_construction/show');
     })->name('privacy.show.en')->where('locale', 'en');
 
     Route::get('/cookies', function () {
-        return view('pages/we_buy_your_bag/show');
+        return view('pages/we_are_under_construction/show');
     })->name('cookies.show.en-es')->where('locale', 'en|es');
 
     Route::get('/aviso-legal', function () {
-        return view('pages/we_buy_your_bag/show');
+        return view('pages/we_are_under_construction/show');
     })->name('legal-notice.show.es')->where('locale', 'es');
 
     Route::get('/legal-notice', function () {
-        return view('pages/we_buy_your_bag/show');
+        return view('pages/we_are_under_construction/show');
     })->name('legal-notice.show.en')->where('locale', 'en');
 
     Route::get('/preguntas-frecuentes', function () {
-        return view('pages/we_buy_your_bag/show');
+        return view('pages/we_are_under_construction/show');
     })->name('faq.show.es')->where('locale', 'es');
 
     Route::get('/frequently-asked-questions', function () {
-        return view('pages/we_buy_your_bag/show');
+        return view('pages/we_are_under_construction/show');
     })->name('faq.show.en')->where('locale', 'en');
     
     

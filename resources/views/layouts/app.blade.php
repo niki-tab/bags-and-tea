@@ -22,14 +22,14 @@
     @livewireStyles
     @yield('styles')
 </head>
-<body class="min-h-screen flex flex-col w-full">
+<body class="min-h-screen flex flex-col">
     @livewireScripts
     <header class="z-10">
         <x-header-desktop/>
         <x-header-mobile/>
     </header>
 
-    <main class="@yield('main-tag-class', 'bg-white')">
+    <main class="mt-32 md:mt-0 flex-grow container mx-auto z-0 pb-12 @yield('main-tag-class', 'bg-white')">
         @yield('content')
     </main>
 
