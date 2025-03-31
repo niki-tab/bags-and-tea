@@ -11,7 +11,7 @@ class WeBuyYourBagController extends Controller
     {   
 
 
-        $this->setSeo();
+        //$this->setSeo();
 
         return view('pages.we_buy_your_bag.show');
 
