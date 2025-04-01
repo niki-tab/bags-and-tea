@@ -12,8 +12,9 @@
             </a>
         </div>
         <!-- Buttons (stacked vertically) -->
-        <div class="flex flex-col items-center gap-2">
-            <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="mt-4 mr-4 px-5 py-1.5 font-robotoCondensed bg-background-color-2 text-white rounded-full text-sm font-regular hover:bg-background-color-3 transition">
+        <div class="flex flex-col gap-2 flex-grow pr-4 pt-1">
+            <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}" 
+            class="mt-4 mr-4 px-5 py-1.5 font-robotoCondensed bg-background-color-2 text-white rounded-full text-sm font-regular hover:bg-background-color-3 transition ml-auto">
                 {{ trans('components/header.button-sell-your-bag') }}
             </a>
         </div>
@@ -26,17 +27,17 @@
         </div>
     </div>
         
-    <div id="hamburgerMenuOptions" class="hidden bg-background-color-4 w-full py-4 mt-4">
-        <div class="relative w-4/5 mx-auto mb-4">
+    <div id="hamburgerMenuOptions" class="hidden bg-background-color-4 w-full pt-4 mt-4">
+        <div class="relative w-5/6 mx-auto mb-4">
             <img src="{{ asset('images/icons/vector_search_icon.svg') }}"  
                     class="absolute left-5 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" 
                     alt="Search Icon">
-            <input type="text" class="pl-12 placeholder:font-robotoCondensed placeholder:text-color-2  placeholder:font-light w-full p-2 bg-white text-color-2 rounded-full border border-gray-300 font-robotoCondensed" placeholder="{{ trans('components/header.placeholder-input-search-product') }}">
+            <input type="text" class="h-12 pl-12 placeholder:font-robotoCondensed placeholder:text-color-2  placeholder:font-light w-full p-2 bg-white text-color-2 rounded-full border border-gray-300 font-robotoCondensed" placeholder="{{ trans('components/header.placeholder-input-search-product') }}">
         </div>
         <div class="flex items-center gap-3 justify-center">
             <a target="_blank" href="https://es.vestiairecollective.com/profile/30176798/?sortBy=relevance&tab=items-for-sale">
                 <img src="{{asset('images/icons/mobile_header_instagram.svg') }}" 
-                    class="w-6 h-6 cursor-pointer"
+                    class="mt-[0.5px] w-6 h-7 cursor-pointer"
                     onmouseover="this.src='{{asset('images/icons/mobile_header_instagram_hover.svg') }}'"
                     onmouseout="this.src='{{asset('images/icons/mobile_header_instagram.svg') }}'">
             </a>
@@ -64,14 +65,17 @@
                     onmouseover="this.src='{{ request()->routeIs('cart.edit.es') || request()->routeIs('cart.edit.en') ? asset('images/icons/mobile_cart_icon_clicked_2.svg') : asset('images/icons/mobile_cart_icon_clicked.svg') }}'"
                     onmouseout="this.src='{{ request()->routeIs('cart.edit.es') || request()->routeIs('cart.edit.en') ? asset('images/icons/mobile_cart_icon_clicked_2.svg') : asset('images/icons/mobile_cart_icon.svg') }}'">
             </a>
+            <div class="ml-[-8px] mt-[2px]">
+                @livewire('shared/language-selector')
+            </div>
         </div>
-        <div class="space-y-4 mt-8">
-            <a href="{{ route(app()->getLocale() === 'es' ? 'certify-your-bag.show.es' : 'certify-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('certify-your-bag.show.es') || request()->routeIs('certify-your-bag.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-lg hover:underline pb-2 font-robotoCondensed ml-12">{{ trans('components/header.menu-option-1') }}</a>
-            <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('we-buy-your-bag.show.es') || request()->routeIs('we-buy-your-bag.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-lg hover:underline pb-2 font-robotoCondensed ml-12">{{ trans('components/header.menu-option-2') }}</a>
-            <a href="{{ route(app()->getLocale() === 'es' ? 'our-bags.show.es' : 'our-bags.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('our-bags.show.es') || request()->routeIs('our-bags.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-lg hover:underline pb-2 font-robotoCondensed ml-12">{{ trans('components/header.menu-option-3') }}</a>
-            <a href="{{ route(app()->getLocale() === 'es' ? 'about-us.show.es' : 'about-us.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('about-us.show.es') || request()->routeIs('about-us.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-lg hover:underline pb-2 font-robotoCondensed ml-12">{{ trans('components/header.menu-option-4') }}</a>
-            <a href="{{ route(app()->getLocale() === 'es' ? 'blog.show.en-es' : 'blog.show.en-es', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('blog.show.en-es') || request()->routeIs('article.show.es') || request()->routeIs('article.show.es') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-lg hover:underline pb-2 font-robotoCondensed ml-12">{{ trans('components/header.menu-option-5') }}</a>
-            <a href="{{ route(app()->getLocale() === 'es' ? 'contact.send.es' : 'contact.send.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('contact.send.es') || request()->routeIs('contact.send.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-lg hover:underline pb-2 font-robotoCondensed ml-12">{{ trans('components/header.menu-option-6') }}</a>
+        <div class="mt-6">
+            <a href="{{ route(app()->getLocale() === 'es' ? 'certify-your-bag.show.es' : 'certify-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('certify-your-bag.show.es') || request()->routeIs('certify-your-bag.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-2xl hover:underline py-4 font-robotoCondensed text-center border-b border-t border-[#E6D4CB]">{{ trans('components/header.menu-option-1') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('we-buy-your-bag.show.es') || request()->routeIs('we-buy-your-bag.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-2xl hover:underline py-4 font-robotoCondensed text-center border-b border-[#E6D4CB]">{{ trans('components/header.menu-option-2') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'our-bags.show.es' : 'our-bags.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('our-bags.show.es') || request()->routeIs('our-bags.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-2xl hover:underline py-4 font-robotoCondensed text-center border-b border-[#E6D4CB]">{{ trans('components/header.menu-option-3') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'about-us.show.es' : 'about-us.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('about-us.show.es') || request()->routeIs('about-us.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-2xl hover:underline py-4 font-robotoCondensed text-center border-b border-[#E6D4CB]">{{ trans('components/header.menu-option-4') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'blog.show.en-es' : 'blog.show.en-es', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('blog.show.en-es') || request()->routeIs('article.show.es') || request()->routeIs('article.show.es') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-2xl hover:underline py-4 font-robotoCondensed text-center border-b border-[#E6D4CB]">{{ trans('components/header.menu-option-5') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'contact.send.es' : 'contact.send.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('contact.send.es') || request()->routeIs('contact.send.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-2xl hover:underline py-4 font-robotoCondensed text-center border-b border-[#E6D4CB]">{{ trans('components/header.menu-option-6') }}</a>
         </div>
     </div>
 </div>
