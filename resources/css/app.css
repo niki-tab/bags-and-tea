@@ -4,10 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
-
-body {
-    font-family: 'Merriweather', serif;
+@font-face {
+    font-family: 'Lovera';
+    src: url('@/fonts/LoveraPersonalUse.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
+
 
 @layer components {
     .article-content p {

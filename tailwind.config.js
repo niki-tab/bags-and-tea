@@ -35,6 +35,7 @@ export default {
       fontFamily: {
         serif: ['Merriweather', 'serif'],
         robotoCondensed: ['"Roboto Condensed"', 'sans-serif'],
+        lovera: ['Lovera', 'sans-serif'],
       },
     },
   },
