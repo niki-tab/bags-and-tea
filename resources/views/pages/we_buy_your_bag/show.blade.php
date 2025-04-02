@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="py-8 md:py-16 bg-[#F8F3F0]">
-        <h2 class="text-center text-3xl md:text-4xl mb-8 md:mb-14 font-['Lovera']">COMPRAMOS TU BOLSO DE LUJO</h2>
+        <h2 class="text-center text-2xl md:text-4xl mb-8 md:mb-14 font-['Lovera']">COMPRAMOS TU BOLSO DE LUJO</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-7xl mx-auto mb-4 px-4 md:px-0">
             <div class="bg-[#E3D4CB] text-center h-32 md:h-40">
                 <img src="{{ asset('images/we_buy_your_bag/Hermes.svg') }}" alt="Luxury Hermes Bag" 
