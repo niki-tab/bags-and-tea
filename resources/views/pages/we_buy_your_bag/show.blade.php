@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-<meta name="robots" content="noindex, nofollow" />
-
 @section('content')
 
 <div class="w-full">
