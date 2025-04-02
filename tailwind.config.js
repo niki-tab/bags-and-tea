@@ -36,6 +36,7 @@ export default {
         serif: ['Merriweather', 'serif'],
         robotoCondensed: ['"Roboto Condensed"', 'sans-serif'],
         lovera: ['Lovera', 'sans-serif'],
+        lovelyna: ['Lovelina', 'sans-serif'],
       },
     },
   },

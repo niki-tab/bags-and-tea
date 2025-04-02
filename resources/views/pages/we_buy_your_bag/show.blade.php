@@ -60,85 +60,111 @@
             </div>
         </div>
     </div>
-    <div class="bg-[#C8928A] text-white py-12 pb-14 text-center">
-        <h2 class="text-center text-4xl font-regular font-['Lovera']">ES MUY SENCILLO</h2>
-        <div class="grid grid-cols-3 gap-8 max-w-7xl mx-auto">
-            <div class="text-center">
+    <div class="bg-[#C8928A] text-white pb-14 text-center">
+        <h2 class="relative top-12 text-center text-4xl font-regular font-['Lovera']">ES MUY SENCILLO</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 max-w-7xl mx-auto px-4 md:px-0">
+            <div class="text-center relative">
                 <div class="flex">
-                    <span class="text-[245px] text-[#482626]">1</span>
-                    <h3 class="text-robotoCondensed font-regular text-4xl w-1/2 text-left mt-32">Busca ese bolso que ya no usas</h3>
+                    <span class="text-[245px] text-[#482626] font-['Lovelina'] relative bottom-[44px]">1</span>
+                    <h3 class="text-robotoCondensed font-regular text-4xl w-1/2 text-left mt-28">
+                        Busca ese bolso que ya no usas
+                    </h3>
                 </div>
-                <p class="text-left text-[#482626] font-robotoCondensed font-regular relative top-[-60px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras dignissim, lectus ut bibendum dignissim, erat lorem scelerisque mauris, eu ultricies nibh dolor eget libero. In sagittis lorem sem, a sollicitudin mauris laoreet eu. Suspendisse efficitur nisl sagittis, vehicula eros non, scelerisque orci. Suspendisse scelerisque et tellus non rutrum.</p>
+                <p class="text-left text-[#482626] font-robotoCondensed font-regular relative bottom-[110px]">
+                    ¿Tienes un bolso de marca que ya no usas? Es el momento perfecto para darle una nueva vida. En B&T te lo ponemos fácil: busca esa pieza especial en tu armario y contacta con nosotros. Estaremos encantados de ayudarte a venderlo de forma segura, rápida y con la discreción que mereces.
+                </p>
             </div>
+
             <div class="text-center">
                 <div class="flex">
-                    <span class="text-[245px] text-[#482626]">2</span>
-                    <h3 class="text-robotoCondensed font-regular text-4xl w-1/2 text-left mt-32">Envíanos fotos y toda su historia</h3>
+                    <span class="text-[245px] text-[#482626] font-['Lovelina'] relative bottom-[44px]">2</span>
+                    <h3 class="text-robotoCondensed font-regular text-4xl w-1/2 text-left mt-28">
+                        Envíanos fotos y toda su historia
+                    </h3>
                 </div>
-                <p class="text-left text-[#482626] font-robotoCondensed font-regular relative top-[-60px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras dignissim, lectus ut bibendum dignissim, erat lorem scelerisque mauris, eu ultricies nibh dolor eget libero. In sagittis lorem sem, a sollicitudin mauris laoreet eu. Suspendisse efficitur nisl sagittis, vehicula eros non, scelerisque orci. Suspendisse scelerisque et tellus non rutrum.</p>
+                <p class="text-left text-[#482626] font-robotoCondensed font-regular relative bottom-[110px]">
+                    Envíanos fotos del bolso desde distintos ángulos: frontal, trasera, base, interior y detalles clave. Cuanta más información tengamos, mejor. Y si puedes, cuéntanos su historia: dónde lo compraste, cómo lo has cuidado o si tiene algún detalle especial. Cada bolso tiene un pasado, y nos encanta conocerlo para valorarlo como merece.
+                </p>
             </div>
+
             <div class="text-center">
                 <div class="flex">
-                    <span class="text-[245px] text-[#482626]">3</span>
-                    <h3 class="text-robotoCondensed font-regular text-4xl w-1/2 text-left mt-32">¡Te compramos tu bolso!</h3>
+                    <span class="text-[245px] text-[#482626] font-['Lovelina'] relative bottom-[44px]">3</span>
+                    <h3 class="text-robotoCondensed font-regular text-4xl w-1/2 text-left mt-28">
+                        ¡Te compramos tu bolso!
+                    </h3>
                 </div>
-                <p class="text-left text-[#482626] font-robotoCondensed font-regular relative top-[-60px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras dignissim, lectus ut bibendum dignissim, erat lorem scelerisque mauris, eu ultricies nibh dolor eget libero. In sagittis lorem sem, a sollicitudin mauris laoreet eu. Suspendisse efficitur nisl sagittis, vehicula eros non, scelerisque orci. Suspendisse scelerisque et tellus non rutrum.</p>
+                <p class="text-left text-[#482626] font-robotoCondensed font-regular relative bottom-[110px]">
+                    Una vez recibamos las fotos y detalles, nos encargamos de todo. Nuestro equipo evaluará tu bolso con el máximo rigor y, si encaja en nuestra selección, te haremos una propuesta de compra justa y transparente. Sin complicaciones, sin esperas innecesarias. Así de fácil: tú nos contactas, y nosotros hacemos el resto.
+                </p>
             </div>
         </div>
-        <button class="mt-8 bg-black text-white px-12 py-3 rounded-full font-medium mx-auto">Ir al formulario &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;></button>
+        <button class="bg-black text-white px-12 py-3 rounded-full font-medium mx-auto">Ir al formulario &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;></button>
         
     </div>
         <!-- FAQs Section -->
         <div class="bg-[#3A1515] text-white py-12">
         <h2 class="text-center text-4xl font-regular mb-8">FAQs</h2>
-        <div class="max-w-7xl mx-auto space-y-4 pb-10">
-            <div class="grid grid-cols-2 gap-6 gap-x-32 max-w-8xl mx-auto mb-4 mt-12 w-full">
-                <div>
-                    <details class="pb-6 border-b border-white">
-                        <summary class="cursor-pointer">FAQ Question 1</summary>
+        <div class="max-w-7xl mx-auto space-y-4 pb-10 px-4 md:px-0">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 gap-x-32 max-w-8xl mx-auto mb-4 mt-12 w-full">
+            <div class="md:col-span-1">
+                    <details class="pb-4 md:pb-6 border-b border-white">
+                        <summary class="cursor-pointer">¿Qué marcas de bolsos compráis?</summary>
+                        <p class="mt-2">Compramos bolsos de Chanel, Hermès, Louis Vuitton, Dior, Saint Laurent, Fendi, Loewe, Prada, Gucci, Balenciaga, Céline, Bottega Veneta y Polène. Estas son las marcas en las que somos expertos. Siempre estamos evolucionando, y esperamos poder ampliar esta lista en el futuro.</p>
+                    </details>  
+                </div>
+                <div class="md:col-span-1">
+                    <details class="pb-4 md:pb-6 border-b border-white">
+                        <summary class="cursor-pointer">¿Cómo tasáis los bolsos para la compra?</summary>
+                        <p class="mt-2">Valoramos cada bolso en función del estado, año de fabricación, marca, y si incluye funda, caja o factura original. También tenemos en cuenta las fotos que nos envías. A partir de ahí, comparamos con precios reales de venta en nuestras fuentes especializadas y realizamos una tasación ajustada al mercado actual.</p>
+                    </details>  
+                </div>
+                <div class="md:col-span-1">
+                    <details class="pb-4 md:pb-6 border-b border-white">
+                        <summary class="cursor-pointer">¿Qué fotos necesitáis para llevar a cabo vuestra tasación?</summary>
+                        <p class="mt-2">Necesitamos una foto frontal del bolso, una de la etiqueta interior, una del logo o marca, y fotos de los grabados en los herrajes (como cremalleras, hebillas, adornos,…). También puedes añadir imágenes de cualquier imperfección, daño o detalle que consideres relevante a la hora de llevar a cabo la tasación</p>
+                    </details>  
+                </div>
+                <div class="md:col-span-1">
+                    <details class="pb-4 md:pb-6 border-b border-white">
+                        <summary class="cursor-pointer">¿Cuánto tardáis en hacer una oferta? ¿Y cuánto tiempo tarda en completarse la venta?</summary>
+                        <p class="mt-2">Respondemos lo antes posible para confirmar que estamos analizando tu bolso, y la oferta suele enviarse en un plazo de 24 a 72 horas. Desde el primer contacto hasta la compra, el proceso completo puede durar entre 5 y 7 días.</p>
+                    </details>  
+                </div>
+                <div class="md:col-span-1">
+                    <details class="pb-4 md:pb-6 border-b border-white">
+                        <summary class="cursor-pointer">¿Aceptáis bolsos con signos de uso o pequeñas imperfecciones?</summary>
+                        <p class="mt-2">Sí, aceptamos bolsos con signos de uso, siempre que estén en buen estado general. Eso sí, las imperfecciones pueden afectar al valor final de la tasación.</p>
+                    </details>  
+                </div>
+                <div class="md:col-span-1">
+                    <details class="pb-4 md:pb-6 border-b border-white">
+                        <summary class="cursor-pointer">¿Puedo vender un bolso aunque no tenga la factura o el packaging original?</summary>
+                        <p class="mt-2">Sí, puedes venderlo siempre que sea un bolso auténtico. Realizaremos las verificaciones necesarias para confirmar su autenticidad. Aunque no es obligatorio, contar con la factura o el packaging original facilita el proceso y puede aumentar el valor de la tasación.</p>
+                    </details>  
+                </div>
+                <div class="md:col-span-1">
+                    <details class="pb-4 md:pb-6 border-b border-white">
+                        <summary class="cursor-pointer">Si acepto vuestra oferta, ¿cómo se realiza el pago?</summary>
                         <p class="mt-2">Answer to FAQ 1</p>
                     </details>  
                 </div>
-                <div>
-                    <details class="pb-6 border-b border-white">
-                        <summary class="cursor-pointer">FAQ Question 1</summary>
+                <div class="md:col-span-1">
+                    <details class="pb-4 md:pb-6 border-b border-white">
+                        <summary class="cursor-pointer">¿Tenéis servicio de recogida o tengo que enviarlo yo?</summary>
                         <p class="mt-2">Answer to FAQ 1</p>
                     </details>  
                 </div>
-                <div>
-                    <details class="pb-6 border-b border-white">
-                        <summary class="cursor-pointer">FAQ Question 1</summary>
-                        <p class="mt-2">Answer to FAQ 1</p>
+                <div class="md:col-span-1">
+                    <details class="pb-4 md:pb-6 border-b border-white">
+                        <summary class="cursor-pointer">¿Puedo vender más de un bolso a la vez?</summary>
+                        <p class="mt-2">Sí, puedes vender todos los bolsos que desees. Cada uno será verificado individualmente para asegurar su autenticidad antes de proceder con la compra.</p>
                     </details>  
                 </div>
-                <div>
-                    <details class="pb-6 border-b border-white">
-                        <summary class="cursor-pointer">FAQ Question 1</summary>
-                        <p class="mt-2">Answer to FAQ 1</p>
-                    </details>  
-                </div>
-                <div>
-                    <details class="pb-6 border-b border-white">
-                        <summary class="cursor-pointer">FAQ Question 1</summary>
-                        <p class="mt-2">Answer to FAQ 1</p>
-                    </details>  
-                </div>
-                <div>
-                    <details class="pb-6 border-b border-white">
-                        <summary class="cursor-pointer">FAQ Question 1</summary>
-                        <p class="mt-2">Answer to FAQ 1</p>
-                    </details>  
-                </div>
-                <div>
-                    <details class="pb-6 border-b border-white">
-                        <summary class="cursor-pointer">FAQ Question 1</summary>
-                        <p class="mt-2">Answer to FAQ 1</p>
-                    </details>  
-                </div>
-                <div>
-                    <details class="pb-6 border-b border-white">
-                        <summary class="cursor-pointer">FAQ Question 1</summary>
-                        <p class="mt-2">Answer to FAQ 1</p>
+                <div class="md:col-span-1">
+                    <details class="pb-4 md:pb-6 border-b border-white">
+                    <summary class="cursor-pointer">Si tengo dudas durante el proceso de venta, ¿a quién me dirijo?</summary>
+                        <p class="mt-2">Puedes contactarnos tanto por email como por WhatsApp, como te resulte más cómodo. Estaremos encantados de ayudarte y responder a todas tus preguntas.</p>
                     </details>  
                 </div>
             </div>
