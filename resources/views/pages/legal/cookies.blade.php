@@ -2,7 +2,7 @@
 <meta name="robots" content="noindex, nofollow" />
 @section('content')
 <div class="flex items-center justify-center mt-10">
-    <div class="text-left font-robotoCondensed text-xl w-2/3 space-y-4 my-4">
+    <div class="text-left font-robotoCondensed text-xl w-5/6 space-y-4 my-4">
         <h2 class="font-bold text-4xl">{{ __('pages/cookies.title') }}</h2>
         <div class="py-1"></div>
         <h3 class="font-bold">{{ __('pages/cookies.section-1-title') }}</h3>
