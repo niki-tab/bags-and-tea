@@ -2,10 +2,11 @@
 <meta name="robots" content="noindex, nofollow" />
 @section('content')
 <div class="flex items-center justify-center mt-10">
-    <div class="text-left font-robotoCondensed text-xl w-2/3 space-y-4">
+    <div class="text-left font-robotoCondensed text-xl w-2/3 space-y-4 my-4">
 
-        <h2 class="font-bold">{{ __('pages/policy.title') }}</h2>
-        <p>{{ __('pages/policy.intro') }}</p>
+        <h2 class="font-bold text-4xl">{{ __('pages/policy.title') }}</h2>
+        <div class="py-1"></div>
+        <p class="">{{ __('pages/policy.intro') }}</p>
 
         <h3 class="font-bold">{{ __('pages/policy.section-1-title') }}</h3>
         <p>{{ __('pages/policy.section-1-text-1') }}</p>
