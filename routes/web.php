@@ -118,23 +118,23 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
     })->name('cart.edit.en')->where('locale', 'en');
 
     Route::get('/privacidad', function () {
-        return view('pages/we_are_under_construction/show');
+        return view('pages/legal/policy');
     })->name('privacy.show.es')->where('locale', 'es');
 
     Route::get('/privacy', function () {
-        return view('pages/we_are_under_construction/show');
+        return view('pages/legal/policy');
     })->name('privacy.show.en')->where('locale', 'en');
 
     Route::get('/cookies', function () {
-        return view('pages/we_are_under_construction/show');
+        return view('pages/legal/cookies');
     })->name('cookies.show.en-es')->where('locale', 'en|es');
 
     Route::get('/aviso-legal', function () {
-        return view('pages/we_are_under_construction/show');
+        return view('pages/legal/legal');
     })->name('legal-notice.show.es')->where('locale', 'es');
 
     Route::get('/legal-notice', function () {
-        return view('pages/we_are_under_construction/show');
+        return view('pages/legal/legal');
     })->name('legal-notice.show.en')->where('locale', 'en');
 
     Route::get('/preguntas-frecuentes', function () {
