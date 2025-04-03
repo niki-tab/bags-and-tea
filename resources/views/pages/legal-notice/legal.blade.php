@@ -1,7 +1,7 @@
 @extends('layouts.app')
 <meta name="robots" content="noindex, nofollow" />
 @section('content')
-<div class="flex items-center justify-center mt-16">
+<div class="flex items-center justify-center mt-10">
     <div class="text-left font-robotoCondensed text-xl w-2/3 space-y-4">
 
         <h2 class="font-bold">{{ __('pages/legal.title') }}</h2>
