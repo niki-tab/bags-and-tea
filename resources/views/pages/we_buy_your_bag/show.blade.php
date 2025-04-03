@@ -170,5 +170,43 @@
             <!-- Repeat for other FAQs -->
         </div>
     </div>
+
+     <!-- Sell Your Bag Section -->
+     <div>
+        <div class="bg-[#F6F0ED] py-8">
+        </div>
+        <div class="relative">
+        <!-- Top half background -->
+        <div class="absolute top-0 left-0 right-0 h-3/4 bg-[#DEA3A5]"></div>
+        <!-- Bottom half background -->
+        <div class="absolute bottom-0 left-0 right-0 h-1/4 bg-[#F6F0ED]"></div>
+        
+        <!-- Content -->
+        <div class="relative z-10">
+            <div class="max-w-7xl">
+                <div class="flex flex-col md:flex-row items-center">
+                    <!-- Image Section -->
+                    <div class="w-full md:w-4/5 pt-8">
+                        <img src="{{ asset('images/we_buy_your_bag/lv-bag-we-buy-your-bags.svg') }}" 
+                            alt="Louis Vuitton Bag" 
+                            class="w-full">
+                    </div>
+                    
+                    <!-- Text Section -->
+                    <div class="w-full md:w-[60%] bg-white p-8 md:p-12 relative md:bottom-[269px] md:left-[8%] bg-[#F6F0ED] border-l-[12px] border-b-[12px] border-[#BE6F62]">
+                        <h2 class="text-3xl md:text-4xl font-['Lovera'] text-[#3A1515] mb-6">
+                            VENDE TU BOLSO DE MARCA
+                        </h2>
+                        <p class="text-[#3A1515] mb-6">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras dignissim, lectus ut bibendum dignissim, erat lorem scelerisque mauris, eu ultricies nibh dolor eget libero. In sagittis lorem sem.
+                        </p>
+                        <p class="text-[#3A1515] font-medium">
+                            También puedes enviarnos toda la información del bolso vía WhatsApp al número: +34 222 333 444
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
