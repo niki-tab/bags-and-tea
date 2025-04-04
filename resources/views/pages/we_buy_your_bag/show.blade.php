@@ -102,7 +102,7 @@
     </div>
         <!-- FAQs Section -->
         <div class="bg-[#3A1515] text-white py-12">
-        <h2 class="text-center text-4xl font-regular mb-8">FAQs</h2>
+        <h2 class="text-center text-4xl font-regular mb-8">FAQs sobre la venta de bolsos de lujo en Bags and Tea</h2>
         <div class="max-w-7xl mx-auto space-y-4 pb-10 px-4 md:px-0">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 gap-x-32 max-w-8xl mx-auto mb-4 mt-12 w-full">
             <div class="md:col-span-1">
