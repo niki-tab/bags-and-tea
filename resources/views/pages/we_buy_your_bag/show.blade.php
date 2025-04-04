@@ -59,7 +59,7 @@
         </div>
     </div>
     <div class="bg-[#C8928A] text-white pb-14 text-center">
-        <h2 class="relative top-12 text-center text-4xl font-regular font-['Lovera']">ES MUY SENCILLO</h2>
+        <h2 class="relative top-12 text-center text-4xl font-regular font-['Lovera']">¿Cómo vender tu bolso de lujo? Es muy fácil</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 max-w-7xl mx-auto px-4 md:px-0">
             <div class="text-center relative">
                 <div class="flex">
