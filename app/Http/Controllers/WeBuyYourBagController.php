@@ -20,7 +20,8 @@ class WeBuyYourBagController extends Controller
     public function setSeo(){
 
         seo()
-        ->title(trans('pages/we-buy-your-bag.page-seo-title'), env('APP_NAME'));
+        ->title(trans('pages/we-buy-your-bag.page-seo-title'), env('APP_NAME'))
+        ->description(trans('pages/we-buy-your-bag.page-seo-description'));
         
     }
 
