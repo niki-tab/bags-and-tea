@@ -107,61 +107,61 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 gap-x-32 max-w-8xl mx-auto mb-4 mt-12 w-full">
             <div class="md:col-span-1">
                     <details class="pb-4 md:pb-6 border-b border-white">
-                        <summary class="cursor-pointer">¿Qué marcas de bolsos compráis?</summary>
+                        <summary class="cursor-pointer"><h3 class="">¿Qué marcas de bolsos compráis?</h3></summary>
                         <p class="mt-2">Compramos bolsos de Chanel, Hermès, Louis Vuitton, Dior, Saint Laurent, Fendi, Loewe, Prada, Gucci, Balenciaga, Céline, Bottega Veneta y Polène. Estas son las marcas en las que somos expertos. Siempre estamos evolucionando, y esperamos poder ampliar esta lista en el futuro.</p>
                     </details>  
                 </div>
                 <div class="md:col-span-1">
                     <details class="pb-4 md:pb-6 border-b border-white">
-                        <summary class="cursor-pointer">¿Cómo tasáis los bolsos para la compra?</summary>
+                        <summary class="cursor-pointer"><h3 class="">¿Cómo tasáis los bolsos para la compra?</h3></summary>
                         <p class="mt-2">Valoramos cada bolso en función del estado, año de fabricación, marca, y si incluye funda, caja o factura original. También tenemos en cuenta las fotos que nos envías. A partir de ahí, comparamos con precios reales de venta en nuestras fuentes especializadas y realizamos una tasación ajustada al mercado actual.</p>
                     </details>  
                 </div>
                 <div class="md:col-span-1">
                     <details class="pb-4 md:pb-6 border-b border-white">
-                        <summary class="cursor-pointer">¿Qué fotos necesitáis para llevar a cabo vuestra tasación?</summary>
+                        <summary class="cursor-pointer"><h3 class="">¿Qué fotos necesitáis para llevar a cabo vuestra tasación?</h3></summary>
                         <p class="mt-2">Necesitamos una foto frontal del bolso, una de la etiqueta interior, una del logo o marca, y fotos de los grabados en los herrajes (como cremalleras, hebillas, adornos,…). También puedes añadir imágenes de cualquier imperfección, daño o detalle que consideres relevante a la hora de llevar a cabo la tasación</p>
                     </details>  
                 </div>
                 <div class="md:col-span-1">
                     <details class="pb-4 md:pb-6 border-b border-white">
-                        <summary class="cursor-pointer">¿Cuánto tardáis en hacer una oferta? ¿Y cuánto tiempo tarda en completarse la venta?</summary>
+                        <summary class="cursor-pointer"><h3 class="">¿Cuánto tardáis en hacer una oferta? ¿Y cuánto tiempo tarda en completarse la venta?</h3></summary>
                         <p class="mt-2">Respondemos lo antes posible para confirmar que estamos analizando tu bolso, y la oferta suele enviarse en un plazo de 24 a 72 horas. Desde el primer contacto hasta la compra, el proceso completo puede durar entre 5 y 7 días.</p>
                     </details>  
                 </div>
                 <div class="md:col-span-1">
                     <details class="pb-4 md:pb-6 border-b border-white">
-                        <summary class="cursor-pointer">¿Aceptáis bolsos con signos de uso o pequeñas imperfecciones?</summary>
+                        <summary class="cursor-pointer"><h3 class="">¿Aceptáis bolsos con signos de uso o pequeñas imperfecciones?</h3></summary>
                         <p class="mt-2">Sí, aceptamos bolsos con signos de uso, siempre que estén en buen estado general. Eso sí, las imperfecciones pueden afectar al valor final de la tasación.</p>
                     </details>  
                 </div>
                 <div class="md:col-span-1">
                     <details class="pb-4 md:pb-6 border-b border-white">
-                        <summary class="cursor-pointer">¿Puedo vender un bolso aunque no tenga la factura o el packaging original?</summary>
+                        <summary class="cursor-pointer"><h3 class="">¿Puedo vender un bolso aunque no tenga la factura o el packaging original?</h3></summary>
                         <p class="mt-2">Sí, puedes venderlo siempre que sea un bolso auténtico. Realizaremos las verificaciones necesarias para confirmar su autenticidad. Aunque no es obligatorio, contar con la factura o el packaging original facilita el proceso y puede aumentar el valor de la tasación.</p>
                     </details>  
                 </div>
                 <div class="md:col-span-1">
                     <details class="pb-4 md:pb-6 border-b border-white">
-                        <summary class="cursor-pointer">Si acepto vuestra oferta, ¿cómo se realiza el pago?</summary>
+                        <summary class="cursor-pointer"><h3 class="">Si acepto vuestra oferta, ¿cómo se realiza el pago?</h3></summary>
                         <p class="mt-2">Answer to FAQ 1</p>
                     </details>  
                 </div>
                 <div class="md:col-span-1">
                     <details class="pb-4 md:pb-6 border-b border-white">
-                        <summary class="cursor-pointer">¿Tenéis servicio de recogida o tengo que enviarlo yo?</summary>
+                        <summary class="cursor-pointer"><h3 class="">¿Tenéis servicio de recogida o tengo que enviarlo yo?</h3></summary>
                         <p class="mt-2">Answer to FAQ 1</p>
                     </details>  
                 </div>
                 <div class="md:col-span-1">
                     <details class="pb-4 md:pb-6 border-b border-white">
-                        <summary class="cursor-pointer">¿Puedo vender más de un bolso a la vez?</summary>
+                        <summary class="cursor-pointer"><h3 class="">¿Puedo vender más de un bolso a la vez?</h3></summary>
                         <p class="mt-2">Sí, puedes vender todos los bolsos que desees. Cada uno será verificado individualmente para asegurar su autenticidad antes de proceder con la compra.</p>
                     </details>  
                 </div>
                 <div class="md:col-span-1">
                     <details class="pb-4 md:pb-6 border-b border-white">
-                    <summary class="cursor-pointer">Si tengo dudas durante el proceso de venta, ¿a quién me dirijo?</summary>
+                        <summary class="cursor-pointer"><h3 class="">Si tengo dudas durante el proceso de venta, ¿a quién me dirijo?</h3></summary>
                         <p class="mt-2">Puedes contactarnos tanto por email como por WhatsApp, como te resulte más cómodo. Estaremos encantados de ayudarte y responder a todas tus preguntas.</p>
                     </details>  
                 </div>
