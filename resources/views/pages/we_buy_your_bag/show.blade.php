@@ -198,10 +198,7 @@
                             VENDE TU BOLSO DE MARCA
                         </h2>
                         <p class="text-[#3A1515] mb-6">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras dignissim, lectus ut bibendum dignissim, erat lorem scelerisque mauris, eu ultricies nibh dolor eget libero. In sagittis lorem sem.
-                        </p>
-                        <p class="text-[#3A1515] font-medium">
-                            También puedes enviarnos toda la información del bolso vía WhatsApp al número: +34 222 333 444
+                            No esperes más y vende ese bolso de marca que llevas tiempo queriendo dejar ir. Rellena el formulario o, si lo prefieres, escríbenos directamente por WhatsApp al +34XXXXXXXXX. Estamos aquí para ayudarte a darle una nueva vida a esa pieza especial, de forma rápida, segura y sin complicaciones.
                         </p>
                     </div>
                 </div>
