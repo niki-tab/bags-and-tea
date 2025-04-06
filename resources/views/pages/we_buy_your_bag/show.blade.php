@@ -59,40 +59,39 @@
         </div>
     </div>
     <div class="bg-[#C8928A] text-white pb-14 text-center">
-        <h2 class="relative top-12 text-center text-4xl font-regular font-['Lovera']">¿Cómo vender tu bolso de lujo? Es muy fácil</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 max-w-7xl mx-auto px-4 md:px-0">
-            <div class="text-center relative">
-                <div class="flex">
-                    <span class="text-[245px] text-[#482626] font-['Lovelina'] relative bottom-[44px]">1</span>
-                    <h3 class="text-robotoCondensed font-regular text-4xl w-1/2 text-left mt-28">
+        <h2 class="mx-4 relative top-12 text-center text-4xl font-regular font-['Lovera']">¿Cómo vender tu bolso de lujo? Es muy fácil</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 md:px-16 py-12 md:py-4 md:h-[500px]">
+            <!-- First item -->
+            <div class="text-center md:text-left mx-8 md:mx-0">
+                <div class="flex items-start gap-4">
+                    <span class="text-[180px] md:text-[245px] text-[#482626] font-['Lovelina'] leading-none">1</span>
+                    <h3 class="text-3xl md:text-4xl text-robotoCondensed font-regular mt-[70px] md:mt-28 w-3/4 md:w-full">
                         Busca ese bolso que ya no usas
                     </h3>
                 </div>
-                <p class="text-left text-[#482626] font-robotoCondensed font-regular relative bottom-[110px]">
+                <p class="text-left text-[#482626] font-robotoCondensed font-regular mt-4 md:mt-[-60px] pt-0 md:pt-20">
                     ¿Tienes un bolso de marca que ya no usas? Es el momento perfecto para darle una nueva vida. En B&T te lo ponemos fácil: busca esa pieza especial en tu armario y contacta con nosotros. Estaremos encantados de ayudarte a venderlo de forma segura, rápida y con la discreción que mereces.
                 </p>
             </div>
-
-            <div class="text-center">
-                <div class="flex">
-                    <span class="text-[245px] text-[#482626] font-['Lovelina'] relative bottom-[44px]">2</span>
-                    <h3 class="text-robotoCondensed font-regular text-4xl w-1/2 text-left mt-28">
+            <div class="text-center md:text-left mx-8 md:mx-0">
+                <div class="flex items-start gap-4">
+                    <span class="text-[180px] md:text-[245px] text-[#482626] font-['Lovelina'] leading-none">2</span>
+                    <h3 class="text-3xl md:text-4xl text-robotoCondensed font-regular mt-[70px] md:mt-28 w-3/4 md:w-full">
                         Envíanos fotos y toda su historia
                     </h3>
                 </div>
-                <p class="text-left text-[#482626] font-robotoCondensed font-regular relative bottom-[110px]">
+                <p class="text-left text-[#482626] font-robotoCondensed font-regular mt-4 md:mt-[-60px] pt-0 md:pt-20">
                     Envíanos fotos del bolso desde distintos ángulos: frontal, trasera, base, interior y detalles clave. Cuanta más información tengamos, mejor. Y si puedes, cuéntanos su historia: dónde lo compraste, cómo lo has cuidado o si tiene algún detalle especial. Cada bolso tiene un pasado, y nos encanta conocerlo para valorarlo como merece.
                 </p>
             </div>
-
-            <div class="text-center">
-                <div class="flex">
-                    <span class="text-[245px] text-[#482626] font-['Lovelina'] relative bottom-[44px]">3</span>
-                    <h3 class="text-robotoCondensed font-regular text-4xl w-1/2 text-left mt-28">
+            <div class="text-center md:text-left mx-8 md:mx-0">
+                <div class="flex items-start gap-4">
+                    <span class="text-[180px] md:text-[245px] text-[#482626] font-['Lovelina'] leading-none">3</span>
+                    <h3 class="text-3xl md:text-4xl text-robotoCondensed font-regular mt-[70px] md:mt-28 w-3/4 md:w-full">
                         ¡Te compramos tu bolso!
                     </h3>
                 </div>
-                <p class="text-left text-[#482626] font-robotoCondensed font-regular relative bottom-[110px]">
+                <p class="text-left text-[#482626] font-robotoCondensed font-regular mt-4 md:mt-[-60px] pt-0 md:pt-20">
                     Una vez recibamos las fotos y detalles, nos encargamos de todo. Nuestro equipo evaluará tu bolso con el máximo rigor y, si encaja en nuestra selección, te haremos una propuesta de compra justa y transparente. Sin complicaciones, sin esperas innecesarias. Así de fácil: tú nos contactas, y nosotros hacemos el resto.
                 </p>
             </div>
@@ -100,6 +99,7 @@
         <button class="bg-black text-white px-12 py-3 rounded-full font-medium mx-auto">Ir al formulario &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;></button>
         
     </div>
+
         <!-- FAQs Section -->
         <div class="bg-[#3A1515] text-white py-12">
         <h2 class="text-center text-4xl font-regular mb-8">FAQs sobre la venta de bolsos de lujo en Bags and Tea</h2>
