@@ -157,7 +157,7 @@
                     </div>
                     
                     <!-- Text Section -->
-                    <div class="w-full md:w-[60%] bg-white p-8 md:p-12 relative md:bottom-[269px] md:left-[8%] bg-[#F6F0ED] border-l-[12px] border-b-[12px] border-[#BE6F62]">
+                    <div class="w-full md:w-[60%] bg-white p-8 md:p-12 relative bottom-[190px] md:bottom-[269px] md:left-[8%] bg-[#F6F0ED] border-l-[12px] border-b-[12px] border-[#BE6F62]">
                         <h2 class="text-3xl md:text-4xl font-['Lovera'] text-[#3A1515] mb-6">
                             {{ trans('pages/we-buy-your-bag.final_section_title') }}
                         </h2>
