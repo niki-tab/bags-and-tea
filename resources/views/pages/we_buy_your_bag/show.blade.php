@@ -99,7 +99,20 @@
         <button class="bg-black text-white px-12 py-3 rounded-full font-medium mx-auto">{{ trans('pages/we-buy-your-bag.hero_button') }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;></button>
         
     </div>
-
+    <div class="bg-[#F8F3F0] py-20">
+        <div class="w-full md:w-full mx-auto bg-[#F8F3F0] relative">
+            <div class="absolute bg-[#F8F3F0] p-4 w-2/5 left-52 top-16">
+                <h2 class="text-center mx-auto w-1/2 font-['Lovera'] text-4xl text-[#482626]">{{ trans('pages/we-buy-your-bag.why_bag_question') }}</h2>
+                <p class="mx-auto w-full text-[#482626] text-robotoCondensed mt-4">{{ trans('pages/we-buy-your-bag.why_bag_answer') }}</p>
+            </div>
+            <div class="flex justify-end mr-56"> <!-- Added this container -->
+                <img src="{{ asset('images/we_buy_your_bag/group-142.svg') }}" 
+                    alt="YSL bag" 
+                    class="w-3/5"> <!-- Optional: adjust width as needed -->
+            </div>
+        </div>
+    </div>
+    </div>
         <!-- FAQs Section -->
         <div class="bg-[#3A1515] text-white py-12">
         <h2 class="mx-6 text-center text-4xl font-regular mb-10 md:mb-20 font-['Lovera']">{{ trans('pages/we-buy-your-bag.faq_title') }}</h2>

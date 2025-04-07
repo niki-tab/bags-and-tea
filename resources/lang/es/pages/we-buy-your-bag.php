@@ -21,6 +21,12 @@ return [
     'step_3_title' => '¡Te compramos tu bolso!',
     'step_3_description' => 'Una vez recibamos las fotos y detalles, nos encargamos de todo. Nuestro equipo evaluará tu bolso con el máximo rigor y, si encaja en nuestra selección, te haremos una propuesta de compra justa y transparente. Sin complicaciones, sin esperas innecesarias. Así de fácil: tú nos contactas, y nosotros hacemos el resto.',
     
+    'why_bag_question' => '¿Por qué compramos tu bolso?',
+    'why_bag_answer' => 'Compramos tu bolso porque somos una plataforma de artículos de lujo que se especializa en la compra y venta de artículos exclusivos. Ofrecemos un servicio seguro y transparente para tu tranquilidad.',
+
+    'why-bags-and-tea-question' => '¿Por qué vender tu bolso en Bags and Tea?',
+    'why-bags-and-tea-answer' => 'Bags and Tea es una plataforma que se especializa en la compra y venta de artículos de lujo exclusivos. Ofrecemos un servicio seguro y transparente para tu tranquilidad.',
+
     'faq_title' => 'FAQs sobre la venta de bolsos de lujo en Bags and Tea',
     'faq_1_question' => '¿Qué marcas de bolsos compráis?',
     'faq_1_answer' => 'Compramos bolsos de Chanel, Hermès, Louis Vuitton, Dior, Saint Laurent, Fendi, Loewe, Prada, Gucci, Balenciaga, Céline, Bottega Veneta y Polène. Estas son las marcas en las que somos expertos. Siempre estamos evolucionando, y esperamos poder ampliar esta lista en el futuro.',

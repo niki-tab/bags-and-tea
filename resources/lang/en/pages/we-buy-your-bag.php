@@ -21,6 +21,12 @@ return [
     'step_3_title' => 'We buy your bag!',
     'step_3_description' => 'Once we receive the photos and details, we take care of everything. Our team will evaluate your bag with the utmost rigor and, if it fits our selection, we\'ll make you a fair and transparent purchase proposal. No complications, no unnecessary waiting. It\'s that easy: you contact us, and we do the rest.',
     
+    'why_bag_question' => 'Why do we buy your bag?',
+    'why_bag_answer' => 'We buy your bag because we are a luxury goods platform that specializes in buying and selling exclusive items. We offer a secure and transparent service for your peace of mind.',
+
+    'why-bags-and-tea-question' => 'Why sell your bag at Bags and Tea?',
+    'why-bags-and-tea-answer' => 'Bags and Tea is a platform that specializes in buying and selling exclusive luxury items. We offer a secure and transparent service for your peace of mind.',
+
     'faq_title' => 'FAQs about selling luxury bags at Bags and Tea',
     'faq_1_question' => 'What bag brands do you buy?',
     'faq_1_answer' => 'We buy bags from Chanel, Hermès, Louis Vuitton, Dior, Saint Laurent, Fendi, Loewe, Prada, Gucci, Balenciaga, Céline, Bottega Veneta, and Polène. These are the brands we\'re experts in. We\'re always evolving, and we hope to expand this list in the future.',
