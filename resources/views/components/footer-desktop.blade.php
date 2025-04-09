@@ -45,9 +45,28 @@
         </div>
         <div class="absolute w-full h-12 bg-background-color-2 left-1/2 transform -translate-x-1/2 bottom-8 flex items-center z-20">
             <nav class="flex justify-between items-center gap-4 py-4 w-2/5 mx-auto">
-                <a href="{{ route(app()->getLocale() === 'es' ? 'privacy.show.es' : 'privacy.show.en', ['locale' => app()->getLocale()]) }}" class="flex-1 text-center text-color-1 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.subfooter-option-1') }}</a>
-                <a href="{{ route(app()->getLocale() === 'es' ? 'cookies.show.en-es' : 'cookies.show.en-es', ['locale' => app()->getLocale()]) }}" class="flex-1 text-center text-color-1 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.subfooter-option-2') }}</a>
-                <a href="{{ route(app()->getLocale() === 'es' ? 'legal-notice.show.es' : 'legal-notice.show.en', ['locale' => app()->getLocale()]) }}" class="flex-1 text-center text-color-1 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.subfooter-option-3') }}</a>
+
+                <a href="{{ route(app()->getLocale() === 'es' ? 'privacy.show.es' : 'privacy.show.en', ['locale' => app()->getLocale()]) }}"
+                        class="flex-1 text-center font-robotoCondensed text-lg font-medium 
+                                {{ request()->routeIs('privacy.show.es', 'privacy.show.en') 
+                                ? 'text-color-5' : 'text-color-1 hover:text-color-3' }}">
+                        {{ trans('components/footer.subfooter-option-1') }}
+                </a>
+
+                
+                <a  href="{{ route(app()->getLocale() === 'es' ? 'cookies.show.en-es' : 'cookies.show.en-es', ['locale' => app()->getLocale()]) }}"
+                    class="flex-1 text-center font-robotoCondensed text-lg font-medium 
+                            {{ request()->routeIs('cookies.show.en-es') 
+                            ? 'text-color-5' : 'text-color-1 hover:text-color-3' }}">
+                    {{ trans('components/footer.subfooter-option-2') }}
+                </a>
+
+                <a  href="{{ route(app()->getLocale() === 'es' ? 'legal-notice.show.es' : 'legal-notice.show.en', ['locale' => app()->getLocale()]) }}"
+                    class=  "flex-1 text-center font-robotoCondensed text-lg font-medium 
+                            {{ request()->routeIs('legal-notice.show.es', 'legal-notice.show.en') 
+                            ? 'text-color-5' : 'text-color-1 hover:text-color-3' }}">              
+                    {{ trans('components/footer.subfooter-option-3') }}
+                </a>
             </nav>
         </div>
     </div>
