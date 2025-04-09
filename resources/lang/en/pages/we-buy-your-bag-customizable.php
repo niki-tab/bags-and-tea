@@ -21,13 +21,11 @@ return [
     'step_3_title' => 'We buy your bag!',
     'step_3_description' => 'Once we receive the photos and details, we take care of everything. Our team will evaluate your bag with the utmost rigor and, if it fits our selection, we\'ll make you a fair and transparent purchase proposal. No complications, no unnecessary waiting. It\'s that easy: you contact us, and we do the rest.',
     
-    'why_bag_question' => 'Why do we buy your designer bag?',
-    'why_bag_answer' => "At B&T, we believe in giving luxury bags a second life, because every well-cared-for piece deserves to continue being admired. We advocate for more conscious consumption, where value, history, and beauty don't fade with time. If you have bags that you'd like to see in the hands of true enthusiasts and other collectors, we'd be delighted to hear from you.",
+    'why_bag_question' => 'Why do we buy your bag?',
+    'why_bag_answer' => 'We buy your bag because we are a luxury goods platform that specializes in buying and selling exclusive items. We offer a secure and transparent service for your peace of mind.',
 
-    'why-bags-and-tea-question' => 'Why sell your designer bag at Bags and Tea?',
-    'why-bags-and-tea-answer' => "Selling your bag with B&T means trusting in a simple, agile, and secure process. We offer you a quick and honest valuation, and we accompany you every step of the way with personalized guidance. We take care of every detail and we're here to answer any questions you may have. So, selling your bag is as easy as reaching out to us.",
-
-
+    'why-bags-and-tea-question' => 'Why sell your bag at Bags and Tea?',
+    'why-bags-and-tea-answer' => 'Bags and Tea is a platform that specializes in buying and selling exclusive luxury items. We offer a secure and transparent service for your peace of mind.',
 
     'faq_title' => 'FAQs about selling luxury bags at Bags and Tea',
     'faq_1_question' => 'What bag brands do you buy?',

@@ -111,6 +111,17 @@
                     class="w-3/5"> <!-- Optional: adjust width as needed -->
             </div>
         </div>
+        <div class="w-full md:w-full mx-auto bg-[#F8F3F0] relative mt-32">
+            <div class="flex justify-start"> <!-- Added this container -->
+                <img src="{{ asset('images/we_buy_your_bag/group-143.svg') }}" 
+                    alt="YSL bag" 
+                    class="w-3/5"> <!-- Optional: adjust width as needed -->
+            </div>
+            <div class="absolute bg-[#F8F3F0] p-4 w-2/5 right-52 bottom-32">
+                <h2 class="text-center mx-auto w-3/4 font-['Lovera'] text-4xl text-[#482626]">{{ trans('pages/we-buy-your-bag.why-bags-and-tea-question') }}</h2>
+                <p class="mx-auto w-full text-[#482626] text-robotoCondensed mt-4">{{ trans('pages/we-buy-your-bag.why-bags-and-tea-answer') }}</p>
+            </div>
+        </div>
     </div>
     </div>
         <!-- FAQs Section -->
@@ -137,8 +148,6 @@
 
      <!-- Sell Your Bag Section -->
      <div>
-        <div class="bg-[#F6F0ED] py-8">
-        </div>
         <div class="relative">
         <!-- Top half background -->
         <div class="absolute top-0 left-0 right-0 h-3/4 bg-[#DEA3A5]"></div>
@@ -157,12 +166,15 @@
                     </div>
                     
                     <!-- Text Section -->
-                    <div class="w-full md:w-[60%] bg-white p-8 md:p-12 relative bottom-[190px] md:bottom-[269px] md:left-[8%] bg-[#F6F0ED] border-l-[12px] border-b-[12px] border-[#BE6F62]">
+                    <div class="w-full md:w-[60%] bg-white p-8 md:p-12 relative bottom-[170px] md:bottom-[257px] md:left-[8%] bg-[#F6F0ED] border-l-[12px] border-b-[12px] border-[#BE6F62]">
                         <h2 class="text-3xl md:text-4xl font-['Lovera'] text-[#3A1515] mb-6">
                             {{ trans('pages/we-buy-your-bag.final_section_title') }}
                         </h2>
                         <p class="text-[#3A1515] mb-6">
-                            {{ trans('pages/we-buy-your-bag.final_section_description') }}
+                            {{ trans('pages/we-buy-your-bag.final_section_description_1') }}
+                        </p>
+                        <p class="text-[#3A1515] mb-6">
+                            {{ trans('pages/we-buy-your-bag.final_section_description_2') }}
                         </p>
                     </div>
                 </div>

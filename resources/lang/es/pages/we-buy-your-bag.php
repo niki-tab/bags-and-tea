@@ -21,11 +21,11 @@ return [
     'step_3_title' => '¡Te compramos tu bolso!',
     'step_3_description' => 'Una vez recibamos las fotos y detalles, nos encargamos de todo. Nuestro equipo evaluará tu bolso con el máximo rigor y, si encaja en nuestra selección, te haremos una propuesta de compra justa y transparente. Sin complicaciones, sin esperas innecesarias. Así de fácil: tú nos contactas, y nosotros hacemos el resto.',
     
-    'why_bag_question' => '¿Por qué compramos tu bolso?',
-    'why_bag_answer' => 'Compramos tu bolso porque somos una plataforma de artículos de lujo que se especializa en la compra y venta de artículos exclusivos. Ofrecemos un servicio seguro y transparente para tu tranquilidad.',
+    'why_bag_question' => '¿Por qué compramos tu bolso de marca?',
+    'why_bag_answer' => 'En B&T creemos en dar una segunda vida a los bolsos de lujo, porque cada pieza bien cuidada merece seguir siendo admirada. Apostamos por un consumo más consciente, donde el valor, la historia y la belleza no se pierden con el tiempo. Si guardas bolsos que te gustaría ver en manos de auténticos entusiastas y de otros coleccionistas, estaremos encantados de escucharte.',
 
-    'why-bags-and-tea-question' => '¿Por qué vender tu bolso en Bags and Tea?',
-    'why-bags-and-tea-answer' => 'Bags and Tea es una plataforma que se especializa en la compra y venta de artículos de lujo exclusivos. Ofrecemos un servicio seguro y transparente para tu tranquilidad.',
+    'why-bags-and-tea-question' => '¿Por qué vender tu bolso de marca en Bags and Tea?',
+    'why-bags-and-tea-answer' => 'Vender tu bolso con B&T es confiar en un proceso sencillo, ágil y seguro. Te ofrecemos una valoración rápida y honesta, y te acompañamos en todo momento con un asesoramiento cercano y personalizado. Nos encargamos de cada detalle y estamos aquí para resolver cualquier duda que tengas. Así que, vender tu bolso es tan fácil como escribirnos.',
 
     'faq_title' => 'FAQs sobre la venta de bolsos de lujo en Bags and Tea',
     'faq_1_question' => '¿Qué marcas de bolsos compráis?',
@@ -59,5 +59,6 @@ return [
     'faq_10_answer' => 'Puedes contactarnos tanto por email como por WhatsApp, como te resulte más cómodo. Estaremos encantados de ayudarte y responder a todas tus preguntas.',
     
     'final_section_title' => 'VENDE TU BOLSO DE MARCA',
-    'final_section_description' => 'No esperes más y vende ese bolso de marca que llevas tiempo queriendo dejar ir. Rellena el formulario o, si lo prefieres, escríbenos directamente por WhatsApp al +34 629 793 047. Estamos aquí para ayudarte a darle una nueva vida a esa pieza especial, de forma rápida, segura y sin complicaciones.',
+    'final_section_description_1' => 'No esperes más y vende ese bolso de marca que llevas tiempo queriendo dejar ir. Rellena el formulario o, si lo prefieres, escríbenos directamente por WhatsApp al +34 629 793 047.',
+    'final_section_description_2' => 'Estamos aquí para ayudarte a darle una nueva vida a esa pieza especial, de forma rápida, segura y sin complicaciones.',
 ];

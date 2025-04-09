@@ -74,6 +74,13 @@
     width: max-content;
 }
 
+summary::-webkit-details-marker {
+    display: none;
+}
+summary {
+    list-style: none;
+}
+
 /* Adjust animation for mobile if needed */
 @media (max-width: 768px) {
     @keyframes marquee-mobile {
