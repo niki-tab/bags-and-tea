@@ -29,7 +29,7 @@
         <x-header-mobile/>
     </header>
 
-    <main class="mt-28 md:mt-0 flex-grow container mx-auto z-0 pb-12 @yield('main-tag-class', 'bg-white')">
+    <main class="w-full md:flex-grow mt-28 md:mt-0 pb-12 z-0 @yield('main-tag-class', 'bg-white')">
         @yield('content')
     </main>
 
