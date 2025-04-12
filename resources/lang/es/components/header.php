@@ -11,6 +11,6 @@ return [
     'menu-option-6' => 'Contacto',
     'button-sell-your-bag' => 'Vende tu bolso',
     'placeholder-input-search-product' => 'Buscar por marca, artículo...',
-    'banner-text' => '¿Buscas tu bolso ideal? ¡Estamos creando la web para que lo encuentres!',
+    'banner-text' => '¡Web en construcción! ¡Pronto podrás encontrar tu bolso ideal!',
 
 ];
