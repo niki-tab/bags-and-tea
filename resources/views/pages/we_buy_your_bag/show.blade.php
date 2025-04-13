@@ -26,7 +26,7 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-7xl mx-auto mb-4 px-4 md:px-0">
             <div class="bg-[#E3D4CB] text-center h-32 md:h-40">
                 <img src="{{ asset('images/we_buy_your_bag/Hermes.svg') }}" alt="Luxury Hermes Bag" 
-                    class="mx-auto my-8 md:my-10 w-2/5">
+                    class="mx-auto my-9 md:my-10 w-2/5">
             </div>
             <div class="bg-[#E3D4CB] text-center h-32 md:h-40">
                 <img src="{{ asset('images/we_buy_your_bag/yves-saint-laurent.svg') }}" alt="Luxury YSL Bag" 
@@ -38,19 +38,19 @@
             </div>
             <div class="bg-[#E3D4CB] text-center h-32 md:h-40">
                 <img src="{{ asset('images/we_buy_your_bag/Louis-Vuitton.svg') }}" alt="Luxury Louis Vuitton Bag" 
-                    class="mx-auto my-[20%] md:my-[24%] w-3/5">
+                    class="mx-auto my-[25%] md:my-[24%] w-3/5">
             </div>
             <div class="bg-[#E3D4CB] text-center h-32 md:h-40">
                 <img src="{{ asset('images/we_buy_your_bag/Gucci.svg') }}" alt="Luxury Gucci Bag" 
-                    class="mx-auto my-12 md:my-16 w-3/5">
+                    class="mx-auto my-[24%] md:my-16 w-3/5">
             </div>
             <div class="bg-[#E3D4CB] text-center h-32 md:h-40">
                 <img src="{{ asset('images/we_buy_your_bag/Prada.svg') }}" alt="Luxury Prada Bag" 
-                    class="mx-auto my-12 md:my-16 w-3/5">
+                    class="mx-auto my-[23%] md:my-16 w-3/5">
             </div>
             <div class="bg-[#E3D4CB] text-center h-32 md:h-40">
                 <img src="{{ asset('images/we_buy_your_bag/Goyard.svg') }}" alt="Luxury Goyard Bag" 
-                    class="mx-auto my-12 md:my-16 w-3/5">
+                    class="mx-auto my-[24%] md:my-16 w-3/5">
             </div>
             <div class="bg-[#E3D4CB] text-center h-32 md:h-40">
                 <img src="{{ asset('images/we_buy_your_bag/Chanel.svg') }}" alt="Luxury Chanel Bag" 
@@ -99,7 +99,7 @@
         <button class="bg-black text-white px-12 py-3 rounded-full font-medium mx-auto">{{ trans('pages/we-buy-your-bag.hero_button') }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;></button>
         
     </div>
-    <div class="bg-[#F8F3F0] py-20">
+    <div class="bg-[#F8F3F0] py-20 hidden lg:block">
         <div class="w-full md:w-full mx-auto bg-[#F8F3F0] relative">
             <div class="absolute bg-[#F8F3F0] p-4 w-2/5 left-52 top-16">
                 <h2 class="text-center mx-auto w-1/2 font-['Lovera'] text-4xl text-[#482626]">{{ trans('pages/we-buy-your-bag.why_bag_question') }}</h2>
@@ -123,6 +123,45 @@
             </div>
         </div>
     </div>
+    <div class="lg:hidden py-14 bg-[#F8F3F0]">
+        <div class="flex flex-col items-center justify-center gap-8">
+            <!-- Row 1: Heading -->
+            <h2 class="mx-16 text-4xl text-center font-['Lovera'] text-[#482626]">
+                {{ trans('pages/we-buy-your-bag.why_bag_question') }}
+            </h2>
+
+            <!-- Row 2: Paragraph -->
+            <p class="mx-10 text-center max-w-2xl text-[#482626]">
+                {{ trans('pages/we-buy-your-bag.why_bag_answer') }}
+            </p>
+
+            <!-- Row 3: Image -->
+            <div class="flex justify-center my-8 w-full px-4">
+                <img
+                    src="{{ asset('images/we_buy_your_bag/group-138.svg') }}" 
+                    alt="Description" 
+                    class="w-full h-auto">
+            </div>
+        </div>
+        <div class="flex flex-col items-center justify-center gap-8 my-8">
+            <!-- Row 1: Heading -->
+            <h2 class="mx-16 text-4xl text-center font-['Lovera'] text-[#482626]">
+                {{ trans('pages/we-buy-your-bag.why-bags-and-tea-question') }}
+            </h2>
+
+            <!-- Row 2: Paragraph -->
+            <p class="mx-10 text-center max-w-2xl text-[#482626]">
+                {{ trans('pages/we-buy-your-bag.why-bags-and-tea-answer') }}
+            </p>
+
+            <!-- Row 3: Image -->
+            <div class="flex justify-center w-full">
+                <img
+                    src="{{ asset('images/we_buy_your_bag/group-139.svg') }}" 
+                    alt="Description" 
+                    class="w-full h-auto">
+            </div>
+        </div>
     </div>
         <!-- FAQs Section -->
         <div class="bg-[#3A1515] text-white py-12">
