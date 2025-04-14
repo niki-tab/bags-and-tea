@@ -24,37 +24,37 @@
     <div class="py-8 md:py-16 bg-[#F8F3F0]">
         <h2 class="text-center text-2xl md:text-4xl mb-8 md:mb-14 font-['Lovera']">{{ trans('pages/we-buy-your-bag.brands_title') }}</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-7xl mx-auto mb-4 px-4 md:px-0">
-            <div class="bg-[#E3D4CB] text-center h-32 md:h-40">
+            <div class="bg-[#E3D4CB] text-center h-32 md:h-40 flex items-center justify-center">
                 <img src="{{ asset('images/we_buy_your_bag/Hermes.svg') }}" alt="Luxury Hermes Bag" 
-                    class="mx-auto my-9 md:my-10 w-2/5">
+                    class="w-2/5">
             </div>
-            <div class="bg-[#E3D4CB] text-center h-32 md:h-40">
+            <div class="bg-[#E3D4CB] text-center h-32 md:h-40 flex items-center justify-center">
                 <img src="{{ asset('images/we_buy_your_bag/yves-saint-laurent.svg') }}" alt="Luxury YSL Bag" 
-                    class="mx-auto my-12 md:my-16 w-3/5">
+                    class="w-3/5">
             </div>
-            <div class="bg-[#E3D4CB] text-center h-32 md:h-40">
+            <div class="bg-[#E3D4CB] text-center h-32 md:h-40 flex items-center justify-center">
                 <img src="{{ asset('images/we_buy_your_bag/Dior.svg') }}" alt="Luxury Dior Bag" 
-                    class="mx-auto my-12 md:my-16 w-2/5">
+                    class="w-2/5">
             </div>
-            <div class="bg-[#E3D4CB] text-center h-32 md:h-40">
+            <div class="bg-[#E3D4CB] text-center h-32 md:h-40 flex items-center justify-center">
                 <img src="{{ asset('images/we_buy_your_bag/Louis-Vuitton.svg') }}" alt="Luxury Louis Vuitton Bag" 
-                    class="mx-auto my-[25%] md:my-[24%] w-3/5">
+                    class="w-3/5">
             </div>
-            <div class="bg-[#E3D4CB] text-center h-32 md:h-40">
+            <div class="bg-[#E3D4CB] text-center h-32 md:h-40 flex items-center justify-center">
                 <img src="{{ asset('images/we_buy_your_bag/Gucci.svg') }}" alt="Luxury Gucci Bag" 
-                    class="mx-auto my-[24%] md:my-16 w-3/5">
+                    class="w-3/5">
             </div>
-            <div class="bg-[#E3D4CB] text-center h-32 md:h-40">
+            <div class="bg-[#E3D4CB] text-center h-32 md:h-40 flex items-center justify-center">
                 <img src="{{ asset('images/we_buy_your_bag/Prada.svg') }}" alt="Luxury Prada Bag" 
-                    class="mx-auto my-[23%] md:my-16 w-3/5">
+                    class="w-3/5">
             </div>
-            <div class="bg-[#E3D4CB] text-center h-32 md:h-40">
+            <div class="bg-[#E3D4CB] text-center h-32 md:h-40 flex items-center justify-center">
                 <img src="{{ asset('images/we_buy_your_bag/Goyard.svg') }}" alt="Luxury Goyard Bag" 
-                    class="mx-auto my-[24%] md:my-16 w-3/5">
+                    class="w-3/5">
             </div>
-            <div class="bg-[#E3D4CB] text-center h-32 md:h-40">
+            <div class="bg-[#E3D4CB] text-center h-32 md:h-40 flex items-center justify-center">
                 <img src="{{ asset('images/we_buy_your_bag/Chanel.svg') }}" alt="Luxury Chanel Bag" 
-                    class="mx-auto my-8 md:my-10 w-2/5">
+                    class="w-2/5">
             </div>
         </div>
     </div>
