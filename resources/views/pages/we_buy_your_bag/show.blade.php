@@ -194,9 +194,9 @@
         <div class="absolute bottom-0 left-0 right-0 h-1/4 bg-[#F6F0ED]"></div>
         
         <!-- Content -->
-        <div class="relative z-10">
-            <div class="max-w-7xl">
-                <div class="flex flex-col md:flex-row items-center">
+        <div class="relative z-10 h-[850px]">
+            <div class="">
+                <div class="flex flex-col md:flex-row items-start">
                     <!-- Image Section -->
                     <div class="w-full md:w-4/5 pt-8">
                         <img src="{{ asset('images/we_buy_your_bag/lv-bag-we-buy-your-bags.svg') }}" 
@@ -205,16 +205,18 @@
                     </div>
                     
                     <!-- Text Section -->
-                    <div class="w-full md:w-[60%] bg-white p-8 md:p-12 relative bottom-[170px] md:bottom-[257px] md:left-[8%] bg-[#F6F0ED] border-l-[12px] border-b-[12px] border-[#BE6F62]">
-                        <h2 class="text-3xl md:text-4xl font-['Lovera'] text-[#3A1515] mb-6">
-                            {{ trans('pages/we-buy-your-bag.final_section_title') }}
-                        </h2>
-                        <p class="text-[#3A1515] mb-6">
-                            {{ trans('pages/we-buy-your-bag.final_section_description_1') }}
-                        </p>
-                        <p class="text-[#3A1515] mb-6">
-                            {{ trans('pages/we-buy-your-bag.final_section_description_2') }}
-                        </p>
+                    <div class="w-full">
+                        <div class="w-full md:w-[70%] bg-white p-8 md:p-12 bg-[#F6F0ED] border-l-[12px] border-b-[12px] border-[#BE6F62] md:relative md:left-32">
+                            <h2 class="text-3xl md:text-4xl font-['Lovera'] text-[#3A1515] mb-6">
+                                {{ trans('pages/we-buy-your-bag.final_section_title') }}
+                            </h2>
+                            <p class="text-[#3A1515] mb-6">
+                                {{ trans('pages/we-buy-your-bag.final_section_description_1') }}
+                            </p>
+                            <p class="text-[#3A1515] mb-6">
+                                {{ trans('pages/we-buy-your-bag.final_section_description_2') }}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
