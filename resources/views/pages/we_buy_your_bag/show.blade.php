@@ -166,7 +166,7 @@
         <!-- FAQs Section -->
         <div class="bg-[#3A1515] text-white py-12">
         <h2 class="mx-6 text-center text-4xl font-regular mb-10 md:mb-20 font-['Lovera']">{{ trans('pages/we-buy-your-bag.faq_title') }}</h2>
-        <div class="max-w-7xl mx-auto space-y-4 pb-10 px-12 md:px-0">
+        <div class="mx-auto space-y-4 pb-10 px-12 md:px-24">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 gap-x-32 max-w-8xl mx-auto mb-4 mt-12 w-full">
                 @for ($i = 1; $i <= 10; $i++)
                     <div class="md:col-span-1">
@@ -205,8 +205,8 @@
                     </div>
                     
                     <!-- Text Section -->
-                    <div class="w-full">
-                        <div class="w-full md:w-[70%] bg-white p-8 md:p-12 bg-[#F6F0ED] border-l-[12px] border-b-[12px] border-[#BE6F62] md:relative md:left-32">
+                    <div class="w-full pb-42 md:pb-0">
+                        <div class="w-[90%] md:w-[70%] bg-white p-8 md:p-12 bg-[#F6F0ED] border-l-[12px] border-b-[12px] border-[#BE6F62] md:relative md:left-32 mx-auto md:mx-0">
                             <h2 class="text-3xl md:text-4xl font-['Lovera'] text-[#3A1515] mb-6">
                                 {{ trans('pages/we-buy-your-bag.final_section_title') }}
                             </h2>
