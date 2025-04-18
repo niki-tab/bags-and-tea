@@ -223,7 +223,7 @@
             </div>
         </div>
     </div>
-    <div class="grid grid-rows-2 grid-cols-1 lg:hidden bg-[#DEA3A5]"> <!-- Different gaps for mobile/desktop -->    <!-- Row 1 -->
+    <div class="grid grid-rows-2 grid-cols-1 lg:hidden bg-[#DEA3A5] gap-8"> <!-- Different gaps for mobile/desktop -->    <!-- Row 1 -->
         <div class="">
             <div class="mt-16 w-[90%] md:w-[70%] bg-white p-8 md:p-12 bg-[#F6F0ED] border-l-[12px] border-b-[12px] border-[#BE6F62] mx-auto">
             <h2 class="text-3xl md:text-4xl font-['Lovera'] text-[#3A1515] mb-6">
@@ -239,7 +239,7 @@
         </div>
         
         <!-- Row 2 -->
-        <div class="pt-8">
+        <div class="">
         <img src="{{ asset('images/we_buy_your_bag/group-145.svg') }}" 
                             alt="Louis Vuitton Bag" 
                             class="w-full">
