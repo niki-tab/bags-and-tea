@@ -239,7 +239,7 @@
         </div>
         
         <!-- Row 2 -->
-        <div class="">
+        <div class="pt-8">
         <img src="{{ asset('images/we_buy_your_bag/group-145.svg') }}" 
                             alt="Louis Vuitton Bag" 
                             class="w-full">
