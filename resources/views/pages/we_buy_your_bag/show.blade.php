@@ -64,8 +64,8 @@
             <!-- First item -->
             <div class="text-center md:text-left mx-8 md:mx-0">
             <div class="flex items-end gap-4 mb-8 md:mb-0"> <!-- Changed items-start to items-center -->
-                <span class="leading-[0.8] text-[160px] md:text-[245px] text-[#482626] font-['Lovelina'] leading-none">{{ trans('pages/we-buy-your-bag.step_1_number') }}</span>
-                <h3 class="text-justify text-2xl md:text-4xl text-robotoCondensed font-regular w-full md:w-3/5 mb-5 md:mb-6 leading-tight break-words">
+                <span class="leading-[0.8] text-[180px] md:text-[245px] text-[#482626] font-['Lovelina'] leading-none">{{ trans('pages/we-buy-your-bag.step_1_number') }}</span>
+                <h3 class="pb-4 text-justify text-3xl md:text-4xl text-robotoCondensed font-regular w-3/5 md:w-3/5 mb-5 md:mb-6"> <!-- Removed mt-[40px] md:mt-28 -->
                     {{ trans('pages/we-buy-your-bag.step_1_title') }}
                 </h3>
             </div>
