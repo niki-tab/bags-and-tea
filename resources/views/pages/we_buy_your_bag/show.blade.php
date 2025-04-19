@@ -1,19 +1,59 @@
 @extends('layouts.app')
 
+@section('main-tag-class')
+bg-background-color-4  {{-- or any other Tailwind class you want for this specific page --}}
+@endsection
+
+@section('footer-desktop-class')
+bg-background-color-4  {{-- or any other Tailwind class you want for this specific page --}}
+@endsection
+
 @section('content')
 
-<div class="w-full">
+@php
+    $formFields = [
+        [
+            'label' => 'Nombre',
+            'placeholder' => 'Nombre',
+            'type' => 'text',
+            'name' => 'name',
+        ],
+        [
+            'label' => 'Apellido',
+            'placeholder' => 'Apellido',
+            'type' => 'text',
+            'name' => 'last_name',
+        ],
+        [
+            'label' => 'Email',
+            'placeholder' => 'Email',
+            'type' => 'email',
+            'name' => 'email',
+        ],
+        [
+            'label' => 'Teléfono',
+            'placeholder' => 'Teléfono',
+            'type' => 'tel',
+            'name' => 'phone',
+        ],
+    ];
+@endphp
+<div class="w-full relative bg-[#F6F0ED]">
     <div class="flex flex-col md:flex-row h-auto md:h-96">
-        <div class="w-full md:w-1/2 px-8 md:px-28 py-12 md:pt-20 bg-[#CB4853] text-white">
-            <h1 class="text-4xl md:text-5xl font-['Lovera'] md:w-[55%]">
-                {{ trans('pages/we-buy-your-bag.hero_title') }}
-            </h1>
-            <p class="mt-6 md:mt-8 font-mixed">
+        <div class="w-full md:w-1/2 bg-[#CB4853] flex items-center justify-center h-full py-12 md:py-0">
+            <div class="w-3/4 mx-auto">
+                <h1 class="text-4xl md:text-5xl font-['Lovera'] text-white">
+                    {{ trans('pages/we-buy-your-bag.hero_title') }}
+                </h1>
+                <p class="font-mixed text-white mt-6 md:mt-8">
                 {{ trans('pages/we-buy-your-bag.hero_description') }}
-            </p>
-            <button class="mt-6 md:mt-8 bg-black text-white px-8 md:px-12 py-2 md:py-3 rounded-full font-medium">
-                {{ trans('pages/we-buy-your-bag.hero_button') }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
-            </button>
+                </p>
+                <button class="mt-6 md:mt-8 bg-black text-white px-8 md:px-12 py-2 md:py-3 rounded-full font-medium">
+                    {{ trans('pages/we-buy-your-bag.hero_button') }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
+                </button>
+            </div>
+
+
         </div>
         <div class="w-full md:w-1/2 bg-[#DEA3A5] py-12 md:py-0">
             <img src="{{ asset('images/we_buy_your_bag/Bolso_YSL1.svg') }}" 
@@ -23,7 +63,7 @@
     </div>
     <div class="py-8 md:py-16 bg-[#F8F3F0]">
         <h2 class="text-center text-2xl md:text-4xl mb-8 md:mb-14 font-['Lovera']">{{ trans('pages/we-buy-your-bag.brands_title') }}</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-7xl mx-auto mb-4 px-4 md:px-0">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-7xl mx-auto mb-4 px-4 md:px-4 lg:px-4 xl:px-0">
             <div class="bg-[#E3D4CB] text-center h-32 md:h-40 flex items-center justify-center">
                 <img src="{{ asset('images/we_buy_your_bag/Hermes.svg') }}" alt="Luxury Hermes Bag" 
                     class="w-2/5">
@@ -224,28 +264,32 @@
         </div>
     </div>
     <div class="flex flex-col lg:hidden bg-[#DEA3A5] gap-8"> <!-- Changed from grid to flex -->
-    <!-- First section -->
-    <div>
-        <div class="mt-16 w-[90%] md:w-[70%] bg-white p-8 md:p-12 bg-[#F6F0ED] border-l-[12px] border-b-[12px] border-[#BE6F62] mx-auto">
-            <h2 class="text-3xl md:text-4xl font-['Lovera'] text-[#3A1515] mb-6">
-                {{ trans('pages/we-buy-your-bag.final_section_title') }}
-            </h2>
-            <p class="text-[#3A1515] mb-6">
-                {{ trans('pages/we-buy-your-bag.final_section_description_1') }}
-            </p>
-            <p class="text-[#3A1515] mb-6">
-                {{ trans('pages/we-buy-your-bag.final_section_description_2') }}
-            </p>
+        <!-- First section -->
+        <div>
+            <div class="mt-16 w-[90%] md:w-[70%] bg-white p-8 md:p-12 bg-[#F6F0ED] border-l-[12px] border-b-[12px] border-[#BE6F62] mx-auto">
+                <h2 class="text-3xl md:text-4xl font-['Lovera'] text-[#3A1515] mb-6">
+                    {{ trans('pages/we-buy-your-bag.final_section_title') }}
+                </h2>
+                <p class="text-[#3A1515] mb-6">
+                    {{ trans('pages/we-buy-your-bag.final_section_description_1') }}
+                </p>
+                <p class="text-[#3A1515] mb-6">
+                    {{ trans('pages/we-buy-your-bag.final_section_description_2') }}
+                </p>
+            </div>
+        </div>
+        
+        <!-- Second section -->
+        <div>
+            <img src="{{ asset('images/we_buy_your_bag/group-145.svg') }}" 
+                alt="Louis Vuitton Bag" 
+                class="w-full">
         </div>
     </div>
-    
-    <!-- Second section -->
-    <div>
-        <img src="{{ asset('images/we_buy_your_bag/group-145.svg') }}" 
-            alt="Louis Vuitton Bag" 
-            class="w-full">
-    </div>
-</div>
+    <div class="bg-[#F6F0ED] py-4 md:py-0 w-full md:w-2/3 mx-auto border-[16px] border-[#F6F0ED] relative z-10 md:-mt-80">
+        <div class="border-[4px] border-[#3A1515]">
+            @livewire('crm/forms/show', ['formTitle' => trans('pages/we-buy-your-bag.form-title'), 'formFields' => $formFields])
+        </div>
     </div>
 </div>
 @endsection

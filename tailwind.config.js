@@ -38,6 +38,9 @@ export default {
         lovera: ['Lovera', 'sans-serif'],
         lovelyna: ['Lovelina', 'sans-serif'],
       },
+      screens: {
+        'mld': '900px', // Custom breakpoint between md and lg
+      },
     },
   },
   plugins: [],

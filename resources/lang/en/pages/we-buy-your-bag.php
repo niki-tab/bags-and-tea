@@ -63,4 +63,5 @@ return [
     'final_section_title' => 'SELL YOUR DESIGNER BAG',
     'final_section_description_1' => 'Don\'t wait any longer to sell that designer bag you\'ve been wanting to let go of. Fill out the form or, if you prefer, write to us directly on WhatsApp at +34 629 793 047.',
     'final_section_description_2' => 'We\'re here to help you give that special piece a new life, quickly, safely, and without complications.',
+    'form-title' => 'FORM',
 ];

@@ -15,6 +15,7 @@ class AppServiceProvider extends ServiceProvider
         Livewire::component('blog/articles/show', \Src\Blog\Articles\Frontend\ShowArticle::class);
         Livewire::component('blog/show', \Src\Blog\Articles\Frontend\ShowAllArticle::class);
         Livewire::component('shared/language-selector', \Src\Shared\Frontend\LanguageSelector::class);
+        Livewire::component('crm/forms/show', \Src\Crm\Forms\Frontend\Form::class);
     }
 
     /**

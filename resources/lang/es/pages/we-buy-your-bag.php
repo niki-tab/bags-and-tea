@@ -61,4 +61,5 @@ return [
     'final_section_title' => 'VENDE TU BOLSO DE MARCA',
     'final_section_description_1' => 'No esperes más y vende ese bolso de marca que llevas tiempo queriendo dejar ir. Rellena el formulario o, si lo prefieres, escríbenos directamente por WhatsApp al +34 629 793 047.',
     'final_section_description_2' => 'Estamos aquí para ayudarte a darle una nueva vida a esa pieza especial, de forma rápida, segura y sin complicaciones.',
+    'form-title' => 'FORMULARIO',
 ];
