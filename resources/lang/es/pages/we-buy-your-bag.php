@@ -4,7 +4,7 @@ return [
     'page-seo-title' => 'Vender bolsos de lujo | Compramos tu bolso de marca',
     'page-seo-description' => 'Vende tu bolsos de lujo de marcas como Hermès, Chanel, Louis Vuitton, Gucci, Prada... Compramos tu bolsos de marca de forma segura. Contacta con nosotros hoy mismo!',
     'hero_title' => 'Vende tu bolso de lujo',
-    'hero_description' => 'Bienvenida a B&T, el lugar perfecto par vender, comprar o alquilar artículos de lujo exclusivos, desde un icono atemporal hasta el último it bag.',
+    'hero_description' => 'Bienvenida a B&T, el lugar perfecto para vender, comprar o alquilar artículos de lujo exclusivos, desde un icono atemporal hasta el último it bag.',
     'hero_button' => 'Ir al formulario',
     'brands_title' => 'COMPRAMOS TU BOLSO DE LUJO',
     
