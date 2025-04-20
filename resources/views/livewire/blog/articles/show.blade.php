@@ -9,7 +9,7 @@
                     <p class="mt-10 ml-0 pl-0 font-robotoCondensed text-base text-color-6"><a href="*">Autenticidad</a>  &nbsp;&nbsp;-&nbsp;&nbsp;  <a href="*">Moda</a></p>
                 </div>
                 <img src="{{ asset($articleMainImage) }}" class="h-[300px] sm:h-[400px] md:h-[520px] lg:h-[520px] w-full object-cover">
-                <div class = "mt-14 md:mt-20 text-justify px-2 md:px-20">{!! $articleBody !!}</div>
+                <div id="article-body" class = "mt-14 md:mt-20 text-justify px-2 md:px-20">{!! $articleBody !!}</div>
             @endif
         </div>
     </div>

@@ -57,12 +57,12 @@
         color: #A47864;
         
     }
-    .article-content img {
+    .article-content #article-body img {
         width: 50%;
         margin: 0 auto;
         display: block;
     }
-    .article-content h5 {
+    .article-content #article-body h5 {
         width: 50%;
         margin: 0 auto;
         display: block;
