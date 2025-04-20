@@ -4,6 +4,7 @@ return [
     'page-seo-title' => 'Sell luxury bags | We buy your designer bag',
     'page-seo-description' => 'Sell your luxury bags from brands like Hermès, Chanel, Louis Vuitton, Gucci, Prada... We buy your designer bags safely. Contact us today!',
     'hero_title' => 'Sell your luxury bag',
+    'hero_title-fendi' => 'Sell your Fendi bag',
     'hero_description' => 'Welcome to B&T, the perfect place to sell, buy or rent exclusive luxury items, from timeless icons to the latest it bags.',
     'hero_button' => 'Go to form',
     'brands_title' => 'WE BUY YOUR LUXURY BAG',

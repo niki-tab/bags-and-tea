@@ -93,9 +93,9 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
         return view('pages/we_are_under_construction/show');
     })->name('our-bags.show.en')->where('locale', 'en');
 
-    Route::get('/compramos-tu-bolso/{slug?}',[WeBuyYourBagController::class, 'index'])->name('we-buy-your-bag.show.es')->where('locale', 'es');
+    Route::get('/compramos-tu-bolso/{bagName?}',[WeBuyYourBagController::class, 'index'])->name('we-buy-your-bag.show.es')->where('locale', 'es');
 
-    Route::get('/we-buy-your-bag/{slug?}',[WeBuyYourBagController::class, 'index'])->name('we-buy-your-bag.show.en')->where('locale', 'en');
+    Route::get('/we-buy-your-bag/{bagName?}',[WeBuyYourBagController::class, 'index'])->name('we-buy-your-bag.show.en')->where('locale', 'en');
 
     Route::get('/certifica-tu-bolso', function () {
         return view('pages/we_are_under_construction/show');
