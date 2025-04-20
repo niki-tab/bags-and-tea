@@ -114,6 +114,11 @@ summary {
         margin-left: 12px;
 
     }
+    .article-content img {
+        width: 66%;
+        margin: 0 auto;
+
+    }
     
     
 }
