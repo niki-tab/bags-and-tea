@@ -114,6 +114,10 @@ summary {
         margin-left: 12px;
 
     }
+    .article-content h5 {
+        font-size: 8px;
+        font-weight: 600;
+    }
     .article-content img {
         width: 66%;
         margin: 0 auto;
