@@ -57,6 +57,17 @@
         color: #A47864;
         
     }
+    .article-content .image-container img {
+        width: 50%;
+        margin: 0 auto;
+        display: block;
+    }
+    .article-content .image-container p {
+        width: 50%;
+        margin: 0 auto;
+        display: block;
+        font-size: px;
+    }
 }
 
 @keyframes marquee {
@@ -94,7 +105,7 @@ summary {
 
     .article-content h2 {
         
-        font-size: 50px;
+        font-size: 30px;
         word-spacing: 0px; 
         white-space: normal;
         margin-left: 12px;
@@ -114,24 +125,7 @@ summary {
         margin-left: 12px;
 
     }
-    .article-content h5 {
-        font-size: 8px;
-        font-weight: 600;
-        margin-bottom: 12px;
-        margin-top: 12px;
-    }
-    .article-content .image-container img {
-        width: 50%;
-        margin: 0 auto;
-        display: block;
-    }
-    .article-content .image-container p {
-        width: 50%;
-        margin: 0 auto;
-        display: block;
-        font-size: 8px;
-        font-weight: 600;
-    }
+    
     
     
 }
