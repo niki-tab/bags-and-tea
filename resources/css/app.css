@@ -125,6 +125,13 @@ summary {
         margin: 0 auto;
         display: block;
     }
+    .article-content .image-container p {
+        width: 50%;
+        margin: 0 auto;
+        display: block;
+        font-size: 8px;
+        font-weight: 600;
+    }
     
     
 }
