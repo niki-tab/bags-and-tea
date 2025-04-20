@@ -59,9 +59,9 @@
     }
     .article-content #article-body img {
         width: 67%;
-        margin: 0 auto;
+        margin-inline: auto;
+        margin-block-start: 22px;
         display: block;
-        margin-top: 22px;
     }
     .article-content #article-body h5 {
         width: 67%;
