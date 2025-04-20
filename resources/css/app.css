@@ -117,6 +117,8 @@ summary {
     .article-content h5 {
         font-size: 8px;
         font-weight: 600;
+        margin-bottom: 12px;
+        margin-top: 12px;
     }
     .article-content img {
         width: 66%;
