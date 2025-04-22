@@ -34,7 +34,7 @@
             <!-- Ensure the image is centered properly -->
         </nav>
         <div class="flex gap-4 justify-center items-center mt-14">
-            <a href=""><img src="{{ asset('images/icons/RRSS_insta_b_5.svg') }}" class="w-7 h-7 cursor-pointer"></a>  
+            <a target="_blank" href="https://www.instagram.com/bags.and.tea?igsh=NTgwcGU2a21paGxk&utm_source=qr"><img src="{{ asset('images/icons/RRSS_insta_b_5.svg') }}" class="w-7 h-7 cursor-pointer"></a>  
             <a target="_blank" href="https://www.vinted.es/member/250362636-bagsandtea"><img src="{{ asset('images/icons/icon_vinted.svg') }}" class="w-7 h-7 cursor-pointer"></a>
             <a target="_blank" href="https://es.vestiairecollective.com/profile/30176798/?sortBy=relevance&tab=items-for-sale"><img src="{{ asset('images/icons/icon_vestaire_collective.svg') }}" class="w-7 h-7 cursor-pointer"></a>
         </div>

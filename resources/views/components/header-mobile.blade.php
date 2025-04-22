@@ -35,7 +35,7 @@
             <input type="text" class="h-12 pl-12 placeholder:font-robotoCondensed placeholder:text-color-2  placeholder:font-light w-full p-2 bg-white text-color-2 rounded-full border border-gray-300 font-robotoCondensed" placeholder="{{ trans('components/header.placeholder-input-search-product') }}">
         </div>
         <div class="flex items-center gap-3 justify-center">
-            <a target="_blank" href="https://es.vestiairecollective.com/profile/30176798/?sortBy=relevance&tab=items-for-sale">
+            <a target="_blank" href="https://www.instagram.com/bags.and.tea?igsh=NTgwcGU2a21paGxk&utm_source=qr">
                 <img src="{{asset('images/icons/mobile_header_instagram.svg') }}" 
                     class="mt-[0.5px] w-6 h-7 cursor-pointer"
                     onmouseover="this.src='{{asset('images/icons/mobile_header_instagram_hover.svg') }}'"
