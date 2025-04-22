@@ -2,10 +2,18 @@
     <h2 class="text-3xl md:text-4xl font-['Lovera'] text-[#3A1515] mx-auto md:mx-0 text-center md:text-left">
         {{ $formTitle }}
     </h2>
-    <form>
+    <l>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-10 md:gap-y-4 mt-8 md:mt-10"> <!-- Added grid container -->
             @foreach ($formFields as $field)
-                <div class="">
+                @if ($field['type'] === 'textarea')
+        </div>
+        <textarea 
+                    name="{{ $field['name'] }}"
+                    class="mt-6 font-robotoCondensed h-36 w-full mb-6 bg-transparent border-b border-color-2 placeholder-color-2 placeholder-font-robotoCondensed pl-4 focus:outline-none focus:ring-0"
+                    placeholder="{{ $field['placeholder'] }}"></textarea>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-10 md:gap-y-4 mt-8 md:mt-10"> <!-- Added grid container -->
+                @else
+                    <div class="">
                     @if ($field['type'] === 'text')
                         <input type="text" 
                                name="{{ $field['name'] }}" 
@@ -20,9 +28,10 @@
                         <input type="tel" 
                                name="{{ $field['name'] }}" 
                                class="font-robotoCondensed h-8 w-full mb-6 bg-transparent border-b border-color-2 placeholder-color-2 placeholder-font-robotoCondensed pl-4 focus:outline-none focus:ring-0"
-                               placeholder="{{ $field['placeholder'] }}">
+                               placeholder="{{ $field['placeholder'] }}">    
                     @endif
-                </div>
+                    </div>
+                @endif
             @endforeach
         </div>
     </form>

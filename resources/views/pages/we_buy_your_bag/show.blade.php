@@ -13,28 +13,46 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
 @php
     $formFields = [
         [
-            'label' => 'Nombre',
-            'placeholder' => 'Nombre',
+            'label' => trans('pages/we-buy-your-bag.form-name'),
+            'placeholder' => trans('pages/we-buy-your-bag.form-name'),
             'type' => 'text',
             'name' => 'name',
         ],
         [
-            'label' => 'Apellido',
-            'placeholder' => 'Apellido',
+            'label' => trans('pages/we-buy-your-bag.form-last-name'),
+            'placeholder' => trans('pages/we-buy-your-bag.form-last-name'),
             'type' => 'text',
             'name' => 'last_name',
         ],
         [
-            'label' => 'Email',
-            'placeholder' => 'Email',
+            'label' => trans('pages/we-buy-your-bag.form-email'),
+            'placeholder' => trans('pages/we-buy-your-bag.form-email'),
             'type' => 'email',
             'name' => 'email',
         ],
         [
-            'label' => 'Teléfono',
-            'placeholder' => 'Teléfono',
+            'label' => trans('pages/we-buy-your-bag.form-phone'),
+            'placeholder' => trans('pages/we-buy-your-bag.form-phone'),
             'type' => 'tel',
             'name' => 'phone',
+        ],
+        [
+            'label' => trans('pages/we-buy-your-bag.form-city'),
+            'placeholder' => trans('pages/we-buy-your-bag.form-city'),
+            'type' => 'text',
+            'name' => 'city',
+        ],
+        [
+            'label' => trans('pages/we-buy-your-bag.form-brand'),
+            'placeholder' => trans('pages/we-buy-your-bag.form-brand'),
+            'type' => 'text',
+            'name' => 'brand',
+        ],
+        [
+            'label' => trans('pages/we-buy-your-bag.form-message'),
+            'placeholder' => trans('pages/we-buy-your-bag.form-message'),
+            'type' => 'textarea',
+            'name' => 'message',
         ],
     ];
 

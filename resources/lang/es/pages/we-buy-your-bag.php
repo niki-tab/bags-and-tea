@@ -82,5 +82,14 @@ return [
     'final_section_description_2' => 'Estamos aquí para ayudarte a darle una nueva vida a esa pieza especial, de forma rápida, segura y sin complicaciones.',
     'final_section_description_1-fendi' => 'No esperes más y vende ese bolso Fendi que llevas tiempo queriendo dejar ir. Rellena el formulario o, si lo prefieres, escríbenos directamente por WhatsApp al +34 629 793 047.',
     'final_section_description_2-fendi' => 'Estamos aquí para ayudarte a darle una nueva vida a esa pieza especial, de forma rápida, segura y sin complicaciones.',
+    
     'form-title' => 'FORMULARIO',
+    'form-name' => 'Nombre',
+    'form-last-name' => 'Apellidos',
+    'form-email' => 'Email',
+    'form-phone' => 'Teléfono',
+    'form-city' => 'Población',
+    'form-brand' => 'Marca',
+    'form-message' => 'Mensaje',
+    'form-send' => 'Enviar',
 ];
