@@ -91,5 +91,11 @@ return [
     'form-city' => 'Población',
     'form-brand' => 'Marca',
     'form-message' => 'Mensaje',
+    'form-complements' => 'Complementos',
+    'form-complements-option-1' => 'Si',
+    'form-complements-option-2' => 'No',
+    'form-documentation' => 'Documentación',
+    'form-documentation-option-1' => 'Si',
+    'form-documentation-option-2' => 'No',
     'form-send' => 'Enviar',
 ];

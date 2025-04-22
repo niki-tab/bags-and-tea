@@ -29,6 +29,18 @@
                                name="{{ $field['name'] }}" 
                                class="font-robotoCondensed h-8 w-full mb-6 bg-transparent border-b border-color-2 placeholder-color-2 placeholder-font-robotoCondensed pl-4 focus:outline-none focus:ring-0"
                                placeholder="{{ $field['placeholder'] }}">    
+                    @elseif ($field['type'] === 'checkbox')
+                        <label for="{{ $field['name'] }}" class="font-robotoCondensed text-color-2 ml-4 block mb-2">{{ $field['label'] }}</label>
+                        @foreach ($field['options'] as $option)
+                            <div class="flex items-center mb-2 ml-12"> <!-- Added container with spacing -->
+                                <input type="checkbox" 
+                                    name="{{ $option }}" 
+                                    value="{{ $option }}"
+                                    class=""
+                                    >
+                                <label for="{{ $option }}" class="font-robotoCondensed text-color-2 ml-4">{{ $option }}</label>
+                            </div>
+                        @endforeach
                     @endif
                     </div>
                 @endif

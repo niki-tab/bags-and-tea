@@ -73,5 +73,11 @@ return [
     'form-city' => 'Population',
     'form-brand' => 'Brand',
     'form-message' => 'Message',
+    'form-complements' => 'Complements',
+    'form-complements-option-1' => 'Yes',
+    'form-complements-option-2' => 'No',
+    'form-documentation' => 'Documentation',
+    'form-documentation-option-1' => 'Yes',
+    'form-documentation-option-2' => 'No',
     'form-send' => 'Send',
 ];

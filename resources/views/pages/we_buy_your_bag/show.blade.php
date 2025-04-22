@@ -49,6 +49,24 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
             'name' => 'brand',
         ],
         [
+            'label' => trans('pages/we-buy-your-bag.form-complements'),
+            'type' => 'checkbox',
+            'name' => 'complements',
+            'options' => [
+                'option-1' => trans('pages/we-buy-your-bag.form-complements-option-1'),
+                'option-2' => trans('pages/we-buy-your-bag.form-complements-option-2'),
+            ],
+        ],
+        [
+            'label' => trans('pages/we-buy-your-bag.form-documentation'),
+            'type' => 'checkbox',
+            'name' => 'documentation',
+            'options' => [
+                'option-1' => trans('pages/we-buy-your-bag.form-documentation-option-1'),
+                'option-2' => trans('pages/we-buy-your-bag.form-documentation-option-2'),
+            ],
+        ],
+        [
             'label' => trans('pages/we-buy-your-bag.form-message'),
             'placeholder' => trans('pages/we-buy-your-bag.form-message'),
             'type' => 'textarea',
