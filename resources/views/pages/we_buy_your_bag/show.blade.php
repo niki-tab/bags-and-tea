@@ -11,19 +11,12 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
 @section('content')
 
 @php
+    /*use App\Models\FormModel;
+    $form = FormModel::where('form_identifier', 'sell-your-bag')->first();
+    $formFields = $form->form_fields;
+
     $formFields = [
-        [
-            'label' => trans('pages/we-buy-your-bag.form-name'),
-            'placeholder' => trans('pages/we-buy-your-bag.form-name'),
-            'type' => 'text',
-            'name' => 'name',
-        ],
-        [
-            'label' => trans('pages/we-buy-your-bag.form-last-name'),
-            'placeholder' => trans('pages/we-buy-your-bag.form-last-name'),
-            'type' => 'text',
-            'name' => 'last_name',
-        ],
+
         [
             'label' => trans('pages/we-buy-your-bag.form-email'),
             'placeholder' => trans('pages/we-buy-your-bag.form-email'),
@@ -72,7 +65,7 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
             'type' => 'textarea',
             'name' => 'message',
         ],
-    ];
+    ];*/
 
     if(request()->route('bagName')){
 
@@ -460,7 +453,7 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
     </div>
     <div id="sell-your-bag-form" class="bg-[#F6F0ED] py-4 md:py-0 w-full md:w-2/3 mx-auto border-[16px] border-[#F6F0ED] relative z-10 md:-mt-80">
         <div class="border-[4px] border-[#3A1515]">
-            @livewire('crm/forms/show', ['formTitle' => trans('pages/we-buy-your-bag.form-title'), 'formFields' => $formFields])
+            @livewire('crm/forms/show', ['formTitle' => trans('pages/we-buy-your-bag.form-title'), 'formIdentifier' => 'sell-your-bag', 'formButtonText' => trans('pages/we-buy-your-bag.form-button-text'), 'isTermsAndConditions' => true, 'isReceiveComercialInformation' => true])
         </div>
     </div>
 </div>

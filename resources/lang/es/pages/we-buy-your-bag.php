@@ -98,4 +98,5 @@ return [
     'form-documentation-option-1' => 'Si',
     'form-documentation-option-2' => 'No',
     'form-send' => 'Enviar',
+    'form-button-text' => 'Enviar',
 ];

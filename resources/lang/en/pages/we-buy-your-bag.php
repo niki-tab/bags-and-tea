@@ -80,4 +80,5 @@ return [
     'form-documentation-option-1' => 'Yes',
     'form-documentation-option-2' => 'No',
     'form-send' => 'Send',
+    'form-button-text' => 'Send',
 ];

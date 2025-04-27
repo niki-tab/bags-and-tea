@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Livewire\Livewire;
 use Illuminate\Support\ServiceProvider;
+use Src\Crm\Forms\Domain\FormRepository;
+use Src\Crm\Forms\Infrastructure\EloquentFormRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,8 @@ class AppServiceProvider extends ServiceProvider
         Livewire::component('blog/show', \Src\Blog\Articles\Frontend\ShowAllArticle::class);
         Livewire::component('shared/language-selector', \Src\Shared\Frontend\LanguageSelector::class);
         Livewire::component('crm/forms/show', \Src\Crm\Forms\Frontend\Form::class);
+
+        $this->app->bind(FormRepository::class, EloquentFormRepository::class);
     }
 
     /**
