@@ -12,6 +12,7 @@ return [
 
     'brands_title' => 'COMPRAMOS TU BOLSO DE LUJO',
     'brands_title-fendi' => 'COMPRAMOS TU BOLSO FENDI',
+    'brands_title-loewe' => 'COMPRAMOS TU BOLSO LOEWE',
 
     'steps_title' => '¿Cómo vender tu bolso de lujo? Es muy fácil',
     'steps_title-fendi' => '¿Cómo vender tu bolso Fendi? Es muy fácil',
