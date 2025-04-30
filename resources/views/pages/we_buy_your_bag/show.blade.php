@@ -220,43 +220,7 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
                 class="w-2/3 md:w-1/2 mx-auto md:mt-16">
         </div>
     </div>
-    <div class="py-8 md:py-16 bg-[#F8F3F0]">
-        <h2 class="text-center text-2xl md:text-4xl mb-8 md:mb-14 font-['Lovera']">{{ $stringBrandsTitle }}</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-7xl mx-auto mb-4 px-4 md:px-4 lg:px-4 xl:px-0">
-            <div class="bg-[#E3D4CB] text-center h-32 md:h-40 flex items-center justify-center">
-                <img src="{{ asset('images/we_buy_your_bag/Hermes.svg') }}" alt="Luxury Hermes Bag" 
-                    class="w-2/5">
-            </div>
-            <div class="bg-[#E3D4CB] text-center h-32 md:h-40 flex items-center justify-center">
-                <img src="{{ asset('images/we_buy_your_bag/yves-saint-laurent.svg') }}" alt="Luxury YSL Bag" 
-                    class="w-3/5">
-            </div>
-            <div class="bg-[#E3D4CB] text-center h-32 md:h-40 flex items-center justify-center">
-                <img src="{{ asset('images/we_buy_your_bag/Dior.svg') }}" alt="Luxury Dior Bag" 
-                    class="w-2/5">
-            </div>
-            <div class="bg-[#E3D4CB] text-center h-32 md:h-40 flex items-center justify-center">
-                <img src="{{ asset('images/we_buy_your_bag/Louis-Vuitton.svg') }}" alt="Luxury Louis Vuitton Bag" 
-                    class="w-3/5">
-            </div>
-            <div class="bg-[#E3D4CB] text-center h-32 md:h-40 flex items-center justify-center">
-                <img src="{{ asset('images/we_buy_your_bag/Gucci.svg') }}" alt="Luxury Gucci Bag" 
-                    class="w-3/5">
-            </div>
-            <div class="bg-[#E3D4CB] text-center h-32 md:h-40 flex items-center justify-center">
-                <img src="{{ asset('images/we_buy_your_bag/Prada.svg') }}" alt="Luxury Prada Bag" 
-                    class="w-3/5">
-            </div>
-            <div class="bg-[#E3D4CB] text-center h-32 md:h-40 flex items-center justify-center">
-                <img src="{{ asset('images/we_buy_your_bag/Goyard.svg') }}" alt="Luxury Goyard Bag" 
-                    class="w-3/5">
-            </div>
-            <div class="bg-[#E3D4CB] text-center h-32 md:h-40 flex items-center justify-center">
-                <img src="{{ asset('images/we_buy_your_bag/Chanel.svg') }}" alt="Luxury Chanel Bag" 
-                    class="w-2/5">
-            </div>
-        </div>
-    </div>
+    <x-our-brands :title="$stringBrandsTitle"/>
     <div class="bg-[#C8928A] text-white pb-14 text-center">
         <h2 class="mx-4 relative top-12 text-center text-4xl font-regular font-['Lovera']">{{ $stringStepsTitle }}</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 px-4 md:px-16 py-12 md:py-4 md:h-[500px] mt-0 md:mt-6">

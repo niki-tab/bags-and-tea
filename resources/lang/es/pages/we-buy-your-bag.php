@@ -99,4 +99,11 @@ return [
     'form-documentation-option-2' => 'No',
     'form-send' => 'Enviar',
     'form-button-text' => 'Enviar',
+    'form-file-1' => '1. Foto Frontal',
+    'form-file-2' => '2. Foto etiqueta interior',
+    'form-file-3' => '3. Foto de la marca',
+    'form-file-4' => '4. Fotos de los grabados en los herrajes',
+    'form-file-5' => '5. Foto 5',
+    'form-file-6' => '6. Foto 6',
+    'form-file-7' => '7. Foto 7',
 ];

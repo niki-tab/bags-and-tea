@@ -81,4 +81,11 @@ return [
     'form-documentation-option-2' => 'No',
     'form-send' => 'Send',
     'form-button-text' => 'Send',
+    'form-file-1' => '1. Front photo',
+    'form-file-2' => '2. Interior label photo',
+    'form-file-3' => '3. Logo or brand photo',
+    'form-file-4' => '4. Engravings on hardware photos',
+    'form-file-5' => '5. Photo 5',
+    'form-file-6' => '6. Photo 6',
+    'form-file-7' => '7. Photo 7',
 ];

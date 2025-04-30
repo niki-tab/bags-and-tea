@@ -15,4 +15,7 @@ return [
     'label-product-price-from' => 'From:',
     'label-product-stock-available' => 'In Stock',
     'label-product-no-stock-available' => 'Out of Stock',
+
+    
+    'brands_title' => 'OUR SECOND HAND LUXURY BAGS',
 ];

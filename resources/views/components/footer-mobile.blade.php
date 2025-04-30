@@ -43,7 +43,7 @@
         <nav class="flex justify-between items-center gap-2 py-4 mx-auto w-full">
             <a 
                 href="{{ route(app()->getLocale() === 'es' ? 'privacy.show.es' : 'privacy.show.en', ['locale' => app()->getLocale()]) }}" 
-                 class="flex-1 text-center font-robotoCondensed text-lg font-medium 
+                 class="mx-auto text-center font-robotoCondensed text-lg font-medium 
                         {{ request()->routeIs('privacy.show.es', 'privacy.show.en') 
                         ? 'text-color-5' : 'text-color-1 hover:text-color-3' }}">
 
@@ -52,18 +52,10 @@
 
             <a 
                 href="{{ route(app()->getLocale() === 'es' ? 'cookies.show.en-es' : 'cookies.show.en-es', ['locale' => app()->getLocale()]) }}" 
-                 class="flex-1 text-center font-robotoCondensed text-lg font-medium 
+                 class="mx-auto text-center font-robotoCondensed text-lg font-medium 
                         {{ request()->routeIs('cookies.show.en-es') 
                         ? 'text-color-5' : 'text-color-1 hover:text-color-3' }}">
                 {{ trans('components/footer.subfooter-option-2') }}
-            </a>
-
-            <a 
-                href="{{ route(app()->getLocale() === 'es' ? 'legal-notice.show.es' : 'legal-notice.show.en', ['locale' => app()->getLocale()]) }}" 
-                 class="flex-1 text-center font-robotoCondensed text-lg font-medium 
-                        {{ request()->routeIs('legal-notice.show.es', 'legal-notice.show.en') 
-                        ? 'text-color-5' : 'text-color-1 hover:text-color-3' }}">
-                {{ trans('components/footer.subfooter-option-3') }}
             </a>
 
         </nav>

@@ -10,10 +10,11 @@ use Src\Blog\Articles\Model\ArticleModel;
 use App\Models\ProductQuantityVariationModel;
 use Src\Crm\Forms\Application\UseCases\FormSubmissionCreator;
 use App\Models\ProducSizeVariationQuantityVariationPriceModel;
+use Livewire\WithFileUploads; 
 
 class Form extends Component
 {
-
+    use WithFileUploads;
     public $formTitle;
     public $formIdentifier;
     public $formFields;
@@ -41,6 +42,7 @@ class Form extends Component
     {
         $rules = [];
         
+
         foreach ($this->formFields as $field) {
             $fieldName = "formData.{$field['name']}";
             
@@ -48,7 +50,11 @@ class Form extends Component
             switch ($field['required']) {
                 
                 case true:
-                    $rules[$fieldName] = 'required';
+                    if ($field['type'] === 'file') {
+                        $rules[$fieldName] = 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048';
+                    } else {
+                        $rules[$fieldName] = 'required';
+                    }
                     break;
 
                 default:
@@ -78,7 +84,8 @@ class Form extends Component
     }
 
     public function submit()
-    {
+    {   
+        //dd($this->formData);
         $this->validate();
         $this->formSubmissionCreator->__invoke(
             "88cba589-9abd-44a1-bb87-c1fe6fb8e5b0",
