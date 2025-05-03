@@ -65,20 +65,20 @@
                         <div class="mb-4">
                             <label for="{{ trans($field['name']) }}" class="font-bold font-robotoCondensed text-color-2 ml-4 block mb-2">{{ trans($field['label']) }}</label>
                             <input type="file"
-                                wire:model="formData.{{ $field['name'] }}"
+                                wire:model="files.{{ $field['name'] }}"
                                 class="font-robotoCondensed ml-8"
                                 accept="image/*"
                                 multiple>
-                            <div wire:loading wire:target="formData.{{ $field['name'] }}">
+                            <div wire:loading wire:target="files.{{ $field['name'] }}">
                                 Uploading...
                             </div>
                             @if ($field['image'])
                                 <img src="{{ asset($field['image']) }}" 
                                     alt="{{ trans($field['label']) }}" 
-                                    class="w-1/2 h-1/2 mt-8 {{ !empty($formData[$field['name']]) ? 'border-2 border-green-500 p-2' : '' }}">
+                                    class="w-1/2 h-1/2 mt-8 {{ !empty($files[$field['name']]) ? 'border-2 border-green-500 p-2' : '' }}">
                             @endif
                         </div>
-                        @error('formData.' . trans($field['name']))
+                        @error('files.' . trans($field['name']))
                                 <span class="text-[#B92334] text-xs relative top-[0px]">{{ $message }}</span>
                         @enderror
                     @endif

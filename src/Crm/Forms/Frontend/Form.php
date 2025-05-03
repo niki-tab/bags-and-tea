@@ -22,6 +22,7 @@ class Form extends Component
     public $formFields;
     public $formButtonText;
     public $formData = [];
+    public $files = [];
     public $isTermsAndConditions;
     public $isReceiveComercialInformation;
     private FormSubmissionCreator $formSubmissionCreator;
@@ -33,8 +34,13 @@ class Form extends Component
     {
         $messages = [];
         foreach ($this->formFields as $field) {
-            $fieldName = trans($field['name']);
-            $messages["formData.{$fieldName}.required"] = trans('components/form-show.validation-required');
+            if ($field['type'] === 'file') {
+                $fieldName = trans($field['name']);
+                $messages["files.{$fieldName}.required"] = trans('components/form-show.validation-required');
+            } else {
+                $fieldName = trans($field['name']);
+                $messages["formData.{$fieldName}.required"] = trans('components/form-show.validation-required');
+            }
         }
         $messages["formData.termsAndConditions.required"] = trans('components/form-show.validation-required');
         $messages["formData.receiveComercialInformation.required"] = trans('components/form-show.validation-required');
@@ -53,6 +59,7 @@ class Form extends Component
                 
                 case true:
                     if ($field['type'] === 'file') {
+                        $fieldName = "files.{$field['name']}";
                         $rules[$fieldName] = 'required|max:2048';
                     } else {
                         $rules[$fieldName] = 'required';
@@ -88,12 +95,33 @@ class Form extends Component
 
     public function submit()
     {   
-        //dd($this->formData);
+
         $this->validate();
+
+        foreach ($this->files as $fieldName => $file) {
+            if ($file) {
+                if (is_array($file)) {
+                    // Handle multiple files
+                    foreach ($file as $singleFile) {
+                        $path = $singleFile->store('form-submissions', 'public');
+                        $this->formData[$fieldName][] = $path;
+                    }
+                } else {
+                    // Handle single file
+                    $path = $file->store('form-submissions', 'public');
+                    $this->formData[$fieldName] = $path;
+                }
+            }
+        }
+
         $this->formSubmissionCreator->__invoke(
             $this->crmFormId,
             $this->formData
         );
+
+        // Reset form
+        $this->formData = [];
+        $this->files = [];
         //dd($this->formData);
     }
 
