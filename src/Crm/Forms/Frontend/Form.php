@@ -3,19 +3,21 @@
 namespace Src\Crm\Forms\Frontend;
 
 use Livewire\Component;
+use Illuminate\Support\Str;
 use App\Models\ProductModel;
+use Livewire\WithFileUploads; 
 use Src\Crm\Forms\Domain\FormModel;
 use App\Models\ProductSizeVariationModel;
 use Src\Blog\Articles\Model\ArticleModel;
 use App\Models\ProductQuantityVariationModel;
 use Src\Crm\Forms\Application\UseCases\FormSubmissionCreator;
 use App\Models\ProducSizeVariationQuantityVariationPriceModel;
-use Livewire\WithFileUploads; 
 
 class Form extends Component
 {
     use WithFileUploads;
     public $formTitle;
+    public $crmFormId;
     public $formIdentifier;
     public $formFields;
     public $formButtonText;
@@ -51,7 +53,7 @@ class Form extends Component
                 
                 case true:
                     if ($field['type'] === 'file') {
-                        $rules[$fieldName] = 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048';
+                        $rules[$fieldName] = 'required|max:2048';
                     } else {
                         $rules[$fieldName] = 'required';
                     }
@@ -77,6 +79,7 @@ class Form extends Component
     {   
         $this->formTitle = $formTitle;
         $form = FormModel::where('form_identifier', $formIdentifier)->first();
+        $this->crmFormId = $form->id;
         $this->formFields = $form->form_fields;
         $this->formButtonText = $formButtonText;
         $this->isTermsAndConditions = $isTermsAndConditions;
@@ -88,7 +91,7 @@ class Form extends Component
         //dd($this->formData);
         $this->validate();
         $this->formSubmissionCreator->__invoke(
-            "88cba589-9abd-44a1-bb87-c1fe6fb8e5b0",
+            $this->crmFormId,
             $this->formData
         );
         //dd($this->formData);
