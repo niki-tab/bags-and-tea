@@ -23,6 +23,7 @@ class Form extends Component
     public $formButtonText;
     public $formData = [];
     public $files = [];
+    public $showSuccessMessage = false;
     public $isTermsAndConditions;
     public $isReceiveComercialInformation;
     private FormSubmissionCreator $formSubmissionCreator;
@@ -122,7 +123,8 @@ class Form extends Component
         // Reset form
         $this->formData = [];
         $this->files = [];
-        //dd($this->formData);
+        
+        $this->showSuccessMessage = true;
     }
 
     public function render()
