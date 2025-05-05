@@ -25,7 +25,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-10 md:gap-y-4 mt-8 md:mt-10"> <!-- Added grid container -->
                     @elseif ($field['type'] === 'section-title')
                         </div>
-                        <p class="block font-robotoCondensed text-color-2 text-xl ml-3 w-full font-bold">{{ trans($field['label']) }}</p>
+                        <p class="block font-robotoCondensed text-color-2 text-xl ml-3 w-full font-regular">{{ trans($field['label']) }}</p>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-10 md:gap-y-4 mt-8 md:mt-10"> <!-- Added grid container -->
                     @else
                         <div class="">
