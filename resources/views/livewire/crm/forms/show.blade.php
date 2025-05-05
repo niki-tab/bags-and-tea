@@ -23,6 +23,10 @@
                             <span class="text-[#B92334] text-xs relative top-[-12px]">{{ $message }}</span>
                         @enderror
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-10 md:gap-y-4 mt-8 md:mt-10"> <!-- Added grid container -->
+                    @elseif ($field['type'] === 'section-title')
+                        </div>
+                        <p class="block font-robotoCondensed text-color-2 text-xl ml-3 w-full font-bold">{{ trans($field['label']) }}</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-10 md:gap-y-4 mt-8 md:mt-10"> <!-- Added grid container -->
                     @else
                         <div class="">
                         @if ($field['type'] === 'text')
@@ -70,7 +74,14 @@
                             @enderror
                         @elseif ($field['type'] === 'file')
                             <div class="mb-4">
-                                <label for="{{ trans($field['name']) }}" class="font-bold font-robotoCondensed text-color-2 ml-4 block mb-2">{{ trans($field['label']) }}</label>
+                                <div class="inline-flex items-center mb-2">
+                                    <label for="{{ trans($field['name']) }}" class="font-bold font-robotoCondensed text-color-2 ml-4 block mb-2">{{ trans($field['label']) }}</label>
+                                    @if ($field['required'])
+                                        <span class="text-color-3 ml-1 mb-3">*</span>
+                                    @else
+                                        <span class="text-color-2 ml-2 mb-2 font-robotoCondensed font-light">(optional)</span>
+                                    @endif
+                                </div>
                                 <input type="file"
                                     wire:model="files.{{ $field['name'] }}"
                                     class="font-robotoCondensed ml-8"

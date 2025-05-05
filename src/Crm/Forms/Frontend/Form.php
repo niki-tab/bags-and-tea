@@ -35,6 +35,9 @@ class Form extends Component
     {
         $messages = [];
         foreach ($this->formFields as $field) {
+            if ($field['type'] === 'section-title') {
+                continue;
+            }
             if ($field['type'] === 'file') {
                 $fieldName = trans($field['name']);
                 $messages["files.{$fieldName}.required"] = trans('components/form-show.validation-required');
@@ -53,6 +56,9 @@ class Form extends Component
         
 
         foreach ($this->formFields as $field) {
+            if ($field['type'] === 'section-title') {
+                continue;
+            }
             $fieldName = "formData.{$field['name']}";
             
             // Basic rules based on field type

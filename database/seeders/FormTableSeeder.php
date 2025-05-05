@@ -90,6 +90,14 @@ class FormTableSeeder extends Seeder
                     'required' => false,
                 ],
                 [
+                    'label' => 'pages/we-buy-your-bag.form-section-title',
+                    'placeholder' =>'',
+                    'image' => null,
+                    'type' => 'section-title',
+                    'name' => 'foto-section-title',
+                    'required' => true,
+                ],
+                [
                     'label' => 'pages/we-buy-your-bag.form-file-1',
                     'placeholder' =>'',
                     'image' => '/images/forms/bag-image-1.svg',

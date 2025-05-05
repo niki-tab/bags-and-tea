@@ -100,6 +100,7 @@ return [
     'form-documentation-option-2' => 'No',
     'form-send' => 'Enviar',
     'form-button-text' => 'Enviar',
+    'form-section-title' => 'Sube fotos del bolso',
     'form-file-1' => '1. Foto Frontal',
     'form-file-2' => '2. Foto etiqueta interior',
     'form-file-3' => '3. Foto de la marca',

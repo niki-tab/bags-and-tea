@@ -81,6 +81,7 @@ return [
     'form-documentation-option-2' => 'No',
     'form-send' => 'Send',
     'form-button-text' => 'Send',
+    'form-section-title' => 'Upload photos of your bag',
     'form-file-1' => '1. Front photo',
     'form-file-2' => '2. Interior label photo',
     'form-file-3' => '3. Logo or brand photo',
