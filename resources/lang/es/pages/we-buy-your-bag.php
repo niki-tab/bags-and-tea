@@ -66,10 +66,10 @@ return [
 
     'faq_title' => 'FAQs sobre la venta de bolsos de lujo en Bags and Tea',
     'faq_title-fendi' => 'FAQs sobre la venta de bolsos Fendi en Bags and Tea',
-    'faq_title-fendi' => 'FAQs sobre la venta de bolsos Loewe en Bags and Tea',
+    'faq_title-loewe' => 'FAQs sobre la venta de bolsos Loewe en Bags and Tea',
     'faq_1_question' => '¿Qué marcas de bolsos compráis?',
     'faq_1_question-fendi' => '¿Qué modelos de bolsos Fendi compráis?',
-    'faq_1_question-loewe' => '¿Qué modelos de bolsos Fendi compráis?',
+    'faq_1_question-loewe' => '¿Qué modelos de bolsos Loewe compráis?',
     'faq_1_answer' => 'Compramos bolsos de Chanel, Hermès, Louis Vuitton, Dior, Saint Laurent, Fendi, Loewe, Prada, Gucci, Balenciaga, Céline, Bottega Veneta y Polène. Estas son las marcas en las que somos expertos. Siempre estamos evolucionando, y esperamos poder ampliar esta lista en el futuro.',
     'faq_1_answer-fendi' => 'En B&T compramos todo tipo de bolsos Fendi. Es una firma que conocemos a la perfección, símbolo de calidad, diseño y savoir-faire. Confiamos plenamente en su valor y sabemos que cada pieza merece seguir brillando. Por eso, nos encanta darles una segunda vida en manos de nuevos amantes del lujo.',
     'faq_1_answer-loewe' => 'En B&T compramos todo tipo de bolsos Loewe. Admiramos su artesanía, su herencia española y la calidad excepcional de cada creación. Conocemos bien la marca y confiamos en su valor duradero. Por eso, apostamos por dar una nueva vida a cada pieza, para que siga siendo admirada como merece.',
@@ -98,7 +98,7 @@ return [
     
     'faq_5_question' => '¿Aceptáis bolsos con signos de uso o pequeñas imperfecciones?',
     'faq_5_question-fendi' => '¿Aceptáis bolsos Fendi con signos de uso o pequeñas imperfecciones?',
-    'faq_5_question-loewe' => '¿Aceptáis bolsos Fendi con signos de uso o pequeñas imperfecciones?',
+    'faq_5_question-loewe' => '¿Aceptáis bolsos Loewe con signos de uso o pequeñas imperfecciones?',
     'faq_5_answer' => 'Sí, aceptamos bolsos con signos de uso, siempre que estén en buen estado general. Eso sí, las imperfecciones pueden afectar al valor final de la tasación.',
     'faq_5_answer-fendi' => 'Aceptamos bolsos con signos de uso, siempre que mantengan un buen estado general. Eso sí, es importante tener en cuenta que las imperfecciones pueden influir en el valor final de la tasación.',
     'faq_5_answer-loewe' => 'Aceptamos bolsos Loewe que presenten signos de uso, siempre que conserven un estado general cuidado. Las marcas propias del tiempo son naturales, aunque conviene recordar que ciertos desperfectos pueden afectar al valor de la tasación final. Aun así, cada pieza será evaluada con atención y criterio especializado.',
