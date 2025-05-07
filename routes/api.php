@@ -1,6 +1,8 @@
 <?php
 
+use App\Mail\TestEmail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,4 +45,12 @@ Route::group(['prefix' => 'blog'], function () {
 
     
 
+});
+
+Route::get('/test-email', function () {
+    
+        Mail::to('recipient@example.com')->send(new TestEmail());
+        return 'Test email sent!';
+    
+    
 });

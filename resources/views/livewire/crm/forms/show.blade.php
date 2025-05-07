@@ -14,27 +14,36 @@
                 @foreach ($formFields as $field)
                     @if ($field['type'] === 'textarea')
             </div>
-            <textarea 
+            <div class="relative">
+                <textarea 
                         wire:model="formData.{{ trans($field['name']) }}"
                         name="{{ trans($field['name']) }}"
                         class="mt-6 font-robotoCondensed h-36 w-full mb-6 bg-transparent border-b border-color-2 placeholder-color-2 placeholder-font-robotoCondensed pl-4 focus:outline-none focus:ring-0"
-                        placeholder="{{ trans($field['placeholder']) }}"></textarea>
-                        @error('formData.' . trans($field['name']))
-                            <span class="text-[#B92334] text-xs relative top-[-12px]">{{ $message }}</span>
-                        @enderror
+                        placeholder="{{ trans($field['placeholder']) }}">
+                </textarea>
+                @if ($field['required'])
+                    <span class="text-color-3 font-robotoCondensed font-light absolute top-[10px] right-2 md:right-0">{{ trans('components/form-show.label-required') }}</span>
+                @endif
+            </div>    
+            @error('formData.' . trans($field['name']))
+                <span class="text-[#B92334] text-xs relative top-[-12px]">{{ $message }}</span>
+            @enderror
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-10 md:gap-y-4 mt-8 md:mt-10"> <!-- Added grid container -->
                     @elseif ($field['type'] === 'section-title')
                         </div>
                         <p class="block font-robotoCondensed text-color-2 text-xl ml-3 w-full font-regular">{{ trans($field['label']) }}</p>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-10 md:gap-y-4 mt-8 md:mt-10"> <!-- Added grid container -->
                     @else
-                        <div class="">
+                        <div class="relative">
                         @if ($field['type'] === 'text')
                             <input type="text" 
                                 wire:model="formData.{{ trans($field['name']) }}"
                                 name="{{ trans($field['name']) }}" 
                                 class="font-robotoCondensed h-8 w-full mb-6 bg-transparent border-b border-color-2 placeholder-color-2 placeholder-font-robotoCondensed pl-4 focus:outline-none focus:ring-0"
                                 placeholder="{{ trans($field['placeholder']) }}">
+                                @if ($field['required'])
+                                    <span class="text-color-3 font-robotoCondensed font-light absolute top-[-8px] right-2 md:right-0">{{ trans('components/form-show.label-required') }}</span>
+                                @endif
                                 @error('formData.' . trans($field['name']))
                                     <span class="text-[#B92334] text-xs relative top-[-12px]">{{ $message }}</span>
                                 @enderror
@@ -44,6 +53,9 @@
                                 name="{{ trans($field['name']) }}" 
                                 class="font-robotoCondensed h-8 w-full mb-6 bg-transparent border-b border-color-2 placeholder-color-2 placeholder-font-robotoCondensed pl-4 focus:outline-none focus:ring-0"
                                 placeholder="{{ trans($field['placeholder']) }}">
+                                @if ($field['required'])
+                                    <span class="text-color-3 font-robotoCondensed font-light absolute top-[-8px] right-2 md:right-0">{{ trans('components/form-show.label-required') }}</span>
+                                @endif
                                 @error('formData.' . trans($field['name']))
                                     <span class="text-[#B92334] text-xs relative top-[-12px]">{{ $message }}</span>
                                 @enderror
@@ -52,12 +64,20 @@
                                 wire:model="formData.{{ trans($field['name']) }}"
                                 name="{{ trans($field['name']) }}" 
                                 class="font-robotoCondensed h-8 w-full mb-6 bg-transparent border-b border-color-2 placeholder-color-2 placeholder-font-robotoCondensed pl-4 focus:outline-none focus:ring-0"
-                                placeholder="{{ trans($field['placeholder']) }}">    
+                                placeholder="{{ trans($field['placeholder']) }}">
+                                @if ($field['required'])
+                                    <span class="text-color-3 font-robotoCondensed font-light absolute top-[-8px] right-2 md:right-0">{{ trans('components/form-show.label-required') }}</span>
+                                @endif    
                                 @error('formData.' . trans($field['name']))
                                     <span class="text-[#B92334] text-xs relative top-[-12px]">{{ $message }}</span>
                                 @enderror
                         @elseif ($field['type'] === 'radio')
-                            <label for="{{ trans($field['name']) }}" class="font-robotoCondensed text-color-2 ml-4 block mb-2">{{ trans($field['label']) }}</label>
+                            <div class="inline-flex items-center mb-2">
+                                <label for="{{ trans($field['name']) }}" class="font-robotoCondensed text-color-2 ml-4">{{ trans($field['label']) }}</label>
+                                @if ($field['required'])
+                                    <span class="text-color-3 ml-1 mb-2 font-robotoCondensed font-light">{{ trans('components/form-show.label-required') }}</span>
+                                @endif
+                            </div>   
                             @foreach ($field['options'] as $option)
                                 <div class="flex items-center mb-2 ml-12">
                                     <input type="radio" 
@@ -77,9 +97,9 @@
                                 <div class="inline-flex items-center mb-2">
                                     <label for="{{ trans($field['name']) }}" class="font-bold font-robotoCondensed text-color-2 ml-4 block mb-2">{{ trans($field['label']) }}</label>
                                     @if ($field['required'])
-                                        <span class="text-color-3 ml-1 mb-3">*</span>
+                                        <span class="text-color-3 ml-1 mb-3 font-robotoCondensed font-light">{{ trans('components/form-show.label-required') }}</span>
                                     @else
-                                        <span class="text-color-2 ml-2 mb-2 font-robotoCondensed font-light">(optional)</span>
+                                        <span class="text-color-2 ml-2 mb-2 font-robotoCondensed font-light">{{ trans('components/form-show.label-optional') }}</span>
                                     @endif
                                 </div>
                                 <input type="file"
