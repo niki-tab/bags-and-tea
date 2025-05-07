@@ -67,7 +67,8 @@ class Form extends Component
                 case true:
                     if ($field['type'] === 'file') {
                         $fieldName = "files.{$field['name']}";
-                        $rules[$fieldName] = 'required|mimes:jpeg,jpg,png,gif|max:2048';
+                        //$rules[$fieldName] = 'required|max:2048';
+                        $rules[$fieldName] = 'max:2048';
                     } else {
                         $rules[$fieldName] = 'required';
                     }
