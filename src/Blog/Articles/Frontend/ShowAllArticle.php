@@ -12,7 +12,7 @@ class ShowAllArticle extends Component
     public $allArticles;
     public array $articlesNotFoundTextTranslations;
 
-    public function mount()
+    public function mount($numberArticles = null)
     {   
         
         $this->lang = app()->getLocale();
@@ -27,7 +27,11 @@ class ShowAllArticle extends Component
                                             return !empty($article['slug']);
                                         });
 
-        $this->allArticles = $articleModel;
+        if($numberArticles){
+            $this->allArticles = $articleModel->take($numberArticles);
+        }else{
+            $this->allArticles = $articleModel;
+        }
         
         //$article = ArticleModel::where("slug->".$this->lang, $articleSlug)->first();
 

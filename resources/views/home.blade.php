@@ -45,6 +45,9 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
         <h2 class="text-center text-[#ffffff] text-2xl md:text-4xl mb-8 md:mb-14 font-['Lovera'] w-2/3 mx-auto">{{ trans('pages/home.title-avantage-buying-bags-and-tea') }} </h2>
         <p class="text-white w-2/3 mx-auto text-robotoCondensed font-light">{{ trans('pages/home.description-avantage-buying-bags-and-tea') }}</p>
     </div>
+    <div class="pt-2">
+        @livewire('blog/show', ['numberArticles' => 3])
+    </div>
 </div>
 
 @endsection

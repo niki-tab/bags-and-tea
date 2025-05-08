@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @livewire('blog/show')
+    @livewire('blog/show', ['numberArticles' => null])
 
 @endsection
 
