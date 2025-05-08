@@ -12,7 +12,7 @@
                         alt="{{ $article["title"] }}" 
                         class="w-full h-48 object-cover">
                     <div class="p-6">
-                        <h2 class="text-xl font-['Lovera'] text-color-2 mb-2">{{ strip_tags($article["title"]) }}</h2>
+                        <h2 class="text-xl font-robotoCondensed text-color-2 mb-2">{{ strip_tags($article["title"]) }}</h2>
                         <p class="text-[#4D5562] font-robotoCondensed text-sm mb-4">{{ Str::limit(strip_tags($article["body"]), 100) }}</p>
                         <span class="text-color-2 font-robotoCondensed font-light">{{ trans('components/article-all-show.label-read-more') }}&nbsp;→</span>
                     </div>
