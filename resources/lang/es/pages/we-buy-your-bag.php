@@ -49,7 +49,7 @@ return [
     'brands_title-fendi' => 'COMPRAMOS TU BOLSO FENDI',
     'brands_title-loewe' => 'COMPRAMOS TU BOLSO LOEWE',
     'brands_title-chanel' => 'COMPRAMOS TU BOLSO CHANEL',
-    'brands_title-louis-vuitton' => 'COMPRAMOS TU BOLSO LOUIS VUITTON',ç
+    'brands_title-louis-vuitton' => 'COMPRAMOS TU BOLSO LOUIS VUITTON',
     'brands_title-gucci' => 'COMPRAMOS TU BOLSO GUCCI',
 
 
