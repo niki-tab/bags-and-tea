@@ -234,7 +234,7 @@ return [
 
 
     'faq_1_question' => '¿Qué marcas de bolsos compráis?',
-    'faq_1_question.fendi' => '¿Qué modelos de bolsos Fendi compráis?',
+    'faq_1_question-fendi' => '¿Qué modelos de bolsos Fendi compráis?',
     'faq_1_question-loewe' => '¿Qué modelos de bolsos Loewe compráis?',
     'faq_1_question-chanel' => '¿Qué modelos de bolsos Chanel compráis?',
     'faq_1_question-louis-vuitton' => '¿Qué modelos de bolsos Louis Vuitton compráis?',
@@ -247,7 +247,7 @@ return [
 
 
     'faq_1_answer' => 'Compramos bolsos de Chanel, Hermès, Louis Vuitton, Dior, Saint Laurent, Fendi, Loewe, Prada, Gucci, Balenciaga, Céline, Bottega Veneta y Polène. Estas son las marcas en las que somos expertos. Siempre estamos evolucionando, y esperamos poder ampliar esta lista en el futuro.',
-    'faq_1_answer-fendi' => 'En B&T compramos todo tipo de bolsos Fendi. Es una firma que conocemos a la perfección, símbolo de calidad, diseño y savoir-faire. Confiamos plenamente en su valor y sabemos que cada pieza merece seguir brillando. Por eso, nos encanta darles una segunda vida en manos de nuevos amantes del lujo.',
+    'faq_1_answer.fendi' => 'En B&T compramos todo tipo de bolsos Fendi. Es una firma que conocemos a la perfección, símbolo de calidad, diseño y savoir-faire. Confiamos plenamente en su valor y sabemos que cada pieza merece seguir brillando. Por eso, nos encanta darles una segunda vida en manos de nuevos amantes del lujo.',
     'faq_1_answer-loewe' => 'En B&T compramos todo tipo de bolsos Loewe. Admiramos su artesanía, su herencia española y la calidad excepcional de cada creación. Conocemos bien la marca y confiamos en su valor duradero. Por eso, apostamos por dar una nueva vida a cada pieza, para que siga siendo admirada como merece.',
     'faq_1_answer-chanel' => 'En B&T estamos especializados en bolsos Chanel, y aceptamos todo tipo de modelos. Sabemos reconocer su valor y entendemos el atractivo atemporal de cada diseño. Por eso, queremos ayudarte a darles una nueva vida en otras manos que los valoren igual que tú.',
     'faq_1_answer-louis-vuitton' => 'En B&T aceptamos todos los modelos de bolsos Louis Vuitton. Conocemos el legado de la maison y sabemos apreciar cada detalle de sus creaciones. Por eso, nos entusiasma darles continuidad en nuevas manos.',
