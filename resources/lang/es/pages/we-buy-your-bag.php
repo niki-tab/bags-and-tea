@@ -8,6 +8,8 @@ return [
     'page-seo-title-louis-vuitton' => 'Vender bolsos Louis Vuitton | Compramos tu bolso Louis Vuitton',
     'page-seo-title-gucci' => 'Vender bolsos Gucci | Compramos tu bolso Gucci',
     'page-seo-title-dior' => 'Vender bolsos Dior | Compramos tu bolso Dior',
+    'page-seo-title-prada' => 'Vender bolsos Prada | Compramos tu bolso Prada',
+    'page-seo-title-balenciaga' => 'Vender bolsos Balenciaga | Compramos tu bolso Balenciaga',
 
 
 
@@ -19,6 +21,8 @@ return [
     'page-seo-description-louis-vuitton' => 'Vende tu bolso Louis Vuitton de forma cómoda y segura. En B&T nos encargamos de todo: tasación justa, trato personalizado y sin complicaciones.',
     'page-seo-description-gucci' => '¿Tienes un bolso Gucci que ya no usas? En B&T lo compramos con un proceso seguro, ágil y transparente. Véndelo con total confianza.',
     'page-seo-description-dior' => 'Vende tu bolso Dior con total seguridad. En B&T te ofrecemos un proceso ágil, fiable y transparente, con una tasación justa.',
+    'page-seo-description-prada' => 'Vende tu bolso Prada con total tranquilidad. En B&T nos encargamos de todo: valoración justa, servicio cercano y sin complicaciones.',
+    'page-seo-description-balenciaga' => '¿Tienes un bolso Balenciaga que ya no usas? En B&T lo valoramos y lo compramos con rapidez, transparencia y atención personalizada.',
 
 
     
@@ -29,6 +33,8 @@ return [
     'hero_title-louis-vuitton' => 'Vende tu bolso Louis Vuitton',
     'hero_title-gucci' => 'Vende tu bolso Gucci',
     'hero_title-dior' => 'Vende tu bolso Dior',
+    'hero_title-prada' => 'Vende tu bolso Prada',
+    'hero_title-balenciaga' => 'Vende tu bolso Balenciaga',
 
 
 
@@ -39,6 +45,8 @@ return [
     'hero_description-louis-vuitton' => 'En B&T te ofrecemos un espacio seguro para vender, comprar o alquilar tus bolsos Louis Vuitton, con atención personalizada y confianza absoluta.',
     'hero_description-gucci' => 'Descubre en B&T el espacio perfecto para vender, comprar o alquilar bolsos Gucci, con atención experta y máxima confianza.',
     'hero_description-dior' => 'En B&T te ayudamos a vender, comprar o alquilar bolsos Dior con plena confianza, atención experta y total discreción.',
+    'hero_description-prada' => 'En B&T te acompañamos en la venta de tu bolso Prada con un proceso ágil, seguro y adaptado a ti.',
+    'hero_description-balenciaga' => 'En B&T ponemos a tu alcance una forma sencilla y segura de vender tus bolsos Balenciaga con plena confianza.',
 
 
 
@@ -50,6 +58,8 @@ return [
     'hero_button-louis-vuitton' => 'Ir al formulario y vende tu bolso Louis Vuitton',
     'hero_button-gucci' => 'Ir al formulario y vende tu bolso Gucci',
     'hero_button-dior' => 'Ir al formulario y vende tu bolso Dior',
+    'hero_button-prada' => 'Ir al formulario y vende tu bolso Prada',
+    'hero_button-balenciaga' => 'Ir al formulario y vende tu bolso Balenciaga',
 
 
 
@@ -61,6 +71,8 @@ return [
     'brands_title-louis-vuitton' => 'COMPRAMOS TU BOLSO LOUIS VUITTON',
     'brands_title-gucci' => 'COMPRAMOS TU BOLSO GUCCI',
     'brands_title-dior' => 'COMPRAMOS TU BOLSO DIOR',
+    'brands_title-prada' => 'COMPRAMOS TU BOLSO PRADA',
+    'brands_title-balenciaga' => 'COMPRAMOS TU BOLSO BALENCIAGA',
 
 
 
@@ -73,6 +85,8 @@ return [
     'steps_title-louis-vuitton' => '¿Cómo vender tu bolso Louis Vuitton? Es muy fácil',
     'steps_title-gucci' => '¿Cómo vender tu bolso Gucci? Es muy fácil',
     'steps_title-dior' => '¿Cómo vender tu bolso Dior? Es muy fácil',
+    'steps_title-prada' => '¿Cómo vender tu bolso Prada? Es muy fácil',
+    'steps_title-balenciaga' => '¿Cómo vender tu bolso Balenciaga? Es muy fácil',
 
 
 
@@ -86,6 +100,8 @@ return [
     'step_1_title-louis-vuitton' => 'Busca ese bolso Louis Vuitton que ya no usas',
     'step_1_title-gucci' => 'Busca ese bolso Gucci que ya no usas',
     'step_1_title-dior' => 'Busca ese bolso Dior que ya no usas',
+    'step_1_title-prada' => 'Busca ese bolso Prada que ya no usas',
+    'step_1_title-balenciaga' => 'Busca ese bolso Balenciaga que ya no usas',
 
 
 
@@ -97,6 +113,8 @@ return [
     'step_1_description-louis-vuitton' => '¿Tienes un bolso Louis Vuitton olvidado en el armario? Ahora puede tener una nueva historia. En B&T nos encargamos de ayudarte a venderlo de forma segura, con discreción y sin complicaciones.',
     'step_1_description-gucci' => '¿Tienes un bolso Gucci esperando en tu armario? En B&T nos encargamos de darle una nueva vida. Escríbenos y te ayudaremos a venderlo con rapidez, seguridad y total discreción.',
     'step_1_description-dior' => '¿Conservas un bolso Dior que ya no usas? En B&T te ayudamos a darle una segunda vida de forma segura y sin complicaciones. Escríbenos y te guiaremos durante todo el proceso.',
+    'step_1_description-prada' => '¿Tienes un bolso Prada en tu armario? En B&T te ayudamos a encontrarle un nuevo destino. Escríbenos y empieza el proceso de venta con seguridad y discreción.',
+    'step_1_description-balenciaga' => '¿Guardas un bolso Balenciaga sin uso? En B&T nos encargamos de todo para que puedas venderlo con total confianza y sin esfuerzo.',
 
 
     
@@ -108,7 +126,8 @@ return [
     'step_2_title-louis-vuitton' => 'Envíanos fotos y toda la historia del bolso Louis Vuitton',
     'step_2_title-gucci' => 'Envíanos fotos y toda la historia del bolso Gucci',
     'step_2_title-dior' => 'Envíanos fotos y toda la historia del bolso Dior',
-
+    'step_2_title-prada' => 'Envíanos fotos y toda la historia del bolso Prada',
+    'step_2_title-balenciaga' => 'Envíanos fotos y toda la historia del bolso Balenciaga',
 
 
 
@@ -119,7 +138,8 @@ return [
     'step_2_description-louis-vuitton' => 'Haznos llegar imágenes del bolso Louis Vuitton desde todos los ángulos relevantes: frontal, base, interior y herrajes. Y si deseas compartir su historia, nos encantará conocerla para valorar mejor la pieza.',
     'step_2_description-gucci' => 'Mándanos imágenes detalladas de tu bolso Gucci: frontal, base, interior y herrajes. Si puedes, comparte también su historia. Nos ayudará a valorarlo de forma más precisa y personalizada.',
     'step_2_description-dior' => 'Envíanos imágenes de tu bolso Dior desde distintos ángulos: frontal, base, interior y herrajes. Si lo deseas, comparte también su historia: cada detalle nos ayuda a valorar la pieza como merece.',
-
+    'step_2_description-prada' => 'Haznos llegar imágenes de tu bolso Prada desde distintos ángulos. Si puedes, cuéntanos dónde lo adquiriste y cómo lo has cuidado. Todo detalle ayuda a valorarlo como merece.',
+    'step_2_description-balenciaga' => 'Mándanos imágenes de tu bolso Balenciaga desde todos los ángulos. Si quieres compartir su historia, estaremos encantados: nos ayuda a entender mejor su valor.',
     
     
     'step_3_number' => '3',
@@ -130,6 +150,8 @@ return [
     'step_3_title-louis-vuitton' => '¡Te compramos tu bolso Louis Vuitton!',
     'step_3_title-gucci' => '¡Te compramos tu bolso Gucci!',
     'step_3_title-dior' => '¡Te compramos tu bolso Dior!',
+    'step_3_title-prada' => '¡Te compramos tu bolso Prada!',
+    'step_3_title-balenciaga' => '¡Te compramos tu bolso Balenciaga!',
 
 
 
@@ -141,6 +163,8 @@ return [
     'step_3_description-louis-vuitton' => 'Una vez que recibimos la información e imágenes, analizamos tu bolso con detalle. Si cumple con nuestros criterios, te haremos una propuesta clara y transparente. Tú decides si seguir adelante, sin compromiso.',
     'step_3_description-gucci' => 'Cuando recibimos la información y las imágenes, evaluamos tu bolso Gucci con detalle. Si encaja en nuestra selección, te enviaremos una oferta clara y justa. Sin complicaciones.',
     'step_3_description-dior' => 'Tras recibir las fotos e información de tu bolso Dior, lo analizamos minuciosamente. Si cumple con nuestros criterios, te haremos una oferta justa y clara. Sin esperas ni complicaciones.',
+    'step_3_description-prada' => 'Una vez que tengamos las imágenes y datos, analizamos tu bolso Prada y, si encaja, te haremos una oferta clara y justa. Sin letra pequeña.',
+    'step_3_description-balenciaga' => 'Con tus imágenes, valoramos tu bolso Balenciaga con rigor. Si cumple nuestros criterios, recibirás una propuesta transparente. Todo sin complicaciones.',
 
     
     
@@ -151,6 +175,8 @@ return [
     'why_bag_question-louis-vuitton' => '¿Por qué compramos tu bolso Louis Vuitton?',
     'why_bag_question-gucci' => '¿Por qué compramos tu bolso Gucci?',
     'why_bag_question-dior' => '¿Por qué compramos tu bolso Dior?',
+    'why_bag_question-prada' => '¿Por qué compramos tu bolso Prada?',
+    'why_bag_question-balenciaga' => '¿Por qué compramos tu bolso Balenciaga?',
 
 
 
@@ -162,6 +188,8 @@ return [
     'why_bag_answer-louis-vuitton' => 'Los bolsos Louis Vuitton tienen una elegancia que perdura. En B&T valoramos su diseño, historia y calidad, y creemos en darles nuevas oportunidades en manos apasionadas por el lujo auténtico.',
     'why_bag_answer-gucci' => 'Gucci es sinónimo de estilo y personalidad. En B&T sabemos reconocer el valor de sus piezas y queremos prolongar su historia ofreciendo nuevas oportunidades a cada bolso que llega a nuestras manos.',
     'why_bag_answer-dior' => 'En B&T valoramos el legado de Dior: piezas con historia, elegancia y estilo propio. Creemos en darles continuidad en nuevas manos, cuidando su esencia y belleza atemporal.',
+    'why_bag_answer-prada' => 'Prada combina modernidad y elegancia. En B&T valoramos cada pieza por su estilo, su historia y su calidad, y queremos darles una nueva vida en manos apasionadas.',
+    'why_bag_answer-balenciaga' => 'Balenciaga es sinónimo de diseño vanguardista. En B&T apreciamos la singularidad de cada bolso y apostamos por prolongar su recorrido más allá de una primera vida.',
 
 
 
@@ -173,6 +201,8 @@ return [
     'why-bags-and-tea-question-louis-vuitton' => '¿Por qué vender tu bolso Louis Vuitton en Bags and Tea?',
     'why-bags-and-tea-question-gucci' => '¿Por qué vender tu bolso Gucci en Bags and Tea?',
     'why-bags-and-tea-question-dior' => '¿Por qué vender tu bolso Dior en Bags and Tea?',
+    'why-bags-and-tea-question-prada' => '¿Por qué vender tu bolso Prada en Bags and Tea?',
+    'why-bags-and-tea-question-balenciaga' => '¿Por qué vender tu bolso Balenciaga en Bags and Tea?',
 
 
 
@@ -184,7 +214,8 @@ return [
     'why-bags-and-tea-answer-louis-vuitton' => 'En B&T te acompañamos durante todo el proceso de venta de tu bolso Louis Vuitton. Recibes una tasación honesta, atención cercana y nos ocupamos de todos los detalles para que solo tengas que dar el primer paso.',
     'why-bags-and-tea-answer-gucci' => 'Vender tu bolso Gucci en B&T es fácil, rápido y seguro. Te acompañamos en cada paso, desde la valoración hasta el pago, con un trato cercano y una atención impecable.',
     'why-bags-and-tea-answer-dior' => 'Vender tu bolso Dior con B&T es confiar en un equipo experto que se encarga de todo por ti. Valoramos tu pieza con criterio, transparencia y una atención personalizada en cada paso.',
-
+    'why-bags-and-tea-answer-prada' => 'Vender tu bolso Prada con B&T es optar por una experiencia de lujo: atención personalizada, valoración profesional y un servicio que cuida cada detalle.',
+    'why-bags-and-tea-answer-balenciaga' => 'Con B&T, vender tu bolso Balenciaga es disfrutar de un proceso claro, seguro y adaptado a ti. Nos ocupamos de todo para que tú solo tengas que escribirnos.',
 
 
 
@@ -196,6 +227,8 @@ return [
     'faq_title-louis-vuitton' => 'FAQs sobre la venta de bolsos Louis Vuitton en Bags and Tea',
     'faq_title-gucci' => 'FAQs sobre la venta de bolsos Gucci en Bags and Tea',
     'faq_title-dior' => 'FAQs sobre la venta de bolsos Dior en Bags and Tea',
+    'faq_title-prada' => 'FAQs sobre la venta de bolsos Prada en Bags and Tea',
+    'faq_title-balenciaga' => 'FAQs sobre la venta de bolsos Balenciaga en Bags and Tea',
 
 
 
@@ -207,6 +240,8 @@ return [
     'faq_1_question-louis-vuitton' => '¿Qué modelos de bolsos Louis Vuitton compráis?',
     'faq_1_question-gucci' => '¿Qué modelos de bolsos Gucci compráis?',
     'faq_1_question-dior' => '¿Qué modelos de bolsos Dior compráis?',
+    'faq_1_question-prada' => '¿Qué modelos de bolsos Prada compráis?',
+    'faq_1_question-balenciaga' => '¿Qué modelos de bolsos Balenciaga compráis?',
 
 
 
@@ -218,6 +253,8 @@ return [
     'faq_1_answer-louis-vuitton' => 'En B&T aceptamos todos los modelos de bolsos Louis Vuitton. Conocemos el legado de la maison y sabemos apreciar cada detalle de sus creaciones. Por eso, nos entusiasma darles continuidad en nuevas manos.',
     'faq_1_answer-gucci' => 'En B&T compramos todo tipo de bolsos Gucci. Conocemos bien la firma, valoramos su diseño y su evolución, y nos entusiasma encontrarles una nueva vida junto a amantes del lujo auténtico.',
     'faq_1_answer-dior' => 'En B&T trabajamos con toda clase de bolsos Dior. Admiramos su diseño, tradición y calidad, y queremos ayudar a prolongar su historia junto a nuevos coleccionistas y amantes del lujo.',
+    'faq_1_answer-prada' => 'En B&T compramos bolsos Prada de todas las colecciones. Nos encanta su diseño atemporal y sabemos apreciar su calidad, estilo y valor duradero.',
+    'faq_1_answer-balenciaga' => 'En B&T aceptamos bolsos Balenciaga de distintas líneas. Nos apasiona su creatividad y cuidamos cada pieza para que siga brillando como el primer día.',
 
     
     
@@ -228,6 +265,8 @@ return [
     'faq_2_question-louis-vuitton' => '¿Cómo tasáis los bolsos Louis Vuitton para la compra?',
     'faq_2_question-gucci' => '¿Cómo tasáis los bolsos Gucci para la compra?',
     'faq_2_question-dior' => '¿Cómo tasáis los bolsos Dior para la compra?',
+    'faq_2_question-prada' => '¿Cómo tasáis los bolsos Prada para la compra?',
+    'faq_2_question-balenciaga' => '¿Cómo tasáis los bolsos Balenciaga para la compra?',
 
 
 
@@ -240,7 +279,10 @@ return [
     'faq_2_answer-louis-vuitton' => 'La tasación de tu bolso Louis Vuitton depende de su estado, antigüedad, accesorios y las imágenes que recibamos. Con esa base, comparamos con precios reales del mercado para ofrecer una valoración ajustada.',
     'faq_2_answer-gucci' => 'Tasamos tu bolso Gucci según su estado, año, complementos y fotografías. Con esa base, lo comparamos con precios reales de mercado y te damos una valoración justa y transparente.',
     'faq_2_answer-dior' => 'Tasamos cada bolso Dior en función de su estado, antigüedad, accesorios incluidos y fotografías. Comparamos con precios reales del mercado y te damos una valoración justa y sin letra pequeña.',
+    'faq_2_answer-prada' => 'Tasamos tu bolso Prada según su estado, año, complementos y fotos. A partir de esa base, te ofrecemos una valoración justa según el mercado actual.',
+    'faq_2_answer-balenciaga' => 'Valoramos cada bolso Balenciaga teniendo en cuenta su estado, antigüedad y accesorios. También analizamos las imágenes para ofrecerte una estimación realista.',
 
+    
     
 
     'faq_3_question' => '¿Qué fotos necesitáis para llevar a cabo vuestra tasación?',
@@ -250,6 +292,8 @@ return [
     'faq_3_question-louis-vuitton' => '¿Qué fotos necesitáis para llevar a cabo vuestra tasación de bolsos Louis Vuitton?',
     'faq_3_question-gucci' => '¿Qué fotos necesitáis para llevar a cabo vuestra tasación de bolsos Gucci?',
     'faq_3_question-dior' => '¿Qué fotos necesitáis para llevar a cabo vuestra tasación de bolsos Dior?',
+    'faq_3_question-prada' => '¿Qué fotos necesitáis para llevar a cabo vuestra tasación de bolsos Prada?',
+    'faq_3_question-balenciaga' => '¿Qué fotos necesitáis para llevar a cabo vuestra tasación de bolsos Balenciaga?',
 
 
 
@@ -261,6 +305,8 @@ return [
     'faq_3_answer-louis-vuitton' => 'Te pedimos imágenes del bolso Louis Vuitton desde el frente, interior, etiqueta y herrajes. También puedes añadir cualquier detalle especial o signo de uso que consideres relevante para su correcta valoración.',
     'faq_3_answer-gucci' => 'Necesitamos imágenes nítidas del bolso Gucci: parte frontal, interior, etiqueta, logo y herrajes. Si tiene imperfecciones o detalles distintivos, inclúyelos también para una mejor evaluación.',
     'faq_3_answer-dior' => 'Necesitamos imágenes detalladas del bolso Dior: parte frontal, interior con etiqueta, logo y herrajes. Si presenta alguna peculiaridad o marca de uso, inclúyela también para una valoración precisa.',
+    'faq_3_answer-prada' => 'Necesitamos imágenes claras del bolso Prada: parte frontal, interior, etiqueta, logo y herrajes. Si hay algún detalle relevante, inclúyelo también.',
+    'faq_3_answer-balenciaga' => 'Mándanos fotos del bolso Balenciaga desde todos los ángulos clave: frontal, interior, etiquetas y herrajes. Los detalles son fundamentales para valorar bien.',
 
     
     
@@ -271,6 +317,8 @@ return [
     'faq_4_question-louis-vuitton' => '¿Cuánto tardáis en hacer una oferta? ¿Y cuánto tiempo tarda en completarse la venta?',
     'faq_4_question-gucci' => '¿Cuánto tardáis en hacer una oferta? ¿Y cuánto tiempo tarda en completarse la venta?',
     'faq_4_question-dior' => '¿Cuánto tardáis en hacer una oferta? ¿Y cuánto tiempo tarda en completarse la venta?',
+    'faq_4_question-prada' => '¿Cuánto tardáis en hacer una oferta? ¿Y cuánto tiempo tarda en completarse la venta?',
+    'faq_4_question-balenciaga' => '¿Cuánto tardáis en hacer una oferta? ¿Y cuánto tiempo tarda en completarse la venta?',
 
 
 
@@ -282,6 +330,9 @@ return [
     'faq_4_answer-louis-vuitton' => 'Respondemos con rapidez para confirmar que estamos revisando tu bolso. Normalmente, en 24 a 72 horas recibirás nuestra propuesta. Todo el proceso puede durar entre cinco y siete días, de forma ágil y sencilla.',
     'faq_4_answer-gucci' => 'Una vez recibamos los datos del bolso Gucci, te enviaremos la oferta en un plazo de 24 a 72 horas. El proceso completo de venta puede cerrarse en menos de una semana.',
     'faq_4_answer-dior' => 'Te responderemos con rapidez para confirmar la recepción del bolso Dior y en 24 a 72 horas te enviaremos una propuesta. El proceso completo puede cerrarse entre 5 y 7 días.',
+    'faq_4_answer-prada' => 'Una vez recibamos la información, confirmamos la recepción y enviamos la oferta entre 24 y 72 horas. Todo el proceso suele completarse en unos 5 a 7 días.',
+    'faq_4_answer-balenciaga' => 'Te enviaremos nuestra oferta en un plazo de 1 a 3 días. Si la aceptas, la venta de tu bolso Balenciaga se puede cerrar en menos de una semana.',
+
 
     
     
@@ -292,7 +343,8 @@ return [
     'faq_5_question-louis-vuitton' => '¿Aceptáis bolsos Louis Vuitton con signos de uso o pequeñas imperfecciones?',
     'faq_5_question-gucci' => '¿Aceptáis bolsos Gucci con signos de uso o pequeñas imperfecciones?',
     'faq_5_question-dior' => '¿Aceptáis bolsos Dior con signos de uso o pequeñas imperfecciones?',
-
+    'faq_5_question-prada' => '¿Aceptáis bolsos Prada con signos de uso o pequeñas imperfecciones?',
+    'faq_5_question-balenciaga' => '¿Aceptáis bolsos Balenciaga con signos de uso o pequeñas imperfecciones?',
 
 
 
@@ -303,8 +355,10 @@ return [
     'faq_5_answer-louis-vuitton' => 'Sí, compramos bolsos Louis Vuitton aunque tengan signos de uso. Siempre que estén bien conservados, podremos hacerte una propuesta. Los pequeños defectos pueden influir, pero no son un impedimento.',
     'faq_5_answer-gucci' => 'Sí, aceptamos bolsos Gucci usados si están en buen estado general. Las marcas de uso pueden influir en la valoración, pero no impiden que podamos hacerte una propuesta.',
     'faq_5_answer-dior' => 'Sí, aceptamos bolsos Dior usados, siempre que estén en buenas condiciones generales. Las pequeñas imperfecciones se tienen en cuenta, pero no impiden la valoración ni la posible compra.',
-
+    'faq_5_answer-prada' => 'Sí, siempre que el bolso esté bien conservado. Las imperfecciones se valoran, pero no impiden la compra.',
+    'faq_5_answer-balenciaga' => 'Sí, aceptamos bolsos Balenciaga usados si su estado general es bueno. Las marcas del tiempo son naturales y no suponen un obstáculo.',
     
+
     
     'faq_6_question' => '¿Puedo vender un bolso aunque no tenga la factura o el packaging original?',
     'faq_6_question-fendi' => '¿Puedo vender un bolso Fendi aunque no tenga la factura o el packaging original?',
@@ -313,6 +367,8 @@ return [
     'faq_6_question-louis-vuitton' => '¿Puedo vender un bolso Louis Vuitton aunque no tenga la factura o el packaging original?',
     'faq_6_question-gucci' => '¿Puedo vender un bolso Gucci aunque no tenga la factura o el packaging original?',
     'faq_6_question-dior' => '¿Puedo vender un bolso Dior aunque no tenga la factura o el packaging original?',
+    'faq_6_question-prada' => '¿Puedo vender un bolso Prada aunque no tenga la factura o el packaging original?',
+    'faq_6_question-balenciaga' => '¿Puedo vender un bolso Balenciaga aunque no tenga la factura o el packaging original?',
 
 
 
@@ -324,7 +380,10 @@ return [
     'faq_6_answer-louis-vuitton' => 'Sí, puedes vender tu bolso Louis Vuitton sin disponer de factura o embalaje original. Verificaremos su autenticidad igualmente. Tener esos elementos ayuda, pero no son obligatorios.',
     'faq_6_answer-gucci' => 'Claro, puedes vender tu bolso Gucci aunque no tengas la factura o el embalaje. En B&T verificamos su autenticidad con rigor. Tener esos elementos facilita, pero no es obligatorio.',
     'faq_6_answer-dior' => 'No es necesario que conserves la factura o el packaging original para vender tu bolso Dior. Nosotros verificaremos su autenticidad con todo el rigor necesario. Contar con ellos facilita, pero no es obligatorio.',
+    'faq_6_answer-prada' => 'Sí, puedes venderlo aunque no conserves la factura o el embalaje. Verificaremos su autenticidad igualmente.',
+    'faq_6_answer-balenciaga' => 'Claro. Aunque contar con ellos ayuda, no es imprescindible. Lo importante es que el bolso sea auténtico.',
 
+    
     
     
     'faq_7_question' => '¿Si acepto vuestra oferta, ¿cómo se realiza el pago?',
@@ -334,6 +393,8 @@ return [
     'faq_7_question-louis-vuitton' => '¿Si acepto vuestra oferta, ¿cómo se realiza el pago?',
     'faq_7_question-gucci' => '¿Si acepto vuestra oferta, ¿cómo se realiza el pago?',
     'faq_7_question-dior' => '¿Si acepto vuestra oferta, ¿cómo se realiza el pago?',
+    'faq_7_question-prada' => '¿Si acepto vuestra oferta, ¿cómo se realiza el pago?',
+    'faq_7_question-balenciaga' => '¿Si acepto vuestra oferta, ¿cómo se realiza el pago?',
 
 
 
@@ -345,6 +406,9 @@ return [
     'faq_7_answer-louis-vuitton' => 'El pago se efectúa por transferencia bancaria tras recibir y autenticar el bolso Louis Vuitton. Es un proceso rápido y completamente seguro.',
     'faq_7_answer-gucci' => 'El pago por tu bolso Gucci se realiza mediante transferencia bancaria tras la recepción y autenticación del artículo. Un proceso seguro y eficiente.',
     'faq_7_answer-dior' => 'Una vez que hayamos recibido y autenticado tu bolso Dior, el pago se efectuará por transferencia bancaria de forma segura y sin demoras.',
+    'faq_7_answer-prada' => 'El pago se realiza por transferencia bancaria una vez recibamos y verifiquemos el bolso Prada.',
+    'faq_7_answer-balenciaga' => 'Pagamos mediante transferencia bancaria una vez que tu bolso Balenciaga haya sido revisado y validado.',
+
 
     
     
@@ -355,6 +419,8 @@ return [
     'faq_8_question-louis-vuitton' => '¿Tenéis servicio de recogida o tengo que enviar yo el bolso?',
     'faq_8_question-gucci' => '¿Tenéis servicio de recogida o tengo que enviar yo el bolso?',
     'faq_8_question-dior' => '¿Tenéis servicio de recogida o tengo que enviar yo el bolso?',
+    'faq_8_question-prada' => '¿Tenéis servicio de recogida o tengo que enviar yo el bolso?',
+    'faq_8_question-balenciaga' => '¿Tenéis servicio de recogida o tengo que enviar yo el bolso?',
 
 
 
@@ -366,6 +432,8 @@ return [
     'faq_8_answer-louis-vuitton' => 'Disponemos de recogida segura y asegurada para que puedas enviarnos tu bolso Louis Vuitton sin preocuparte por nada.',
     'faq_8_answer-gucci' => 'Te ofrecemos un servicio de recogida seguro y asegurado, para que enviar tu bolso Gucci sea fácil y sin preocupaciones.',
     'faq_8_answer-dior' => 'En B&T disponemos de un servicio de recogida asegurado para tu bolso Dior, para que puedas enviarlo sin preocuparte por la logística.',
+    'faq_8_answer-prada' => 'Sí, ofrecemos un servicio de recogida con seguro incluido para que no tengas que preocuparte por el envío.',
+    'faq_8_answer-balenciaga' => 'Nos encargamos de recoger tu bolso Balenciaga de forma segura. Solo tienes que prepararlo y nosotros hacemos el resto.',
 
 
 
@@ -378,6 +446,8 @@ return [
     'faq_9_question-louis-vuitton' => '¿Puedo vender más de un bolso a la vez?',
     'faq_9_question-gucci' => '¿Puedo vender más de un bolso a la vez?',
     'faq_9_question-dior' => '¿Puedo vender más de un bolso a la vez?',
+    'faq_9_question-prada' => '¿Puedo vender más de un bolso a la vez?',
+    'faq_9_question-balenciaga' => '¿Puedo vender más de un bolso a la vez?',
 
 
 
@@ -389,6 +459,8 @@ return [
     'faq_9_answer-louis-vuitton' => 'Claro, puedes vender varios bolsos Louis Vuitton o de otras marcas. Cada uno será revisado de forma independiente antes de continuar con el proceso.',
     'faq_9_answer-gucci' => 'Sí, puedes vender varios bolsos Gucci u otras marcas. Cada uno será valorado por separado para garantizar autenticidad y ofrecerte la mejor propuesta.',
     'faq_9_answer-dior' => 'Sí, puedes vender varios bolsos Dior u otras marcas al mismo tiempo. Cada uno será evaluado de forma independiente antes de proceder con la compra.',
+    'faq_9_answer-prada' => 'Sí, puedes vender varios bolsos Prada u otras marcas. Los valoramos individualmente para ofrecerte el mejor precio.',
+    'faq_9_answer-balenciaga' => 'Por supuesto. Cada bolso Balenciaga será revisado por separado para garantizar su autenticidad y valor.',
 
 
 
@@ -400,6 +472,8 @@ return [
     'faq_10_question-louis-vuitton' => 'Si tengo dudas durante el proceso de venta, ¿a quién me dirijo?',
     'faq_10_question-gucci' => 'Si tengo dudas durante el proceso de venta, ¿a quién me dirijo?',
     'faq_10_question-dior' => 'Si tengo dudas durante el proceso de venta, ¿a quién me dirijo?',
+    'faq_10_question-prada' => 'Si tengo dudas durante el proceso de venta, ¿a quién me dirijo?',
+    'faq_10_question-balenciaga' => 'Si tengo dudas durante el proceso de venta, ¿a quién me dirijo?',
 
 
 
@@ -411,6 +485,8 @@ return [
     'faq_10_answer-louis-vuitton' => 'Puedes contactarnos por email o por WhatsApp, como prefieras. Estaremos encantados de ayudarte y resolver todas tus dudas sobre la venta de tu bolso Louis Vuitton.',
     'faq_10_answer-gucci' => 'Puedes contactar con nosotros por email o WhatsApp. Te asesoraremos en todo momento y resolveremos cualquier consulta que tengas sobre la venta de tu bolso Gucci.',
     'faq_10_answer-dior' => 'Puedes comunicarte con nosotros por email o WhatsApp en cualquier momento. Estaremos encantados de resolver tus dudas y acompañarte durante todo el proceso de venta.',
+    'faq_10_answer-prada' => 'Puedes contactar por email o WhatsApp. Estaremos encantados de ayudarte durante todo el proceso.',
+    'faq_10_answer-balenciaga' => 'Escríbenos por el canal que prefieras: email o WhatsApp. Resolveremos tus dudas lo antes posible.',
 
 
 
@@ -422,6 +498,8 @@ return [
     'final_section_title-louis-vuitton' => 'VENDE TU BOLSO LOUIS VUITTON',
     'final_section_title-gucci' => 'VENDE TU BOLSO GUCCI',
     'final_section_title-dior' => 'VENDE TU BOLSO DIOR',
+    'final_section_title-prada' => 'VENDE TU BOLSO PRADA',
+    'final_section_title-balenciaga' => 'VENDE TU BOLSO BALENCIAGA',
 
 
 
@@ -433,6 +511,8 @@ return [
     'final_section_description_1-louis-vuitton' => 'Es el momento perfecto para vender ese bolso Louis Vuitton que ya no utilizas. Rellena el formulario o envíanos un WhatsApp al +34 629 793 047.',
     'final_section_description_1-gucci' => 'Ha llegado el momento de vender ese bolso Gucci que ya no utilizas. Escríbenos por WhatsApp al +34 629 793 047 o rellena nuestro formulario online.',
     'final_section_description_1-dior' => 'Ese bolso Dior que ya no utilizas puede tener una nueva vida. Escríbenos por WhatsApp al +34 629 793 047 o completa nuestro formulario.',
+    'final_section_description_1-prada' => '¿Tienes un bolso Prada que ya no usas? Escríbenos por WhatsApp al +34 629 793 047 o completa el formulario online.',
+    'final_section_description_1-balenciaga' => 'Ese bolso Balenciaga que ya no forma parte de tu día a día puede tener una nueva historia. Contáctanos por WhatsApp o rellena el formulario.',
 
 
 
@@ -444,6 +524,8 @@ return [
     'final_section_description_2-louis-vuitton' => 'En B&T te ayudamos a que tu bolso Louis Vuitton tenga una nueva vida, con un proceso seguro, ágil y totalmente personalizado.',
     'final_section_description_2-gucci' => 'Te ayudamos a dar una segunda vida a tu bolso Gucci con un servicio ágil, personalizado y totalmente seguro.',
     'final_section_description_2-dior' => 'En B&T te ayudamos a vender tu bolso Dior con un proceso cómodo, rápido y totalmente seguro, adaptado a ti.',
+    'final_section_description_2-prada' => 'Te ayudamos a vender tu bolso Prada con rapidez, seguridad y un servicio que cuida cada detalle.',
+    'final_section_description_2-balenciaga' => 'Desde la valoración hasta la venta, en B&T nos encargamos de todo para que vender tu bolso Balenciaga sea fácil y seguro.',
 
 
     
