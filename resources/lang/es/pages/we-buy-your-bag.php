@@ -234,7 +234,7 @@ return [
 
 
     'faq_1_question' => '¿Qué marcas de bolsos compráis?',
-    'faq_1_question-fendi' => '¿Qué modelos de bolsos Fendi compráis?',
+    'faq_1_question.fendi' => '¿Qué modelos de bolsos Fendi compráis?',
     'faq_1_question-loewe' => '¿Qué modelos de bolsos Loewe compráis?',
     'faq_1_question-chanel' => '¿Qué modelos de bolsos Chanel compráis?',
     'faq_1_question-louis-vuitton' => '¿Qué modelos de bolsos Louis Vuitton compráis?',
