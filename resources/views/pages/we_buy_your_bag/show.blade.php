@@ -344,7 +344,12 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
 
                             <span class="text-xl mr-4">+</span>
                             </summary>
-                            <p class="mt-2">{{ trans("pages/we-buy-your-bag.faq_{$i}_answer") }}</p>
+                            @if(Lang::has("pages/we-buy-your-bag.faq_{$i}_answer{$iBagName}"))
+                                <p class="mt-2">{{ trans("pages/we-buy-your-bag.faq_{$i}_answer{$iBagName}") }}</p>
+                            @else
+                                <p class="mt-2">{{ trans("pages/we-buy-your-bag.faq_{$i}_answer") }}</p>
+                            @endif
+                            
                         </details>  
                     </div>
                 @endfor
