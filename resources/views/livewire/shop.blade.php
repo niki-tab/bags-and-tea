@@ -7,12 +7,8 @@
                 
                 <div class="p-6">
                     <h2 class="text-xl font-semibold text-gray-800 mb-2">{{ $product->name }}</h2>
-                    <p class="text-gray-600 mb-4">{{ Str::limit($product->description_1, 100) }}</p>
                     
-                    <div class="flex items-center justify-between">
-                        <span class="text-lg font-bold text-gray-900">${{ number_format($product->price, 2) }}</span>
-                        <a href="{{ route(app()->getLocale() === 'es' ? 'product.show.es' : 'product.show.en', ['locale' => app()->getLocale(), 'productSlug' => $product->slug]) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">{{ __('View Product') }}</a>
-                    </div>
+                    
                 </div>
             </div>
         @endforeach

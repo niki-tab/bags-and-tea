@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProductModel;
 use Illuminate\Http\Request;
+use Src\Products\Product\Infrastructure\Eloquent\ProductEloquentModel;
 
 class HomeController extends Controller
 {
@@ -11,7 +11,18 @@ class HomeController extends Controller
     public function index()
     {   
 
-        $featuredProducts = ProductModel::where('featured', true)->get();
+        $featuredProducts = ProductEloquentModel::where('featured', true)->orderBy('featured_position', 'asc')->limit(9)->get();
+
+        $featuredProducts = $featuredProducts->map(function($product) {
+            return [
+                'id' => $product->id,
+                'name' => $product->name,
+                'brand' => $product->price,
+                'image' => $product->image,
+                'description' => $product->description,
+                // Add any other fields you need
+            ];
+        })->toArray();
 
         //$this->setSeo();
 

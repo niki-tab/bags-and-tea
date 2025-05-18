@@ -9,6 +9,7 @@ use App\Models\ProductSizeVariationModel;
 use App\Models\ProductQuantityVariationModel;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\ProducSizeVariationQuantityVariationPriceModel;
+use Src\Products\Product\Infrastructure\Eloquent\ProductEloquentModel;
 
 class FakeEnvironmentSeeder extends Seeder
 {
@@ -18,15 +19,17 @@ class FakeEnvironmentSeeder extends Seeder
     public function run(): void
     {   
 
-        $vieira = ProductModel::create([
+        $bag1 = ProductEloquentModel::create([
 
             'id' => (string) Str::uuid(),
-            'name' => "Vieira",
+            'name' => "Bolso Speedy 25",
+            'brand' => "Louis Vuitton",
             'description_1' => "Procedente de Francia. Oceano Atlántico",
             'description_2' => "La vieira es un marisco delicado y sabroso, apreciado por su textura suave y su sabor único. En Rutas del Mar, te ofrecemos vieiras francesas frescas y de la mejor calidad, traídas directamente desde las costas más puras. Ideal para quienes buscan un toque gourmet en sus platos, la vieira es el manjar perfecto del mar",
-            'slug' => "vieira-bretaña",
+            'slug' => "speedy-25",
             'origin_general' => "Francia",
             'origin_specific' => "Bretaña",
+            'quality' => "AB",
             'product_type' => "Simple",
             'food_type' => "Marisco",
             'species_type' => "mollusk",
@@ -36,13 +39,14 @@ class FakeEnvironmentSeeder extends Seeder
             'stock' => "50",
             'stock_unit' => "unit",
             'out_of_stock' => true,
-            'image' => 'images/product/vieira_product_1.png',
+            'image' => 'images/product/speedy-25-imp-3-1.webp',
             'featured' => true,
+            'featured_position' => 1,
 
         ]);
 
-        $vieira
-        ->setTranslation('name', 'en', 'Scallop')
+        $bag1
+        ->setTranslation('name', 'en', 'Speedy 25 Bag')
         ->setTranslation('food_type', 'en', 'Seafood')
         ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'The scallop is a delicate and flavorful seafood, appreciated for its smooth texture and unique taste. At Rutas del Mar, we offer fresh French scallops of the highest quality, brought directly from the purest coasts. Ideal for those looking for a gourmet touch in their dishes, the scallop is the perfect seafood delicacy.')
@@ -51,46 +55,46 @@ class FakeEnvironmentSeeder extends Seeder
         ->setTranslation('slug', 'en', 'scallop-brittany')
         ->save();
 
-        $vieiraCrabProductSizeVariation1 = ProductSizeVariationModel::create([
+        $bag1CrabProductSizeVariation1 = ProductSizeVariationModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $vieira->id,
+            'product_id' => $bag1->id,
             'size_name' => "Vieira Mediana",
             'size_description' => "Vieira Mediana",
             'order' => 1,
         ]);
 
-        $vieiraCrabProductSizeVariation1
+        $bag1CrabProductSizeVariation1
         ->setTranslation('size_name', 'en', 'Medium Size Scallop')
         ->setTranslation('size_description', 'en', 'Medium Size Scallop')
         ->save();
 
-        $vieiraCrabProductSizeVariation2 = ProductSizeVariationModel::create([
+        $bag1CrabProductSizeVariation2 = ProductSizeVariationModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $vieira->id,
+            'product_id' => $bag1->id,
             'size_name' => "Vieira Grande",
             'size_description' => "Vieira Grande",
             'order' => 2,
         ]);
         
-        $vieiraCrabProductSizeVariation2
+        $bag1CrabProductSizeVariation2
         ->setTranslation('size_name', 'en', 'Big Size Scallop')
         ->setTranslation('size_description', 'en', 'Big Size Scallop')
         ->save();
 
-        $vieiraVariationPrices1 = ProducSizeVariationQuantityVariationPriceModel::create([
+        $bag1VariationPrices1 = ProducSizeVariationQuantityVariationPriceModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $vieira->id,
-            'product_size_variation_id' => $vieiraCrabProductSizeVariation1->id,
+            'product_id' => $bag1->id,
+            'product_size_variation_id' => $bag1CrabProductSizeVariation1->id,
             'product_quantity_variation_id' => null,
             'sale_price' => 3.50,
             'discounted_price' => null,
             'currency' => "€",
         ]);
 
-        $vieiraVariationPrices2 = ProducSizeVariationQuantityVariationPriceModel::create([
+        $bag1VariationPrices2 = ProducSizeVariationQuantityVariationPriceModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $vieira->id,
-            'product_size_variation_id' => $vieiraCrabProductSizeVariation2->id,
+            'product_id' => $bag1->id,
+            'product_size_variation_id' => $bag1CrabProductSizeVariation2->id,
             'product_quantity_variation_id' => null,
             'sale_price' => 4.00,
             'discounted_price' => null,
@@ -100,15 +104,17 @@ class FakeEnvironmentSeeder extends Seeder
 
 
 
-        $spiderCrab = ProductModel::create([
+        $bag2 = ProductEloquentModel::create([
 
             'id' => (string) Str::uuid(),
-            'name' => "Centollo",
+            'name' => "Bolso Noe",
+            'brand' => "Louis Vuitton",
             'description_1' => "Procedente de Francia. Oceano Atlántico",
             'description_2' => "La centolla de Francia es sinónimo de calidad y sabor refinado. Un producto excepcional que puedes disfrutar en cualquier momento del año. En Rutas del Mar, traemos directamente desde las costas francesas las centollas más frescas, seleccionadas cuidadosamente para ofrecerte lo mejor del mar. La centolla francesa es una alternativa exquisita a la centolla gallega.",
-            'slug' => "centollo-bretaña",
+            'slug' => "noe",
             'origin_general' => "Francia",
             'origin_specific' => "Bretaña",
+            'quality' => "AB",
             'product_type' => "Simple",
             'food_type' => "Marisco",
             'species_type' => "Crab",
@@ -118,13 +124,14 @@ class FakeEnvironmentSeeder extends Seeder
             'stock' => "50",
             'stock_unit' => "unit",
             'out_of_stock' => true,
-            'image' => 'images/product/centolla_product_1.png',
+            'image' => 'images/product/noe-imp-3-1.webp',
             'featured' => true,
+            'featured_position' => 2,
 
         ]);
 
-        $spiderCrab
-        ->setTranslation('name', 'en', 'Spider crab')
+        $bag2
+        ->setTranslation('name', 'en', 'Noe Bag')
         ->setTranslation('food_type', 'en', 'Seafood')
         ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'The French spider crab is synonymous with quality and refined flavor. An exceptional product that you can enjoy at any time of the year. At Rutas del Mar, we bring the freshest spider crabs directly from the French coasts, carefully selected to offer you the best of the sea. The French spider crab is an exquisite alternative to the Galician spider crab.')
@@ -133,85 +140,87 @@ class FakeEnvironmentSeeder extends Seeder
         ->setTranslation('slug', 'en', 'spider-crab-brittany')
         ->save();
 
-        $spiderCrabProductSizeVariation1 = ProductSizeVariationModel::create([
+        $bag2ProductSizeVariation1 = ProductSizeVariationModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $spiderCrab->id,
+            'product_id' => $bag2->id,
             'size_name' => "Centolla Mediana (0,8-1kg/pieza)",
             'size_description' => "Centolla Mediana (0.8-1kg/pieza)",
             'order' => 1,
         ]);
         
-        $spiderCrabProductSizeVariation1
+        $bag2ProductSizeVariation1
         ->setTranslation('size_name', 'en', 'Medium Size Spider Crab (1-1,3kg/piece)')
         ->setTranslation('size_description', 'en', 'Medium Size Spider Crab (1-1,3kg/piece)')
         ->save();
 
-        $spiderCrabProductSizeVariation2 = ProductSizeVariationModel::create([
+        $bag2ProductSizeVariation2 = ProductSizeVariationModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $spiderCrab->id,
+            'product_id' => $bag2->id,
             'size_name' => "Centolla Grande (1-1,3kg/pieza)",
             'size_description' => "Centolla Grande (1-1,3kg/pieza)",
             'order' => 2,
         ]);
         
-        $spiderCrabProductSizeVariation2
+        $bag2ProductSizeVariation2
         ->setTranslation('size_name', 'en', 'Big Size Spider Crab (1-1,3kg/piece)')
         ->setTranslation('size_description', 'en', 'Big Size Spider Crab (1-1,3kg/piece)')
         ->save();
 
-        $spiderCrabProductSizeVariation3 = ProductSizeVariationModel::create([
+        $bag2ProductSizeVariation3 = ProductSizeVariationModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $spiderCrab->id,
+            'product_id' => $bag2->id,
             'size_name' => "Centolla XL (1,3-1,5kg/pieza)",
             'size_description' => "Centolla XL (1,3-1,5kg/pieza)",
             'order' => 3,
         ]);
         
-        $spiderCrabProductSizeVariation3
+        $bag2ProductSizeVariation3
         ->setTranslation('size_name', 'en', 'XL Spider Crab (1,3-1,5kg/piece)')
         ->setTranslation('size_description', 'en', 'XL Spider Crab (1,3-1,5kg/piece)')
         ->save();
 
-        $spiderCrabVariationPrices1 = ProducSizeVariationQuantityVariationPriceModel::create([
+        $bag2VariationPrices1 = ProducSizeVariationQuantityVariationPriceModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $spiderCrab->id,
-            'product_size_variation_id' => $spiderCrabProductSizeVariation1->id,
+            'product_id' => $bag2->id,
+            'product_size_variation_id' => $bag2ProductSizeVariation1->id,
             'product_quantity_variation_id' => null,
             'sale_price' => 23.90,
             'discounted_price' => null,
             'currency' => "€",
         ]);
 
-        $spiderCrabVariationPrices2 = ProducSizeVariationQuantityVariationPriceModel::create([
+        $bag2VariationPrices2 = ProducSizeVariationQuantityVariationPriceModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $spiderCrab->id,
-            'product_size_variation_id' => $spiderCrabProductSizeVariation2->id,
+            'product_id' => $bag2->id,
+            'product_size_variation_id' => $bag2ProductSizeVariation2->id,
             'product_quantity_variation_id' => null,
             'sale_price' => 28.90,
             'discounted_price' => null,
             'currency' => "€",
         ]);
 
-        $spiderCrabVariationPrices3 = ProducSizeVariationQuantityVariationPriceModel::create([
+        $bag2VariationPrices3 = ProducSizeVariationQuantityVariationPriceModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $spiderCrab->id,
-            'product_size_variation_id' => $spiderCrabProductSizeVariation3->id,
+            'product_id' => $bag2->id,
+            'product_size_variation_id' => $bag2ProductSizeVariation3->id,
             'product_quantity_variation_id' => null,
             'sale_price' => 33.90,
             'discounted_price' => null,
             'currency' => "€",
         ]);
 
-        $oisters = ProductModel::create([
+        $bag3 = ProductEloquentModel::create([
 
             'id' => (string) Str::uuid(),
-            'name' => "Ostras",
+            'name' => "Bolso Looping GM",
+            'brand' => "Louis Vuitton",
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
-            'slug' => "ostras-bretaña",
+            'slug' => "looping-gm",
             'origin_general' => "Francia",
             'origin_specific' => "Bretaña",
+            'quality' => "AB",
             'product_type' => "Variable",
             'food_type' => "Marisco",
             'species_type' => "Oister",
@@ -221,13 +230,14 @@ class FakeEnvironmentSeeder extends Seeder
             'stock' => "50",
             'stock_unit' => "unit",
             'out_of_stock' => false,
-            'image' => 'images/product/ostras_product_1.png',
+            'image' => 'images/product/looping-gm-imp-3-1.webp',
             'featured' => true,
+            'featured_position' => 3,
 
         ]);
 
-        $oisters
-        ->setTranslation('name', 'en', 'Oysters')
+        $bag3
+        ->setTranslation('name', 'en', 'Looping GM Bag')
         ->setTranslation('food_type', 'en', 'Seafood')
         ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'Our fresh oysters are carefully harvested by passionate cultivators who uphold the tradition of sustainable gathering directly from the ocean. These oysters stand out for their pronounced flavor, balanced with a salty touch that enhances their smooth and meaty texture. The perfect choice for seafood lovers. Enjoy the freshness and authenticity of these marine treasures, with home delivery in less than 24 hours, ensuring their quality and flavor at their best.')
@@ -239,7 +249,7 @@ class FakeEnvironmentSeeder extends Seeder
 
         $oisterProductSizeVariation1 = ProductSizeVariationModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $oisters->id,
+            'product_id' => $bag3->id,
             'size_name' => "Talla 1",
             'size_description' => "Talla 1",
             'order' => 1,
@@ -252,7 +262,7 @@ class FakeEnvironmentSeeder extends Seeder
 
         $oisterProductSizeVariation2 = ProductSizeVariationModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $oisters->id,
+            'product_id' => $bag3->id,
             'size_name' => "Talla 2",
             'size_description' => "Talla 2",
             'order' => 2,
@@ -265,7 +275,7 @@ class FakeEnvironmentSeeder extends Seeder
 
         $oisterProductSizeVariation3 = ProductSizeVariationModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $oisters->id,
+            'product_id' => $bag3->id,
             'size_name' => "Talla 3",
             'size_description' => "Talla 3",
             'order' => 3,
@@ -280,7 +290,7 @@ class FakeEnvironmentSeeder extends Seeder
 
         $oisterProductQuantityVariationModel1 = ProductQuantityVariationModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $oisters->id,
+            'product_id' => $bag3->id,
             'quantity_name' => "Caja 12 unidades",
             'quantity_description' => "Caja 12 unidades",
             'order' => 1,
@@ -293,7 +303,7 @@ class FakeEnvironmentSeeder extends Seeder
 
         $oisterProductQuantityVariationModel2 = ProductQuantityVariationModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $oisters->id,
+            'product_id' => $bag3->id,
             'quantity_name' => "Caja 24 unidades",
             'quantity_description' => "Caja 24 unidades",
             'order' => 2,
@@ -306,7 +316,7 @@ class FakeEnvironmentSeeder extends Seeder
 
         $oisterProductQuantityVariationModel3 = ProductQuantityVariationModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $oisters->id,
+            'product_id' => $bag3->id,
             'quantity_name' => "Caja 36 unidades",
             'quantity_description' => "Caja 36 unidades",
             'order' => 3,
@@ -319,7 +329,7 @@ class FakeEnvironmentSeeder extends Seeder
 
         $oisterVariationPrices1 = ProducSizeVariationQuantityVariationPriceModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $oisters->id,
+            'product_id' => $bag3->id,
             'product_size_variation_id' => $oisterProductSizeVariation1->id,
             'product_quantity_variation_id' => $oisterProductQuantityVariationModel1->id,
             'sale_price' => 15.6,
@@ -329,7 +339,7 @@ class FakeEnvironmentSeeder extends Seeder
 
         $oisterVariationPrices2 = ProducSizeVariationQuantityVariationPriceModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $oisters->id,
+            'product_id' => $bag3->id,
             'product_size_variation_id' => $oisterProductSizeVariation1->id,
             'product_quantity_variation_id' => $oisterProductQuantityVariationModel2->id,
             'sale_price' => 31.2,
@@ -339,7 +349,7 @@ class FakeEnvironmentSeeder extends Seeder
 
         $oisterVariationPrices3 = ProducSizeVariationQuantityVariationPriceModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $oisters->id,
+            'product_id' => $bag3->id,
             'product_size_variation_id' => $oisterProductSizeVariation1->id,
             'product_quantity_variation_id' => $oisterProductQuantityVariationModel3->id,
             'sale_price' => 46.8,
@@ -349,7 +359,7 @@ class FakeEnvironmentSeeder extends Seeder
 
         $oisterVariationPrices4 = ProducSizeVariationQuantityVariationPriceModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $oisters->id,
+            'product_id' => $bag3->id,
             'product_size_variation_id' => $oisterProductSizeVariation2->id,
             'product_quantity_variation_id' => $oisterProductQuantityVariationModel1->id,
             'sale_price' => 15.6,
@@ -359,7 +369,7 @@ class FakeEnvironmentSeeder extends Seeder
 
         $oisterVariationPrices5 = ProducSizeVariationQuantityVariationPriceModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $oisters->id,
+            'product_id' => $bag3->id,
             'product_size_variation_id' => $oisterProductSizeVariation2->id,
             'product_quantity_variation_id' => $oisterProductQuantityVariationModel2->id,
             'sale_price' => 31.2,
@@ -369,7 +379,7 @@ class FakeEnvironmentSeeder extends Seeder
 
         $oisterVariationPrices6 = ProducSizeVariationQuantityVariationPriceModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $oisters->id,
+            'product_id' => $bag3->id,
             'product_size_variation_id' => $oisterProductSizeVariation2->id,
             'product_quantity_variation_id' => $oisterProductQuantityVariationModel3->id,
             'sale_price' => 46.8,
@@ -379,7 +389,7 @@ class FakeEnvironmentSeeder extends Seeder
 
         $oisterVariationPrices7 = ProducSizeVariationQuantityVariationPriceModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $oisters->id,
+            'product_id' => $bag3->id,
             'product_size_variation_id' => $oisterProductSizeVariation3->id,
             'product_quantity_variation_id' => $oisterProductQuantityVariationModel1->id,
             'sale_price' => 15.6,
@@ -389,7 +399,7 @@ class FakeEnvironmentSeeder extends Seeder
 
         $oisterVariationPrices8 = ProducSizeVariationQuantityVariationPriceModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $oisters->id,
+            'product_id' => $bag3->id,
             'product_size_variation_id' => $oisterProductSizeVariation3->id,
             'product_quantity_variation_id' => $oisterProductQuantityVariationModel2->id,
             'sale_price' => 31.2,
@@ -399,7 +409,7 @@ class FakeEnvironmentSeeder extends Seeder
 
         $oisterVariationPrices9 = ProducSizeVariationQuantityVariationPriceModel::create([
             'id' => (string) Str::uuid(),
-            'product_id' => $oisters->id,
+            'product_id' => $bag3->id,
             'product_size_variation_id' => $oisterProductSizeVariation3->id,
             'product_quantity_variation_id' => $oisterProductQuantityVariationModel3->id,
             'sale_price' => 46.8,
@@ -440,5 +450,228 @@ class FakeEnvironmentSeeder extends Seeder
         ->setTranslation('origin_specific', 'en', 'Lanzarote')
         ->setTranslation('slug', 'en', 'grouper-canary-islands')
         ->save();*/
+
+        $bag4 = ProductEloquentModel::create([
+
+            'id' => (string) Str::uuid(),
+            'name' => "Bolso Alma",
+            'brand' => "Louis Vuitton",
+            'description_1' => "Procedentes de Francia. Oceano Atlántico",
+            'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
+            //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
+            'slug' => "alma",
+            'origin_general' => "Francia",
+            'origin_specific' => "Bretaña",
+            'quality' => "AB",
+            'product_type' => "Variable",
+            'food_type' => "Marisco",
+            'species_type' => "Oister",
+            'price_from' => 10,
+            'sell_unit' => "kg",
+            'sell_mode' => "per-box",
+            'stock' => "50",
+            'stock_unit' => "unit",
+            'out_of_stock' => false,
+            'image' => 'images/product/alma-imp-3-1.webp',
+            'featured' => true,
+            'featured_position' => 4,
+
+        ]);
+
+        $bag4
+        ->setTranslation('name', 'en', 'Alma Bag')
+        ->setTranslation('food_type', 'en', 'Seafood')
+        ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
+        ->setTranslation('description_2', 'en', 'Our fresh oysters are carefully harvested by passionate cultivators who uphold the tradition of sustainable gathering directly from the ocean. These oysters stand out for their pronounced flavor, balanced with a salty touch that enhances their smooth and meaty texture. The perfect choice for seafood lovers. Enjoy the freshness and authenticity of these marine treasures, with home delivery in less than 24 hours, ensuring their quality and flavor at their best.')
+        ->setTranslation('origin_general', 'en', 'France')
+        ->setTranslation('origin_specific', 'en', 'Bretaña')
+        ->setTranslation('slug', 'en', 'oysters-bretaña')
+        ->save();
+
+        $bag5 = ProductEloquentModel::create([
+
+            'id' => (string) Str::uuid(),
+            'name' => "Bolso Petit Noe Epi",
+            'brand' => "Louis Vuitton",
+            'description_1' => "Procedentes de Francia. Oceano Atlántico",
+            'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
+            //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
+            'slug' => "petit-noe-epi-red",
+            'origin_general' => "Francia",
+            'origin_specific' => "Bretaña",
+            'quality' => "AB",
+            'product_type' => "Variable",
+            'food_type' => "Marisco",
+            'species_type' => "Oister",
+            'price_from' => 10,
+            'sell_unit' => "kg",
+            'sell_mode' => "per-box",
+            'stock' => "50",
+            'stock_unit' => "unit",
+            'out_of_stock' => false,
+            'image' => 'images/product/petit-noe-epi-red-imp-3-1.webp',
+            'featured' => true,
+            'featured_position' => 5,
+
+        ]);
+
+        $bag5
+        ->setTranslation('name', 'en', 'Petit Noe Epi Red Bag')
+        ->setTranslation('food_type', 'en', 'Seafood')
+        ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
+        ->setTranslation('description_2', 'en', 'Our fresh oysters are carefully harvested by passionate cultivators who uphold the tradition of sustainable gathering directly from the ocean. These oysters stand out for their pronounced flavor, balanced with a salty touch that enhances their smooth and meaty texture. The perfect choice for seafood lovers. Enjoy the freshness and authenticity of these marine treasures, with home delivery in less than 24 hours, ensuring their quality and flavor at their best.')
+        ->setTranslation('origin_general', 'en', 'France')
+        ->setTranslation('origin_specific', 'en', 'Bretaña')
+        ->setTranslation('slug', 'en', 'oysters-bretaña')
+        ->save();
+
+        $bag6 = ProductEloquentModel::create([
+
+            'id' => (string) Str::uuid(),
+            'name' => "Bolso Speedy 25",
+            'brand' => "Louis Vuitton",
+            'description_1' => "Procedentes de Francia. Oceano Atlántico",
+            'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
+            //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
+            'slug' => "speedy-25-2",
+            'origin_general' => "Francia",
+            'origin_specific' => "Bretaña",
+            'quality' => "AB",
+            'product_type' => "Variable",
+            'food_type' => "Marisco",
+            'species_type' => "Oister",
+            'price_from' => 10,
+            'sell_unit' => "kg",
+            'sell_mode' => "per-box",
+            'stock' => "50",
+            'stock_unit' => "unit",
+            'out_of_stock' => false,
+            'image' => 'images/product/speedy-25-imp-3-2.webp',
+            'featured' => true,
+            'featured_position' => 6,
+
+        ]);
+
+        $bag6
+        ->setTranslation('name', 'en', 'Petit Noe Epi Red Bag')
+        ->setTranslation('food_type', 'en', 'Seafood')
+        ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
+        ->setTranslation('description_2', 'en', 'Our fresh oysters are carefully harvested by passionate cultivators who uphold the tradition of sustainable gathering directly from the ocean. These oysters stand out for their pronounced flavor, balanced with a salty touch that enhances their smooth and meaty texture. The perfect choice for seafood lovers. Enjoy the freshness and authenticity of these marine treasures, with home delivery in less than 24 hours, ensuring their quality and flavor at their best.')
+        ->setTranslation('origin_general', 'en', 'France')
+        ->setTranslation('origin_specific', 'en', 'Bretaña')
+        ->setTranslation('slug', 'en', 'oysters-bretaña')
+        ->save();
+
+        $bag7 = ProductEloquentModel::create([
+
+            'id' => (string) Str::uuid(),
+            'name' => "Looping PM",
+            'brand' => "Louis Vuitton",
+            'description_1' => "Procedentes de Francia. Oceano Atlántico",
+            'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
+            //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
+            'slug' => "looping-pm",
+            'origin_general' => "Francia",
+            'origin_specific' => "Bretaña",
+            'quality' => "AB",
+            'product_type' => "Variable",
+            'food_type' => "Marisco",
+            'species_type' => "Oister",
+            'price_from' => 10,
+            'sell_unit' => "kg",
+            'sell_mode' => "per-box",
+            'stock' => "50",
+            'stock_unit' => "unit",
+            'out_of_stock' => false,
+            'image' => 'images/product/looping-pm-imp-3-1.webp',
+            'featured' => true,
+            'featured_position' => 7,
+
+        ]);
+
+        $bag7
+        ->setTranslation('name', 'en', 'Looping PM Bag')
+        ->setTranslation('food_type', 'en', 'Seafood')
+        ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
+        ->setTranslation('description_2', 'en', 'Our fresh oysters are carefully harvested by passionate cultivators who uphold the tradition of sustainable gathering directly from the ocean. These oysters stand out for their pronounced flavor, balanced with a salty touch that enhances their smooth and meaty texture. The perfect choice for seafood lovers. Enjoy the freshness and authenticity of these marine treasures, with home delivery in less than 24 hours, ensuring their quality and flavor at their best.')
+        ->setTranslation('origin_general', 'en', 'France')
+        ->setTranslation('origin_specific', 'en', 'Bretaña')
+        ->setTranslation('slug', 'en', 'oysters-bretaña')
+        ->save();
+
+        $bag8 = ProductEloquentModel::create([
+
+            'id' => (string) Str::uuid(),
+            'name' => "Bolso Noe",
+            'brand' => "Louis Vuitton",
+            'description_1' => "Procedentes de Francia. Oceano Atlántico",
+            'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
+            //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
+            'slug' => "noe-1",
+            'origin_general' => "Francia",
+            'origin_specific' => "Bretaña",
+            'quality' => "AB",
+            'product_type' => "Variable",
+            'food_type' => "Marisco",
+            'species_type' => "Oister",
+            'price_from' => 10,
+            'sell_unit' => "kg",
+            'sell_mode' => "per-box",
+            'stock' => "50",
+            'stock_unit' => "unit",
+            'out_of_stock' => false,
+            'image' => 'images/product/noe-imp-3-2.webp',
+            'featured' => true,
+            'featured_position' => 8,
+
+        ]);
+
+        $bag8
+        ->setTranslation('name', 'en', 'Noe Bag')
+        ->setTranslation('food_type', 'en', 'Seafood')
+        ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
+        ->setTranslation('description_2', 'en', 'Our fresh oysters are carefully harvested by passionate cultivators who uphold the tradition of sustainable gathering directly from the ocean. These oysters stand out for their pronounced flavor, balanced with a salty touch that enhances their smooth and meaty texture. The perfect choice for seafood lovers. Enjoy the freshness and authenticity of these marine treasures, with home delivery in less than 24 hours, ensuring their quality and flavor at their best.')
+        ->setTranslation('origin_general', 'en', 'France')
+        ->setTranslation('origin_specific', 'en', 'Bretaña')
+        ->setTranslation('slug', 'en', 'oysters-bretaña')
+        ->save();
+
+        $bag9 = ProductEloquentModel::create([
+
+            'id' => (string) Str::uuid(),
+            'name' => "Bolso Alma",
+            'brand' => "Louis Vuitton",
+            'description_1' => "Procedentes de Francia. Oceano Atlántico",
+            'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
+            //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
+            'slug' => "alma-2",
+            'origin_general' => "Francia",
+            'origin_specific' => "Bretaña",
+            'quality' => "AB",
+            'product_type' => "Variable",
+            'food_type' => "Marisco",
+            'species_type' => "Oister",
+            'price_from' => 10,
+            'sell_unit' => "kg",
+            'sell_mode' => "per-box",
+            'stock' => "50",
+            'stock_unit' => "unit",
+            'out_of_stock' => false,
+            'image' => 'images/product/alma-imp-3-2.webp',
+            'featured' => true,
+            'featured_position' => 9,
+
+        ]);
+
+        $bag9
+        ->setTranslation('name', 'en', 'Alma Bag')
+        ->setTranslation('food_type', 'en', 'Seafood')
+        ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
+        ->setTranslation('description_2', 'en', 'Our fresh oysters are carefully harvested by passionate cultivators who uphold the tradition of sustainable gathering directly from the ocean. These oysters stand out for their pronounced flavor, balanced with a salty touch that enhances their smooth and meaty texture. The perfect choice for seafood lovers. Enjoy the freshness and authenticity of these marine treasures, with home delivery in less than 24 hours, ensuring their quality and flavor at their best.')
+        ->setTranslation('origin_general', 'en', 'France')
+        ->setTranslation('origin_specific', 'en', 'Bretaña')
+        ->setTranslation('slug', 'en', 'oysters-bretaña')
+        ->save();
+
     }
 }

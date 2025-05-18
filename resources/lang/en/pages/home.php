@@ -24,4 +24,7 @@ return [
     'description-avantage-buying-bags-and-tea' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut aliquet pellentesque ex, sed pharetra risus tempor a. Duis et tempor ex, id gravida dolor. In hac habitasse platea dictumst. Nullam in fringilla odio. Curabitur porta mauris eget dignissim egestas. Nunc vitae fringilla est. Phasellus aliquam egestas varius. Aliquam eu enim et magna lobortis euismod in non dolor. Vivamus metus purus, mollis sed rutrum in, suscipit et dui. Sed pellentesque venenatis maximus. Aenean luctus risus eget dui iaculis semper.',
 
     'brands_title' => 'OUR SECOND HAND LUXURY BAGS',
+
+    'title-featured-products' => 'Latest Bags',
+    'button-view-all-products' => 'View all',
 ];

@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 
-use App\Models\ProductModel;
+use Src\Products\Product\Infrastructure\Eloquent\ProductEloquentModel;
 
 class Shop extends Component
 {
@@ -12,7 +12,7 @@ class Shop extends Component
 
     public function mount()
     {
-        $this->products = ProductModel::all();
+        $this->products = ProductEloquentModel::all();
     }
 
     public function render()

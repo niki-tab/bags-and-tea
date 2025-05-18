@@ -17,6 +17,27 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
 @endphp
 
 @section('content')
+
+@php
+if(request()->route('bagName')){
+
+    $bagName = request()->route('bagName');
+
+    $translationKey = 'pages/we-buy-your-bag.faq_title-' . $bagName;
+        $stringFaqTitle = Lang::has($translationKey) 
+            ? trans($translationKey) 
+            : trans('pages/we-buy-your-bag.faq_title');
+
+    $iBagName = "-" . $bagName;
+
+}else{
+
+    $stringFaqTitle = trans('pages/we-buy-your-bag.faq_title');
+    $iBagName = "";
+
+}
+@endphp
+
 <div>
     <div class="flex flex-col md:flex-row h-auto md:h-96">
         <div class="w-full md:w-1/2 bg-[#ffffff] flex items-center justify-center h-full py-12 md:py-0 pl-0 md:pl-10">
@@ -45,8 +66,63 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
         <h2 class="text-center text-[#ffffff] text-2xl md:text-4xl mb-8 md:mb-14 font-['Lovera'] w-2/3 mx-auto">{{ trans('pages/home.title-avantage-buying-bags-and-tea') }} </h2>
         <p class="text-white w-2/3 mx-auto text-robotoCondensed font-light">{{ trans('pages/home.description-avantage-buying-bags-and-tea') }}</p>
     </div>
+    <div class="py-8 md:py-16 bg-[#F8F3F0] px-52">
+    <h2 class="text-center text-color-2 text-2xl md:text-4xl mb-8 md:mb-14 font-['Lovera'] w-2/3 mx-auto">{{ trans('pages/home.title-featured-products') }} </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            @foreach($featuredProducts as $product)
+                <div class="bg-white shadow-lg overflow-hidden hover:shadow-xl transition">
+                    <img src="{{ $product['image'] }}" alt="{{ $product['name'] }}" class="w-full h-96 object-cover">
+                    <div class="p-6 mt-6">
+                        <h2 class="text-center text-xl font-robotoCondensed font-light text-color-2 mb-2">{{ $product['name'] }}</h2>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        <div class="flex justify-center">
+            <a href="{{ app()->getLocale() == 'es' ? route('shop.show.es', ['locale' => app()->getLocale()]) : route('shop.show.en', ['locale' => app()->getLocale()]) }}" class="mt-12 md:mt-12 bg-transparent text-color-2 px-4 md:px-4 py-2 md:py-2 font-medium border border-color-2 font-['Lovera'] inline-block">
+                {{ trans('pages/home.button-view-all-products') }}
+            </a>
+        </div>
+    </div>
+    <!-- FAQs Section -->
+    <div class="bg-[#3A1515] text-white py-12">
+        <h2 class="mx-6 text-center text-4xl font-regular mb-10 md:mb-20 font-['Lovera']">{{ $stringFaqTitle }}</h2>
+        <div class="mx-auto space-y-4 pb-10 px-12 md:px-24">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 gap-x-32 max-w-8xl mx-auto mb-4 mt-12 w-full">
+                @for ($i = 1; $i <= 10; $i++)
+                    <div class="md:col-span-1">
+                        <details class="pb-4 md:pb-6 border-b border-white">
+                        <summary class="cursor-pointer flex items-center justify-between">
+
+                            @if(Lang::has("pages/we-buy-your-bag.faq_{$i}_question{$iBagName}"))
+                                <h3 class="inline text-xl w-4/5">{{ trans("pages/we-buy-your-bag.faq_{$i}_question{$iBagName}") }}</h3>
+                            @else
+                                <h3 class="inline text-xl w-4/5">{{ trans("pages/we-buy-your-bag.faq_{$i}_question") }}</h3>
+                            @endif
+
+                            <span class="text-xl mr-4">+</span>
+                            </summary>
+                            @if(Lang::has("pages/we-buy-your-bag.faq_{$i}_answer{$iBagName}"))
+                                <p class="mt-2">{!! trans("pages/we-buy-your-bag.faq_{$i}_answer{$iBagName}") !!}</p>
+                            @else
+                                <p class="mt-2">{!! trans("pages/we-buy-your-bag.faq_{$i}_answer") !!}</p>
+                            @endif
+                            
+                        </details>  
+                    </div>
+                @endfor
+            </div>
+            
+            <!-- Repeat for other FAQs -->
+        </div>
+    </div>
     <div class="pt-2">
         @livewire('blog/show', ['numberArticles' => 3])
+        <div class="flex justify-center">
+            <a href="{{ route('blog.show.en-es', ['locale' => app()->getLocale()]) }}" class="mt-12 md:mt-12 bg-transparent text-color-2 px-4 md:px-4 py-2 md:py-2 font-medium border border-color-2 font-['Lovera'] inline-block">
+                {{ trans('pages/home.button-view-all-products') }}
+            </a>
+        </div>
     </div>
 </div>
 

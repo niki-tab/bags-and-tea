@@ -2,11 +2,11 @@
 
 namespace App\Livewire;
 
-use App\Models\ProducSizeVariationQuantityVariationPriceModel;
 use Livewire\Component;
-use App\Models\ProductModel;
 use App\Models\ProductSizeVariationModel;
 use App\Models\ProductQuantityVariationModel;
+use App\Models\ProducSizeVariationQuantityVariationPriceModel;
+use Src\Products\Product\Infrastructure\Eloquent\ProductEloquentModel;
 
 class ProductDetail extends Component
 {
@@ -38,73 +38,9 @@ class ProductDetail extends Component
 
         $this->lang = app()->getLocale();
 
-        $this->product = ProductModel::where("slug->".$this->lang, $productSlug)->first();
+        $this->product = ProductEloquentModel::where("slug->".$this->lang, $productSlug)->first();
         
-        if($this->product){
-
-            //$this->setSeo();
-
-            $productId = $this->product->id;
-            $this->productSizeVariations = ProductSizeVariationModel::where("product_id", $productId)->with('producQuantityVariations')->get();
-
-            $defaultSizeVariation = $this->productSizeVariations->firstWhere('order', 1);
-            
-            if($defaultSizeVariation){
-                $this->selectedSize = $defaultSizeVariation->id;
-            }
-        }
-
-        $producSizeVariationQuantityVariationPriceModel = ProducSizeVariationQuantityVariationPriceModel::where(
-            [
-                ["product_size_variation_id", $defaultSizeVariation->id],
-            ]
-        )->with('productQuantity') // Eager load productQuantity relation
-        ->get()
-        ->sortBy('productQuantity.order') 
-        ->map(function ($item) {
-            return $item->productQuantity; 
-        })
-        ->values();
-
-        $productVariationLowestPrice = ProducSizeVariationQuantityVariationPriceModel::where([
-                                                                                                ["product_id", $productId]
-                                                                                            ])
-                                                                                            ->orderBy('sale_price', "ASC") 
-                                                                                            ->first();
-
-        if($productVariationLowestPrice){
-
-            $this->specificPrice = $productVariationLowestPrice->sale_price;
-
-        }
-        /*$this->test = [
-            ['id' => 1, 'quantity_name' => 'Small', 'order' => 1],
-            ['id' => 2, 'quantity_name' => 'Medium', 'order' => 2],
-            ['id' => 3, 'quantity_name' => 'Large', 'order' => 3],
-        ];*/
-
-        $productQuantityVariationModel = ProductQuantityVariationModel::where("product_id", $productId)->first();
         
-        if($productQuantityVariationModel){
-
-            foreach ($producSizeVariationQuantityVariationPriceModel as $producSizeVariationQuantityVariationPriceModelIndividual){
-                
-                $this->test[] = [
-                    'id' => $producSizeVariationQuantityVariationPriceModelIndividual->id,
-                    'quantity_name' => $producSizeVariationQuantityVariationPriceModelIndividual->quantity_name, // Append a random number to the quantity name
-                    'order' => $producSizeVariationQuantityVariationPriceModelIndividual->order, // Assuming the order corresponds to the ID
-                ];
-
-            }
-
-            $this->productHasQuantityVariation = true;
-
-        }else{
-
-            $this->test = null;
-            $this->productHasQuantityVariation = false;
-
-        }
         
     }
 

@@ -1,10 +1,10 @@
 test:
-	docker-compose exec app php artisan migrate:reset
-	docker-compose exec app php artisan migrate
-	docker-compose exec app php artisan db:seed
+	docker compose exec app php artisan migrate:reset
+	docker compose exec app php artisan migrate
+	docker compose exec app php artisan db:seed
 
 frontend:
-	docker-compose exec app npm run dev
+	docker compose exec app npm run dev
 	
 
 custom-composer-install:
