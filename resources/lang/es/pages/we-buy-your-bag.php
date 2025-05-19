@@ -114,7 +114,7 @@ return [
     'brands_title-hermes' => 'COMPRAMOS TU BOLSO HERMÈS',
     'brands_title-polene' => 'COMPRAMOS TU BOLSO POLÈNE',
     'brands_title-celine' => 'COMPRAMOS TU BOLSO CÉLINE',
-    'brands_title-bottega-veneta' => 'COMPRAMOS TU BOLSO Bottega Veneta',
+    'brands_title-bottega-veneta' => 'COMPRAMOS TU BOLSO BOTTEGA VENETA',
     'brands_title-miu-miu' => 'COMPRAMOS TU BOLSO MIU MIU',
     'brands_title-chloe' => 'COMPRAMOS TU BOLSO CHLOÉ',
 
