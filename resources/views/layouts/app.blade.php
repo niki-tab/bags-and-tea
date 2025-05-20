@@ -53,8 +53,8 @@
         <x-footer-desktop />
         <x-footer-mobile />
     </footer>
-    @if(request()->routeIs('we-buy-your-bag.show.es') || request()->routeIs('we-buy-your-bag.show.en'))
+    {{--  @if(request()->routeIs('we-buy-your-bag.show.es') || request()->routeIs('we-buy-your-bag.show.en')) --}}
         @livewire('shared/whatsapp-widget')
-    @endif
+        {{-- @endif --}}
 </body>
 </html>
