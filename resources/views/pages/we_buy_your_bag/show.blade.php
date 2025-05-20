@@ -262,31 +262,31 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
         <button onclick="document.getElementById('sell-your-bag-form').scrollIntoView({behavior: 'smooth'})" class="bg-black text-white px-12 py-3 rounded-full font-medium mx-auto mt-12 md:mt-0">{{ $stringSellYourbagButton }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;></button>
         
     </div>
-    <div class="bg-[#F8F3F0] py-20 hidden lg:block">
+    <div class="bg-[#F8F3F0] py-20 hidden min-[1424px]:block">
         <div class="w-full md:w-full mx-auto bg-[#F8F3F0] relative">
             <div class="absolute bg-[#F8F3F0] p-4 w-2/5 left-52 top-16">
             <h2 class="text-center mx-auto w-1/2 font-['Lovera'] text-4xl text-[#482626]">{{ $stringWhyBagQuestion }}</h2>
-                <p class="mx-auto w-full text-[#482626] text-robotoCondensed mt-4">{{ $stringWhyBagAnswer }}</p>
+                <p class="mx-auto w-full text-[#482626] text-robotoCondensed mt-5">{{ $stringWhyBagAnswer }}</p>
             </div>
-            <div class="flex justify-end mr-56"> <!-- Added this container -->
-                <img src="{{ asset('images/we_buy_your_bag/group-142.svg') }}" 
+            <div class="flex justify-end mr-32"> <!-- Added this container -->
+                <img src="{{ asset('images/we_buy_your_bag/group-176.png') }}" 
                     alt="YSL bag" 
                     class="w-3/5"> <!-- Optional: adjust width as needed -->
             </div>
         </div>
-        <div class="w-full md:w-full mx-auto bg-[#F8F3F0] relative mt-32">
+        <div class="w-full md:w-full mx-auto bg-[#F8F3F0] relative mt-40">
             <div class="flex justify-start"> <!-- Added this container -->
-                <img src="{{ asset('images/we_buy_your_bag/group-143.svg') }}" 
+                <img src="{{ asset('images/we_buy_your_bag/group-177.png') }}" 
                     alt="YSL bag" 
                     class="w-3/5"> <!-- Optional: adjust width as needed -->
             </div>
-            <div class="absolute bg-[#F8F3F0] p-4 w-2/5 right-52 bottom-32">
+            <div class="absolute bg-[#F8F3F0] p-4 w-2/5 right-52 bottom-48">
                 <h2 class="text-center mx-auto w-3/4 font-['Lovera'] text-4xl text-[#482626]">{{ $stringWhyBagsAndTeaQuestion }}</h2>
                 <p class="mx-auto w-full text-[#482626] text-robotoCondensed mt-4">{{ $stringWhyBagsAndTeaAnswer }}</p>
             </div>
         </div>
     </div>
-    <div class="lg:hidden py-14 bg-[#F8F3F0]">
+    <div class="min-[1424px]:hidden py-14 bg-[#F8F3F0]">
         <div class="flex flex-col items-center justify-center gap-8">
             <!-- Row 1: Heading -->
             <h2 class="mx-16 text-4xl text-center font-['Lovera'] text-[#482626]">
@@ -303,7 +303,7 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
                 <img
                     src="{{ asset('images/we_buy_your_bag/group-138.svg') }}" 
                     alt="Description" 
-                    class="w-full h-auto">
+                    class="w-3/5 h-auto">
             </div>
         </div>
         <div class="flex flex-col items-center justify-center gap-8 my-8">
@@ -322,7 +322,7 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
                 <img
                     src="{{ asset('images/we_buy_your_bag/group-139.svg') }}" 
                     alt="Description" 
-                    class="w-full h-auto">
+                    class="w-3/5 h-auto">
             </div>
         </div>
     </div>
