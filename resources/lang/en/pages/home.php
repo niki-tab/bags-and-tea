@@ -27,4 +27,7 @@ return [
 
     'title-featured-products' => 'Latest Bags',
     'button-view-all-products' => 'View all',
+
+    'headline-1' => 'Fashionable and unique luxury bags',
+    'headline-2' => 'Find your desired bags',
 ];

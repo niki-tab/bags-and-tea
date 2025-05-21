@@ -40,7 +40,9 @@ class ProductDetail extends Component
 
         $this->product = ProductEloquentModel::where("slug->".$this->lang, $productSlug)->first();
         
-        
+        if($this->product){
+
+        }
         
     }
 

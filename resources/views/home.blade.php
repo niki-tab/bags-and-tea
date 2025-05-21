@@ -39,10 +39,40 @@ if(request()->route('bagName')){
 @endphp
 
 <div>
+    <div class="relative w-full h-[700px] md:block hidden">
+        <!-- Background Image -->
+        <img 
+            src="{{ asset('images/home/frame-home-1.svg') }}" 
+            alt="Tienda de Bolsos de Lujo Bags and Tea" 
+            class="w-full h-full object-cover">
+
+        <!-- Text Content -->
+        <div class="absolute left-20 top-1/2 transform -translate-y-1/2 text-white">
+            <h1 class="text-white text-7xl font-['Lovera'] mb-10">{{ trans('pages/home.headline-1') }}</h1>
+            <h2 class="text-white text-5xl font-robotoCondensed font-light">{{ trans('pages/home.headline-2') }}</h2>
+        </div>
+    </div>
+    <div class="relative w-full h-[500px] md:hidden">
+        <!-- Background Image -->
+        <img 
+            src="{{ asset('images/home/mask-group.svg') }}" 
+            alt="Tienda de Bolsos de Lujo Bags and Tea" 
+            class="w-full h-full object-cover">
+
+        <!-- Centered and Wider Text Content -->
+        <div class="absolute top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl px-4 text-white text-center">
+            <h1 class="text-white text-5xl font-['Lovera'] mb-10">
+                {{ trans('pages/home.headline-1') }}
+            </h1>
+            <h2 class="text-white text-3xl font-robotoCondensed font-light">
+                {{ trans('pages/home.headline-2') }}
+            </h2>
+        </div>
+    </div>
     <div class="flex flex-col md:flex-row h-auto md:h-96">
         <div class="w-full md:w-1/2 bg-[#ffffff] flex items-center justify-center h-full py-12 md:py-0 pl-0 md:pl-10">
             <div class="w-3/4 mx-auto">
-                <h1 class="text-4xl md:text-5xl font-['Lovera'] text-color-2">
+                <h1 class="text-4xl md:text-5xl font-['Lovera'] text-color-2 text-center md:text-left">
                     {{ trans('pages/home.title-sell-your-bag') }}
                 </h1>
                 <p class="font-mixed text-color-2 mt-6 md:mt-8">

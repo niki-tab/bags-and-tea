@@ -27,4 +27,7 @@ return [
 
     'title-featured-products' => 'Bolsos recientes',
     'button-view-all-products' => 'Ver todos',
+
+    'headline-1' => 'Bolsos de marca vintage',
+    'headline-2' => 'Encuentra tu bolso deseado',
 ];
