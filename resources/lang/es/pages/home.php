@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'hero_title' => 'Bolsos Vintage de Marca',
+    'hero_title' => 'Bolsos de Lujo Segunda Mano | Comprar Bolsos de Marca',
     'hero_subtitle' => 'Sin intermediarios',
     'shop_now' => 'Compra Ahora y obten un 10% de descuento',
     'about_title' => 'Sobre Nosotros',
@@ -21,11 +21,11 @@ return [
     'button-sell-your-bag' => 'Ir al formulario',
 
     'title-avantage-buying-bags-and-tea' => 'VENTAJAS DE COMPRAR TU BOLSO DE SEGUNDA MANO DE MARCA EN BAGS AND TEA',  
-    'description-avantage-buying-bags-and-tea' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut aliquet pellentesque ex, sed pharetra risus tempor a. Duis et tempor ex, id gravida dolor. In hac habitasse platea dictumst. Nullam in fringilla odio. Curabitur porta mauris eget dignissim egestas. Nunc vitae fringilla est. Phasellus aliquam egestas varius. Aliquam eu enim et magna lobortis euismod in non dolor. Vivamus metus purus, mollis sed rutrum in, suscipit et dui. Sed pellentesque venenatis maximus. Aenean luctus risus eget dui iaculis semper.',  
+    'description-avantage-buying-bags-and-tea' => 'En Bags & Tea, comprar un bolso de lujo es mucho más que adquirir un accesorio: es invertir en elegancia, autenticidad y sostenibilidad. Cada pieza ha sido cuidadosamente seleccionada por su calidad, rareza y diseño icónico, garantizando que solo lo excepcional llegue a tus manos. Apostamos por la moda consciente, dando una segunda vida a tesoros que merecen ser preservados. Nuestro proceso de verificación experta te ofrece la tranquilidad de una compra segura y respaldada. Con atención personalizada y una selección exclusiva, en Bags & Tea descubrirás el lujo más atemporal con el cuidado y la confianza que mereces.',  
 
     'brands_title' => 'NUESTROS BOLSOS DE LUJO DE SEGUNDA MANO',
 
-    'title-featured-products' => 'Bolsos recientes',
+    'title-featured-products' => 'Nuestros bolsos de segunda mano de lujo más recientes',
     'button-view-all-products' => 'Ver todos',
 
     'headline-1' => 'Bolsos de marca vintage',
@@ -65,5 +65,4 @@ return [
     'faq_10_question' => '¿Qué bolsos de lujo aceptáis?',
     'faq_10_answer' => 'Aceptamos bolsos de Chanel, Hermès, Louis Vuitton, Dior, Saint Laurent, Fendi, Loewe, Prada, Gucci, Balenciaga, Céline, Bottega Veneta, y Polène. Estas son las marcas en las que somos expertos. Siempre estamos evolucionando, y esperamos expandir esta lista en el futuro.',
     
-
 ];
