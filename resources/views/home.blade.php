@@ -23,10 +23,10 @@ if(request()->route('bagName')){
 
     $bagName = request()->route('bagName');
 
-    $translationKey = 'pages/we-buy-your-bag.faq_title-' . $bagName;
+    $translationKey = 'pages/home.faq_title-' . $bagName;
         $stringFaqTitle = Lang::has($translationKey) 
             ? trans($translationKey) 
-            : trans('pages/we-buy-your-bag.faq_title');
+            : trans('pages/home.faq_title');
 
     $iBagName = "-" . $bagName;
 
@@ -126,18 +126,18 @@ if(request()->route('bagName')){
                         <details class="pb-4 md:pb-6 border-b border-white">
                         <summary class="cursor-pointer flex items-center justify-between">
 
-                            @if(Lang::has("pages/we-buy-your-bag.faq_{$i}_question{$iBagName}"))
-                                <h3 class="inline text-xl w-4/5">{{ trans("pages/we-buy-your-bag.faq_{$i}_question{$iBagName}") }}</h3>
+                            @if(Lang::has("pages/home.faq_{$i}_question{$iBagName}"))
+                                <h3 class="inline text-xl w-4/5">{{ trans("pages/home.faq_{$i}_question{$iBagName}") }}</h3>
                             @else
-                                <h3 class="inline text-xl w-4/5">{{ trans("pages/we-buy-your-bag.faq_{$i}_question") }}</h3>
+                                <h3 class="inline text-xl w-4/5">{{ trans("pages/home.faq_{$i}_question") }}</h3>
                             @endif
 
                             <span class="text-xl mr-4">+</span>
                             </summary>
-                            @if(Lang::has("pages/we-buy-your-bag.faq_{$i}_answer{$iBagName}"))
-                                <p class="mt-2">{!! trans("pages/we-buy-your-bag.faq_{$i}_answer{$iBagName}") !!}</p>
+                            @if(Lang::has("pages/home.faq_{$i}_answer{$iBagName}"))
+                                <p class="mt-2">{!! trans("pages/home.faq_{$i}_answer{$iBagName}") !!}</p>
                             @else
-                                <p class="mt-2">{!! trans("pages/we-buy-your-bag.faq_{$i}_answer") !!}</p>
+                                <p class="mt-2">{!! trans("pages/home.faq_{$i}_answer") !!}</p>
                             @endif
                             
                         </details>  
@@ -159,3 +159,5 @@ if(request()->route('bagName')){
 </div>
 
 @endsection
+
+@metadata

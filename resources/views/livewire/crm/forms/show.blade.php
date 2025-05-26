@@ -4,7 +4,7 @@
     </h2>
     @if ($showSuccessMessage)
         <div class="text-center">
-            <p class="text-[#3A1515] font-robotoCondensed text-xl my-12">
+            <p id = "form-success-message-{{ $formIdentifier }}" class="text-[#3A1515] font-robotoCondensed text-xl my-12">
                 {{ trans('components/form-show.success-message') }}
             </p>
         </div>

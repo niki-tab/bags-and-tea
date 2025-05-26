@@ -30,4 +30,42 @@ return [
 
     'headline-1' => 'Fashionable and unique luxury bags',
     'headline-2' => 'Find your desired bags',
+
+    'page-seo-title' => 'Vintage Brand Bags',
+    'page-seo-description' => 'No Middlemen',
+
+    'faq_title' => 'FAQs about selling luxury bags at Bags and Tea',
+    'faq_1_question' => 'What bag brands do you buy?',
+    'faq_1_answer' => 'We buy bags from Chanel, Hermès, Louis Vuitton, Dior, Saint Laurent, Fendi, Loewe, Prada, Gucci, Balenciaga, Céline, Bottega Veneta, and Polène. These are the brands we\'re experts in. We\'re always evolving, and we hope to expand this list in the future.',
+    
+    'faq_2_question' => 'How do you appraise bags for purchase?',
+    'faq_2_answer' => 'We value each bag based on its condition, year of manufacture, brand, and whether it includes the original dust bag, box, or invoice. We also consider the photos you send us. From there, we compare with actual sale prices from our specialized sources and make an appraisal adjusted to the current market.',
+    
+    'faq_3_question' => 'What bag brands do you buy?',
+    'faq_3_answer' => 'We buy bags from Chanel, Hermès, Louis Vuitton, Dior, Saint Laurent, Fendi, Loewe, Prada, Gucci, Balenciaga, Céline, Bottega Veneta, and Polène. These are the brands we\'re experts in. We\'re always evolving, and we hope to expand this list in the future.',
+
+    'faq_4_question' => 'How do you appraise bags for purchase?',
+    'faq_4_answer' => 'We value each bag based on its condition, year of manufacture, brand, and whether it includes the original dust bag, box, or invoice. We also consider the photos you send us. From there, we compare with actual sale prices from our specialized sources and make an appraisal adjusted to the current market.',
+    
+    'faq_5_question' => 'What bag brands do you buy?',
+    'faq_5_answer' => 'We buy bags from Chanel, Hermès, Louis Vuitton, Dior, Saint Laurent, Fendi, Loewe, Prada, Gucci, Balenciaga, Céline, Bottega Veneta, and Polène. These are the brands we\'re experts in. We\'re always evolving, and we hope to expand this list in the future.',
+
+    'faq_6_question' => 'How do you appraise bags for purchase?',
+    'faq_6_answer' => 'We value each bag based on its condition, year of manufacture, brand, and whether it includes the original dust bag, box, or invoice. We also consider the photos you send us. From there, we compare with actual sale prices from our specialized sources and make an appraisal adjusted to the current market.',
+    
+    'faq_7_question' => 'What bag brands do you buy?',
+    'faq_7_answer' => 'We buy bags from Chanel, Hermès, Louis Vuitton, Dior, Saint Laurent, Fendi, Loewe, Prada, Gucci, Balenciaga, Céline, Bottega Veneta, and Polène. These are the brands we\'re experts in. We\'re always evolving, and we hope to expand this list in the future.',
+    
+    'faq_8_question' => 'How do you appraise bags for purchase?',
+    'faq_8_answer' => 'We value each bag based on its condition, year of manufacture, brand, and whether it includes the original dust bag, box, or invoice. We also consider the photos you send us. From there, we compare with actual sale prices from our specialized sources and make an appraisal adjusted to the current market.',
+    
+    'faq_9_question' => 'What bag brands do you buy?',
+    'faq_9_answer' => 'We buy bags from Chanel, Hermès, Louis Vuitton, Dior, Saint Laurent, Fendi, Loewe, Prada, Gucci, Balenciaga, Céline, Bottega Veneta, and Polène. These are the brands we\'re experts in. We\'re always evolving, and we hope to expand this list in the future.',
+
+    'faq_10_question' => 'How do you appraise bags for purchase?',
+    'faq_10_answer' => 'We value each bag based on its condition, year of manufacture, brand, and whether it includes the original dust bag, box, or invoice. We also consider the photos you send us. From there, we compare with actual sale prices from our specialized sources and make an appraisal adjusted to the current market.',
+    
+    
+    
+
 ];
