@@ -29,5 +29,5 @@ return [
     'button-view-all-products' => 'Ver todos',
 
     'headline-1' => 'Bolsos de Lujo de Segunda Mano',
-    'headline-2' => 'Encuentra tu bolso de marca de segunda mano perfecto',
+    'headline-2' => 'Encuentra tu bolso de marca de segunda mano',
 ];
