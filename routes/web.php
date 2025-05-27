@@ -58,11 +58,11 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
     })->name('cart.show.en')->where('locale', 'en');*/
 
     Route::get('/contacto', function () {
-        return view('pages/we_are_under_construction/show');
+        return view('pages/contact/show');
     })->name('contact.send.es')->where('locale', 'es');
 
     Route::get('/contact', function () {
-        return view('pages/we_are_under_construction/show');
+        return view('pages/contact/show');
     })->name('contact.send.en')->where('locale', 'en');
 
     Route::get('/blog', function () {

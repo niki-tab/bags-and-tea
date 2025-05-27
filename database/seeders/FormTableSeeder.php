@@ -157,5 +157,49 @@ class FormTableSeeder extends Seeder
             'is_active' => true,
         ]);
 
+        FormModel::create([
+            'form_name' => 'Contact us',
+            'form_identifier' => 'contact-us',
+            'form_description' => '',
+            'form_fields' => [
+                [
+                    'label' => 'pages/we-buy-your-bag.form-name',
+                    'placeholder' => 'pages/we-buy-your-bag.form-name',
+                    'type' => 'text',
+                    'name' => 'name',
+                    'required' => true,
+                ],
+                [
+                    'label' => 'pages/we-buy-your-bag.form-last-name',
+                    'placeholder' => 'pages/we-buy-your-bag.form-last-name',
+                    'type' => 'text',
+                    'name' => 'last_name',
+                    'required' => true,
+                ],
+                [
+                    'label' => 'pages/we-buy-your-bag.form-email',
+                    'placeholder' => 'pages/we-buy-your-bag.form-email',
+                    'type' => 'email',
+                    'name' => 'email',
+                    'required' => true,
+                ],
+                [
+                    'label' => 'pages/we-buy-your-bag.form-phone',
+                    'placeholder' => 'pages/we-buy-your-bag.form-phone',
+                    'type' => 'tel',
+                    'name' => 'phone',
+                    'required' => true,
+                ],
+                [
+                    'label' => 'pages/we-buy-your-bag.form-message',    
+                    'placeholder' => 'pages/we-buy-your-bag.form-message',
+                    'type' => 'textarea',
+                    'name' => 'message',
+                    'required' => true,
+                ],
+            ],
+            'is_active' => true,
+        ]);
+
     }
 }
