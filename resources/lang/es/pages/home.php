@@ -31,12 +31,12 @@ return [
     'headline-1' => 'Bolsos de marca vintage',
     'headline-2' => 'Encuentra tu bolso deseado',
 
-    'page-seo-title' => 'Bolsos Vintage de Marca',
-    'page-seo-description' => 'Sin intermediarios',
+    'page-seo-title' => 'Bolsos de Lujo Segunda Mano | Comprar Bolsos de Marca',
+    'page-seo-description' => 'Compra y venta de bolsos de lujo de segunda mano con confianza. Selección exclusiva, marcas icónicas y autenticidad garantizada en cada pieza.',
 
     'faq_title' => 'Preguntas frecuentes sobre la venta de bolsos de lujo en Bags and Tea',
-    'faq_1_question' => '¿Qué marcas de bolsos de lujo compras?',
-    'faq_1_answer' => 'Compramos bolsos de Chanel, Hermès, Louis Vuitton, Dior, Saint Laurent, Fendi, Loewe, Prada, Gucci, Balenciaga, Céline, Bottega Veneta, y Polène. Estas son las marcas en las que somos expertos. Siempre estamos evolucionando, y esperamos expandir esta lista en el futuro.',
+    'faq_1_question' => '¿Qué marcas de bolsos de lujo vendemos?',
+    'faq_1_answer' => 'Vendemos bolsos de Chanel, Hermès, Louis Vuitton, Dior, Saint Laurent, Fendi, Loewe, Prada, Gucci, Balenciaga, Céline, Bottega Veneta, y Polène. Estas son las marcas en las que somos expertos. Siempre estamos evolucionando, y esperamos expandir esta lista en el futuro.',
     
     'faq_2_question' => '¿Cómo valoras los bolsos para la compra?',
     'faq_2_answer' => 'Valoramos cada bolso según su condición, año de fabricación, marca y si incluye el bolsillo de polvo original, caja o factura. También consideramos las fotos que nos envías. Desde ahí, comparamos con los precios de venta reales de nuestras fuentes especializadas y hacemos una valoración ajustada al mercado actual.',    
