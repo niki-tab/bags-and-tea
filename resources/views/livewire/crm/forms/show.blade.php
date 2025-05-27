@@ -81,47 +81,61 @@
                                 @endif
                             </div> 
                             @foreach ($field['options'] as $option)
-                            <div class="flex items-center mb-2 ml-0 md:ml-12 justify-center md:justify-start">
-                                <input type="radio" 
-                                    wire:model="formData.{{ trans($field['name']) }}"
-                                    name="{{ trans($field['name']) }}" 
-                                    value="{{ trans($option) }}"
-                                    class=""
-                                >
-                                <label for="{{ trans($option) }}" class="font-robotoCondensed text-color-2 ml-4">{{ trans($option) }}</label>
-                            </div>
+                                <div class="flex items-center mb-2 ml-0 md:ml-12 justify-center md:justify-start">
+                                    <div class="flex items-center w-20 md:w-auto justify-start">
+                                        <input type="radio" 
+                                            wire:model="formData.{{ trans($field['name']) }}"
+                                            name="{{ trans($field['name']) }}" 
+                                            value="{{ trans($option) }}"
+                                            class="flex-shrink-0"
+                                        >
+                                        <label for="{{ trans($option) }}" class="font-robotoCondensed text-color-2 ml-4 whitespace-nowrap">
+                                            {{ trans($option) }}
+                                        </label>
+                                    </div>
+                                </div>
                             @endforeach
                             @error('formData.' . trans($field['name']))
                                     <span class="text-[#B92334] text-xs relative top-[0px]">{{ $message }}</span>
                             @enderror
-                        @elseif ($field['type'] === 'file')
-                            <div class="mb-4">
-                                <div class="inline-flex items-center mb-2 text-center md:text-left w-full md:w-auto justify-center md:justify-start">
-                                    <label for="{{ trans($field['name']) }}" class="font-bold font-robotoCondensed text-color-2 ml-4 md:ml-4 block mb-2 whitespace-nowrap">{{ trans($field['label']) }}</label>
-                                    @if ($field['required'])
-                                        <span class="text-color-3 ml-1 mb-3 font-robotoCondensed font-light whitespace-nowrap">{{ trans('components/form-show.label-required') }}</span>
-                                    @else
-                                        <span class="text-color-2 ml-2 mb-2 font-robotoCondensed font-light whitespace-nowrap">{{ trans('components/form-show.label-optional') }}</span>
-                                    @endif
-                                </div>
-                                <input type="file"
-                                    wire:model="files.{{ $field['name'] }}"
-                                    class="font-robotoCondensed ml-8"
-                                    accept="image/*"
-                                    multiple>
-                                <div wire:loading wire:target="files.{{ $field['name'] }}">
-                                    Uploading...
-                                </div>
-                                @if ($field['image'])
-                                    <img src="{{ asset($field['image']) }}" 
-                                        alt="{{ trans($field['label']) }}" 
-                        class="mx-auto md:mx-0 w-1/2 h-1/2 mt-8 {{ !empty($files[$field['name']]) ? 'border-2 border-[#A2DEA2] p-2' : '' }}">
+                    @elseif ($field['type'] === 'file')
+                        <div class="mb-4">
+                            <!-- Fixed label container -->
+                            <div class="flex flex-col md:flex-row md:items-center mb-2 text-center md:text-left">
+                                <label for="{{ trans($field['name']) }}" class="font-bold font-robotoCondensed text-color-2 block mb-1 md:mb-0 md:mr-2">{{ trans($field['label']) }}</label>
+                                @if ($field['required'])
+                                    <span class="text-color-3 font-robotoCondensed font-light text-sm">{{ trans('components/form-show.label-required') }}</span>
+                                @else
+                                    <span class="text-color-2 font-robotoCondensed font-light text-sm">{{ trans('components/form-show.label-optional') }}</span>
                                 @endif
                             </div>
-                            @error('files.' . trans($field['name']))
-                                    <span class="text-[#B92334] text-xs relative top-[0px]">{{ $message }}</span>
-                            @enderror
-                        @endif
+                            
+                            <!-- File input with better mobile styling -->
+                            <div class="mb-4">
+                                <input type="file"
+                                    wire:model="files.{{ $field['name'] }}"
+                                    class="font-robotoCondensed w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold"
+                                    accept="image/*"
+                                    multiple>
+                            </div>
+                            
+                            <div wire:loading wire:target="files.{{ $field['name'] }}" class="text-sm text-gray-600 mb-2">
+                                Uploading...
+                            </div>
+                            
+                            @if ($field['image'])
+                                <!-- Fixed image container -->
+                                <div class="mt-4"> <!-- Consistent top margin -->
+                                    <img src="{{ asset($field['image']) }}" 
+                                        alt="{{ trans($field['label']) }}" 
+                                        class="mx-auto md:mx-0 w-full max-w-xs md:w-1/2 md:h-1/2 object-contain {{ !empty($files[$field['name']]) ? 'border-2 border-[#A2DEA2] p-2' : '' }}">
+                                </div>
+                            @endif
+                        </div>
+                        @error('files.' . trans($field['name']))
+                            <span class="text-[#B92334] text-xs">{{ $message }}</span>
+                        @enderror
+                    @endif
                         </div>
                     @endif
                 @endforeach
