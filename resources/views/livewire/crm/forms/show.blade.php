@@ -101,8 +101,8 @@
                     @elseif ($field['type'] === 'file')
                         <div class="mb-4">
                             <!-- Fixed label container -->
-                            <div class="flex flex-col md:flex-row md:items-center mb-2 text-center md:text-left">
-                                <label for="{{ trans($field['name']) }}" class="font-bold font-robotoCondensed text-color-2 block mb-1 md:mb-0 md:mr-2">{{ trans($field['label']) }}</label>
+                            <div class="flex flex-wrap items-center justify-center md:justify-start mb-2 text-center md:text-left">
+                                <label for="{{ trans($field['name']) }}" class="font-bold font-robotoCondensed text-color-2 mb-1 md:mb-0 mr-2">{{ trans($field['label']) }}</label>
                                 @if ($field['required'])
                                     <span class="text-color-3 font-robotoCondensed font-light text-sm">{{ trans('components/form-show.label-required') }}</span>
                                 @else
@@ -111,10 +111,10 @@
                             </div>
                             
                             <!-- File input with better mobile styling -->
-                            <div class="mb-4">
+                            <div class="mb-4 flex justify-center md:justify-start">
                                 <input type="file"
                                     wire:model="files.{{ $field['name'] }}"
-                                    class="font-robotoCondensed w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold"
+                                    class="font-robotoCondensed text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold"
                                     accept="image/*"
                                     multiple>
                             </div>
