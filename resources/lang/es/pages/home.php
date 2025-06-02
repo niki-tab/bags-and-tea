@@ -29,7 +29,7 @@ return [
     'button-view-all-products' => 'Ver todos',
 
     'headline-1' => 'Bolsos de Lujo Segunda Mano',
-    'headline-2' => 'Encuentra tus bolsos de marca de segunda mano deseados',
+    'headline-2' => 'Encuentra tus bolsos de marca de segunda mano',
 
     'page-seo-title' => 'Bolsos de Lujo Segunda Mano | Comprar Bolsos de Marca',
     'page-seo-description' => 'Compra y venta de bolsos de lujo de segunda mano con confianza. Selección exclusiva, marcas icónicas y autenticidad garantizada en cada pieza.',
