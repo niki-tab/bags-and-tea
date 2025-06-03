@@ -57,7 +57,7 @@ class AdminPanelController extends Controller
 
     public function blog(): View
     {
-        return view('pages.admin-panel.dashboard.blog');
+        return view('pages.admin-panel.dashboard.blog.show');
     }
 
     public function settings(): View

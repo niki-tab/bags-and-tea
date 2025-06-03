@@ -6,8 +6,10 @@ use Livewire\Livewire;
 use Illuminate\Support\ServiceProvider;
 use Src\Crm\Forms\Domain\FormRepository;
 use Src\Products\Product\Domain\ProductRepository;
+use Src\Blog\Articles\Domain\ArticleRepository;
 use Src\Crm\Forms\Infrastructure\EloquentFormRepository;
 use Src\Products\Product\Infrastructure\EloquentProductRepository;
+use Src\Blog\Articles\Infrastructure\EloquentArticleRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
          * Repositories
          */
         ProductRepository::class => EloquentProductRepository::class,
+        ArticleRepository::class => EloquentArticleRepository::class,
 
     ];
 
@@ -27,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Livewire::component('blog/articles/show', \Src\Blog\Articles\Frontend\ShowArticle::class);
         Livewire::component('blog/show', \Src\Blog\Articles\Frontend\ShowAllArticle::class);
+        Livewire::component('admin.blog.articles.show-all', \Src\Admin\Blog\Articles\Frontend\ShowAllArticle::class);
         Livewire::component('shared/language-selector', \Src\Shared\Frontend\LanguageSelector::class);
         Livewire::component('crm/forms/show', \Src\Crm\Forms\Frontend\Form::class);
         Livewire::component('shared/whatsapp-widget', \Src\Shared\Frontend\WhatsappWidget::class);

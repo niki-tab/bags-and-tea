@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Src\Shared\Domain\Criteria;
 
 use InvalidArgumentException;
-use ChannelManager\Shared\Domain\ValueObject\Enum;
+use Src\Shared\Domain\ValueObject\Enum;
 
 /**
  * @method static FilterOperator gt()
