@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace Src\Products\Product\Infrastructure;
 
-use ChannelManager\Shared\Domain\Criteria\Criteria;
-use ChannelManager\Core\Tours\Domain\TourRepository;
-use ChannelManager\Core\Tours\Infrastructure\Eloquent\TourEloquentModel;
+use Src\Shared\Domain\Criteria\Criteria;
+use Src\Products\Product\Domain\ProductRepository;
+use Src\Products\Product\Infrastructure\Eloquent\ProductEloquentModel;
 
 final class EloquentProductRepository implements ProductRepository
 {
-    public function save(TourEloquentModel $tour): void
+    public function save(ProductEloquentModel $product): void
     {
-        $tour->save();
+        $product->save();
     }
-    public function search(string $id): ?TourEloquentModel
+    public function search(string $id): ?ProductEloquentModel
     {
-        return TourEloquentModel::find($id);
+        return ProductEloquentModel::find($id);
     }
     public function searchByCriteria(Criteria $criteria): array
     {
-        $whereClause = [];
+        $query = ProductEloquentModel::query();
 
         foreach ($criteria->plainFilters() as $filter) {
             $value = $filter->value()->value();
@@ -28,11 +28,11 @@ final class EloquentProductRepository implements ProductRepository
                 $value = '%' . $value . '%';
             }
 
-            array_push($whereClause, [
+            $query->where(
                 $filter->field()->value(),
                 $filter->operator()->value(),
-                $value,
-            ]);
+                $value
+            );
         }
 
         $limit = $criteria->limit();
@@ -40,14 +40,9 @@ final class EloquentProductRepository implements ProductRepository
             $limit = 50;
         }
 
-        $eloquentModels = TourEloquentModel::where($whereClause)
-            ->offset($criteria->offset() ?? 0)
+        return $query->offset($criteria->offset() ?? 0)
             ->limit($limit)
-            ->get();
-
-        if (null === $eloquentModels) {
-            return [];
-        }
-        return $eloquentModels->all();
+            ->get()
+            ->all();
     }
 }

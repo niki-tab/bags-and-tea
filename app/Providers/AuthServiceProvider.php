@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use App\Auth\User\Domain\UserRepository;
+use App\Auth\User\Infrastructure\EloquentUserRepository;
+use App\Auth\Role\Domain\RoleRepository;
+use App\Auth\Role\Infrastructure\EloquentRoleRepository;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -21,6 +24,15 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->registerRepositories();
+    }
+
+    /**
+     * Register repository bindings.
+     */
+    private function registerRepositories(): void
+    {
+        $this->app->bind(UserRepository::class, EloquentUserRepository::class);
+        $this->app->bind(RoleRepository::class, EloquentRoleRepository::class);
     }
 }

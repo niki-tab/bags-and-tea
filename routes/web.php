@@ -9,6 +9,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\WeBuyYourBagController;
+use App\Http\Controllers\Admin\AdminPanelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,36 @@ use App\Http\Controllers\WeBuyYourBagController;
 });*/
 
 // Add Livewire routes without locale prefix
+
+// Admin Authentication Routes
+Route::prefix('admin-panel')->name('admin.')->group(function () {
+    // Login page (GET)
+    Route::get('/login', [AdminPanelController::class, 'login'])->name('login');
+    
+    // Authentication (POST)
+    Route::post('/authenticate', [AdminPanelController::class, 'authenticate'])->name('authenticate');
+    
+    // Protected Admin Routes
+    Route::middleware(['admin.auth'])->group(function () {
+        // Dashboard Home
+        Route::get('/', [AdminPanelController::class, 'home'])->name('home');
+        
+        // Products Management
+        Route::get('/products', [AdminPanelController::class, 'products'])->name('products');
+        
+        // Orders Management
+        Route::get('/orders', [AdminPanelController::class, 'orders'])->name('orders');
+        
+        // Blog & Content Management
+        Route::get('/blog', [AdminPanelController::class, 'blog'])->name('blog');
+        
+        // Settings & Configuration
+        Route::get('/settings', [AdminPanelController::class, 'settings'])->name('settings');
+        
+        // Logout (POST)
+        Route::post('/logout', [AdminPanelController::class, 'logout'])->name('logout');
+    });
+});
 
 
 Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function () {
@@ -154,4 +185,15 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
 Route::get('/test', function () {
     return view('pages/test');
 })->name('test');
+
+/*
+|--------------------------------------------------------------------------
+| Admin Panel Routes
+|--------------------------------------------------------------------------
+|
+| Routes for the admin panel with authentication and authorization.
+| All admin routes are prefixed with 'admin-panel' and use 'admin.' names.
+|
+*/
+
 

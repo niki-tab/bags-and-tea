@@ -35,6 +35,8 @@ class ProductEloquentModel extends Model
         'image',
         'featured',
         'featured_position',
+        'meta_title',
+        'meta_description',
     ];
 
 

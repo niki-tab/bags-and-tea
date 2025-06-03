@@ -24,7 +24,7 @@ class HomeController extends Controller
             ];
         })->toArray();
 
-        //$this->setSeo();
+        $this->setSeo();
 
         return view('home', compact('featuredProducts'));
 
@@ -36,7 +36,11 @@ class HomeController extends Controller
 
         seo()
         ->title(trans('pages/home.page-seo-title'), env('APP_NAME'))
-        ->description(trans('pages/home.page-seo-description'));
+        ->description(trans('pages/home.page-seo-description'))
+        ->images(
+            env('APP_LOGO_1_PATH'),
+                env('APP_LOGO_2_PATH'),
+        );
             
         
 

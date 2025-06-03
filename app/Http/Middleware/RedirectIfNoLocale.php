@@ -15,7 +15,7 @@ class RedirectIfNoLocale
      */
     public function handle(Request $request, Closure $next)
     {   
-        if ($request->is('livewire/*') || $request->is('api/*') || $request->is('images/*') || $request->is('storage/*') || $request->is('public/*')) {
+        if ($request->is('livewire/*') || $request->is('api/*') || $request->is('images/*') || $request->is('storage/*') || $request->is('public/*') || $request->is('admin-panel/*') || $request->is('admin-panel')) {
             return $next($request); // Skip the language prefix for Livewire routes
         }
 

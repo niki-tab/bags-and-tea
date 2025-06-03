@@ -14,8 +14,11 @@ class DatabaseSeeder extends Seeder
     {
         
     $this->call([
-
-
+      // Auth & Role System
+      RoleSeeder::class,
+      AdminUserSeeder::class,
+      
+      // Existing Seeders
       FakeEnvironmentSeeder::class,
       ArticleTableSeeder::class,
       RoleTableSeeder::class,
