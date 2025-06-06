@@ -1,7 +1,7 @@
 <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
         
-        <form class="mt-8 space-y-6 w-2/3 md:w-1/2 mx-auto" wire:submit.prevent="authenticate">
+        <form class="mt-8 space-y-6 mx-auto" wire:submit.prevent="authenticate">
             <div class="rounded-md shadow-sm -space-y-px">
                 <div>
                     <label for="email" class="sr-only">Email address</label>

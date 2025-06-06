@@ -20,13 +20,11 @@ class ProductEloquentModel extends Model
         'slug',
         'description_1',
         'description_2',
-        'origin_general',
-        'origin_specific',
+        'origin',
         'quality',
         'product_type',
-        'species_type',
-        'food_type',
-        'price_from',
+        'price',
+        'discounted_price',
         'sell_unit',
         'sell_mode',
         'stock',
@@ -48,13 +46,11 @@ class ProductEloquentModel extends Model
         'slug' => 'string',
         'description_1' => 'string',
         'description_2' => 'string',
-        'origin_general' => 'string',
-        'origin_specific' => 'string',
+        'origin' => 'string',
         'quality' => 'string',
         'product_type' => 'string',
-        'species_type' => 'string',
-        'food_type' => 'string',
-        'price_from' => 'float',
+        'price' => 'float',
+        'discounted_price' => 'float',
         'sell_unit' => 'string',
         'sell_mode' => 'string',
         'stock' => 'string',
@@ -67,5 +63,5 @@ class ProductEloquentModel extends Model
         'meta_description' => 'string',
     ];
 
-    public $translatable = ['name', 'brand', 'description_1', 'description_2', 'origin_general', 'origin_specific', 'slug', 'meta_title', 'meta_description', 'food_type'];
+    public $translatable = ['name', 'brand', 'description_1', 'description_2', 'origin', 'slug', 'meta_title', 'meta_description', 'food_type'];
 }

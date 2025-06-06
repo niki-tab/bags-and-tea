@@ -18,13 +18,11 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->longText('description_1')->nullable();
             $table->longText('description_2')->nullable();
-            $table->string('origin_general');
-            $table->string('origin_specific');
+            $table->string('origin');
             $table->string('product_type');
-            $table->string('quality');
-            $table->string('food_type');
-            $table->string('species_type');
-            $table->float('price_from');
+            $table->string('quality_id');
+            $table->float('price');
+            $table->float('discounted_price')->nullable();
             $table->string('sell_unit');
             $table->string('sell_mode');
             $table->string('stock');
@@ -45,5 +43,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('products');
+        Schema::dropIfExists('qualities');
     }
 };

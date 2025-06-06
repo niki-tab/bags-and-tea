@@ -22,7 +22,6 @@ class ProductModelFactory extends Factory
             'name' => $this->faker->word,
             'description_1' => $this->faker->sentence,
             'product_type' => $this->faker->word,
-            'product_species_type' => $this->faker->word,
             'price' => $this->faker->randomFloat(2, 1, 1000),
             'image' => 'placeholder.jpg',
             'featured' => $this->faker->boolean,

@@ -22,7 +22,7 @@ class AdminUserSeeder extends Seeder
                 'id' => Str::uuid()->toString(),
                 'name' => 'Administrator',
                 'email' => 'admin@admin.com',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('bagsandtea1234'),
                 'email_verified_at' => now(),
                 'created_at' => now(),
                 'updated_at' => now(),

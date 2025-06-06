@@ -171,7 +171,7 @@
                                 <!-- Price -->
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm font-semibold text-gray-900">
-                                        {{ $this->formatPrice($product->price_from) }}
+                                        {{ $this->formatPrice($product->price) }}
                                     </div>
                                     <div class="text-xs text-gray-500">Starting from</div>
                                 </td>

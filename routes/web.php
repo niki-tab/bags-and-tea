@@ -50,6 +50,17 @@ Route::prefix('admin-panel')->name('admin.')->group(function () {
         // Blog & Content Management
         Route::get('/blog', [AdminPanelController::class, 'blog'])->name('blog');
         
+        // Blog Articles Management
+        Route::prefix('blog/articles')->name('blog.articles.')->group(function () {
+            Route::get('/create', function () {
+                return view('pages.admin-panel.dashboard.blog.articles.show');
+            })->name('create');
+            
+            Route::get('/edit/{id}', function ($id) {
+                return view('pages.admin-panel.dashboard.blog.articles.show', ['id' => $id]);
+            })->name('edit');
+        });
+        
         // Settings & Configuration
         Route::get('/settings', [AdminPanelController::class, 'settings'])->name('settings');
         

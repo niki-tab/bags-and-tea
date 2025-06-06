@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
       // Auth & Role System
       RoleSeeder::class,
       AdminUserSeeder::class,
+      ArticleTableSeeder::class,
+      QualityTableSeeder::class,
       
       // Existing Seeders
       FakeEnvironmentSeeder::class,

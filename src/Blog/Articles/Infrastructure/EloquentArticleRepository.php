@@ -20,6 +20,11 @@ final class EloquentArticleRepository implements ArticleRepository
         return ArticleModel::find($id);
     }
 
+    public function findById(string $id): ?ArticleModel
+    {
+        return ArticleModel::find($id);
+    }
+
     public function searchByCriteria(Criteria $criteria): array
     {
         $query = ArticleModel::query();

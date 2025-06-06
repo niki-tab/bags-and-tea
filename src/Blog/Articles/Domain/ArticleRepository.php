@@ -11,5 +11,6 @@ interface ArticleRepository
 {
     public function save(ArticleModel $article): void;
     public function search(string $id): ?ArticleModel;
+    public function findById(string $id): ?ArticleModel;
     public function searchByCriteria(Criteria $criteria): array;
 }
