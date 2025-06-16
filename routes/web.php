@@ -75,13 +75,9 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
     /*Route::get('/shop', function () {
         return view('pages/shop');
     })->name('shop.show');*/
-    Route::get('/tienda', function () {
-        return view('pages/shop');
-    })->name('shop.show.es')->where('locale', 'es');
+    Route::get('/tienda', Shop::class)->name('shop.show.es')->where('locale', 'es');
 
-    Route::get('/shop', function () {
-        return view('pages/shop');
-    })->name('shop.show.en')->where('locale', 'en');
+    Route::get('/shop', Shop::class)->name('shop.show.en')->where('locale', 'en');
 
     Route::get('/tienda/producto/{productSlug}', function () {
         return view('pages/product-detail');

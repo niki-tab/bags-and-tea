@@ -22,12 +22,16 @@ class FakeEnvironmentSeeder extends Seeder
 
         $quality1 = QualityEloquentModel::where('code', 'AB')->first();
         $quality1Id = $quality1->id;
+
+        // Get Louis Vuitton brand ID
+        $louisVuittonBrand = \DB::table('brands')->where('slug', 'louis-vuitton')->first();
+        $louisVuittonBrandId = $louisVuittonBrand->id;
         
         $bag1 = ProductEloquentModel::create([
 
             'id' => (string) Str::uuid(),
             'name' => "Bolso Speedy 25",
-            'brand' => "Louis Vuitton",
+            'brand_id' => $louisVuittonBrandId,
             'description_1' => "Procedente de Francia. Oceano Atlántico",
             'description_2' => "La vieira es un marisco delicado y sabroso, apreciado por su textura suave y su sabor único. En Rutas del Mar, te ofrecemos vieiras francesas frescas y de la mejor calidad, traídas directamente desde las costas más puras. Ideal para quienes buscan un toque gourmet en sus platos, la vieira es el manjar perfecto del mar",
             'slug' => "speedy-25",
@@ -107,7 +111,7 @@ class FakeEnvironmentSeeder extends Seeder
 
             'id' => (string) Str::uuid(),
             'name' => "Bolso Noe",
-            'brand' => "Louis Vuitton",
+            'brand_id' => $louisVuittonBrandId,
             'description_1' => "Procedente de Francia. Oceano Atlántico",
             'description_2' => "La centolla de Francia es sinónimo de calidad y sabor refinado. Un producto excepcional que puedes disfrutar en cualquier momento del año. En Rutas del Mar, traemos directamente desde las costas francesas las centollas más frescas, seleccionadas cuidadosamente para ofrecerte lo mejor del mar. La centolla francesa es una alternativa exquisita a la centolla gallega.",
             'slug' => "noe",
@@ -207,7 +211,7 @@ class FakeEnvironmentSeeder extends Seeder
 
             'id' => (string) Str::uuid(),
             'name' => "Bolso Looping GM",
-            'brand' => "Louis Vuitton",
+            'brand_id' => $louisVuittonBrandId,
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
@@ -440,7 +444,7 @@ class FakeEnvironmentSeeder extends Seeder
 
             'id' => (string) Str::uuid(),
             'name' => "Bolso Alma",
-            'brand' => "Louis Vuitton",
+            'brand_id' => $louisVuittonBrandId,
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
@@ -472,7 +476,7 @@ class FakeEnvironmentSeeder extends Seeder
 
             'id' => (string) Str::uuid(),
             'name' => "Bolso Petit Noe Epi",
-            'brand' => "Louis Vuitton",
+            'brand_id' => $louisVuittonBrandId,
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
@@ -504,7 +508,7 @@ class FakeEnvironmentSeeder extends Seeder
 
             'id' => (string) Str::uuid(),
             'name' => "Bolso Speedy 25",
-            'brand' => "Louis Vuitton",
+            'brand_id' => $louisVuittonBrandId,
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
@@ -537,7 +541,7 @@ class FakeEnvironmentSeeder extends Seeder
 
             'id' => (string) Str::uuid(),
             'name' => "Looping PM",
-            'brand' => "Louis Vuitton",
+            'brand_id' => $louisVuittonBrandId,
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
@@ -570,7 +574,7 @@ class FakeEnvironmentSeeder extends Seeder
 
             'id' => (string) Str::uuid(),
             'name' => "Bolso Noe",
-            'brand' => "Louis Vuitton",
+            'brand_id' => $louisVuittonBrandId,
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
@@ -603,7 +607,7 @@ class FakeEnvironmentSeeder extends Seeder
 
             'id' => (string) Str::uuid(),
             'name' => "Bolso Alma",
-            'brand' => "Louis Vuitton",
+            'brand_id' => $louisVuittonBrandId,
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",

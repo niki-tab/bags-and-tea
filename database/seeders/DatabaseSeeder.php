@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
       QualityTableSeeder::class,
       
       // Existing Seeders
+      BrandTableSeeder::class,
       FakeEnvironmentSeeder::class,
       ArticleTableSeeder::class,
       RoleTableSeeder::class,

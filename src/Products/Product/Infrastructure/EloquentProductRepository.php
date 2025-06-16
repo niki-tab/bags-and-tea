@@ -21,28 +21,105 @@ final class EloquentProductRepository implements ProductRepository
     public function searchByCriteria(Criteria $criteria): array
     {
         $query = ProductEloquentModel::query();
-
+        
         foreach ($criteria->plainFilters() as $filter) {
+            $field = $filter->field()->value();
+            $operator = $filter->operator()->value();
             $value = $filter->value()->value();
-            if ($filter->operator()->value() === 'like') {
+
+            // Handle special cases for relationships
+            if ($field === 'categories') {
+                $query->whereHas('categories', function ($q) use ($operator, $value) {
+                    if ($operator === 'in') {
+                        // Handle comma-separated string values from FilterValue
+                        $values = is_string($value) ? explode(',', $value) : (is_array($value) ? $value : [$value]);
+                        $q->whereIn('categories.id', $values);
+                    } else {
+                        $q->where('categories.id', $operator, $value);
+                    }
+                });
+                continue;
+            }
+
+            if ($field === 'attributes') {
+                $query->whereHas('attributes', function ($q) use ($operator, $value) {
+                    if ($operator === 'in') {
+                        // Handle comma-separated string values from FilterValue
+                        $values = is_string($value) ? explode(',', $value) : (is_array($value) ? $value : [$value]);
+                        $q->whereIn('attributes.id', $values);
+                    } else {
+                        $q->where('attributes.id', $operator, $value);
+                    }
+                });
+                continue;
+            }
+
+            // Handle special price ranges filter
+            if ($field === 'price_ranges') {
+                $priceRanges = explode(',', $value);
+                $query->where(function ($q) use ($priceRanges) {
+                    foreach ($priceRanges as $priceRange) {
+                        $q->orWhere(function ($subQ) use ($priceRange) {
+                            switch (trim($priceRange)) {
+                                case '0-100':
+                                    $subQ->whereBetween('price', [0, 100]);
+                                    break;
+                                case '100-500':
+                                    $subQ->whereBetween('price', [100, 500]);
+                                    break;
+                                case '500-1000':
+                                    $subQ->whereBetween('price', [500, 1000]);
+                                    break;
+                                case '1000-2000':
+                                    $subQ->whereBetween('price', [1000, 2000]);
+                                    break;
+                                case '2000+':
+                                    $subQ->where('price', '>=', 2000);
+                                    break;
+                            }
+                        });
+                    }
+                });
+                continue;
+            }
+
+            // Handle standard filters
+            if ($operator === 'like') {
                 $value = '%' . $value . '%';
             }
 
-            $query->where(
-                $filter->field()->value(),
-                $filter->operator()->value(),
-                $value
-            );
+            if ($operator === 'in') {
+                // Handle comma-separated string values from FilterValue
+                $values = is_string($value) ? explode(',', $value) : (is_array($value) ? $value : [$value]);
+                $query->whereIn($field, $values);
+            } else {
+                $query->where($field, $operator, $value);
+            }
+        }
+
+        // Always include relationships for shop display
+        $query->with(['brand', 'quality', 'categories', 'attributes']);
+
+        // Apply sorting if specified
+        $order = $criteria->order();
+        if ($order && !$order->isNone()) {
+            $orderBy = $order->orderBy();
+            $orderType = $order->orderType();
+            if ($orderBy && $orderType) {
+                $query->orderBy($orderBy->value(), $orderType->value());
+            }
         }
 
         $limit = $criteria->limit();
         if ($limit === 0 || !isset($limit)) {
             $limit = 50;
         }
-
-        return $query->offset($criteria->offset() ?? 0)
+        
+        $results = $query->offset($criteria->offset() ?? 0)
             ->limit($limit)
             ->get()
             ->all();
+        
+        return $results;
     }
 }

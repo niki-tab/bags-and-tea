@@ -4,8 +4,13 @@ namespace Src\Products\Product\Infrastructure\Eloquent;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Translatable\HasTranslations;
+use Src\Products\Brands\Infrastructure\Eloquent\BrandEloquentModel;
+use Src\Categories\Infrastructure\Eloquent\CategoryEloquentModel;
+use Src\Attributes\Infrastructure\Eloquent\AttributeEloquentModel;
+use Src\Products\Quality\Infrastructure\Eloquent\QualityEloquentModel;
 class ProductEloquentModel extends Model
 {
     use HasFactory, HasTranslations;
@@ -16,12 +21,12 @@ class ProductEloquentModel extends Model
     protected $fillable = [
         'id',
         'name',
-        'brand',
+        'brand_id',
         'slug',
         'description_1',
         'description_2',
         'origin',
-        'quality',
+        'quality_id',
         'product_type',
         'price',
         'discounted_price',
@@ -42,12 +47,12 @@ class ProductEloquentModel extends Model
     protected $casts = [
         'id' => 'string',
         'name' => 'string',
-        'brand' => 'string',
+        'brand_id' => 'string',
         'slug' => 'string',
         'description_1' => 'string',
         'description_2' => 'string',
         'origin' => 'string',
-        'quality' => 'string',
+        'quality_id' => 'string',
         'product_type' => 'string',
         'price' => 'float',
         'discounted_price' => 'float',
@@ -63,5 +68,45 @@ class ProductEloquentModel extends Model
         'meta_description' => 'string',
     ];
 
-    public $translatable = ['name', 'brand', 'description_1', 'description_2', 'origin', 'slug', 'meta_title', 'meta_description', 'food_type'];
+    public $translatable = ['name', 'description_1', 'description_2', 'origin', 'slug', 'meta_title', 'meta_description'];
+
+    public function brand(): BelongsTo
+    {
+        return $this->belongsTo(BrandEloquentModel::class, 'brand_id');
+    }
+
+    public function quality(): BelongsTo
+    {
+        return $this->belongsTo(QualityEloquentModel::class, 'quality_id');
+    }
+
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            CategoryEloquentModel::class,
+            'product_category',
+            'product_id',
+            'category_id'
+        )->withTimestamps();
+    }
+
+    public function attributes(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            AttributeEloquentModel::class,
+            'product_attribute',
+            'product_id',
+            'attribute_id'
+        )->withTimestamps();
+    }
+
+    public function scopeFeatured($query)
+    {
+        return $query->where('featured', true)->orderBy('featured_position');
+    }
+
+    public function scopeInStock($query)
+    {
+        return $query->where('out_of_stock', false);
+    }
 }
