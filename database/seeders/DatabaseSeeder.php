@@ -23,8 +23,6 @@ class DatabaseSeeder extends Seeder
       // Existing Seeders
       BrandTableSeeder::class,
       FakeEnvironmentSeeder::class,
-      ArticleTableSeeder::class,
-      RoleTableSeeder::class,
       UserTableSeeder::class,
       FormTableSeeder::class,
       FormSubmissionTableSeeder::class
