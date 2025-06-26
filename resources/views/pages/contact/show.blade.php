@@ -18,23 +18,20 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
 
 @section('content')
 
-
-
 <div>
-    <div class="relative w-full h-[500px] md:block hidden">
-        <!-- Background Image -->
+    <div class="w-full md:block hidden">
         <img 
-            src="{{ asset('images/home/mask-group.svg') }}" 
-            alt="Tienda de Bolsos de Lujo Bags and Tea" 
-            class="w-full h-full object-cover">
+            src="{{ asset('images/home/image54.png') }}" 
+            alt="Bolso Bags and Tea" 
+            class="w-full object-contain block mx-auto">
     </div>
-    <div class="relative w-full h-[300px] md:hidden">
-        <!-- Background Image -->
-        <img 
-            src="{{ asset('images/home/mask-group.svg') }}" 
-            alt="Tienda de Bolsos de Lujo Bags and Tea" 
-            class="w-full h-full object-cover">
 
+
+    <div class="w-full aspect-[5.5] md:hidden">
+        <img 
+            src="{{ asset('images/home/image54.png') }}" 
+            alt="Bolso Bags and Tea" 
+            class="w-full h-full object-contain mx-auto">
     </div>
     <div id="contact-form" class="bg-[#F6F0ED] py-20">
         <div class="border-[4px] border-[#3A1515] w-4/5 mx-auto">

@@ -1,6 +1,6 @@
 <div class="flex items-center justify-center mb-2 md:mb-4">
     <div class="mt-4 md:mt-12 px-8 md:px-32 text-center">
-        <h1 class="mx-auto inline-block mb-8 md:mb-12 text-4xl md:text-5xl font-['Lovera']">{{trans('components/article-all-show.page-title')}}</h1>
+        <h1 class="mx-auto inline-block mb-8 md:mb-12 text-4xl md:text-5xl font-['Lovera']" style="color: #482626;">{{trans('components/article-all-show.page-title')}}</h1>
         @if(!$allArticles)
             <h1 class="text-6xl mx-auto inline-block">{{$articlesNotFoundText}}</h1>
         @else
