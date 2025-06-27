@@ -34,6 +34,10 @@ return [
     'page-seo-title' => 'Vintage Brand Bags',
     'page-seo-description' => 'No Middlemen',
 
+    'title-certify-your-bag' => 'Certify your luxury bag',
+    'description-certify-your-bag' => 'At Bags & Tea, certifying your luxury bag is more than just a guarantee: it means ensuring your luxury piece has been examined by experts and has passed rigorous quality criteria. Each certification is a seal of authenticity and quality, guaranteeing that your pre-owned bag is exceptional and deserves to be preserved.',
+    'button-certify-your-bag' => 'Go to the form',
+
     'faq_title' => 'FAQs about selling luxury bags at Bags and Tea',
     'faq_1_question' => 'What bag brands do you buy?',
     'faq_1_answer' => 'We buy bags from Chanel, Hermès, Louis Vuitton, Dior, Saint Laurent, Fendi, Loewe, Prada, Gucci, Balenciaga, Céline, Bottega Veneta, and Polène. These are the brands we\'re experts in. We\'re always evolving, and we hope to expand this list in the future.',

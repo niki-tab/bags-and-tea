@@ -34,6 +34,10 @@ return [
     'page-seo-title' => 'Bolsos de Lujo Segunda Mano | Comprar Bolsos de Marca',
     'page-seo-description' => 'Compra y venta de bolsos de lujo de segunda mano con confianza. Selección exclusiva, marcas icónicas y autenticidad garantizada en cada pieza.',
 
+    'title-certify-your-bag' => 'Certifica tu bolso de lujo',
+    'description-certify-your-bag' => 'En Bags & Tea, certificar tu bolso de lujo es más que una simple garantía: es asegurar que tu pieza de lujo ha sido examinada por expertos y ha superado rigurosos criterios de calidad. Cada certificación es un sello de autenticidad y calidad, garantizando que tu bolso de segunda mano es excepcional y merece ser preservado.',
+    'button-certify-your-bag' => 'Ir al formulario',
+
     'faq_title' => 'Preguntas frecuentes sobre la venta de bolsos de lujo en Bags and Tea',
     'faq_1_question' => '¿Es seguro comprar bolsos de lujo de segunda mano por internet?',
     'faq_1_answer' => 'Sí. En B&T nos tomamos la seguridad muy en serio. Cada pieza que ofrecemos ha sido cuidadosamente inspeccionada por expertos para garantizar su autenticidad y estado. Comprar a través de nuestra plataforma es una experiencia segura, transparente y respaldada por un equipo con años de experiencia en la venta de bolsos de lujo de segunda mano.',
