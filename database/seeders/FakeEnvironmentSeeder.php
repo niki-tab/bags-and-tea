@@ -8,6 +8,9 @@ use Illuminate\Database\Seeder;
 use App\Models\ProductSizeVariationModel;
 use App\Models\ProductQuantityVariationModel;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Src\Products\Product\Application\AddCategoryToProduct;
+use Src\Categories\Infrastructure\EloquentCategoryRepository;
+use Src\Products\Product\Infrastructure\EloquentProductRepository;
 use App\Models\ProducSizeVariationQuantityVariationPriceModel;
 use Src\Products\Product\Infrastructure\Eloquent\ProductEloquentModel;
 use Src\Products\Quality\Infrastructure\Eloquent\QualityEloquentModel;
@@ -19,12 +22,19 @@ class FakeEnvironmentSeeder extends Seeder
      */
     public function run(): void
     {   
+    
 
         $quality1 = QualityEloquentModel::where('code', 'AB')->first();
         $quality1Id = $quality1->id;
 
-        // Get Louis Vuitton brand ID
-        $louisVuittonBrand = \DB::table('brands')->where('slug', 'louis-vuitton')->first();
+        $quality2 = QualityEloquentModel::where('code', 'A')->first();
+        $quality2Id = $quality2->id;
+
+        $quality3 = QualityEloquentModel::where('code', 'B')->first();
+        $quality3Id = $quality3->id;
+
+        // Get Louis Vuitton brand ID - now using JSON slug format
+        $louisVuittonBrand = \DB::table('brands')->where('slug', 'like', '%louis-vuitton%')->first();
         $louisVuittonBrandId = $louisVuittonBrand->id;
         
         $bag1 = ProductEloquentModel::create([
@@ -38,7 +48,7 @@ class FakeEnvironmentSeeder extends Seeder
             'origin' => "Francia",
             'quality_id' => $quality1Id,
             'product_type' => "Simple",
-            'price' => 3.50,
+            'price' => 585,
             'sell_unit' => "unit",
             'sell_mode' => "per-unit",
             'stock' => "50",
@@ -116,7 +126,7 @@ class FakeEnvironmentSeeder extends Seeder
             'description_2' => "La centolla de Francia es sinónimo de calidad y sabor refinado. Un producto excepcional que puedes disfrutar en cualquier momento del año. En Rutas del Mar, traemos directamente desde las costas francesas las centollas más frescas, seleccionadas cuidadosamente para ofrecerte lo mejor del mar. La centolla francesa es una alternativa exquisita a la centolla gallega.",
             'slug' => "noe",
             'origin' => "Japan",
-            'quality_id' => $quality1Id,
+            'quality_id' => $quality2Id,
             'product_type' => "Simple",
             'price' => 20,
             'sell_unit' => "unit",
@@ -217,9 +227,9 @@ class FakeEnvironmentSeeder extends Seeder
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
             'slug' => "looping-gm",
             'origin' => "Francia",
-            'quality_id' => $quality1Id,
+            'quality_id' => $quality3Id,
             'product_type' => "Variable",
-            'price' => 10,
+            'price' => 390,
             'sell_unit' => "unit",
             'sell_mode' => "per-box",
             'stock' => "50",
@@ -452,7 +462,7 @@ class FakeEnvironmentSeeder extends Seeder
             'origin' => "Francia",
             'quality_id' => $quality1Id,
             'product_type' => "Variable",
-            'price' => 10,
+            'price' => 400,
             'sell_unit' => "unit",
             'sell_mode' => "per-box",
             'stock' => "50",
@@ -482,9 +492,9 @@ class FakeEnvironmentSeeder extends Seeder
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
             'slug' => "petit-noe-epi-red",
             'origin' => "Francia",
-            'quality_id' => $quality1Id,
+            'quality_id' => $quality2Id,
             'product_type' => "Variable",
-            'price' => 10,
+            'price' => 475,
             'sell_unit' => "unit",
             'sell_mode' => "per-box",
             'stock' => "50",
@@ -514,9 +524,9 @@ class FakeEnvironmentSeeder extends Seeder
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
             'slug' => "speedy-25-2",
             'origin' => "Francia",
-            'quality_id' => $quality1Id,
+            'quality_id' => $quality3Id,
             'product_type' => "Variable",
-            'price' => 10,
+            'price' => 550,
             'sell_unit' => "unit",
             'sell_mode' => "per-box",
             'stock' => "50",
@@ -549,7 +559,7 @@ class FakeEnvironmentSeeder extends Seeder
             'origin' => "Francia",
             'quality_id' => $quality1Id,
             'product_type' => "Variable",
-            'price' => 10,
+            'price' => 380,
             'sell_unit' => "unit",
             'sell_mode' => "per-box",
             'stock' => "50",
@@ -580,9 +590,9 @@ class FakeEnvironmentSeeder extends Seeder
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
             'slug' => "noe-1",
             'origin' => "Francia",
-            'quality_id' => $quality1Id,
+            'quality_id' => $quality2Id,
             'product_type' => "Variable",
-            'price' => 10,
+            'price' => 570,
             'sell_unit' => "unit",
             'sell_mode' => "per-box",
             'stock' => "50",
@@ -613,9 +623,9 @@ class FakeEnvironmentSeeder extends Seeder
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
             'slug' => "alma-2",
             'origin' => "Francia",
-            'quality_id' => $quality1Id,
+            'quality_id' => $quality3Id,
             'product_type' => "Variable",
-            'price' => 10,
+            'price' => 400,
             'sell_unit' => "unit",
             'sell_mode' => "per-box",
             'stock' => "50",
@@ -635,5 +645,92 @@ class FakeEnvironmentSeeder extends Seeder
         ->setTranslation('slug', 'en', 'oysters-bretaña')
         ->save();
 
+        // Assign random materials to products
+        $this->assignRandomMaterials([
+            $bag1->id,
+            $bag2->id, 
+            $bag3->id,
+            $bag4->id,
+            $bag5->id,
+            $bag6->id,
+            $bag7->id,
+            $bag8->id,
+            $bag9->id
+        ]);
+
+        // Assign random bag types to products
+        $this->assignRandomBagTypes([
+            $bag1->id,
+            $bag2->id, 
+            $bag3->id,
+            $bag4->id,
+            $bag5->id,
+            $bag6->id,
+            $bag7->id,
+            $bag8->id,
+            $bag9->id
+        ]);
+    }
+
+    /**
+     * Assign random materials to products
+     */
+    private function assignRandomMaterials(array $productIds): void
+    {
+        $categoryRepository = new EloquentCategoryRepository();
+        $categories = $categoryRepository->findByParentName('Material');
+        
+        // If no materials found, return early
+        if (empty($categories)) {
+            return;
+        }
+
+        foreach ($productIds as $productId) {
+            // Get one random material from the categories
+            $randomMaterial = collect($categories)->random();
+            
+            // Manually create dependencies instead of using DI container
+            $productRepository = new EloquentProductRepository();
+            $addCategoryToProductUseCase = new AddCategoryToProduct(
+                $productRepository,
+                $categoryRepository
+            );
+            
+            $addCategoryToProductUseCase->execute(
+                $productId,
+                $randomMaterial->id
+            );
+        }
+    }
+
+    /**
+     * Assign random bag types to products
+     */
+    private function assignRandomBagTypes(array $productIds): void
+    {
+        $categoryRepository = new EloquentCategoryRepository();
+        $categories = $categoryRepository->findByParentName('Bag Type');
+        
+        // If no bag types found, return early
+        if (empty($categories)) {
+            return;
+        }
+
+        foreach ($productIds as $productId) {
+            // Get one random bag type from the categories
+            $randomBagType = collect($categories)->random();
+            
+            // Manually create dependencies instead of using DI container
+            $productRepository = new EloquentProductRepository();
+            $addCategoryToProductUseCase = new AddCategoryToProduct(
+                $productRepository,
+                $categoryRepository
+            );
+            
+            $addCategoryToProductUseCase->execute(
+                $productId,
+                $randomBagType->id
+            );
+        }
     }
 }

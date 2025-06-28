@@ -20,6 +20,10 @@ class DatabaseSeeder extends Seeder
       ArticleTableSeeder::class,
       QualityTableSeeder::class,
       
+      // Categories and Shop Configuration
+      CategoryTableSeeder::class,
+      ShopFilterTableSeeder::class,
+      
       // Existing Seeders
       BrandTableSeeder::class,
       FakeEnvironmentSeeder::class,

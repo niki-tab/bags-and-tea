@@ -5,12 +5,15 @@ return [
     'sort_by' => 'Ordenar por',
     'brand' => 'Marca',
     'category' => 'Categoría',
+    'material' => 'Material',
+    'bag-type' => 'Tipo de Bolso',
     'condition' => 'Condición',
     'size' => 'Talla',
     'price' => 'Precio',
     'seller_badges' => 'Distintivos de Vendedor',
     'discounted_prices' => 'Precios con Descuento',
     'clear_filters' => 'Limpiar Filtros',
+    'clear_all' => 'Limpiar todo',
     
     // Sort options
     'name_asc' => 'Nombre A-Z',
@@ -23,6 +26,7 @@ return [
     'adjust_filters_message' => 'Intenta ajustar los filtros para ver más resultados',
     
     // Page content
-    'page_title' => 'BOLSOS LOUIS VUITTON',
-    'page_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris gravida sapien at diam fermentum rutrum a sit amet nisl. Vestibulum sed pulvinar erat.',
+    'page_title' => 'BOLSOS DE LUJO',
+    'page_description' => 'Descubre nuestra colección curada de bolsos de lujo auténticos de las marcas más prestigiosas del mundo.',
+    'default_description_2' => 'Calidad excepcional y elegancia atemporal en cada pieza.',
 ];

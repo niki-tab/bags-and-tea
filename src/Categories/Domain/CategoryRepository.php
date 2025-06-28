@@ -22,4 +22,8 @@ interface CategoryRepository
     public function findRoots(): array;
     
     public function findActiveRoots(): array;
+    
+    public function findByParentName(string $parentName): ?array;
+
+    
 }

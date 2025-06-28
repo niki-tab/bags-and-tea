@@ -23,6 +23,8 @@ class BrandEloquentModel extends Model
     protected $fillable = [
         'name',
         'slug',
+        'description_1',
+        'description_2',
         'logo_url',
         'display_order',
         'is_active',
@@ -31,13 +33,15 @@ class BrandEloquentModel extends Model
     protected $casts = [
         'id' => 'string',
         'name' => 'array',
-        'slug' => 'string',
+        'slug' => 'array',
+        'description_1' => 'array',
+        'description_2' => 'array',
         'logo_url' => 'string',
         'display_order' => 'integer',
         'is_active' => 'boolean',
     ];
 
-    public $translatable = ['name'];
+    public $translatable = ['name', 'slug', 'description_1', 'description_2'];
 
     public function products(): HasMany
     {

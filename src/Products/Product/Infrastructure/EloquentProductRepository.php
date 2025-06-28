@@ -122,4 +122,10 @@ final class EloquentProductRepository implements ProductRepository
         
         return $results;
     }
+
+    public function addCategory(string $productId, string $categoryId): void
+    {
+        $product = ProductEloquentModel::findOrFail($productId);
+        $product->categories()->attach($categoryId);
+    }
 }

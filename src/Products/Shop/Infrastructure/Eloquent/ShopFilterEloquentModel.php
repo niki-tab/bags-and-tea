@@ -30,7 +30,6 @@ class ShopFilterEloquentModel extends Model
 
     protected $casts = [
         'id' => 'string',
-        'name' => 'array',
         'type' => 'string',
         'reference_table' => 'string',
         'product_column' => 'string',

@@ -87,7 +87,9 @@ class ProductEloquentModel extends Model
             'product_category',
             'product_id',
             'category_id'
-        )->withTimestamps();
+        )->withTimestamps()
+         ->withPivot('id')
+         ->using(\Src\Products\Product\Infrastructure\Eloquent\ProductCategoryPivot::class);
     }
 
     public function attributes(): BelongsToMany
