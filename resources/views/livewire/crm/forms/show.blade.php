@@ -151,7 +151,7 @@
             @endif
             @if ($isReceiveComercialInformation)
             <p class="text-color-2 text-xs mt-4">
-                <input type="checkbox" wire:model="formData.receiveComercialInformation" name="receiveComercialInformation" id="receiveComercialInformation">
+                <input type="checkbox" wire:model="formData.receiveComercialInformation" name="receiveComercialInformation" id="receiveComercialInformation" required>
                 <label for="receiveComercialInformation" class="ml-2 text-color-2 text-sm font-robotoCondensed font-regular">{{ trans('components/contact-form.label-receive-comercial-information') }}</label>
                 @error('formData.receiveComercialInformation')
                     <span class="text-[#B92334] text-xs relative left-[12px]">{{ $message }}</span>
