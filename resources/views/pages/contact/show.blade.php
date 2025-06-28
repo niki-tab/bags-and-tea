@@ -27,13 +27,13 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
     </div>
 
 
-    <div class="w-full aspect-[5.5] md:hidden">
+    <div class="w-full h-60 md:hidden">
         <img 
             src="{{ asset('images/home/image54.png') }}" 
             alt="Bolso Bags and Tea" 
-            class="w-full h-full object-contain mx-auto">
+            class="w-full h-full object-cover mx-auto">
     </div>
-    <div id="contact-form" class="bg-[#F6F0ED] py-20">
+    <div id="contact-form" class="bg-[#F6F0ED] py-8 md:py-20">
         <div class="border-[4px] border-[#3A1515] w-4/5 mx-auto">
             @livewire('crm/forms/show', ['formTitle' => trans('pages/contact.form-title'), 'formIdentifier' => 'contact-us', 'formButtonText' => trans('pages/contact.form-button-text'), 'isTermsAndConditions' => true, 'isReceiveComercialInformation' => true])
         </div>
