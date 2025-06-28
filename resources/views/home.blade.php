@@ -67,6 +67,7 @@ if(request()->route('bagName')){
             </h2>
         </div>
     </div>
+
     <div class="flex flex-col md:flex-row h-auto md:h-96">
         <div class="w-full md:w-1/2 bg-[#ffffff] flex items-center justify-center h-full py-12 md:py-0 pl-0 md:pl-10">
             <div class="w-3/4 mx-auto">
@@ -80,8 +81,6 @@ if(request()->route('bagName')){
                     {{ trans('pages/home.button-sell-your-bag') }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
                 </button>
             </div>
-
-
         </div>
         <div class="w-full md:w-1/2 bg-[#ffffff] py-12 md:py-0">
             <img src="{{ asset('images/we_buy_your_bag/Bolso_YSL1.svg') }}" 
@@ -89,13 +88,14 @@ if(request()->route('bagName')){
                 class="w-2/3 md:w-1/2 mx-auto md:mt-16">
         </div>
     </div>
+
     <x-our-brands :title="$ourBrandsTitle"/>
     <div class="py-8 md:py-16 bg-color-3">
         <h2 class="text-center text-[#ffffff] text-2xl md:text-4xl mb-8 md:mb-14 font-['Lovera'] w-2/3 mx-auto">{{ trans('pages/home.title-avantage-buying-bags-and-tea') }} </h2>
         <p class="text-white w-2/3 mx-auto text-robotoCondensed font-light">{{ trans('pages/home.description-avantage-buying-bags-and-tea') }}</p>
     </div>
     <div class="py-8 md:py-16 bg-[#F8F3F0] px-4 lg:px-52">
-    <h2 class="text-center text-color-2 text-2xl md:text-4xl mb-8 md:mb-14 font-['Lovera'] w-2/3 mx-auto">{{ trans('pages/home.title-featured-products') }} </h2>
+        <h2 class="text-center text-color-2 text-2xl md:text-4xl mb-8 md:mb-14 font-['Lovera'] w-2/3 mx-auto">{{ trans('pages/home.title-featured-products') }} </h2>
         <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 lg:gap-10">
             @foreach($featuredProducts as $product)
                 <div class="bg-white shadow-lg overflow-hidden hover:shadow-xl transition flex flex-col">
@@ -114,6 +114,30 @@ if(request()->route('bagName')){
             </a>
         </div>
     </div>
+
+    <div class="flex flex-col md:flex-row h-auto md:h-[350px] w-full md:w-[79%] mx-auto mb-10">
+        <!-- Imagen alineada a la izquierda y ocupando todo el alto, sin margen -->
+        <div class="w-full md:w-1/2 bg-white flex items-center justify-start p-0 m-0 shadow-lg md:shadow-lg max-w-xs md:max-w-none mx-auto md:mx-0">
+            <img src="{{ asset('images/home/image49.png') }}" 
+                alt="Luxury YSL Bag" 
+                class="w-full h-full object-cover md:object-cover m-0 p-0">
+        </div>
+        <!-- Texto alineado a la izquierda y centrado verticalmente -->
+        <div class="w-full md:w-1/2 bg-white flex items-center justify-center h-full p-0 md:pl-10 shadow-lg md:shadow-lg max-w-xs md:max-w-none mx-auto md:mx-0">
+            <div class="w-full md:w-3/4 mx-auto md:mx-0 p-4 md:p-0">
+                <h1 class=" text-[#482626] text-3xl md:text-5xl font-['Lovera'] text-center md:text-left">
+                    {{ trans('pages/home.title-certify-your-bag') }}
+                </h1>
+                <p class="font-mixed text-color-2 mt-4 md:mt-8 text-center md:text-left">
+                    {{ trans('pages/home.description-certify-your-bag') }}   
+                </p>
+                <button class="mt-6 md:mt-8 bg-color-2 text-white px-8 md:px-12 py-2 md:py-3 rounded-full font-medium flex items-center gap-2 mx-auto md:mx-0">
+                    {{ trans('pages/home.button-certify-your-bag') }} <span class="text-lg font-bold ml-2">&gt;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    
     <!-- FAQs Section -->
     <div class="bg-[#3A1515] text-white py-12">
         <h2 class="mx-6 text-center text-4xl font-regular mb-10 md:mb-20 font-['Lovera']">{{ $stringFaqTitle }}</h2>
