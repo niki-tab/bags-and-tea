@@ -77,7 +77,7 @@ if(request()->route('bagName')){
                 <p class="font-mixed text-color-2 mt-6 md:mt-8">
                     {{ trans('pages/home.description-sell-your-bag') }}   
                 </p>
-                <button class="mt-6 md:mt-8 bg-color-2 text-white px-8 md:px-12 py-2 md:py-3 rounded-full font-medium">
+                <button class="mt-6 md:mt-8 bg-color-2 text-white px-8 md:px-12 py-2 md:py-3 rounded-full font-medium block mx-auto md:mx-0">
                     {{ trans('pages/home.button-sell-your-bag') }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
                 </button>
             </div>
@@ -115,25 +115,29 @@ if(request()->route('bagName')){
         </div>
     </div>
 
-    <div class="flex flex-col md:flex-row h-auto md:h-[350px] w-full md:w-[79%] mx-auto mb-10">
-        <!-- Imagen alineada a la izquierda y ocupando todo el alto, sin margen -->
-        <div class="w-full md:w-1/2 bg-white flex items-center justify-start p-0 m-0 shadow-lg md:shadow-lg max-w-xs md:max-w-none mx-auto md:mx-0">
-            <img src="{{ asset('images/home/image49.png') }}" 
-                alt="Luxury YSL Bag" 
-                class="w-full h-full object-cover md:object-cover m-0 p-0">
-        </div>
-        <!-- Texto alineado a la izquierda y centrado verticalmente -->
-        <div class="w-full md:w-1/2 bg-white flex items-center justify-center h-full p-0 md:pl-10 shadow-lg md:shadow-lg max-w-xs md:max-w-none mx-auto md:mx-0">
-            <div class="w-full md:w-3/4 mx-auto md:mx-0 p-4 md:p-0">
-                <h1 class=" text-[#482626] text-3xl md:text-5xl font-['Lovera'] text-center md:text-left">
-                    {{ trans('pages/home.title-certify-your-bag') }}
-                </h1>
-                <p class="font-mixed text-color-2 mt-4 md:mt-8 text-center md:text-left">
-                    {{ trans('pages/home.description-certify-your-bag') }}   
-                </p>
-                <button class="mt-6 md:mt-8 bg-color-2 text-white px-8 md:px-12 py-2 md:py-3 rounded-full font-medium flex items-center gap-2 mx-auto md:mx-0">
-                    {{ trans('pages/home.button-certify-your-bag') }} <span class="text-lg font-bold ml-2">&gt;</span>
-                </button>
+    <div class="py-4 sm:py-6 md:py-8 lg:py-12 xl:py-16 bg-[#F8F3F0] px-2 sm:px-4 lg:px-52">
+        <div class="flex flex-col md:flex-row h-auto md:h-[250px] lg:h-[280px] xl:h-[320px] 2xl:h-[400px] w-full mx-auto mb-6 sm:mb-8 lg:mb-10">
+            <!-- Imagen -->
+            <div class="w-full md:w-1/2 bg-white flex items-center justify-center shadow-lg">
+                <img src="{{ asset('images/home/image49.png') }}" 
+                    alt="Luxury YSL Bag" 
+                    class="w-full h-48 sm:h-56 md:h-full object-cover">
+            </div>
+            <!-- Contenido de texto -->
+            <div class="w-full md:w-1/2 bg-white flex items-center justify-center shadow-lg">
+                <div class="w-full px-3 py-4 sm:px-4 sm:py-5 md:px-4 md:py-3 lg:px-6 lg:py-4 xl:px-8 xl:py-0 2xl:px-10">
+                    <h1 class="text-[#482626] text-lg sm:text-xl md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-['Lovera'] text-center leading-tight">
+                        {{ trans('pages/home.title-certify-your-bag') }}
+                    </h1>
+                    <p class="font-mixed text-color-2 mt-2 sm:mt-3 md:mt-2 lg:mt-3 xl:mt-4 2xl:mt-6 text-xs sm:text-sm md:text-xs lg:text-sm xl:text-base 2xl:text-lg text-center leading-relaxed">
+                        {{ trans('pages/home.description-certify-your-bag') }}   
+                    </p>
+                    <div class="flex justify-center mt-3 sm:mt-4 md:mt-3 lg:mt-4 xl:mt-5 2xl:mt-6">
+                        <button class="bg-color-2 text-white px-3 sm:px-4 md:px-4 lg:px-5 xl:px-8 2xl:px-12 py-1.5 sm:py-2 md:py-1.5 lg:py-2 xl:py-2.5 2xl:py-3 rounded-full font-medium flex items-center gap-1 sm:gap-1.5 md:gap-1 lg:gap-1.5 xl:gap-2 text-xs sm:text-sm md:text-xs lg:text-sm xl:text-base hover:bg-opacity-90 transition-colors">
+                            {{ trans('pages/home.button-certify-your-bag') }} <span class="text-xs sm:text-sm md:text-xs lg:text-sm xl:text-base 2xl:text-lg font-bold ml-0.5 sm:ml-1 md:ml-0.5 lg:ml-1 xl:ml-2">&gt;</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
