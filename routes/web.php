@@ -116,11 +116,11 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
     })->name('article.show.en')->where('locale', 'en');
 
     Route::get('/quienes-somos', function () {
-        return view('pages/we_are_under_construction/show');
+        return view('pages/about-us/show');
     })->name('about-us.show.es')->where('locale', 'es');
 
     Route::get('/about-us', function () {
-        return view('pages/we_are_under_construction/show');
+        return view('pages/about-us/show');
     })->name('about-us.show.en')->where('locale', 'en');
 
     Route::get('/nuestros-bolsos', function () {
