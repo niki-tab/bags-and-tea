@@ -11,6 +11,7 @@ use Src\Products\Brands\Infrastructure\Eloquent\BrandEloquentModel;
 use Src\Categories\Infrastructure\Eloquent\CategoryEloquentModel;
 use Src\Attributes\Infrastructure\Eloquent\AttributeEloquentModel;
 use Src\Products\Quality\Infrastructure\Eloquent\QualityEloquentModel;
+use Src\Vendors\Infrastructure\Eloquent\VendorEloquentModel;
 class ProductEloquentModel extends Model
 {
     use HasFactory, HasTranslations;
@@ -22,6 +23,7 @@ class ProductEloquentModel extends Model
         'id',
         'name',
         'brand_id',
+        'vendor_id',
         'slug',
         'description_1',
         'description_2',
@@ -48,6 +50,7 @@ class ProductEloquentModel extends Model
         'id' => 'string',
         'name' => 'string',
         'brand_id' => 'string',
+        'vendor_id' => 'string',
         'slug' => 'string',
         'description_1' => 'string',
         'description_2' => 'string',
@@ -75,6 +78,11 @@ class ProductEloquentModel extends Model
         return $this->belongsTo(BrandEloquentModel::class, 'brand_id');
     }
 
+    public function vendor(): BelongsTo
+    {
+        return $this->belongsTo(VendorEloquentModel::class, 'vendor_id');
+    }
+
     public function quality(): BelongsTo
     {
         return $this->belongsTo(QualityEloquentModel::class, 'quality_id');
@@ -99,7 +107,9 @@ class ProductEloquentModel extends Model
             'product_attribute',
             'product_id',
             'attribute_id'
-        )->withTimestamps();
+        )->withTimestamps()
+        ->withPivot('id')
+        ->using(\Src\Products\Product\Infrastructure\Eloquent\ProductAttributePivot::class);
     }
 
     public function scopeFeatured($query)

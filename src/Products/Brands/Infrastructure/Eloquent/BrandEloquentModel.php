@@ -32,10 +32,10 @@ class BrandEloquentModel extends Model
 
     protected $casts = [
         'id' => 'string',
-        'name' => 'array',
-        'slug' => 'array',
-        'description_1' => 'array',
-        'description_2' => 'array',
+        'name' => 'string',
+        'slug' => 'string',
+        'description_1' => 'string',
+        'description_2' => 'string',
         'logo_url' => 'string',
         'display_order' => 'integer',
         'is_active' => 'boolean',

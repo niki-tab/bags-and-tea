@@ -38,6 +38,7 @@ Route::prefix('admin-panel')->name('admin.')->group(function () {
     
     // Protected Admin Routes
     Route::middleware(['admin.auth'])->group(function () {
+        // Routes accessible by both admin and vendor
         // Dashboard Home
         Route::get('/', [AdminPanelController::class, 'home'])->name('home');
         
@@ -47,25 +48,52 @@ Route::prefix('admin-panel')->name('admin.')->group(function () {
         // Orders Management
         Route::get('/orders', [AdminPanelController::class, 'orders'])->name('orders');
         
-        // Blog & Content Management
-        Route::get('/blog', [AdminPanelController::class, 'blog'])->name('blog');
-        
-        // Blog Articles Management
-        Route::prefix('blog/articles')->name('blog.articles.')->group(function () {
-            Route::get('/create', function () {
-                return view('pages.admin-panel.dashboard.blog.articles.show');
-            })->name('create');
-            
-            Route::get('/edit/{id}', function ($id) {
-                return view('pages.admin-panel.dashboard.blog.articles.show', ['id' => $id]);
-            })->name('edit');
-        });
-        
-        // Settings & Configuration
-        Route::get('/settings', [AdminPanelController::class, 'settings'])->name('settings');
-        
         // Logout (POST)
         Route::post('/logout', [AdminPanelController::class, 'logout'])->name('logout');
+        
+        // Admin-only routes
+        Route::middleware(['admin.only'])->group(function () {
+            // Blog & Content Management
+            Route::get('/blog', [AdminPanelController::class, 'blog'])->name('blog');
+            
+            // Blog Articles Management
+            Route::prefix('blog/articles')->name('blog.articles.')->group(function () {
+                Route::get('/create', function () {
+                    return view('pages.admin-panel.dashboard.blog.articles.show');
+                })->name('create');
+                
+                Route::get('/edit/{id}', function ($id) {
+                    return view('pages.admin-panel.dashboard.blog.articles.show', ['id' => $id]);
+                })->name('edit');
+            });
+            
+            // Categories Management
+            Route::get('/categories', [AdminPanelController::class, 'categories'])->name('categories');
+            Route::prefix('categories')->name('categories.')->group(function () {
+                Route::get('/create', function () {
+                    return view('pages.admin-panel.dashboard.categories.create');
+                })->name('create');
+                
+                Route::get('/edit/{id}', function ($id) {
+                    return view('pages.admin-panel.dashboard.categories.edit', ['id' => $id]);
+                })->name('edit');
+            });
+            
+            // Attributes Management
+            Route::get('/attributes', [AdminPanelController::class, 'attributes'])->name('attributes');
+            Route::prefix('attributes')->name('attributes.')->group(function () {
+                Route::get('/create', function () {
+                    return view('pages.admin-panel.dashboard.attributes.create');
+                })->name('create');
+                
+                Route::get('/edit/{id}', function ($id) {
+                    return view('pages.admin-panel.dashboard.attributes.edit', ['id' => $id]);
+                })->name('edit');
+            });
+            
+            // Settings & Configuration
+            Route::get('/settings', [AdminPanelController::class, 'settings'])->name('settings');
+        });
     });
 });
 
@@ -79,12 +107,12 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
 
     Route::get('/shop', Shop::class)->name('shop.show.en')->where('locale', 'en');*/
 
-    Route::get('/tienda/{categorySlug?}', function ($locale, $categorySlug = null) {
-        return view('pages/shop', ['categorySlug' => $categorySlug]);
+    Route::get('/tienda/{slug?}', function ($locale, $slug = null) {
+        return view('pages/shop', ['categorySlug' => $slug]);
     })->name('shop.show.es')->where('locale', 'es');
 
-    Route::get('/shop/{categorySlug?}', function ($locale, $categorySlug = null) {
-        return view('pages/shop', ['categorySlug' => $categorySlug]);
+    Route::get('/shop/{slug?}', function ($locale, $slug = null) {
+        return view('pages/shop', ['categorySlug' => $slug]);
     })->name('shop.show.en')->where('locale', 'en');
 
     Route::get('/tienda/producto/{productSlug}', function () {

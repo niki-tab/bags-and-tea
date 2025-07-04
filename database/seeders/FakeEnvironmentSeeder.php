@@ -9,11 +9,14 @@ use App\Models\ProductSizeVariationModel;
 use App\Models\ProductQuantityVariationModel;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Src\Products\Product\Application\AddCategoryToProduct;
+use Src\Products\Product\Application\AddAttributeToProduct;
 use Src\Categories\Infrastructure\EloquentCategoryRepository;
-use Src\Products\Product\Infrastructure\EloquentProductRepository;
 use App\Models\ProducSizeVariationQuantityVariationPriceModel;
+use Src\Attributes\Infrastructure\EloquentAttributeRepository;
+use Src\Products\Product\Infrastructure\EloquentProductRepository;
 use Src\Products\Product\Infrastructure\Eloquent\ProductEloquentModel;
 use Src\Products\Quality\Infrastructure\Eloquent\QualityEloquentModel;
+use Src\Vendors\Infrastructure\Eloquent\VendorEloquentModel;
 
 class FakeEnvironmentSeeder extends Seeder
 {
@@ -22,7 +25,12 @@ class FakeEnvironmentSeeder extends Seeder
      */
     public function run(): void
     {   
-    
+        // Get vendors for assignment
+        $vendors = VendorEloquentModel::all();
+        if ($vendors->isEmpty()) {
+            $this->command->error('No vendors found. Please run VendorSeeder first.');
+            return;
+        }
 
         $quality1 = QualityEloquentModel::where('code', 'AB')->first();
         $quality1Id = $quality1->id;
@@ -42,6 +50,7 @@ class FakeEnvironmentSeeder extends Seeder
             'id' => (string) Str::uuid(),
             'name' => "Bolso Speedy 25",
             'brand_id' => $louisVuittonBrandId,
+            'vendor_id' => $vendors->random()->id,
             'description_1' => "Procedente de Francia. Oceano Atlántico",
             'description_2' => "La vieira es un marisco delicado y sabroso, apreciado por su textura suave y su sabor único. En Rutas del Mar, te ofrecemos vieiras francesas frescas y de la mejor calidad, traídas directamente desde las costas más puras. Ideal para quienes buscan un toque gourmet en sus platos, la vieira es el manjar perfecto del mar",
             'slug' => "speedy-25",
@@ -122,6 +131,7 @@ class FakeEnvironmentSeeder extends Seeder
             'id' => (string) Str::uuid(),
             'name' => "Bolso Noe",
             'brand_id' => $louisVuittonBrandId,
+            'vendor_id' => $vendors->random()->id,
             'description_1' => "Procedente de Francia. Oceano Atlántico",
             'description_2' => "La centolla de Francia es sinónimo de calidad y sabor refinado. Un producto excepcional que puedes disfrutar en cualquier momento del año. En Rutas del Mar, traemos directamente desde las costas francesas las centollas más frescas, seleccionadas cuidadosamente para ofrecerte lo mejor del mar. La centolla francesa es una alternativa exquisita a la centolla gallega.",
             'slug' => "noe",
@@ -222,6 +232,7 @@ class FakeEnvironmentSeeder extends Seeder
             'id' => (string) Str::uuid(),
             'name' => "Bolso Looping GM",
             'brand_id' => $louisVuittonBrandId,
+            'vendor_id' => $vendors->random()->id,
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
@@ -455,6 +466,7 @@ class FakeEnvironmentSeeder extends Seeder
             'id' => (string) Str::uuid(),
             'name' => "Bolso Alma",
             'brand_id' => $louisVuittonBrandId,
+            'vendor_id' => $vendors->random()->id,
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
@@ -487,6 +499,7 @@ class FakeEnvironmentSeeder extends Seeder
             'id' => (string) Str::uuid(),
             'name' => "Bolso Petit Noe Epi",
             'brand_id' => $louisVuittonBrandId,
+            'vendor_id' => $vendors->random()->id,
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
@@ -519,6 +532,7 @@ class FakeEnvironmentSeeder extends Seeder
             'id' => (string) Str::uuid(),
             'name' => "Bolso Speedy 25",
             'brand_id' => $louisVuittonBrandId,
+            'vendor_id' => $vendors->random()->id,
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
@@ -552,6 +566,7 @@ class FakeEnvironmentSeeder extends Seeder
             'id' => (string) Str::uuid(),
             'name' => "Looping PM",
             'brand_id' => $louisVuittonBrandId,
+            'vendor_id' => $vendors->random()->id,
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
@@ -585,6 +600,7 @@ class FakeEnvironmentSeeder extends Seeder
             'id' => (string) Str::uuid(),
             'name' => "Bolso Noe",
             'brand_id' => $louisVuittonBrandId,
+            'vendor_id' => $vendors->random()->id,
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
@@ -618,6 +634,7 @@ class FakeEnvironmentSeeder extends Seeder
             'id' => (string) Str::uuid(),
             'name' => "Bolso Alma",
             'brand_id' => $louisVuittonBrandId,
+            'vendor_id' => $vendors->random()->id,
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
@@ -660,6 +677,19 @@ class FakeEnvironmentSeeder extends Seeder
 
         // Assign random bag types to products
         $this->assignRandomBagTypes([
+            $bag1->id,
+            $bag2->id, 
+            $bag3->id,
+            $bag4->id,
+            $bag5->id,
+            $bag6->id,
+            $bag7->id,
+            $bag8->id,
+            $bag9->id
+        ]);
+
+        // Assign random manufacture year to products
+        $this->assignRandomManufacturedYears([
             $bag1->id,
             $bag2->id, 
             $bag3->id,
@@ -730,6 +760,35 @@ class FakeEnvironmentSeeder extends Seeder
             $addCategoryToProductUseCase->execute(
                 $productId,
                 $randomBagType->id
+            );
+        }
+    }
+
+    private function assignRandomManufacturedYears(array $productIds): void
+    {
+        $attributeRepository = new EloquentAttributeRepository();
+        $attributes = $attributeRepository->findByParentName('Year of manufacture');
+        
+        // If no attributes found, return early
+        if (empty($attributes) || $attributes === null) {
+
+            return;
+        }
+
+        foreach ($productIds as $productId) {
+            // Get one random bag type from the categories
+            $randomManufacturedYear = collect($attributes)->random();
+            
+            // Manually create dependencies instead of using DI container
+            $productRepository = new EloquentProductRepository();
+            $addAttributeToProductUseCase = new AddAttributeToProduct(
+                $productRepository,
+                $attributeRepository
+            );
+            
+            $addAttributeToProductUseCase->execute(
+                $productId,
+                $randomManufacturedYear->id
             );
         }
     }

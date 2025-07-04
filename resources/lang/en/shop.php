@@ -25,6 +25,10 @@ return [
     'no_products_found' => 'No products found',
     'adjust_filters_message' => 'Try adjusting the filters to see more results',
     
+    // Pagination
+    'previous' => 'Previous',
+    'next' => 'Next',
+    
     // Page content
     'page_title' => 'LUXURY HANDBAGS',
     'page_description' => 'Discover our curated collection of authentic luxury handbags from the world\'s most prestigious brands.',

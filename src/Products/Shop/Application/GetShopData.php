@@ -29,7 +29,7 @@ final class GetShopData
         private QualityRepository $qualityRepository
     ) {}
 
-    public function execute(array $appliedFilters = [], string $sortBy = '', ?string $categorySlug = null): array
+    public function execute(array $appliedFilters = [], string $sortBy = '', ?string $categorySlug = null, ?int $offset = null, ?int $limit = 50): array
     {
         // Get active shop filters configuration
         $activeFilters = $this->shopFilterRepository->findActive();
@@ -43,12 +43,16 @@ final class GetShopData
         }
 
         // Get filtered products
-        $products = $this->getFilteredProducts($appliedFilters, $sortBy, $categorySlug);
+        $products = $this->getFilteredProducts($appliedFilters, $sortBy, $categorySlug, $offset, $limit);
+
+        // Get total count for pagination (without limit/offset)
+        $totalCount = count($this->getFilteredProducts($appliedFilters, $sortBy, $categorySlug, null, null));
 
         return [
             'filters' => $activeFilters,
             'filterOptions' => $filterOptions,
             'products' => $products,
+            'totalCount' => $totalCount,
             'appliedFilters' => $appliedFilters,
             'categorySlug' => $categorySlug,
         ];
@@ -68,7 +72,7 @@ final class GetShopData
                 break;
 
             case 'attribute':
-                $options = $this->attributeRepository->findActiveRoots();
+                $options = $this->getAttributeFilterOptions($filter);
                 break;
 
             case 'quality':
@@ -86,20 +90,28 @@ final class GetShopData
         return $this->sortOptionsAlphabetically($options);
     }
 
-    private function getFilteredProducts(array $appliedFilters, string $sortBy = '', ?string $categorySlug = null): array
+    private function getFilteredProducts(array $appliedFilters, string $sortBy = '', ?string $categorySlug = null, ?int $offset = null, ?int $limit = 50): array
     {
         $filters = [];
         
         // Get active filters to determine filter types dynamically
         $activeFilters = $this->shopFilterRepository->findActive();
         $categoryFilterSlugs = [];
+        $attributeFilterSlugs = [];
         
-        // Build a map of category filter slugs for dynamic handling
+        // Build a map of category and attribute filter slugs for dynamic handling
         foreach ($activeFilters as $activeFilter) {
             if ($activeFilter->type === 'category' && !empty($activeFilter->config)) {
                 $config = is_array($activeFilter->config) ? $activeFilter->config : json_decode($activeFilter->config, true);
                 if (isset($config['filter_slug'])) {
                     $categoryFilterSlugs[] = $config['filter_slug'];
+                }
+            }
+            
+            if ($activeFilter->type === 'attribute' && !empty($activeFilter->config)) {
+                $config = is_array($activeFilter->config) ? $activeFilter->config : json_decode($activeFilter->config, true);
+                if (isset($config['filter_slug'])) {
+                    $attributeFilterSlugs[] = $config['filter_slug'];
                 }
             }
         }
@@ -112,7 +124,7 @@ final class GetShopData
             switch ($filterType) {
                 case 'brands':
                     if (! empty($filterValues)) {
-                        // Convert array to string for FilterValue - join with commas for 'in' operator
+                        // Filter values should already be IDs from Livewire component
                         $filterValueString = is_array($filterValues) ? implode(',', $filterValues) : $filterValues;
                         $filters[] = new Filter(
                             new FilterField('brand_id'),
@@ -124,8 +136,7 @@ final class GetShopData
 
                 case 'categories':
                     if (! empty($filterValues)) {
-                        // For categories, we need to join with the pivot table
-                        // This might require a custom implementation in the repository
+                        // Filter values should already be IDs from Livewire component
                         $filterValueString = is_array($filterValues) ? implode(',', $filterValues) : $filterValues;
                         $filters[] = new Filter(
                             new FilterField('categories'),
@@ -137,7 +148,7 @@ final class GetShopData
 
                 case 'attributes':
                     if (! empty($filterValues)) {
-                        // Similar to categories, for pivot table relationships
+                        // Filter values should already be IDs from Livewire component
                         $filterValueString = is_array($filterValues) ? implode(',', $filterValues) : $filterValues;
                         $filters[] = new Filter(
                             new FilterField('attributes'),
@@ -208,12 +219,30 @@ final class GetShopData
                 default:
                     // Handle dynamic category filters based on filter_slug
                     if (in_array($filterType, $categoryFilterSlugs) && !empty($filterValues)) {
-                        $filterValueString = is_array($filterValues) ? implode(',', $filterValues) : $filterValues;
-                        $filters[] = new Filter(
-                            new FilterField('categories'),
-                            new FilterOperator('in'),
-                            new FilterValue($filterValueString)
-                        );
+                        // Convert category slugs to IDs
+                        $categoryIds = $this->convertCategorySlugsToIds($filterValues);
+                        if (!empty($categoryIds)) {
+                            $filterValueString = is_array($categoryIds) ? implode(',', $categoryIds) : $categoryIds;
+                            $filters[] = new Filter(
+                                new FilterField('categories'),
+                                new FilterOperator('in'),
+                                new FilterValue($filterValueString)
+                            );
+                        }
+                    }
+                    
+                    // Handle dynamic attribute filters based on filter_slug
+                    if (in_array($filterType, $attributeFilterSlugs) && !empty($filterValues)) {
+                        // Convert attribute slugs to IDs
+                        $attributeIds = $this->convertAttributeSlugsToIds($filterValues);
+                        if (!empty($attributeIds)) {
+                            $filterValueString = is_array($attributeIds) ? implode(',', $attributeIds) : $attributeIds;
+                            $filters[] = new Filter(
+                                new FilterField('attributes'),
+                                new FilterOperator('in'),
+                                new FilterValue($filterValueString)
+                            );
+                        }
                     }
                     break;
             }
@@ -227,15 +256,15 @@ final class GetShopData
             $criteria = new Criteria(
                 new Filters([]),
                 $order,
-                null,
-                50
+                $offset,
+                $limit
             );
         } else {
             $criteria = new Criteria(
                 new Filters($filters),
                 $order,
-                null, // offset
-                50    // limit
+                $offset,
+                $limit
             );
         }
 
@@ -294,8 +323,8 @@ final class GetShopData
 
     private function getFilterKey($filter): string
     {
-        // For category filters, check if there's a filter_slug in config
-        if ($filter->type === 'category' && ! empty($filter->config)) {
+        // For category and attribute filters, check if there's a filter_slug in config
+        if (($filter->type === 'category' || $filter->type === 'attribute') && ! empty($filter->config)) {
             $config = is_array($filter->config) ? $filter->config : json_decode($filter->config, true);
             if (isset($config['filter_slug'])) {
                 return $config['filter_slug'];
@@ -355,6 +384,56 @@ final class GetShopData
         return $categories;
     }
 
+    private function getAttributeFilterOptions($filter): array
+    {
+        // Get all active root attributes
+        $attributes = $this->attributeRepository->findActiveRoots();
+
+        // If there's a filter_slug in config, filter by slug
+        if (! empty($filter->config)) {
+            $config = is_array($filter->config) ? $filter->config : json_decode($filter->config, true);
+            if (isset($config['filter_slug'])) {
+                $filterSlug = $config['filter_slug'];
+                foreach ($attributes as $attribute) {
+                    $slugMatch = false;
+
+                    // Use getTranslation method to handle both JSON and array slug formats
+                    $currentLocale = app()->getLocale();
+                    
+                    // Check current locale first
+                    if ($attribute->getTranslation('slug', $currentLocale) === $filterSlug) {
+                        $slugMatch = true;
+                    } else {
+                        // Check all supported locales
+                        foreach (['en', 'es'] as $locale) {
+                            if ($attribute->getTranslation('slug', $locale) === $filterSlug) {
+                                $slugMatch = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if ($slugMatch) {
+                        // Return the children of this attribute as objects
+                        // Use direct query to ensure we get proper objects
+                        $children = \Src\Attributes\Infrastructure\Eloquent\AttributeEloquentModel::where('parent_id', $attribute->id)
+                            ->where('is_active', true)
+                            ->orderBy('display_order')
+                            ->get()
+                            ->all();
+
+                        return $children;
+                    }
+                }
+
+                return [];
+            }
+        }
+
+        // If no filter_slug, return all root attributes
+        return $attributes;
+    }
+
     private function sortOptionsAlphabetically(array $options): array
     {
         if (empty($options)) {
@@ -409,5 +488,83 @@ final class GetShopData
         }
 
         return '';
+    }
+
+    private function convertAttributeSlugsToIds($slugs): array
+    {
+        if (empty($slugs)) {
+            return [];
+        }
+
+        // Ensure we have an array
+        $slugArray = is_array($slugs) ? $slugs : [$slugs];
+        $attributeIds = [];
+        
+        $currentLocale = app()->getLocale();
+        
+        foreach ($slugArray as $slug) {
+            // Try to find attribute by slug in current locale first, then fallback to English
+            $attribute = \Src\Attributes\Infrastructure\Eloquent\AttributeEloquentModel::where("slug->{$currentLocale}", $slug)
+                ->orWhere('slug->en', $slug)
+                ->first();
+                
+            if ($attribute) {
+                $attributeIds[] = $attribute->id;
+            }
+        }
+        
+        return $attributeIds;
+    }
+
+    private function convertCategorySlugsToIds($slugs): array
+    {
+        if (empty($slugs)) {
+            return [];
+        }
+
+        // Ensure we have an array
+        $slugArray = is_array($slugs) ? $slugs : [$slugs];
+        $categoryIds = [];
+        
+        $currentLocale = app()->getLocale();
+        
+        foreach ($slugArray as $slug) {
+            // Try to find category by slug in current locale first, then fallback to English
+            $category = \Src\Categories\Infrastructure\Eloquent\CategoryEloquentModel::where("slug->{$currentLocale}", $slug)
+                ->orWhere('slug->en', $slug)
+                ->first();
+                
+            if ($category) {
+                $categoryIds[] = $category->id;
+            }
+        }
+        
+        return $categoryIds;
+    }
+
+    private function convertBrandSlugsToIds($slugs): array
+    {
+        if (empty($slugs)) {
+            return [];
+        }
+
+        // Ensure we have an array
+        $slugArray = is_array($slugs) ? $slugs : [$slugs];
+        $brandIds = [];
+        
+        $currentLocale = app()->getLocale();
+        
+        foreach ($slugArray as $slug) {
+            // Try to find brand by slug in current locale first, then fallback to English
+            $brand = \Src\Products\Brands\Infrastructure\Eloquent\BrandEloquentModel::where("slug->{$currentLocale}", $slug)
+                ->orWhere('slug->en', $slug)
+                ->first();
+                
+            if ($brand) {
+                $brandIds[] = $brand->id;
+            }
+        }
+        
+        return $brandIds;
     }
 }

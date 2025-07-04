@@ -60,6 +60,16 @@ class AdminPanelController extends Controller
         return view('pages.admin-panel.dashboard.blog.show');
     }
 
+    public function categories(): View
+    {
+        return view('pages.admin-panel.dashboard.categories');
+    }
+
+    public function attributes(): View
+    {
+        return view('pages.admin-panel.dashboard.attributes');
+    }
+
     public function settings(): View
     {
         return view('pages.admin-panel.dashboard.settings');
@@ -68,6 +78,9 @@ class AdminPanelController extends Controller
     public function logout(): RedirectResponse
     {
         $this->adminAuthenticator->logout();
+        
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
         
         return redirect()->route('admin.login');
     }

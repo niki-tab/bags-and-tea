@@ -35,6 +35,10 @@ class CategoryEloquentModel extends Model
     protected $casts = [
         'id' => 'string',
         'parent_id' => 'string',
+        'name' => 'string',
+        'slug' => 'string',
+        'description_1' => 'string',
+        'description_2' => 'string',
         'display_order' => 'integer',
         'is_active' => 'boolean',
     ];

@@ -1,8 +1,8 @@
 <div>
-    <div class="container mx-auto px-4 py-8 bg-white">
+    <div class="mx-4 md:mx-12 px-4 py-8 bg-white">
         {{-- Header Section --}}
         <div class="text-center mb-8">
-            <h1 class="text-4xl font-['Lovera'] text-color-2 mb-8 mt-6">
+            <h1 class="text-4xl {{ preg_match('/\d/', $pageTitle) ? 'font-robotoCondensed' : 'font-[\'Lovera\']' }} text-color-2 mb-8 mt-6">
                 {{ $pageTitle }}
             </h1>
             <p class="text-color-2 w-3/4 mx-auto robotoCondensed text-left">
@@ -42,7 +42,7 @@
         </div>
 
         {{-- Filter Section --}}
-        <div class="mb-8">
+        <div class="mb-8 md:mb-20 mx-4 md:mx-16 lg:mx-32">
             <div class="flex flex-wrap items-center gap-4 mb-4">
                 {{-- Sort Order --}}
                 <div class="relative">
@@ -63,7 +63,7 @@
                 {{-- Dynamic Filters --}}
                 @foreach($filterOptions as $filterKey => $options)
                     @if(!empty($options) && $filterKey !== 'price')
-                        <div class="relative" x-data="{ open: false }">
+                        <div class="relative" x-data="{ open: false }" wire:key="filter-{{ $filterKey }}-{{ md5(serialize($selectedFilters)) }}">
                             <button @click="open = !open" class="appearance-none border border-gray-300 rounded px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white min-w-[120px] text-left">
                                 @php
                                     $selectedCount = isset($selectedFilters[$filterKey]) ? count($selectedFilters[$filterKey]) : 0;
@@ -87,9 +87,57 @@
                             <div x-show="open" @click.away="open = false" class="absolute z-10 mt-1 bg-white border border-gray-300 rounded shadow-lg max-h-60 overflow-y-auto min-w-[200px]">
                                 @foreach($options as $option)
                                     <label class="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                                        @php
+                                            // Find the filter configuration for this filterKey
+                                            $currentFilter = null;
+                                            foreach($filters as $filter) {
+                                                $config = is_array($filter->config) ? $filter->config : json_decode($filter->config, true);
+                                                $configFilterKey = ($filter->type === 'category' || $filter->type === 'attribute') && !empty($config['filter_slug']) 
+                                                    ? $config['filter_slug'] 
+                                                    : $filter->type;
+                                                if ($configFilterKey === $filterKey) {
+                                                    $currentFilter = $filter;
+                                                    break;
+                                                }
+                                            }
+                                            
+                                            // Use slug for all filters to have user-friendly URLs
+                                            $optionValue = is_object($option) ? $option->id : $option['id']; // Default fallback
+                                            
+                                            if (is_object($option)) {
+                                                // Check if it's a model with translatable slug using Spatie
+                                                if (method_exists($option, 'getTranslation') && property_exists($option, 'slug')) {
+                                                    // Use Spatie's getTranslation method for current locale, fallback to English
+                                                    $optionValue = $option->getTranslation('slug', app()->getLocale()) ?: $option->getTranslation('slug', 'en') ?: $option->id;
+                                                } elseif (property_exists($option, 'slug') && !empty($option->slug)) {
+                                                    // Handle direct slug property
+                                                    $optionValue = $option->slug;
+                                                }
+                                            } elseif (is_array($option)) {
+                                                // Handle array format
+                                                if (isset($option['slug']) && !empty($option['slug'])) {
+                                                    if (is_array($option['slug'])) {
+                                                        $locale = app()->getLocale();
+                                                        $optionValue = $option['slug'][$locale] ?? $option['slug']['en'] ?? $option['id'];
+                                                    } else {
+                                                        $optionValue = $option['slug'];
+                                                    }
+                                                }
+                                            }
+                                        @endphp
+                                        @php
+                                            // Check if this option is selected by converting back to ID for comparison
+                                            $isSelected = false;
+                                            if (isset($selectedFilters[$filterKey])) {
+                                                // Convert the option slug back to ID to check against selected filters (which store IDs internally)
+                                                $optionId = is_object($option) ? $option->id : $option['id'];
+                                                $isSelected = in_array($optionId, $selectedFilters[$filterKey]);
+                                            }
+                                        @endphp
                                         <input type="checkbox" 
-                                               wire:change="toggleFilter('{{ $filterKey }}', '{{ is_object($option) ? $option->id : $option['id'] }}')"
-                                               @if(isset($selectedFilters[$filterKey]) && in_array(is_object($option) ? $option->id : $option['id'], $selectedFilters[$filterKey])) checked @endif
+                                               wire:change="toggleFilter('{{ $filterKey }}', '{{ $optionValue }}')"
+                                               @if($isSelected) checked @endif
+                                               wire:key="checkbox-{{ $filterKey }}-{{ $optionValue }}-{{ $isSelected ? 'checked' : 'unchecked' }}"
                                                class="mr-2">
                                         <span class="text-sm">
                                             @if(is_object($option) && method_exists($option, 'getTranslation'))
@@ -230,7 +278,7 @@
         @endif
 
         {{-- Products Grid --}}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" wire:loading.remove wire:key="products-container-{{ $selectedSortBy ?: 'none' }}-{{ $urlFilters ?: 'none' }}">
+        <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6" wire:loading.remove wire:key="products-container-{{ $selectedSortBy ?: 'none' }}-{{ md5(serialize($selectedFilters)) }}">
             @foreach($products as $index => $product)
                 <div wire:key="product-{{ $product->id }}-sort-{{ $selectedSortBy ?: 'none' }}" class="bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
                     {{-- Product Image --}}
@@ -285,16 +333,26 @@
                 <p class="mt-1 text-sm text-gray-500">{{ __('shop.adjust_filters_message') }}</p>
             </div>
         @endif
+
+        {{-- Pagination Component --}}
+        @if(!$loading && !empty($products))
+            @livewire('shared/pagination', [
+                'currentPage' => $currentPage,
+                'totalItems' => $totalProducts,
+                'perPage' => $perPage,
+                'paginationClass' => 'mx-4 md:mx-16 lg:mx-32'
+            ], key('pagination-' . $totalProducts . '-' . $currentPage . '-' . md5(json_encode($selectedFilters))))
+        @endif
     </div>
-    <div class="bg-color-4 py-28 px-32">
-            <h2 class="text-left text-xl font-bold robotoCondensed text-color-2">
+    <div class="bg-color-4 py-16 md:py-28 px-14 md:px-32">
+            <h2 class="text-center md:text-left text-xl font-bold robotoCondensed text-color-2">
                 @if(app()->getLocale() === 'es')
                     Descripción 2
                 @else
                     Description 2
                 @endif
             </h2>
-            <p class="text-left text-sm robotoCondensed mt-8 text-color-2">
+            <p class="text-center md:text-left text-sm robotoCondensed mt-8 text-color-2">
                 {{ $pageDescription2 }}
             </p>
     </div>

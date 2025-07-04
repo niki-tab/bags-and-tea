@@ -39,6 +39,30 @@ class AttributeTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'id' => (string) Str::uuid(),
+                'name' => json_encode([
+                    'en' => 'Year of manufacture',
+                    'es' => 'Año de fabricación'
+                ]),
+                'slug' => json_encode([
+                    'en' => 'year-of-manufacture',
+                    'es' => 'año-de-fabricacion'
+                ]),
+                'description_1' => json_encode([
+                    'en' => 'Find your bag depending on the year of manufacture',
+                    'es' => 'Encuentra tu bolso dependiendo del año de fabricación.'
+                ]),
+                'description_2' => json_encode([
+                    'en' => 'Find your bag depending on the year of manufacture',
+                    'es' => 'Encuentra tu bolso dependiendo del año de fabricación.'
+                ]),
+                'parent_id' => null,
+                'display_order' => 2,
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ];
 
         // Insert parent attributes first
@@ -119,6 +143,125 @@ class AttributeTableSeeder extends Seeder
 
         // Insert all children
         foreach ($sizeChildren as $child) {
+            \DB::table('attributes')->insert($child);
+        }
+
+        // Get parent IDs for children
+        $yearManufactureAttribute = \DB::table('attributes')->where('slug->en', 'year-of-manufacture')->first();
+
+        $yearManufactureChildren = [
+            [
+                'id' => (string) Str::uuid(),
+                'name' => json_encode(['en' => '1970-1980', 'es' => '1970-1980']),
+                'slug' => json_encode(['en' => '1970-1980', 'es' => '1970-1980']),
+                'description_1' => json_encode([
+                    'en' => '1970-1980',
+                    'es' => '1970-1980'
+                ]),
+                'description_2' => json_encode([
+                    'en' => '1970-1980',
+                    'es' => '1970-1980'
+                ]),
+                'parent_id' => $yearManufactureAttribute->id,
+                'display_order' => 1,
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => (string) Str::uuid(),
+                'name' => json_encode(['en' => '1980-1990', 'es' => '1980-1990']),
+                'slug' => json_encode(['en' => '1980-1990', 'es' => '1980-1990']),
+                'description_1' => json_encode([
+                    'en' => '1980-1990',
+                    'es' => '1980-1990'
+                ]),
+                'description_2' => json_encode([
+                    'en' => '1980-1990',
+                    'es' => '1980-1990'
+                ]),
+                'parent_id' => $yearManufactureAttribute->id,
+                'display_order' => 2,
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => (string) Str::uuid(),
+                'name' => json_encode(['en' => '1990-2000', 'es' => '1990-2000']),
+                'slug' => json_encode(['en' => '1990-2000', 'es' => '1990-2000']),
+                'description_1' => json_encode([
+                    'en' => '1990-2000',
+                    'es' => '1990-2000'
+                ]),
+                'description_2' => json_encode([
+                    'en' => '1990-2000',
+                    'es' => '1990-2000'
+                ]),
+                'parent_id' => $yearManufactureAttribute->id,
+                'display_order' => 3,
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => (string) Str::uuid(),
+                'name' => json_encode(['en' => '2000-2010', 'es' => '2000-2010']),
+                'slug' => json_encode(['en' => '2000-2010', 'es' => '2000-2010']),
+                'description_1' => json_encode([
+                    'en' => '2000-2010',
+                    'es' => '2000-2010'
+                ]),
+                'description_2' => json_encode([
+                    'en' => '2000-2010',
+                    'es' => '2000-2010'
+                ]),
+                'parent_id' => $yearManufactureAttribute->id,
+                'display_order' => 4,
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => (string) Str::uuid(),
+                'name' => json_encode(['en' => '2010-2020', 'es' => '2010-2020']),
+                'slug' => json_encode(['en' => '2010-2020', 'es' => '2010-2020']),
+                'description_1' => json_encode([
+                    'en' => '2010-2020',
+                    'es' => '2010-2020'
+                ]),
+                'description_2' => json_encode([
+                    'en' => '2010-2020',
+                    'es' => '2010-2020'
+                ]),
+                'parent_id' => $yearManufactureAttribute->id,
+                'display_order' => 5,
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => (string) Str::uuid(),
+                'name' => json_encode(['en' => '2020-2030', 'es' => '2020-2030']),
+                'slug' => json_encode(['en' => '2020-2030', 'es' => '2020-2030']),
+                'description_1' => json_encode([
+                    'en' => '2020-2030',
+                    'es' => '2020-2030'
+                ]),
+                'description_2' => json_encode([
+                    'en' => '2020-2030',
+                    'es' => '2020-2030'
+                ]),
+                'parent_id' => $yearManufactureAttribute->id,
+                'display_order' => 5,
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ];
+        
+        // Insert all children
+        foreach ($yearManufactureChildren as $child) {
             \DB::table('attributes')->insert($child);
         }
     }

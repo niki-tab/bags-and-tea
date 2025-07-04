@@ -36,6 +36,11 @@ class UserModel extends Authenticatable
         'admin_id',
     ];
 
+    protected $casts = [
+        'id' => 'string',
+    ];
+
+
 
     /**
      * The attributes that should be hidden for serialization.

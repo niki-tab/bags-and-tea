@@ -25,6 +25,10 @@ return [
     'no_products_found' => 'No se encontraron productos',
     'adjust_filters_message' => 'Intenta ajustar los filtros para ver más resultados',
     
+    // Pagination
+    'previous' => 'Anterior',
+    'next' => 'Siguiente',
+    
     // Page content
     'page_title' => 'BOLSOS DE LUJO',
     'page_description' => 'Descubre nuestra colección curada de bolsos de lujo auténticos de las marcas más prestigiosas del mundo.',
