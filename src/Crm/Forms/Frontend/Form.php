@@ -25,7 +25,7 @@ class Form extends Component
     public $files = [];
     public $showSuccessMessage = false;
     public $isTermsAndConditions;
-    public $isReceiveComercialInformation;
+    
     private FormSubmissionCreator $formSubmissionCreator;
     public function boot(FormSubmissionCreator $formSubmissionCreator)
     {
@@ -84,13 +84,11 @@ class Form extends Component
             $rules['formData.termsAndConditions'] = 'required';
         }
 
-        if ($this->isReceiveComercialInformation === true) {
-            $rules['formData.receiveComercialInformation'] = 'required';
-        }
+        
         
         return $rules;
     }
-    public function mount($formTitle, $formIdentifier, $formButtonText, $isTermsAndConditions = false, $isReceiveComercialInformation = false)
+    public function mount($formTitle, $formIdentifier, $formButtonText, $isTermsAndConditions = false)
     {   
         $this->formTitle = $formTitle;
         $form = FormModel::where('form_identifier', $formIdentifier)->first();
@@ -98,7 +96,7 @@ class Form extends Component
         $this->formFields = $form->form_fields;
         $this->formButtonText = $formButtonText;
         $this->isTermsAndConditions = $isTermsAndConditions;
-        $this->isReceiveComercialInformation = $isReceiveComercialInformation;
+        
     }
 
     public function submit()
