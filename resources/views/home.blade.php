@@ -40,7 +40,7 @@ if(request()->route('bagName')){
     <div class="relative w-full h-[700px] md:block hidden">
         <!-- Background Image -->
         <img 
-            src="{{ asset('images/home/frame-home-2.png') }}" 
+            src="{{ asset('images/home/frame-home-1.svg') }}" 
             alt="Tienda de Bolsos de Lujo Bags and Tea" 
             class="w-full h-full object-cover">
 
