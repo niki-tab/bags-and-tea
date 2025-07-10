@@ -111,7 +111,7 @@
             <!-- Botón alineado a la derecha -->
             <div class="flex items-center w-[160px] justify-end">
                 <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}"
-                   class="mb-2 px-8 h-8 py-1.5 font-robotoCondensed bg-background-color-2 text-white rounded-full text-sm font-regular hover:bg-background-color-3 transition whitespace-nowrap">
+                    class="mb-2 px-8 h-8 py-1.5 font-robotoCondensed bg-background-color-2 text-white rounded-full text-sm font-regular hover:bg-background-color-3 transition whitespace-nowrap">
                     {{ trans('components/header.button-sell-your-bag') }}
                 </a>
             </div>

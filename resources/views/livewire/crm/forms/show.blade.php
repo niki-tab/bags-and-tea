@@ -1,10 +1,10 @@
-<div class="w-full bg-[#F6F0ED] px-6 md:px-20 py-12 md:py-20">
+<div class="w-full bg-[#F6F0ED] px-6 md:px-20 py-12 md:py-20" id="form-container-{{ $formIdentifier }}">
     <h2 class="text-3xl md:text-4xl font-['Lovera'] text-[#3A1515] mx-auto md:mx-0 text-center md:text-left">
         {{ $formTitle }}
     </h2>
     @if ($showSuccessMessage)
         <div class="text-center">
-            <p id = "form-success-message-{{ $formIdentifier }}" class="text-[#3A1515] font-robotoCondensed text-xl my-12">
+            <p id="form-success-message-{{ $formIdentifier }}" class="text-[#3A1515] font-robotoCondensed text-xl my-12">
                 {{ trans('components/form-show.success-message') }}
             </p>
         </div>
@@ -114,7 +114,7 @@
                             <div class="mb-4 flex justify-center md:justify-start">
                                 <input type="file"
                                     wire:model="files.{{ $field['name'] }}"
-                                    class="font-robotoCondensed text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold"
+                                    class="font-robotoCondensed text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold hover:file:bg-background-color-3 file:transition"
                                     accept="image/*"
                                     multiple>
                             </div>
@@ -160,3 +160,19 @@
         </form>
     @endif
 </div>
+
+<script>
+document.addEventListener('livewire:init', () => {
+    Livewire.on('scrollToForm', (event) => {
+        setTimeout(() => {
+            const successMessage = document.getElementById('form-success-message-' + event.formIdentifier);
+            if (successMessage) {
+                successMessage.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            }
+        }, 100);
+    });
+});
+</script>

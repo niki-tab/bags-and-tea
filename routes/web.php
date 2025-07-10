@@ -185,6 +185,10 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
     
     
     Route::get('/', [HomeController::class, 'index'])->name('home.show.en-es');
+
+    Route::get('/calendar-test', function () {
+        return view('pages/calendar-test');
+    })->name('calendar-test.en-es')->where('locale', 'en|es');
     
 });
 
@@ -192,6 +196,7 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
 Route::get('/test', function () {
     return view('pages/test');
 })->name('test');
+
 
 /*
 |--------------------------------------------------------------------------
