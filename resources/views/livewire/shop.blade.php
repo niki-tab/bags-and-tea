@@ -41,6 +41,46 @@
             @endif
         </div>
 
+        {{-- Selected Filters Section --}}
+        @php
+            $activeFilters = $this->getActiveFilters();
+        @endphp
+        
+        @if(!empty($activeFilters))
+        <div class="mb-6 mx-4 md:mx-16 lg:mx-32">
+            <div class="flex flex-wrap items-center gap-2">
+                @foreach($activeFilters as $filter)
+                    <div class="inline-flex items-center bg-background-color-4 hover:bg-background-color-4/80 border border-background-color-4 rounded-full px-3 py-1.5 text-sm text-color-2 font-medium transition-all duration-200 shadow-sm hover:shadow-md">
+                        <span>{{ $filter['label'] }}</span>
+                        <button 
+                            wire:click="removeFilter('{{ $filter['type'] }}', '{{ $filter['value'] }}')"
+                            class="ml-2 p-0.5 text-color-2/70 hover:text-color-2 hover:bg-color-2/20 rounded-full focus:outline-none focus:ring-2 focus:ring-color-2/50 focus:ring-offset-1 transition-all duration-150"
+                            title="Remove {{ $filter['label'] }} filter"
+                        >
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                @endforeach
+                
+                {{-- Clear All Filters --}}
+                @if(count($activeFilters) > 1)
+                    <button 
+                        wire:click="clearFilters"
+                        class="inline-flex items-center bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-full px-3 py-1.5 text-sm text-gray-600 hover:text-gray-800 font-medium transition-all duration-200 shadow-sm hover:shadow-md ml-2"
+                        title="Clear all filters"
+                    >
+                        <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
+                        {{ __('shop.clear_all') }}
+                    </button>
+                @endif
+            </div>
+        </div>
+        @endif
+
         {{-- Filter Section --}}
         <div class="mb-8 md:mb-20 mx-4 md:mx-16 lg:mx-32">
             <div class="flex flex-wrap items-center gap-4 mb-4">
@@ -230,45 +270,6 @@
             </div>
         </div>
 
-        {{-- Active Filters Display --}}
-        @php
-            $activeFilters = $this->getActiveFilters();
-        @endphp
-        
-        @if(!empty($activeFilters))
-        <div class="mb-6">
-            <div class="flex flex-wrap items-center gap-2">
-                @foreach($activeFilters as $filter)
-                    <div class="inline-flex items-center bg-background-color-4 hover:bg-background-color-4/80 border border-background-color-4 rounded-full px-3 py-1.5 text-sm text-color-2 font-medium transition-all duration-200 shadow-sm hover:shadow-md">
-                        <span>{{ $filter['label'] }}</span>
-                        <button 
-                            wire:click="removeFilter('{{ $filter['type'] }}', '{{ $filter['value'] }}')"
-                            class="ml-2 p-0.5 text-color-2/70 hover:text-color-2 hover:bg-color-2/20 rounded-full focus:outline-none focus:ring-2 focus:ring-color-2/50 focus:ring-offset-1 transition-all duration-150"
-                            title="Remove {{ $filter['label'] }} filter"
-                        >
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </button>
-                    </div>
-                @endforeach
-                
-                {{-- Clear All Filters --}}
-                @if(count($activeFilters) > 1)
-                    <button 
-                        wire:click="clearFilters"
-                        class="inline-flex items-center bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-full px-3 py-1.5 text-sm text-gray-600 hover:text-gray-800 font-medium transition-all duration-200 shadow-sm hover:shadow-md ml-2"
-                        title="Clear all filters"
-                    >
-                        <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                        </svg>
-                        {{ __('shop.clear_all') }}
-                    </button>
-                @endif
-            </div>
-        </div>
-        @endif
 
         {{-- Loading State --}}
         @if($loading)

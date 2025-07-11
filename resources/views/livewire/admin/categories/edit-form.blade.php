@@ -7,8 +7,47 @@
             
             <div class="p-6 space-y-6">
                 @if (session()->has('success'))
-                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
-                        {{ session('success') }}
+                    <div class="mb-6 bg-green-50 border-l-4 border-green-400 rounded-md p-4 shadow-md" 
+                         x-data="{ show: true }" 
+                         x-show="show" 
+                         x-init="setTimeout(() => show = false, 5000); window.scrollTo({ top: 0, behavior: 'smooth' })"
+                         x-transition:enter="transition ease-out duration-300" 
+                         x-transition:enter-start="opacity-0 transform translate-y-2" 
+                         x-transition:enter-end="opacity-100 transform translate-y-0" 
+                         x-transition:leave="transition ease-in duration-200" 
+                         x-transition:leave-start="opacity-100 transform translate-y-0" 
+                         x-transition:leave-end="opacity-0 transform translate-y-2">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-8 w-8 rounded-full bg-green-100">
+                                    <svg class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <div class="flex items-center">
+                                    <p class="text-sm font-medium text-green-800">
+                                        Success!
+                                    </p>
+                                </div>
+                                <div class="mt-1">
+                                    <p class="text-sm text-green-700">
+                                        {{ session('success') }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="ml-auto pl-3">
+                                <div class="-mx-1.5 -my-1.5">
+                                    <button @click="show = false" class="inline-flex bg-green-50 rounded-md p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600 transition-colors duration-150">
+                                        <span class="sr-only">Dismiss</span>
+                                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 @endif
 
@@ -129,7 +168,7 @@
                                 wire:model="parent_id"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             >
-                                <option value="">Root Category</option>
+                                <option value="">Parent Category</option>
                                 @foreach($parentCategories as $parent)
                                     <option value="{{ $parent->id }}">{{ $parent->getTranslation('name', 'en') }}</option>
                                 @endforeach

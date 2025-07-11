@@ -29,9 +29,8 @@
     >
         <div class="flex flex-col h-full">
             <!-- Logo/Brand -->
-            <div class="flex items-center h-16 px-6 bg-slate-900 border-b border-slate-700">
-                <img class="h-8 w-auto" src="{{ asset('images/logo/bags_and_tea_logo.svg') }}" alt="Bags & Tea" onerror="this.style.display='none'">
-                <div class="ml-3">
+            <div class="flex items-center h-16 bg-slate-900 border-b border-slate-700">
+                <div class="w-1/3 mx-auto">
                     <h1 class="text-white text-xl font-bold">Admin</h1>
                     <p class="text-slate-300 text-xs">Bags & Tea</p>
                 </div>

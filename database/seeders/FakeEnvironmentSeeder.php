@@ -54,15 +54,16 @@ class FakeEnvironmentSeeder extends Seeder
             'description_1' => "Procedente de Francia. Oceano Atlántico",
             'description_2' => "La vieira es un marisco delicado y sabroso, apreciado por su textura suave y su sabor único. En Rutas del Mar, te ofrecemos vieiras francesas frescas y de la mejor calidad, traídas directamente desde las costas más puras. Ideal para quienes buscan un toque gourmet en sus platos, la vieira es el manjar perfecto del mar",
             'slug' => "speedy-25",
-            'origin' => "Francia",
+            'origin_country' => "FR",
             'quality_id' => $quality1Id,
-            'product_type' => "Simple",
+            'product_type' => "simple",
             'price' => 585,
-            'sell_unit' => "unit",
-            'sell_mode' => "per-unit",
-            'stock' => "50",
+            'sell_mode_quantity' => 1,
+            'sell_mode' => "unit",
+            'stock' => 1,
             'stock_unit' => "unit",
             'out_of_stock' => true,
+            'is_sold_out' => true,
             'image' => 'images/product/speedy-25-imp-3-1.webp',
             'featured' => true,
             'featured_position' => 1,
@@ -73,8 +74,7 @@ class FakeEnvironmentSeeder extends Seeder
         ->setTranslation('name', 'en', 'Speedy 25 Bag')
         ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'The scallop is a delicate and flavorful seafood, appreciated for its smooth texture and unique taste. At Rutas del Mar, we offer fresh French scallops of the highest quality, brought directly from the purest coasts. Ideal for those looking for a gourmet touch in their dishes, the scallop is the perfect seafood delicacy.')
-        ->setTranslation('origin', 'en', 'France')
-        ->setTranslation('slug', 'en', 'scallop-brittany')
+        ->setTranslation('slug', 'en', 'speedy-25')
         ->save();
 
         $bag1CrabProductSizeVariation1 = ProductSizeVariationModel::create([
@@ -135,15 +135,16 @@ class FakeEnvironmentSeeder extends Seeder
             'description_1' => "Procedente de Francia. Oceano Atlántico",
             'description_2' => "La centolla de Francia es sinónimo de calidad y sabor refinado. Un producto excepcional que puedes disfrutar en cualquier momento del año. En Rutas del Mar, traemos directamente desde las costas francesas las centollas más frescas, seleccionadas cuidadosamente para ofrecerte lo mejor del mar. La centolla francesa es una alternativa exquisita a la centolla gallega.",
             'slug' => "noe",
-            'origin' => "Japan",
+            'origin_country' => "ES",
             'quality_id' => $quality2Id,
-            'product_type' => "Simple",
-            'price' => 20,
-            'sell_unit' => "unit",
-            'sell_mode' => "per-unit",
-            'stock' => "50",
+            'product_type' => "simple",
+            'price' => 550,
+            'sell_mode_quantity' => 1,
+            'sell_mode' => "unit",
+            'stock' => 1,
             'stock_unit' => "unit",
             'out_of_stock' => true,
+            'is_sold_out' => true,
             'image' => 'images/product/noe-imp-3-1.webp',
             'featured' => true,
             'featured_position' => 2,
@@ -154,8 +155,7 @@ class FakeEnvironmentSeeder extends Seeder
         ->setTranslation('name', 'en', 'Noe Bag')
         ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'The French spider crab is synonymous with quality and refined flavor. An exceptional product that you can enjoy at any time of the year. At Rutas del Mar, we bring the freshest spider crabs directly from the French coasts, carefully selected to offer you the best of the sea. The French spider crab is an exquisite alternative to the Galician spider crab.')
-        ->setTranslation('origin', 'en', 'France')
-        ->setTranslation('slug', 'en', 'spider-crab-brittany')
+        ->setTranslation('slug', 'en', 'noe')
         ->save();
 
         $bag2ProductSizeVariation1 = ProductSizeVariationModel::create([
@@ -237,15 +237,16 @@ class FakeEnvironmentSeeder extends Seeder
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
             'slug' => "looping-gm",
-            'origin' => "Francia",
+            'origin_country' => "FR",
             'quality_id' => $quality3Id,
-            'product_type' => "Variable",
+            'product_type' => "simple",
             'price' => 390,
-            'sell_unit' => "unit",
-            'sell_mode' => "per-box",
-            'stock' => "50",
+            'sell_mode_quantity' => 1,
+            'sell_mode' => "unit",
+            'stock' => 1,
             'stock_unit' => "unit",
             'out_of_stock' => false,
+            'is_sold_out' => true,
             'image' => 'images/product/looping-gm-imp-3-1.webp',
             'featured' => true,
             'featured_position' => 3,
@@ -258,8 +259,7 @@ class FakeEnvironmentSeeder extends Seeder
         ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'Our fresh oysters are carefully harvested by passionate cultivators who uphold the tradition of sustainable gathering directly from the ocean. These oysters stand out for their pronounced flavor, balanced with a salty touch that enhances their smooth and meaty texture. The perfect choice for seafood lovers. Enjoy the freshness and authenticity of these marine treasures, with home delivery in less than 24 hours, ensuring their quality and flavor at their best.')
         //->setTranslation('description_2', 'en', 'The French oyster is a true delight for seafood lovers, known for its delicate flavor and unmistakable texture. <br>At Rutas del Mar, we source oysters from the finest French farmers so you can enjoy this delicacy all year round. With its unparalleled freshness, the French oyster becomes an exceptional option for any special occasion or for the most discerning palates.')
-        ->setTranslation('origin', 'en', 'France')
-        ->setTranslation('slug', 'en', 'oysters-brittany')
+        ->setTranslation('slug', 'en', 'looping-gm')
         ->save();
 
         $oisterProductSizeVariation1 = ProductSizeVariationModel::create([
@@ -440,12 +440,12 @@ class FakeEnvironmentSeeder extends Seeder
             'description_1' => "Procedente de España. Oceano Atlántico",
             'description_2' => "El mero es un manjar del mar, apreciado por su carne firme y sabor suave, ideal para los paladares más exigentes. En Rutas del Mar, seleccionamos los mejores ejemplares de mero de las costas españolas, garantizando frescura y calidad en cada pieza. Este pescado versátil es perfecto para una gran variedad de preparaciones culinarias y está disponible durante todo el año para que puedas disfrutar de su inigualable sabor en cualquier momento.",
             'slug' => "mero-islas-canarias",
-            'origin' => "España",
+            'origin_country' => "España",
             'product_type' => "Simple",
             'price' => 25,
-            'sell_unit' => "unit",
+            'sell_mode_quantity' => 1,
             'sell_mode' => "per-kilo",
-            'stock' => "50",
+            'stock' => 1,
             'stock_unit' => "unit",
             'out_of_stock' => true,
             'image' => 'images/product/mero_product.jpg',
@@ -457,7 +457,6 @@ class FakeEnvironmentSeeder extends Seeder
         ->setTranslation('name', 'en', 'Grouper')
         ->setTranslation('description_1', 'en', 'Sourced from Spain. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'The grouper is a delicacy of the sea, appreciated for its firm flesh and mild flavor, perfect for the most discerning palates. At Rutas del Mar, we select the finest grouper specimens from the Spanish coasts, ensuring freshness and quality in every piece. This versatile fish is ideal for a wide variety of culinary preparations and is available year-round, so you can enjoy its unparalleled flavor at any time.')
-        ->setTranslation('origin', 'en', 'Spain')
         ->setTranslation('slug', 'en', 'grouper-canary-islands')
         ->save();*/
 
@@ -471,15 +470,16 @@ class FakeEnvironmentSeeder extends Seeder
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
             'slug' => "alma",
-            'origin' => "Francia",
+            'origin_country' => "FR",
             'quality_id' => $quality1Id,
-            'product_type' => "Variable",
+            'product_type' => "simple",
             'price' => 400,
-            'sell_unit' => "unit",
-            'sell_mode' => "per-box",
-            'stock' => "50",
+            'sell_mode_quantity' => 1,
+            'sell_mode' => "unit",
+            'stock' => 1,
             'stock_unit' => "unit",
             'out_of_stock' => false,
+            'is_sold_out' => true,
             'image' => 'images/product/alma-imp-3-1.webp',
             'featured' => true,
             'featured_position' => 4,
@@ -490,8 +490,7 @@ class FakeEnvironmentSeeder extends Seeder
         ->setTranslation('name', 'en', 'Alma Bag')
         ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'Our fresh oysters are carefully harvested by passionate cultivators who uphold the tradition of sustainable gathering directly from the ocean. These oysters stand out for their pronounced flavor, balanced with a salty touch that enhances their smooth and meaty texture. The perfect choice for seafood lovers. Enjoy the freshness and authenticity of these marine treasures, with home delivery in less than 24 hours, ensuring their quality and flavor at their best.')
-        ->setTranslation('origin', 'en', 'France')
-        ->setTranslation('slug', 'en', 'oysters-bretaña')
+        ->setTranslation('slug', 'en', 'alma')
         ->save();
 
         $bag5 = ProductEloquentModel::create([
@@ -504,15 +503,16 @@ class FakeEnvironmentSeeder extends Seeder
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
             'slug' => "petit-noe-epi-red",
-            'origin' => "Francia",
+            'origin_country' => "FR",
             'quality_id' => $quality2Id,
-            'product_type' => "Variable",
-            'price' => 475,
-            'sell_unit' => "unit",
-            'sell_mode' => "per-box",
-            'stock' => "50",
+            'product_type' => "simple",
+            'price' => 370,
+            'sell_mode_quantity' => 1,
+            'sell_mode' => "unit",
+            'stock' => 1,
             'stock_unit' => "unit",
             'out_of_stock' => false,
+            'is_sold_out' => true,
             'image' => 'images/product/petit-noe-epi-red-imp-3-1.webp',
             'featured' => true,
             'featured_position' => 5,
@@ -523,8 +523,7 @@ class FakeEnvironmentSeeder extends Seeder
         ->setTranslation('name', 'en', 'Petit Noe Epi Red Bag')
         ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'Our fresh oysters are carefully harvested by passionate cultivators who uphold the tradition of sustainable gathering directly from the ocean. These oysters stand out for their pronounced flavor, balanced with a salty touch that enhances their smooth and meaty texture. The perfect choice for seafood lovers. Enjoy the freshness and authenticity of these marine treasures, with home delivery in less than 24 hours, ensuring their quality and flavor at their best.')
-        ->setTranslation('origin', 'en', 'France')
-        ->setTranslation('slug', 'en', 'oysters-bretaña')
+        ->setTranslation('slug', 'en', 'petit-noe-epi-red')
         ->save();
 
         $bag6 = ProductEloquentModel::create([
@@ -537,15 +536,16 @@ class FakeEnvironmentSeeder extends Seeder
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
             'slug' => "speedy-25-2",
-            'origin' => "Francia",
+            'origin_country' => "FR",
             'quality_id' => $quality3Id,
-            'product_type' => "Variable",
+            'product_type' => "simple",
             'price' => 550,
-            'sell_unit' => "unit",
-            'sell_mode' => "per-box",
-            'stock' => "50",
+            'sell_mode_quantity' => 1,
+            'sell_mode' => "unit",
+            'stock' => 1,
             'stock_unit' => "unit",
             'out_of_stock' => false,
+            'is_sold_out' => true,
             'image' => 'images/product/speedy-25-imp-3-2.webp',
             'featured' => true,
             'featured_position' => 6,
@@ -557,8 +557,7 @@ class FakeEnvironmentSeeder extends Seeder
 
         ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'Our fresh oysters are carefully harvested by passionate cultivators who uphold the tradition of sustainable gathering directly from the ocean. These oysters stand out for their pronounced flavor, balanced with a salty touch that enhances their smooth and meaty texture. The perfect choice for seafood lovers. Enjoy the freshness and authenticity of these marine treasures, with home delivery in less than 24 hours, ensuring their quality and flavor at their best.')
-        ->setTranslation('origin', 'en', 'France')
-        ->setTranslation('slug', 'en', 'oysters-bretaña')
+        ->setTranslation('slug', 'en', 'speedy-25-2')
         ->save();
 
         $bag7 = ProductEloquentModel::create([
@@ -571,15 +570,17 @@ class FakeEnvironmentSeeder extends Seeder
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
             'slug' => "looping-pm",
-            'origin' => "Francia",
+            'origin_country' => "FR",
             'quality_id' => $quality1Id,
-            'product_type' => "Variable",
+            'product_type' => "simple",
+            'status' => "pending-review",
             'price' => 380,
-            'sell_unit' => "unit",
-            'sell_mode' => "per-box",
-            'stock' => "50",
+            'sell_mode_quantity' => 1,
+            'sell_mode' => "unit",
+            'stock' => 1,
             'stock_unit' => "unit",
             'out_of_stock' => false,
+            'is_sold_out' => true,
             'image' => 'images/product/looping-pm-imp-3-1.webp',
             'featured' => true,
             'featured_position' => 7,
@@ -591,8 +592,7 @@ class FakeEnvironmentSeeder extends Seeder
 
         ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'Our fresh oysters are carefully harvested by passionate cultivators who uphold the tradition of sustainable gathering directly from the ocean. These oysters stand out for their pronounced flavor, balanced with a salty touch that enhances their smooth and meaty texture. The perfect choice for seafood lovers. Enjoy the freshness and authenticity of these marine treasures, with home delivery in less than 24 hours, ensuring their quality and flavor at their best.')
-        ->setTranslation('origin', 'en', 'France')
-        ->setTranslation('slug', 'en', 'oysters-bretaña')
+        ->setTranslation('slug', 'en', 'looping-pm')
         ->save();
 
         $bag8 = ProductEloquentModel::create([
@@ -605,15 +605,16 @@ class FakeEnvironmentSeeder extends Seeder
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
             'slug' => "noe-1",
-            'origin' => "Francia",
+            'origin_country' => "FR",
             'quality_id' => $quality2Id,
-            'product_type' => "Variable",
+            'product_type' => "simple",
             'price' => 570,
-            'sell_unit' => "unit",
-            'sell_mode' => "per-box",
-            'stock' => "50",
+            'sell_mode_quantity' => 1,
+            'sell_mode' => "unit",
+            'stock' => 1,
             'stock_unit' => "unit",
             'out_of_stock' => false,
+            'is_sold_out' => true,
             'image' => 'images/product/noe-imp-3-2.webp',
             'featured' => true,
             'featured_position' => 8,
@@ -625,8 +626,7 @@ class FakeEnvironmentSeeder extends Seeder
 
         ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'Our fresh oysters are carefully harvested by passionate cultivators who uphold the tradition of sustainable gathering directly from the ocean. These oysters stand out for their pronounced flavor, balanced with a salty touch that enhances their smooth and meaty texture. The perfect choice for seafood lovers. Enjoy the freshness and authenticity of these marine treasures, with home delivery in less than 24 hours, ensuring their quality and flavor at their best.')
-        ->setTranslation('origin', 'en', 'France')
-        ->setTranslation('slug', 'en', 'oysters-bretaña')
+        ->setTranslation('slug', 'en', 'noe-1')
         ->save();
 
         $bag9 = ProductEloquentModel::create([
@@ -639,15 +639,16 @@ class FakeEnvironmentSeeder extends Seeder
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
             'slug' => "alma-2",
-            'origin' => "Francia",
+            'origin_country' => "FR",
             'quality_id' => $quality3Id,
-            'product_type' => "Variable",
+            'product_type' => "simple",
             'price' => 400,
-            'sell_unit' => "unit",
-            'sell_mode' => "per-box",
-            'stock' => "50",
+            'sell_mode_quantity' => 1,
+            'sell_mode' => "unit",
+            'stock' => 1,
             'stock_unit' => "unit",
             'out_of_stock' => false,
+            'is_sold_out' => true,
             'image' => 'images/product/alma-imp-3-2.webp',
             'featured' => true,
             'featured_position' => 9,
@@ -658,8 +659,7 @@ class FakeEnvironmentSeeder extends Seeder
         ->setTranslation('name', 'en', 'Alma Bag')
         ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'Our fresh oysters are carefully harvested by passionate cultivators who uphold the tradition of sustainable gathering directly from the ocean. These oysters stand out for their pronounced flavor, balanced with a salty touch that enhances their smooth and meaty texture. The perfect choice for seafood lovers. Enjoy the freshness and authenticity of these marine treasures, with home delivery in less than 24 hours, ensuring their quality and flavor at their best.')
-        ->setTranslation('origin', 'en', 'France')
-        ->setTranslation('slug', 'en', 'oysters-bretaña')
+        ->setTranslation('slug', 'en', 'alma-2')
         ->save();
 
         // Assign random materials to products

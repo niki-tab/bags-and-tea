@@ -24,6 +24,7 @@ class QualityTableSeeder extends Seeder
                 'es' => 'Nuevo'
             ],
             'code' => "A+",
+            'display_order' => 1,
         ]);
 
         $a = QualityEloquentModel::create([
@@ -33,6 +34,7 @@ class QualityTableSeeder extends Seeder
                 'es' => 'Como nuevo'
             ],
             'code' => "A",
+            'display_order' => 2,
         ]);
 
         $ab = QualityEloquentModel::create([
@@ -42,6 +44,7 @@ class QualityTableSeeder extends Seeder
                 'es' => 'Muy buen estado'
             ],
             'code' => "AB",
+            'display_order' => 3,
         ]);
 
         $b = QualityEloquentModel::create([
@@ -51,6 +54,7 @@ class QualityTableSeeder extends Seeder
                 'es' => 'Buen estado'
             ],
             'code' => "B",
+            'display_order' => 4,
         ]);
 
         $c = QualityEloquentModel::create([
@@ -60,6 +64,7 @@ class QualityTableSeeder extends Seeder
                 'es' => 'Usado'
             ],
             'code' => "C",
+            'display_order' => 5,
         ]);
 
         $d = QualityEloquentModel::create([
@@ -69,6 +74,7 @@ class QualityTableSeeder extends Seeder
                 'es' => 'Muy usado'
             ],
             'code' => "D",
+            'display_order' => 6,
         ]);
 
     }

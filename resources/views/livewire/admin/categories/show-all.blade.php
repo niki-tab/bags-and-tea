@@ -38,28 +38,37 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th wire:click="sortBy('display_order')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
+                            <th wire:click="sortByColumn('display_order')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
                                 Display Order
                                 @if($sortBy === 'display_order')
                                     @if($sortDirection === 'asc') ↑ @else ↓ @endif
                                 @endif
                             </th>
-                            <th wire:click="sortBy('name')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
+                            <th wire:click="sortByColumn('name')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
                                 Name
                                 @if($sortBy === 'name')
                                     @if($sortDirection === 'asc') ↑ @else ↓ @endif
                                 @endif
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th wire:click="sortByColumn('slug')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
                                 Slug
+                                @if($sortBy === 'slug')
+                                    @if($sortDirection === 'asc') ↑ @else ↓ @endif
+                                @endif
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th wire:click="sortByColumn('parent_id')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
                                 Parent
+                                @if($sortBy === 'parent_id')
+                                    @if($sortDirection === 'asc') ↑ @else ↓ @endif
+                                @endif
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th wire:click="sortByColumn('is_active')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
                                 Status
+                                @if($sortBy === 'is_active')
+                                    @if($sortDirection === 'asc') ↑ @else ↓ @endif
+                                @endif
                             </th>
-                            <th wire:click="sortBy('created_at')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
+                            <th wire:click="sortByColumn('created_at')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
                                 Created
                                 @if($sortBy === 'created_at')
                                     @if($sortDirection === 'asc') ↑ @else ↓ @endif
@@ -90,7 +99,7 @@
                                     {{ $category->getTranslation('slug', 'en') }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                    {{ $category->parent ? $category->parent->getTranslation('name', 'en') : 'Root' }}
+                                    {{ $category->parent ? $category->parent->getTranslation('name', 'en') : 'NULL' }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <button 
@@ -129,9 +138,16 @@
                 </table>
             </div>
 
-            <div class="mt-6">
-                {{ $categories->links() }}
-            </div>
+            @if($categories->hasPages())
+                <div class="mt-6">
+                    @livewire('shared/pagination', [
+                        'currentPage' => $categories->currentPage(),
+                        'totalItems' => $categories->total(),
+                        'perPage' => $categories->perPage(),
+                        'paginationClass' => 'justify-center'
+                    ], key('categories-pagination-' . $categories->currentPage() . '-' . $categories->total()))
+                </div>
+            @endif
         </div>
     </div>
 </div>

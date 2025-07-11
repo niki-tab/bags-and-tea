@@ -336,7 +336,7 @@ final class GetShopData
 
     private function getCategoryFilterOptions($filter): array
     {
-        // Get all active root categories
+        // Get all active parent categories
         $categories = $this->categoryRepository->findActiveRoots();
 
         // If there's a filter_slug in config, filter by slug
@@ -380,7 +380,7 @@ final class GetShopData
             }
         }
 
-        // If no filter_slug, return all root categories
+        // If no filter_slug, return all parent categories
         return $categories;
     }
 

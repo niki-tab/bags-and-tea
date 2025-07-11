@@ -2,7 +2,7 @@
     <form wire:submit.prevent="save">
         <div class="bg-white shadow-lg rounded-lg overflow-hidden">
             <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
-                <h2 class="text-xl font-semibold text-gray-900">Edit Attribute</h2>
+                <h2 class="text-xl font-semibold text-gray-900">Create New Attribute</h2>
             </div>
             
             <div class="p-6 space-y-6">
@@ -225,8 +225,8 @@
                     wire:loading.attr="disabled"
                     wire:loading.class="opacity-50 cursor-not-allowed"
                 >
-                    <span wire:loading.remove>Update Attribute</span>
-                    <span wire:loading>Updating...</span>
+                    <span wire:loading.remove>Create Attribute</span>
+                    <span wire:loading>Creating...</span>
                 </button>
             </div>
         </div>

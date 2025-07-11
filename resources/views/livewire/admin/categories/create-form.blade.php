@@ -2,7 +2,7 @@
     <form wire:submit.prevent="save">
         <div class="bg-white shadow-lg rounded-lg overflow-hidden">
             <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
-                <h2 class="text-xl font-semibold text-gray-900">Edit Attribute</h2>
+                <h2 class="text-xl font-semibold text-gray-900">Create New Category</h2>
             </div>
             
             <div class="p-6 space-y-6">
@@ -62,7 +62,7 @@
                                 type="text" 
                                 wire:model.live="name_en"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                placeholder="Enter attribute name in English"
+                                placeholder="Enter category name in English"
                             >
                             @error('name_en') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                         </div>
@@ -73,7 +73,7 @@
                                 type="text" 
                                 wire:model="slug_en"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                placeholder="attribute-slug-en"
+                                placeholder="category-slug-en"
                             >
                             @error('slug_en') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                         </div>
@@ -115,7 +115,7 @@
                                 type="text" 
                                 wire:model.live="name_es"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                placeholder="Enter attribute name in Spanish"
+                                placeholder="Enter category name in Spanish"
                             >
                             @error('name_es') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                         </div>
@@ -126,7 +126,7 @@
                                 type="text" 
                                 wire:model="slug_es"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                placeholder="attribute-slug-es"
+                                placeholder="category-slug-es"
                             >
                             @error('slug_es') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                         </div>
@@ -157,19 +157,19 @@
                     </div>
                 </div>
 
-                <!-- Attribute Settings -->
+                <!-- Category Settings -->
                 <div>
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Attribute Settings</h3>
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Category Settings</h3>
                     
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Parent Attribute</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Parent Category</label>
                             <select 
                                 wire:model="parent_id"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             >
-                                <option value="">Root Attribute</option>
-                                @foreach($parentAttributes as $parent)
+                                <option value="">Root Category</option>
+                                @foreach($parentCategories as $parent)
                                     <option value="{{ $parent->id }}">{{ $parent->getTranslation('name', 'en') }}</option>
                                 @endforeach
                             </select>
@@ -216,7 +216,7 @@
             </div>
             
             <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-between items-center">
-                <a href="{{ route('admin.attributes') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                <a href="{{ route('admin.categories') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                     Cancel
                 </a>
                 <button 
@@ -225,8 +225,8 @@
                     wire:loading.attr="disabled"
                     wire:loading.class="opacity-50 cursor-not-allowed"
                 >
-                    <span wire:loading.remove>Update Attribute</span>
-                    <span wire:loading>Updating...</span>
+                    <span wire:loading.remove>Create Category</span>
+                    <span wire:loading>Creating...</span>
                 </button>
             </div>
         </div>

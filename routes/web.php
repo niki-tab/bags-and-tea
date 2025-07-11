@@ -44,6 +44,15 @@ Route::prefix('admin-panel')->name('admin.')->group(function () {
         
         // Products Management
         Route::get('/products', [AdminPanelController::class, 'products'])->name('products');
+        Route::prefix('products')->name('products.')->group(function () {
+            Route::get('/create', function () {
+                return view('pages.admin-panel.dashboard.products.create');
+            })->name('create');
+            
+            Route::get('/edit/{id}', function ($id) {
+                return view('pages.admin-panel.dashboard.products.edit', ['id' => $id]);
+            })->name('edit');
+        });
         
         // Orders Management
         Route::get('/orders', [AdminPanelController::class, 'orders'])->name('orders');

@@ -6,11 +6,8 @@ use Livewire\Component;
 use Src\Attributes\Infrastructure\Eloquent\AttributeEloquentModel;
 use Illuminate\Support\Str;
 
-class EditForm extends Component
+class CreateForm extends Component
 {
-    public $attributeId;
-    public $attribute;
-    
     // English fields
     public $name_en = '';
     public $slug_en = '';
@@ -34,8 +31,8 @@ class EditForm extends Component
     protected $rules = [
         'name_en' => 'required|string|max:255',
         'name_es' => 'required|string|max:255',
-        'slug_en' => 'required|string|max:255',
-        'slug_es' => 'required|string|max:255',
+        'slug_en' => 'required|string|max:255|unique:attributes,slug',
+        'slug_es' => 'required|string|max:255|unique:attributes,slug',
         'description_1_en' => 'nullable|string|max:1000',
         'description_1_es' => 'nullable|string|max:1000',
         'description_2_en' => 'nullable|string|max:1000',
@@ -45,39 +42,23 @@ class EditForm extends Component
         'is_active' => 'boolean',
     ];
 
-    public function mount($attributeId)
+    public function mount()
     {
-        $this->attributeId = $attributeId;
-        $this->loadAttribute();
         $this->loadParentAttributes();
-    }
-
-    public function loadAttribute()
-    {
-        $this->attribute = AttributeEloquentModel::findOrFail($this->attributeId);
-        
-        // Load translations
-        $this->name_en = $this->attribute->getTranslation('name', 'en');
-        $this->name_es = $this->attribute->getTranslation('name', 'es');
-        $this->slug_en = $this->attribute->getTranslation('slug', 'en');
-        $this->slug_es = $this->attribute->getTranslation('slug', 'es');
-        $this->description_1_en = $this->attribute->getTranslation('description_1', 'en');
-        $this->description_1_es = $this->attribute->getTranslation('description_1', 'es');
-        $this->description_2_en = $this->attribute->getTranslation('description_2', 'en');
-        $this->description_2_es = $this->attribute->getTranslation('description_2', 'es');
-        
-        // Load other fields
-        $this->parent_id = $this->attribute->parent_id ?? '';
-        $this->display_order = $this->attribute->display_order;
-        $this->is_active = $this->attribute->is_active;
+        $this->setDefaultDisplayOrder();
     }
 
     public function loadParentAttributes()
     {
-        $this->parentAttributes = AttributeEloquentModel::where('id', '!=', $this->attributeId)
-            ->whereNull('parent_id')
+        $this->parentAttributes = AttributeEloquentModel::whereNull('parent_id')
             ->orderBy('display_order')
             ->get();
+    }
+
+    public function setDefaultDisplayOrder()
+    {
+        $maxOrder = AttributeEloquentModel::max('display_order');
+        $this->display_order = $maxOrder ? $maxOrder + 1 : 1;
     }
 
     public function updatedNameEn()
@@ -94,7 +75,8 @@ class EditForm extends Component
     {
         $this->validate();
 
-        $this->attribute->update([
+        $attributeData = [
+            'id' => (string) Str::uuid(),
             'name' => [
                 'en' => $this->name_en,
                 'es' => $this->name_es,
@@ -114,13 +96,18 @@ class EditForm extends Component
             'parent_id' => $this->parent_id ?: null,
             'display_order' => $this->display_order,
             'is_active' => $this->is_active,
-        ]);
+        ];
 
-        session()->flash('success', 'Attribute updated successfully!');
+        AttributeEloquentModel::create($attributeData);
+
+        session()->flash('success', 'Attribute created successfully!');
+        
+        // Redirect to the attributes listing
+        return redirect()->route('admin.attributes');
     }
 
     public function render()
     {
-        return view('livewire.admin.attributes.edit-form');
+        return view('livewire.admin.attributes.create-form');
     }
 }

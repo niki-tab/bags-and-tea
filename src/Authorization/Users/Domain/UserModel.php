@@ -38,6 +38,8 @@ class UserModel extends Authenticatable
 
     protected $casts = [
         'id' => 'string',
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
 
 
@@ -58,10 +60,7 @@ class UserModel extends Authenticatable
      *
      * @var array<string, string>
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
+
 
     protected static function boot()
     {

@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 use Src\Products\Brands\Infrastructure\Eloquent\BrandEloquentModel;
 use Src\Categories\Infrastructure\Eloquent\CategoryEloquentModel;
 use Src\Attributes\Infrastructure\Eloquent\AttributeEloquentModel;
 use Src\Products\Quality\Infrastructure\Eloquent\QualityEloquentModel;
 use Src\Vendors\Infrastructure\Eloquent\VendorEloquentModel;
+
 class ProductEloquentModel extends Model
 {
     use HasFactory, HasTranslations;
@@ -25,18 +27,22 @@ class ProductEloquentModel extends Model
         'brand_id',
         'vendor_id',
         'slug',
+        'status',
         'description_1',
         'description_2',
-        'origin',
+        'origin_country',
         'quality_id',
         'product_type',
         'price',
         'discounted_price',
-        'sell_unit',
+        'deal_price',
         'sell_mode',
+        'sell_mode_quantity',
         'stock',
         'stock_unit',
         'out_of_stock',
+        'is_sold_out',
+        'is_hidden',
         'image',
         'featured',
         'featured_position',
@@ -52,18 +58,22 @@ class ProductEloquentModel extends Model
         'brand_id' => 'string',
         'vendor_id' => 'string',
         'slug' => 'string',
+        'status' => 'string',
         'description_1' => 'string',
         'description_2' => 'string',
-        'origin' => 'string',
+        'origin_country' => 'string',
         'quality_id' => 'string',
         'product_type' => 'string',
         'price' => 'float',
         'discounted_price' => 'float',
-        'sell_unit' => 'string',
+        'deal_price' => 'float',
         'sell_mode' => 'string',
-        'stock' => 'string',
+        'sell_mode_quantity' => 'string',
+        'stock' => 'integer',
         'stock_unit' => 'string',
         'out_of_stock' => 'boolean',
+        'is_sold_out' => 'boolean',
+        'is_hidden' => 'boolean',
         'image' => 'string',
         'featured' => 'boolean',
         'featured_position' => 'integer',
@@ -71,7 +81,7 @@ class ProductEloquentModel extends Model
         'meta_description' => 'string',
     ];
 
-    public $translatable = ['name', 'description_1', 'description_2', 'origin', 'slug', 'meta_title', 'meta_description'];
+    public $translatable = ['name', 'description_1', 'description_2', 'slug', 'meta_title', 'meta_description'];
 
     public function brand(): BelongsTo
     {
@@ -120,5 +130,25 @@ class ProductEloquentModel extends Model
     public function scopeInStock($query)
     {
         return $query->where('out_of_stock', false);
+    }
+
+    public function media(): HasMany
+    {
+        return $this->hasMany(ProductMediaModel::class, 'product_id')->ordered();
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(ProductMediaModel::class, 'product_id')->images()->ordered();
+    }
+
+    public function videos(): HasMany
+    {
+        return $this->hasMany(ProductMediaModel::class, 'product_id')->videos()->ordered();
+    }
+
+    public function primaryImage()
+    {
+        return $this->hasOne(ProductMediaModel::class, 'product_id')->images()->primary();
     }
 }
