@@ -130,6 +130,9 @@ class Form extends Component
         $this->files = [];
         
         $this->showSuccessMessage = true;
+        
+        // Scroll to form after submission
+        $this->dispatch('scrollToForm', formIdentifier: $this->formIdentifier);
     }
 
     public function render()
