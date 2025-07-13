@@ -17,8 +17,14 @@ class DatabaseSeeder extends Seeder
       // Auth & Role System
       RoleSeeder::class,
       AdminUserSeeder::class,
+      VendorSeeder::class,
       ArticleTableSeeder::class,
       QualityTableSeeder::class,
+      
+      // Categories and Shop Configuration
+      CategoryTableSeeder::class,
+      AttributeTableSeeder::class,
+      ShopFilterTableSeeder::class,
       
       // Existing Seeders
       BrandTableSeeder::class,

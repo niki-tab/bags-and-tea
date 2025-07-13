@@ -6,11 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 use Src\Products\Brands\Infrastructure\Eloquent\BrandEloquentModel;
 use Src\Categories\Infrastructure\Eloquent\CategoryEloquentModel;
 use Src\Attributes\Infrastructure\Eloquent\AttributeEloquentModel;
 use Src\Products\Quality\Infrastructure\Eloquent\QualityEloquentModel;
+use Src\Vendors\Infrastructure\Eloquent\VendorEloquentModel;
+
 class ProductEloquentModel extends Model
 {
     use HasFactory, HasTranslations;
@@ -22,20 +25,24 @@ class ProductEloquentModel extends Model
         'id',
         'name',
         'brand_id',
+        'vendor_id',
         'slug',
+        'status',
         'description_1',
         'description_2',
-        'origin',
+        'origin_country',
         'quality_id',
         'product_type',
         'price',
         'discounted_price',
-        'sell_unit',
+        'deal_price',
         'sell_mode',
+        'sell_mode_quantity',
         'stock',
         'stock_unit',
         'out_of_stock',
-        'image',
+        'is_sold_out',
+        'is_hidden',
         'featured',
         'featured_position',
         'meta_title',
@@ -48,31 +55,40 @@ class ProductEloquentModel extends Model
         'id' => 'string',
         'name' => 'string',
         'brand_id' => 'string',
+        'vendor_id' => 'string',
         'slug' => 'string',
+        'status' => 'string',
         'description_1' => 'string',
         'description_2' => 'string',
-        'origin' => 'string',
+        'origin_country' => 'string',
         'quality_id' => 'string',
         'product_type' => 'string',
         'price' => 'float',
         'discounted_price' => 'float',
-        'sell_unit' => 'string',
+        'deal_price' => 'float',
         'sell_mode' => 'string',
-        'stock' => 'string',
+        'sell_mode_quantity' => 'string',
+        'stock' => 'integer',
         'stock_unit' => 'string',
         'out_of_stock' => 'boolean',
-        'image' => 'string',
+        'is_sold_out' => 'boolean',
+        'is_hidden' => 'boolean',
         'featured' => 'boolean',
         'featured_position' => 'integer',
         'meta_title' => 'string',
         'meta_description' => 'string',
     ];
 
-    public $translatable = ['name', 'description_1', 'description_2', 'origin', 'slug', 'meta_title', 'meta_description'];
+    public $translatable = ['name', 'description_1', 'description_2', 'slug', 'meta_title', 'meta_description'];
 
     public function brand(): BelongsTo
     {
         return $this->belongsTo(BrandEloquentModel::class, 'brand_id');
+    }
+
+    public function vendor(): BelongsTo
+    {
+        return $this->belongsTo(VendorEloquentModel::class, 'vendor_id');
     }
 
     public function quality(): BelongsTo
@@ -87,7 +103,9 @@ class ProductEloquentModel extends Model
             'product_category',
             'product_id',
             'category_id'
-        )->withTimestamps();
+        )->withTimestamps()
+         ->withPivot('id')
+         ->using(\Src\Products\Product\Infrastructure\Eloquent\ProductCategoryPivot::class);
     }
 
     public function attributes(): BelongsToMany
@@ -97,7 +115,9 @@ class ProductEloquentModel extends Model
             'product_attribute',
             'product_id',
             'attribute_id'
-        )->withTimestamps();
+        )->withTimestamps()
+        ->withPivot('id')
+        ->using(\Src\Products\Product\Infrastructure\Eloquent\ProductAttributePivot::class);
     }
 
     public function scopeFeatured($query)
@@ -108,5 +128,25 @@ class ProductEloquentModel extends Model
     public function scopeInStock($query)
     {
         return $query->where('out_of_stock', false);
+    }
+
+    public function media(): HasMany
+    {
+        return $this->hasMany(ProductMediaModel::class, 'product_id')->ordered();
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(ProductMediaModel::class, 'product_id')->images()->ordered();
+    }
+
+    public function videos(): HasMany
+    {
+        return $this->hasMany(ProductMediaModel::class, 'product_id')->videos()->ordered();
+    }
+
+    public function primaryImage()
+    {
+        return $this->hasOne(ProductMediaModel::class, 'product_id')->images()->primary();
     }
 }

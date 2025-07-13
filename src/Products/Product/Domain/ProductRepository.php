@@ -13,5 +13,6 @@ interface ProductRepository
     public function save(ProductEloquentModel $product): void;
     public function search(string $id): ?ProductEloquentModel;
     public function searchByCriteria(Criteria $criteria): array;
-
+    public function addCategory(string $productId, string $categoryId): void;
+    public function addAttribute(string $productId, string $attributeId): void;
 }

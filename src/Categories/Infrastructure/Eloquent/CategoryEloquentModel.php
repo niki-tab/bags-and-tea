@@ -25,6 +25,8 @@ class CategoryEloquentModel extends Model
     protected $fillable = [
         'name',
         'slug',
+        'description_1',
+        'description_2',
         'parent_id',
         'display_order',
         'is_active',
@@ -33,13 +35,15 @@ class CategoryEloquentModel extends Model
     protected $casts = [
         'id' => 'string',
         'parent_id' => 'string',
-        'name' => 'array',
+        'name' => 'string',
         'slug' => 'string',
+        'description_1' => 'string',
+        'description_2' => 'string',
         'display_order' => 'integer',
         'is_active' => 'boolean',
     ];
 
-    public $translatable = ['name'];
+    public $translatable = ['name', 'slug', 'description_1', 'description_2'];
 
     public function parent(): BelongsTo
     {

@@ -67,4 +67,16 @@ final class EloquentCategoryRepository implements CategoryRepository
     {
         return CategoryEloquentModel::active()->roots()->withChildren()->ordered()->get()->all();
     }
+
+    public function findByParentName(string $parentName): ?array
+    {
+        return CategoryEloquentModel::query()
+        ->join('categories as parent', 'categories.parent_id', '=', 'parent.id')
+        ->where('parent.name->en', 'like', '%' . $parentName . '%')
+        ->where('categories.is_active', true)
+        ->select('categories.*')
+        ->orderBy('categories.name->en')
+        ->get()
+        ->all();
+    }
 }

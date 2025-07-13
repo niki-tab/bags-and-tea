@@ -19,6 +19,7 @@ class QualityEloquentModel extends Model
         'id',
         'name',
         'code',
+        'display_order'
     ];
 
 
@@ -27,6 +28,8 @@ class QualityEloquentModel extends Model
         'id' => 'string',
         'name' => 'string',
         'code' => 'string',
+        'display_order' => 'integer',
+
     ];
 
     public $translatable = ['name'];

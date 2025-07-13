@@ -19,38 +19,62 @@ class QualityTableSeeder extends Seeder
 
         $aPlus = QualityEloquentModel::create([
             'id' => (string) Str::uuid(),
-            'name' => 'New',
+            'name' => [
+                'en' => 'New',
+                'es' => 'Nuevo'
+            ],
             'code' => "A+",
+            'display_order' => 1,
         ]);
 
         $a = QualityEloquentModel::create([
             'id' => (string) Str::uuid(),
-            'name' => 'As good as new',
+            'name' => [
+                'en' => 'As good as new',
+                'es' => 'Como nuevo'
+            ],
             'code' => "A",
+            'display_order' => 2,
         ]);
 
         $ab = QualityEloquentModel::create([
             'id' => (string) Str::uuid(),
-            'name' => 'Very good condition',
+            'name' => [
+                'en' => 'Very good condition',
+                'es' => 'Muy buen estado'
+            ],
             'code' => "AB",
+            'display_order' => 3,
         ]);
 
         $b = QualityEloquentModel::create([
             'id' => (string) Str::uuid(),
-            'name' => 'Good condition',
+            'name' => [
+                'en' => 'Good condition',
+                'es' => 'Buen estado'
+            ],
             'code' => "B",
+            'display_order' => 4,
         ]);
 
         $c = QualityEloquentModel::create([
             'id' => (string) Str::uuid(),
-            'name' => 'Used',
+            'name' => [
+                'en' => 'Used',
+                'es' => 'Usado'
+            ],
             'code' => "C",
+            'display_order' => 5,
         ]);
 
         $d = QualityEloquentModel::create([
             'id' => (string) Str::uuid(),
-            'name' => 'Very used',
+            'name' => [
+                'en' => 'Very used',
+                'es' => 'Muy usado'
+            ],
             'code' => "D",
+            'display_order' => 6,
         ]);
 
     }

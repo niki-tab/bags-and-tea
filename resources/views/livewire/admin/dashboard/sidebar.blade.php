@@ -29,9 +29,8 @@
     >
         <div class="flex flex-col h-full">
             <!-- Logo/Brand -->
-            <div class="flex items-center h-16 px-6 bg-slate-900 border-b border-slate-700">
-                <img class="h-8 w-auto" src="{{ asset('images/logo/bags_and_tea_logo.svg') }}" alt="Bags & Tea" onerror="this.style.display='none'">
-                <div class="ml-3">
+            <div class="flex items-center h-16 bg-slate-900 border-b border-slate-700">
+                <div class="w-1/3 mx-auto">
                     <h1 class="text-white text-xl font-bold">Admin</h1>
                     <p class="text-slate-300 text-xs">Bags & Tea</p>
                 </div>
@@ -98,16 +97,19 @@
                 
                 <!-- Logout -->
                 <div class="px-4 py-4">
-                    <button 
-                        wire:click="logout"
-                        onclick="return confirm('Are you sure you want to logout?')"
-                        class="group flex items-center w-full px-3 py-2 text-sm font-medium text-slate-300 rounded-lg hover:bg-red-600 hover:text-white transition-all duration-200"
-                    >
-                        <svg class="mr-3 h-5 w-5 text-slate-400 group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                        </svg>
-                        Logout
-                    </button>
+                    <form action="{{ route('admin.logout') }}" method="POST" class="w-full">
+                        @csrf
+                        <button 
+                            type="submit"
+                            onclick="return confirm('Are you sure you want to logout?')"
+                            class="group flex items-center w-full px-3 py-2 text-sm font-medium text-slate-300 rounded-lg hover:bg-red-600 hover:text-white transition-all duration-200"
+                        >
+                            <svg class="mr-3 h-5 w-5 text-slate-400 group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                            </svg>
+                            Logout
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

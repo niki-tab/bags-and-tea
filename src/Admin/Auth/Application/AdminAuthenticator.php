@@ -25,11 +25,11 @@ class AdminAuthenticator
             throw new \InvalidArgumentException('Invalid password');
         }
 
-        if (!$user->hasRole('admin')) {
-            throw new \InvalidArgumentException('User is not an admin');
+        if (!$user->hasRole('admin') && !$user->hasRole('vendor')) {
+            throw new \InvalidArgumentException('User is not an admin or vendor');
         }
 
-        Auth::loginUsingId($user->id);
+        Auth::login($user);
 
         return $user;
     }
@@ -47,6 +47,6 @@ class AdminAuthenticator
             return false;
         }
 
-        return $user->hasRole('admin');
+        return $user->hasRole('admin') || $user->hasRole('vendor');
     }
 }

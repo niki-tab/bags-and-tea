@@ -5,9 +5,11 @@ namespace App\Auth\User\Infrastructure\Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Auth\Role\Infrastructure\Eloquent\RoleEloquentModel;
+use Src\Vendors\Infrastructure\Eloquent\VendorEloquentModel;
 
 class UserEloquentModel extends Authenticatable
 {
@@ -47,6 +49,11 @@ class UserEloquentModel extends Authenticatable
             'user_id',
             'role_id'
         )->withTimestamps();
+    }
+
+    public function vendor(): HasOne
+    {
+        return $this->hasOne(VendorEloquentModel::class, 'user_id');
     }
 
     public function isAdmin(): bool

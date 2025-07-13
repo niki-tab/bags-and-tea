@@ -8,9 +8,16 @@ use Illuminate\Database\Seeder;
 use App\Models\ProductSizeVariationModel;
 use App\Models\ProductQuantityVariationModel;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Src\Products\Product\Application\AddCategoryToProduct;
+use Src\Products\Product\Application\AddAttributeToProduct;
+use Src\Categories\Infrastructure\EloquentCategoryRepository;
 use App\Models\ProducSizeVariationQuantityVariationPriceModel;
+use Src\Attributes\Infrastructure\EloquentAttributeRepository;
+use Src\Products\Product\Infrastructure\EloquentProductRepository;
 use Src\Products\Product\Infrastructure\Eloquent\ProductEloquentModel;
+use Src\Products\Product\Infrastructure\Eloquent\ProductMediaModel;
 use Src\Products\Quality\Infrastructure\Eloquent\QualityEloquentModel;
+use Src\Vendors\Infrastructure\Eloquent\VendorEloquentModel;
 
 class FakeEnvironmentSeeder extends Seeder
 {
@@ -19,12 +26,24 @@ class FakeEnvironmentSeeder extends Seeder
      */
     public function run(): void
     {   
+        // Get vendors for assignment
+        $vendors = VendorEloquentModel::all();
+        if ($vendors->isEmpty()) {
+            $this->command->error('No vendors found. Please run VendorSeeder first.');
+            return;
+        }
 
         $quality1 = QualityEloquentModel::where('code', 'AB')->first();
         $quality1Id = $quality1->id;
 
-        // Get Louis Vuitton brand ID
-        $louisVuittonBrand = \DB::table('brands')->where('slug', 'louis-vuitton')->first();
+        $quality2 = QualityEloquentModel::where('code', 'A')->first();
+        $quality2Id = $quality2->id;
+
+        $quality3 = QualityEloquentModel::where('code', 'B')->first();
+        $quality3Id = $quality3->id;
+
+        // Get Louis Vuitton brand ID - now using JSON slug format
+        $louisVuittonBrand = \DB::table('brands')->where('slug', 'like', '%louis-vuitton%')->first();
         $louisVuittonBrandId = $louisVuittonBrand->id;
         
         $bag1 = ProductEloquentModel::create([
@@ -32,19 +51,20 @@ class FakeEnvironmentSeeder extends Seeder
             'id' => (string) Str::uuid(),
             'name' => "Bolso Speedy 25",
             'brand_id' => $louisVuittonBrandId,
+            'vendor_id' => $vendors->random()->id,
             'description_1' => "Procedente de Francia. Oceano Atlántico",
             'description_2' => "La vieira es un marisco delicado y sabroso, apreciado por su textura suave y su sabor único. En Rutas del Mar, te ofrecemos vieiras francesas frescas y de la mejor calidad, traídas directamente desde las costas más puras. Ideal para quienes buscan un toque gourmet en sus platos, la vieira es el manjar perfecto del mar",
             'slug' => "speedy-25",
-            'origin' => "Francia",
+            'origin_country' => "FR",
             'quality_id' => $quality1Id,
-            'product_type' => "Simple",
-            'price' => 3.50,
-            'sell_unit' => "unit",
-            'sell_mode' => "per-unit",
-            'stock' => "50",
+            'product_type' => "simple",
+            'price' => 585,
+            'sell_mode_quantity' => 1,
+            'sell_mode' => "unit",
+            'stock' => 1,
             'stock_unit' => "unit",
             'out_of_stock' => true,
-            'image' => 'images/product/speedy-25-imp-3-1.webp',
+            'is_sold_out' => true,
             'featured' => true,
             'featured_position' => 1,
 
@@ -54,8 +74,7 @@ class FakeEnvironmentSeeder extends Seeder
         ->setTranslation('name', 'en', 'Speedy 25 Bag')
         ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'The scallop is a delicate and flavorful seafood, appreciated for its smooth texture and unique taste. At Rutas del Mar, we offer fresh French scallops of the highest quality, brought directly from the purest coasts. Ideal for those looking for a gourmet touch in their dishes, the scallop is the perfect seafood delicacy.')
-        ->setTranslation('origin', 'en', 'France')
-        ->setTranslation('slug', 'en', 'scallop-brittany')
+        ->setTranslation('slug', 'en', 'speedy-25')
         ->save();
 
         $bag1CrabProductSizeVariation1 = ProductSizeVariationModel::create([
@@ -112,19 +131,20 @@ class FakeEnvironmentSeeder extends Seeder
             'id' => (string) Str::uuid(),
             'name' => "Bolso Noe",
             'brand_id' => $louisVuittonBrandId,
+            'vendor_id' => $vendors->random()->id,
             'description_1' => "Procedente de Francia. Oceano Atlántico",
             'description_2' => "La centolla de Francia es sinónimo de calidad y sabor refinado. Un producto excepcional que puedes disfrutar en cualquier momento del año. En Rutas del Mar, traemos directamente desde las costas francesas las centollas más frescas, seleccionadas cuidadosamente para ofrecerte lo mejor del mar. La centolla francesa es una alternativa exquisita a la centolla gallega.",
             'slug' => "noe",
-            'origin' => "Japan",
-            'quality_id' => $quality1Id,
-            'product_type' => "Simple",
-            'price' => 20,
-            'sell_unit' => "unit",
-            'sell_mode' => "per-unit",
-            'stock' => "50",
+            'origin_country' => "ES",
+            'quality_id' => $quality2Id,
+            'product_type' => "simple",
+            'price' => 550,
+            'sell_mode_quantity' => 1,
+            'sell_mode' => "unit",
+            'stock' => 1,
             'stock_unit' => "unit",
             'out_of_stock' => true,
-            'image' => 'images/product/noe-imp-3-1.webp',
+            'is_sold_out' => true,
             'featured' => true,
             'featured_position' => 2,
 
@@ -134,8 +154,7 @@ class FakeEnvironmentSeeder extends Seeder
         ->setTranslation('name', 'en', 'Noe Bag')
         ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'The French spider crab is synonymous with quality and refined flavor. An exceptional product that you can enjoy at any time of the year. At Rutas del Mar, we bring the freshest spider crabs directly from the French coasts, carefully selected to offer you the best of the sea. The French spider crab is an exquisite alternative to the Galician spider crab.')
-        ->setTranslation('origin', 'en', 'France')
-        ->setTranslation('slug', 'en', 'spider-crab-brittany')
+        ->setTranslation('slug', 'en', 'noe')
         ->save();
 
         $bag2ProductSizeVariation1 = ProductSizeVariationModel::create([
@@ -212,20 +231,21 @@ class FakeEnvironmentSeeder extends Seeder
             'id' => (string) Str::uuid(),
             'name' => "Bolso Looping GM",
             'brand_id' => $louisVuittonBrandId,
+            'vendor_id' => $vendors->random()->id,
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
             'slug' => "looping-gm",
-            'origin' => "Francia",
-            'quality_id' => $quality1Id,
-            'product_type' => "Variable",
-            'price' => 10,
-            'sell_unit' => "unit",
-            'sell_mode' => "per-box",
-            'stock' => "50",
+            'origin_country' => "FR",
+            'quality_id' => $quality3Id,
+            'product_type' => "simple",
+            'price' => 390,
+            'sell_mode_quantity' => 1,
+            'sell_mode' => "unit",
+            'stock' => 1,
             'stock_unit' => "unit",
             'out_of_stock' => false,
-            'image' => 'images/product/looping-gm-imp-3-1.webp',
+            'is_sold_out' => true,
             'featured' => true,
             'featured_position' => 3,
 
@@ -237,8 +257,7 @@ class FakeEnvironmentSeeder extends Seeder
         ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'Our fresh oysters are carefully harvested by passionate cultivators who uphold the tradition of sustainable gathering directly from the ocean. These oysters stand out for their pronounced flavor, balanced with a salty touch that enhances their smooth and meaty texture. The perfect choice for seafood lovers. Enjoy the freshness and authenticity of these marine treasures, with home delivery in less than 24 hours, ensuring their quality and flavor at their best.')
         //->setTranslation('description_2', 'en', 'The French oyster is a true delight for seafood lovers, known for its delicate flavor and unmistakable texture. <br>At Rutas del Mar, we source oysters from the finest French farmers so you can enjoy this delicacy all year round. With its unparalleled freshness, the French oyster becomes an exceptional option for any special occasion or for the most discerning palates.')
-        ->setTranslation('origin', 'en', 'France')
-        ->setTranslation('slug', 'en', 'oysters-brittany')
+        ->setTranslation('slug', 'en', 'looping-gm')
         ->save();
 
         $oisterProductSizeVariation1 = ProductSizeVariationModel::create([
@@ -419,15 +438,14 @@ class FakeEnvironmentSeeder extends Seeder
             'description_1' => "Procedente de España. Oceano Atlántico",
             'description_2' => "El mero es un manjar del mar, apreciado por su carne firme y sabor suave, ideal para los paladares más exigentes. En Rutas del Mar, seleccionamos los mejores ejemplares de mero de las costas españolas, garantizando frescura y calidad en cada pieza. Este pescado versátil es perfecto para una gran variedad de preparaciones culinarias y está disponible durante todo el año para que puedas disfrutar de su inigualable sabor en cualquier momento.",
             'slug' => "mero-islas-canarias",
-            'origin' => "España",
+            'origin_country' => "España",
             'product_type' => "Simple",
             'price' => 25,
-            'sell_unit' => "unit",
+            'sell_mode_quantity' => 1,
             'sell_mode' => "per-kilo",
-            'stock' => "50",
+            'stock' => 1,
             'stock_unit' => "unit",
             'out_of_stock' => true,
-            'image' => 'images/product/mero_product.jpg',
             'featured' => true,
 
         ]);
@@ -436,7 +454,6 @@ class FakeEnvironmentSeeder extends Seeder
         ->setTranslation('name', 'en', 'Grouper')
         ->setTranslation('description_1', 'en', 'Sourced from Spain. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'The grouper is a delicacy of the sea, appreciated for its firm flesh and mild flavor, perfect for the most discerning palates. At Rutas del Mar, we select the finest grouper specimens from the Spanish coasts, ensuring freshness and quality in every piece. This versatile fish is ideal for a wide variety of culinary preparations and is available year-round, so you can enjoy its unparalleled flavor at any time.')
-        ->setTranslation('origin', 'en', 'Spain')
         ->setTranslation('slug', 'en', 'grouper-canary-islands')
         ->save();*/
 
@@ -445,20 +462,21 @@ class FakeEnvironmentSeeder extends Seeder
             'id' => (string) Str::uuid(),
             'name' => "Bolso Alma",
             'brand_id' => $louisVuittonBrandId,
+            'vendor_id' => $vendors->random()->id,
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
             'slug' => "alma",
-            'origin' => "Francia",
+            'origin_country' => "FR",
             'quality_id' => $quality1Id,
-            'product_type' => "Variable",
-            'price' => 10,
-            'sell_unit' => "unit",
-            'sell_mode' => "per-box",
-            'stock' => "50",
+            'product_type' => "simple",
+            'price' => 400,
+            'sell_mode_quantity' => 1,
+            'sell_mode' => "unit",
+            'stock' => 1,
             'stock_unit' => "unit",
             'out_of_stock' => false,
-            'image' => 'images/product/alma-imp-3-1.webp',
+            'is_sold_out' => true,
             'featured' => true,
             'featured_position' => 4,
 
@@ -468,8 +486,7 @@ class FakeEnvironmentSeeder extends Seeder
         ->setTranslation('name', 'en', 'Alma Bag')
         ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'Our fresh oysters are carefully harvested by passionate cultivators who uphold the tradition of sustainable gathering directly from the ocean. These oysters stand out for their pronounced flavor, balanced with a salty touch that enhances their smooth and meaty texture. The perfect choice for seafood lovers. Enjoy the freshness and authenticity of these marine treasures, with home delivery in less than 24 hours, ensuring their quality and flavor at their best.')
-        ->setTranslation('origin', 'en', 'France')
-        ->setTranslation('slug', 'en', 'oysters-bretaña')
+        ->setTranslation('slug', 'en', 'alma')
         ->save();
 
         $bag5 = ProductEloquentModel::create([
@@ -477,20 +494,21 @@ class FakeEnvironmentSeeder extends Seeder
             'id' => (string) Str::uuid(),
             'name' => "Bolso Petit Noe Epi",
             'brand_id' => $louisVuittonBrandId,
+            'vendor_id' => $vendors->random()->id,
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
             'slug' => "petit-noe-epi-red",
-            'origin' => "Francia",
-            'quality_id' => $quality1Id,
-            'product_type' => "Variable",
-            'price' => 10,
-            'sell_unit' => "unit",
-            'sell_mode' => "per-box",
-            'stock' => "50",
+            'origin_country' => "FR",
+            'quality_id' => $quality2Id,
+            'product_type' => "simple",
+            'price' => 370,
+            'sell_mode_quantity' => 1,
+            'sell_mode' => "unit",
+            'stock' => 1,
             'stock_unit' => "unit",
             'out_of_stock' => false,
-            'image' => 'images/product/petit-noe-epi-red-imp-3-1.webp',
+            'is_sold_out' => true,
             'featured' => true,
             'featured_position' => 5,
 
@@ -500,8 +518,7 @@ class FakeEnvironmentSeeder extends Seeder
         ->setTranslation('name', 'en', 'Petit Noe Epi Red Bag')
         ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'Our fresh oysters are carefully harvested by passionate cultivators who uphold the tradition of sustainable gathering directly from the ocean. These oysters stand out for their pronounced flavor, balanced with a salty touch that enhances their smooth and meaty texture. The perfect choice for seafood lovers. Enjoy the freshness and authenticity of these marine treasures, with home delivery in less than 24 hours, ensuring their quality and flavor at their best.')
-        ->setTranslation('origin', 'en', 'France')
-        ->setTranslation('slug', 'en', 'oysters-bretaña')
+        ->setTranslation('slug', 'en', 'petit-noe-epi-red')
         ->save();
 
         $bag6 = ProductEloquentModel::create([
@@ -509,20 +526,21 @@ class FakeEnvironmentSeeder extends Seeder
             'id' => (string) Str::uuid(),
             'name' => "Bolso Speedy 25",
             'brand_id' => $louisVuittonBrandId,
+            'vendor_id' => $vendors->random()->id,
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
             'slug' => "speedy-25-2",
-            'origin' => "Francia",
-            'quality_id' => $quality1Id,
-            'product_type' => "Variable",
-            'price' => 10,
-            'sell_unit' => "unit",
-            'sell_mode' => "per-box",
-            'stock' => "50",
+            'origin_country' => "FR",
+            'quality_id' => $quality3Id,
+            'product_type' => "simple",
+            'price' => 550,
+            'sell_mode_quantity' => 1,
+            'sell_mode' => "unit",
+            'stock' => 1,
             'stock_unit' => "unit",
             'out_of_stock' => false,
-            'image' => 'images/product/speedy-25-imp-3-2.webp',
+            'is_sold_out' => true,
             'featured' => true,
             'featured_position' => 6,
 
@@ -533,8 +551,7 @@ class FakeEnvironmentSeeder extends Seeder
 
         ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'Our fresh oysters are carefully harvested by passionate cultivators who uphold the tradition of sustainable gathering directly from the ocean. These oysters stand out for their pronounced flavor, balanced with a salty touch that enhances their smooth and meaty texture. The perfect choice for seafood lovers. Enjoy the freshness and authenticity of these marine treasures, with home delivery in less than 24 hours, ensuring their quality and flavor at their best.')
-        ->setTranslation('origin', 'en', 'France')
-        ->setTranslation('slug', 'en', 'oysters-bretaña')
+        ->setTranslation('slug', 'en', 'speedy-25-2')
         ->save();
 
         $bag7 = ProductEloquentModel::create([
@@ -542,20 +559,22 @@ class FakeEnvironmentSeeder extends Seeder
             'id' => (string) Str::uuid(),
             'name' => "Looping PM",
             'brand_id' => $louisVuittonBrandId,
+            'vendor_id' => $vendors->random()->id,
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
             'slug' => "looping-pm",
-            'origin' => "Francia",
+            'origin_country' => "FR",
             'quality_id' => $quality1Id,
-            'product_type' => "Variable",
-            'price' => 10,
-            'sell_unit' => "unit",
-            'sell_mode' => "per-box",
-            'stock' => "50",
+            'product_type' => "simple",
+            'status' => "pending-review",
+            'price' => 380,
+            'sell_mode_quantity' => 1,
+            'sell_mode' => "unit",
+            'stock' => 1,
             'stock_unit' => "unit",
             'out_of_stock' => false,
-            'image' => 'images/product/looping-pm-imp-3-1.webp',
+            'is_sold_out' => true,
             'featured' => true,
             'featured_position' => 7,
 
@@ -566,8 +585,7 @@ class FakeEnvironmentSeeder extends Seeder
 
         ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'Our fresh oysters are carefully harvested by passionate cultivators who uphold the tradition of sustainable gathering directly from the ocean. These oysters stand out for their pronounced flavor, balanced with a salty touch that enhances their smooth and meaty texture. The perfect choice for seafood lovers. Enjoy the freshness and authenticity of these marine treasures, with home delivery in less than 24 hours, ensuring their quality and flavor at their best.')
-        ->setTranslation('origin', 'en', 'France')
-        ->setTranslation('slug', 'en', 'oysters-bretaña')
+        ->setTranslation('slug', 'en', 'looping-pm')
         ->save();
 
         $bag8 = ProductEloquentModel::create([
@@ -575,20 +593,21 @@ class FakeEnvironmentSeeder extends Seeder
             'id' => (string) Str::uuid(),
             'name' => "Bolso Noe",
             'brand_id' => $louisVuittonBrandId,
+            'vendor_id' => $vendors->random()->id,
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
             'slug' => "noe-1",
-            'origin' => "Francia",
-            'quality_id' => $quality1Id,
-            'product_type' => "Variable",
-            'price' => 10,
-            'sell_unit' => "unit",
-            'sell_mode' => "per-box",
-            'stock' => "50",
+            'origin_country' => "FR",
+            'quality_id' => $quality2Id,
+            'product_type' => "simple",
+            'price' => 570,
+            'sell_mode_quantity' => 1,
+            'sell_mode' => "unit",
+            'stock' => 1,
             'stock_unit' => "unit",
             'out_of_stock' => false,
-            'image' => 'images/product/noe-imp-3-2.webp',
+            'is_sold_out' => true,
             'featured' => true,
             'featured_position' => 8,
 
@@ -599,8 +618,7 @@ class FakeEnvironmentSeeder extends Seeder
 
         ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'Our fresh oysters are carefully harvested by passionate cultivators who uphold the tradition of sustainable gathering directly from the ocean. These oysters stand out for their pronounced flavor, balanced with a salty touch that enhances their smooth and meaty texture. The perfect choice for seafood lovers. Enjoy the freshness and authenticity of these marine treasures, with home delivery in less than 24 hours, ensuring their quality and flavor at their best.')
-        ->setTranslation('origin', 'en', 'France')
-        ->setTranslation('slug', 'en', 'oysters-bretaña')
+        ->setTranslation('slug', 'en', 'noe-1')
         ->save();
 
         $bag9 = ProductEloquentModel::create([
@@ -608,20 +626,21 @@ class FakeEnvironmentSeeder extends Seeder
             'id' => (string) Str::uuid(),
             'name' => "Bolso Alma",
             'brand_id' => $louisVuittonBrandId,
+            'vendor_id' => $vendors->random()->id,
             'description_1' => "Procedentes de Francia. Oceano Atlántico",
             'description_2' => "Nuestras ostras frescas son cuidadosamente recolectadas por cultivadores apasionados, quienes mantienen viva la tradición de la recolección sostenible directamente del océano. Estas ostras se destacan por su sabor pronunciado, equilibrado con un toque salino que realza su textura suave y carnosa. La elección perfecta para los amantes del marisco. Disfruta de la frescura y autenticidad de estas joyas marinas, con entrega a domicilio en menos de 24 horas, garantizando su calidad y sabor en su mejor momento.",
             //'description_2' => "La ostra francesa es un verdadero placer para los amantes del marisco, conocida por su delicado sabor y textura inconfundible. <br>En Rutas del Mar, contamos con las ostras de los mejores cultivadores franceses para que disfrutes de este manjar todo el año. Con su frescura incomparable, la ostra francesa se convierte en una opción excepcional para cualquier ocasión especial o para los paladares más exigentes.",
             'slug' => "alma-2",
-            'origin' => "Francia",
-            'quality_id' => $quality1Id,
-            'product_type' => "Variable",
-            'price' => 10,
-            'sell_unit' => "unit",
-            'sell_mode' => "per-box",
-            'stock' => "50",
+            'origin_country' => "FR",
+            'quality_id' => $quality3Id,
+            'product_type' => "simple",
+            'price' => 400,
+            'sell_mode_quantity' => 1,
+            'sell_mode' => "unit",
+            'stock' => 1,
             'stock_unit' => "unit",
             'out_of_stock' => false,
-            'image' => 'images/product/alma-imp-3-2.webp',
+            'is_sold_out' => true,
             'featured' => true,
             'featured_position' => 9,
 
@@ -631,9 +650,185 @@ class FakeEnvironmentSeeder extends Seeder
         ->setTranslation('name', 'en', 'Alma Bag')
         ->setTranslation('description_1', 'en', 'Sourced from France. Atlantic Ocean')
         ->setTranslation('description_2', 'en', 'Our fresh oysters are carefully harvested by passionate cultivators who uphold the tradition of sustainable gathering directly from the ocean. These oysters stand out for their pronounced flavor, balanced with a salty touch that enhances their smooth and meaty texture. The perfect choice for seafood lovers. Enjoy the freshness and authenticity of these marine treasures, with home delivery in less than 24 hours, ensuring their quality and flavor at their best.')
-        ->setTranslation('origin', 'en', 'France')
-        ->setTranslation('slug', 'en', 'oysters-bretaña')
+        ->setTranslation('slug', 'en', 'alma-2')
         ->save();
 
+        // Assign random materials to products
+        $this->assignRandomMaterials([
+            $bag1->id,
+            $bag2->id, 
+            $bag3->id,
+            $bag4->id,
+            $bag5->id,
+            $bag6->id,
+            $bag7->id,
+            $bag8->id,
+            $bag9->id
+        ]);
+
+        // Assign random bag types to products
+        $this->assignRandomBagTypes([
+            $bag1->id,
+            $bag2->id, 
+            $bag3->id,
+            $bag4->id,
+            $bag5->id,
+            $bag6->id,
+            $bag7->id,
+            $bag8->id,
+            $bag9->id
+        ]);
+
+        // Assign random manufacture year to products
+        $this->assignRandomManufacturedYears([
+            $bag1->id,
+            $bag2->id, 
+            $bag3->id,
+            $bag4->id,
+            $bag5->id,
+            $bag6->id,
+            $bag7->id,
+            $bag8->id,
+            $bag9->id
+        ]);
+
+        // Create product media entries for all products
+        $this->createProductMediaEntries([
+            ['product' => $bag1, 'image_path' => 'images/product/speedy-25-imp-3-1.webp'],
+            ['product' => $bag2, 'image_path' => 'images/product/noe-imp-3-1.webp'],
+            ['product' => $bag3, 'image_path' => 'images/product/looping-gm-imp-3-1.webp'],
+            ['product' => $bag4, 'image_path' => 'images/product/alma-imp-3-1.webp'],
+            ['product' => $bag5, 'image_path' => 'images/product/petit-noe-epi-red-imp-3-1.webp'],
+            ['product' => $bag6, 'image_path' => 'images/product/speedy-25-imp-3-2.webp'],
+            ['product' => $bag7, 'image_path' => 'images/product/looping-pm-imp-3-1.webp'],
+            ['product' => $bag8, 'image_path' => 'images/product/noe-imp-3-2.webp'],
+            ['product' => $bag9, 'image_path' => 'images/product/alma-imp-3-2.webp']
+        ]);
+    }
+
+    /**
+     * Assign random materials to products
+     */
+    private function assignRandomMaterials(array $productIds): void
+    {
+        $categoryRepository = new EloquentCategoryRepository();
+        $categories = $categoryRepository->findByParentName('Material');
+        
+        // If no materials found, return early
+        if (empty($categories)) {
+            return;
+        }
+
+        foreach ($productIds as $productId) {
+            // Get one random material from the categories
+            $randomMaterial = collect($categories)->random();
+            
+            // Manually create dependencies instead of using DI container
+            $productRepository = new EloquentProductRepository();
+            $addCategoryToProductUseCase = new AddCategoryToProduct(
+                $productRepository,
+                $categoryRepository
+            );
+            
+            $addCategoryToProductUseCase->execute(
+                $productId,
+                $randomMaterial->id
+            );
+        }
+    }
+
+    /**
+     * Assign random bag types to products
+     */
+    private function assignRandomBagTypes(array $productIds): void
+    {
+        $categoryRepository = new EloquentCategoryRepository();
+        $categories = $categoryRepository->findByParentName('Bag Type');
+        
+        // If no bag types found, return early
+        if (empty($categories)) {
+            return;
+        }
+
+        foreach ($productIds as $productId) {
+            // Get one random bag type from the categories
+            $randomBagType = collect($categories)->random();
+            
+            // Manually create dependencies instead of using DI container
+            $productRepository = new EloquentProductRepository();
+            $addCategoryToProductUseCase = new AddCategoryToProduct(
+                $productRepository,
+                $categoryRepository
+            );
+            
+            $addCategoryToProductUseCase->execute(
+                $productId,
+                $randomBagType->id
+            );
+        }
+    }
+
+    private function assignRandomManufacturedYears(array $productIds): void
+    {
+        $attributeRepository = new EloquentAttributeRepository();
+        $attributes = $attributeRepository->findByParentName('Year of manufacture');
+        
+        // If no attributes found, return early
+        if (empty($attributes) || $attributes === null) {
+
+            return;
+        }
+
+        foreach ($productIds as $productId) {
+            // Get one random bag type from the categories
+            $randomManufacturedYear = collect($attributes)->random();
+            
+            // Manually create dependencies instead of using DI container
+            $productRepository = new EloquentProductRepository();
+            $addAttributeToProductUseCase = new AddAttributeToProduct(
+                $productRepository,
+                $attributeRepository
+            );
+            
+            $addAttributeToProductUseCase->execute(
+                $productId,
+                $randomManufacturedYear->id
+            );
+        }
+    }
+
+    /**
+     * Create product media entries for products
+     */
+    private function createProductMediaEntries(array $productData): void
+    {
+        foreach ($productData as $data) {
+            $product = $data['product'];
+            $imagePath = $data['image_path'];
+            $extension = pathinfo($imagePath, PATHINFO_EXTENSION);
+            
+            // Determine MIME type based on file extension
+            $mimeType = match($extension) {
+                'webp' => 'image/webp',
+                'jpg', 'jpeg' => 'image/jpeg',
+                'png' => 'image/png',
+                'gif' => 'image/gif',
+                default => 'image/webp'
+            };
+            
+            ProductMediaModel::create([
+                'id' => (string) Str::uuid(),
+                'product_id' => $product->id,
+                'file_path' => $imagePath,
+                'file_name' => basename($imagePath),
+                'file_type' => 'image',
+                'mime_type' => $mimeType,
+                'file_size' => 150000, // Default 150KB for seeder data
+                'sort_order' => 1,
+                'is_primary' => true,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+        }
     }
 }

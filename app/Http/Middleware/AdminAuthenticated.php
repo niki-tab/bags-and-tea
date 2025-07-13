@@ -13,7 +13,7 @@ class AdminAuthenticated
     {
         $user = Auth::user();
 
-        if (!$user || !$user->hasRole('admin')) {
+        if (!$user || (!$user->hasRole('admin') && !$user->hasRole('vendor'))) {
             return redirect()->route('admin.login');
         }
 

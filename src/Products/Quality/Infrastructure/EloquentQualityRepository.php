@@ -50,6 +50,6 @@ final class EloquentQualityRepository implements QualityRepository
 
     public function findAll(): array
     {
-        return QualityEloquentModel::all()->toArray();
+        return QualityEloquentModel::all()->all();
     }
 }

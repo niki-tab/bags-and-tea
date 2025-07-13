@@ -67,4 +67,16 @@ final class EloquentAttributeRepository implements AttributeRepository
     {
         return AttributeEloquentModel::active()->roots()->withChildren()->ordered()->get()->all();
     }
+
+    public function findByParentName(string $parentName): ?array
+    {
+        return AttributeEloquentModel::query()
+        ->join('attributes as parent', 'attributes.parent_id', '=', 'parent.id')
+        ->where('parent.name->en', 'like', '%' . $parentName . '%')
+        ->where('attributes.is_active', true)
+        ->select('attributes.*')
+        ->orderBy('attributes.name->en')
+        ->get()
+        ->all();
+    }
 }
