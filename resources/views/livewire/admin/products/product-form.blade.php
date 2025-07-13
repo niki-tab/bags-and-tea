@@ -24,7 +24,8 @@
         <div class="mb-6 bg-green-50 border-l-4 border-green-400 rounded-md p-4 shadow-md" 
              x-data="{ show: true }" 
              x-show="show" 
-             x-init="setTimeout(() => show = false, 5000); window.scrollTo({ top: 0, behavior: 'smooth' })"
+             x-init="show = true; setTimeout(() => show = false, 5000)"
+             wire:key="success-{{ session('success') }}-{{ now()->timestamp }}"
              x-transition:enter="transition ease-out duration-300" 
              x-transition:enter-start="opacity-0 transform translate-y-2" 
              x-transition:enter-end="opacity-100 transform translate-y-0" 
@@ -70,7 +71,8 @@
         <div class="mb-6 bg-red-50 border-l-4 border-red-400 rounded-md p-4 shadow-md" 
              x-data="{ show: true }" 
              x-show="show" 
-             x-init="window.scrollTo({ top: 0, behavior: 'smooth' })"
+             x-init="show = true; setTimeout(() => show = false, 5000)"
+             wire:key="error-{{ count($errors) }}-{{ now()->timestamp }}"
              x-transition:enter="transition ease-out duration-300" 
              x-transition:enter-start="opacity-0 transform translate-y-2" 
              x-transition:enter-end="opacity-100 transform translate-y-0" 
@@ -235,60 +237,72 @@
                 <div class="bg-gray-50 rounded-lg p-6">
                     <h4 class="text-sm font-medium text-gray-900 mb-4">Product Images</h4>
                     
-                    <!-- Existing Media -->
-                    @if(!empty($existingMedia))
+                    <!-- All Images (Unified Display) -->
+                    @if(!empty($unifiedMedia))
                         <div class="mb-6">
-                            <h5 class="text-xs font-medium text-gray-700 mb-3">Current Images</h5>
-                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                                @foreach($existingMedia as $media)
-                                    <div class="relative group" wire:key="media-{{ $media['id'] }}">
-                                        <img src="{{ asset($media['file_path']) }}" alt="{{ $media['alt_text'] }}" class="w-full h-32 object-cover rounded-lg shadow-sm border-2 {{ $media['is_primary'] ? 'border-indigo-500' : 'border-gray-200' }}">
-                                        @if($media['is_primary'])
-                                            <div class="absolute top-2 left-2 bg-indigo-600 text-white text-xs px-2 py-1 rounded">
-                                                Primary
+                            <h5 class="text-xs font-medium text-gray-700 mb-3">Product Images ({{ count($unifiedMedia) }}/12)</h5>
+                            <p class="text-xs text-gray-500 mb-3">Drag images to reorder. First image will be the primary image.</p>
+                            <div id="sortable-images" class="flex flex-wrap gap-4">
+                                @foreach($unifiedMedia as $index => $item)
+                                    @if($item['type'] === 'existing')
+                                        <!-- Existing Media -->
+                                        <div class="relative group cursor-move w-40 h-40 flex-shrink-0" wire:key="media-{{ $item['data']['id'] }}" data-id="{{ $item['id'] }}">
+                                            <img src="{{ asset($item['data']['file_path']) }}" alt="{{ $item['data']['alt_text'] ?? '' }}" class="w-full h-40 object-cover rounded-lg shadow-sm border-2 {{ $item['is_primary'] ? 'border-indigo-500' : 'border-gray-200' }}">
+                                            @if($item['is_primary'])
+                                                <div class="absolute top-2 left-2 bg-indigo-600 text-white text-xs px-2 py-1 rounded">
+                                                    Primary
+                                                </div>
+                                            @endif
+                                            <div class="absolute top-2 right-2 bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded">
+                                                #{{ $item['position'] }}
+                                            </div>
+                                            <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg flex items-center justify-center">
+                                                <button wire:click="removeMedia('{{ $item['data']['id'] }}')" type="button" class="remove-button text-white text-xs px-2 py-1 bg-red-600 rounded hover:bg-red-700">
+                                                    <span wire:loading.remove wire:target="removeMedia">Remove</span>
+                                                    <span wire:loading wire:target="removeMedia">Removing...</span>
+                                                </button>
+                                            </div>
+                                            <!-- Drag handle -->
+                                            <div class="absolute bottom-2 right-2 text-white opacity-75">
+                                                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M7 2a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM7 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM7 14a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM17 2a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM17 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM17 14a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"></path>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <!-- New Media -->
+                                        @if(is_object($item['data']) && method_exists($item['data'], 'getClientOriginalName'))
+                                            <div class="relative group cursor-move w-40 h-40 flex-shrink-0 border-2 border-green-300 rounded-lg bg-white overflow-hidden" data-id="{{ $item['id'] }}">
+                                                <img src="{{ $item['data']->temporaryUrl() }}" alt="{{ $item['data']->getClientOriginalName() }}" class="w-full h-40 object-cover">
+                                                @if($item['is_primary'])
+                                                    <div class="absolute top-2 left-2 bg-indigo-600 text-white text-xs px-2 py-1 rounded">
+                                                        Primary
+                                                    </div>
+                                                @else
+                                                    <div class="absolute top-2 left-2 bg-green-600 text-white text-xs px-2 py-1 rounded">
+                                                        New
+                                                    </div>
+                                                @endif
+                                                <div class="absolute top-2 right-2 bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded">
+                                                    #{{ $item['position'] }}
+                                                </div>
+                                                <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+                                                    <div class="text-center">
+                                                        <p class="text-white text-xs font-medium">{{ $item['data']->getClientOriginalName() }}</p>
+                                                        <p class="text-green-300 text-xs mt-1">Ready to upload</p>
+                                                        <button wire:click="removeNewMedia({{ str_replace('new_', '', $item['id']) }})" type="button" class="remove-button text-white text-xs px-2 py-1 bg-red-600 rounded hover:bg-red-700 mt-2">
+                                                            Remove
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <!-- Drag handle -->
+                                                <div class="absolute bottom-2 right-2 text-white opacity-75">
+                                                    <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M7 2a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM7 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM7 14a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM17 2a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM17 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM17 14a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"></path>
+                                                    </svg>
+                                                </div>
                                             </div>
                                         @endif
-                                        <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg flex items-center justify-center">
-                                            <button wire:click="setPrimaryMedia('{{ $media['id'] }}')" type="button" class="text-white text-xs px-2 py-1 bg-indigo-600 rounded mr-2 hover:bg-indigo-700">
-                                                {{ $media['is_primary'] ? 'Primary' : 'Set Primary' }}
-                                            </button>
-                                            <button wire:click="removeMedia('{{ $media['id'] }}')" type="button" class="text-white text-xs px-2 py-1 bg-red-600 rounded hover:bg-red-700">
-                                                <span wire:loading.remove wire:target="removeMedia">Remove</span>
-                                                <span wire:loading wire:target="removeMedia">Removing...</span>
-                                            </button>
-                                        </div>
-                                        <!-- Debug info -->
-                                        <div class="absolute bottom-0 left-0 text-xs text-white bg-black bg-opacity-75 px-1">
-                                            ID: {{ $media['id'] ?? 'NO_ID' }}
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-
-                    <!-- New Images Preview -->
-                    @if(!empty($media) && is_array($media))
-                        <div class="mb-6">
-                            <h5 class="text-xs font-medium text-gray-700 mb-3">New Images ({{ count($media) }} to upload)</h5>
-                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                                @foreach($media as $index => $file)
-                                    @if(is_object($file) && method_exists($file, 'getClientOriginalName'))
-                                        <div class="relative group border-2 border-dashed border-green-300 rounded-lg bg-green-50">
-                                            <div class="w-full h-32 flex items-center justify-center rounded-lg">
-                                                <div class="text-center">
-                                                    <svg class="mx-auto h-8 w-8 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                    </svg>
-                                                    <p class="text-xs text-green-600 mt-1">{{ $file->getClientOriginalName() }}</p>
-                                                </div>
-                                            </div>
-                                            <div class="absolute bottom-2 left-2 right-2">
-                                                <div class="bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded text-center">
-                                                    Ready to upload
-                                                </div>
-                                            </div>
-                                        </div>
                                     @endif
                                 @endforeach
                             </div>
@@ -296,19 +310,39 @@
                     @endif
 
                     <!-- Upload New Media -->
-                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-indigo-400 transition-colors duration-200">
-                        <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                        <div class="mt-4">
-                            <label class="cursor-pointer">
+                    @php
+                        $totalImages = count($unifiedMedia ?? []);
+                        $maxImages = 12;
+                        $canUpload = $totalImages < $maxImages;
+                    @endphp
+                    
+                    @if($canUpload)
+                        <label class="block border-2 border-dashed border-gray-300 hover:border-indigo-400 rounded-lg p-6 text-center cursor-pointer transition-colors duration-200">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <div class="mt-4">
                                 <span class="mt-2 block text-sm font-medium text-gray-900">Upload new images</span>
-                                <input wire:model="media" type="file" class="sr-only" multiple accept="image/*">
-                            </label>
-                            <p class="mt-1 text-sm text-gray-500">PNG, JPG, GIF up to 10MB each</p>
-                            <p class="mt-1 text-xs text-gray-400">Click to browse files</p>
+                                <p class="mt-1 text-sm text-gray-500">PNG, JPG, GIF up to 10MB each</p>
+                                <p class="mt-1 text-xs text-gray-400">{{ $maxImages - $totalImages }} more images can be added</p>
+                            </div>
+                            <input wire:model="media" type="file" class="sr-only" multiple accept="image/*">
+                        </label>
+                    @else
+                        <div class="border-2 border-dashed border-gray-200 rounded-lg p-6 text-center opacity-50">
+                            <svg class="mx-auto h-12 w-12 text-gray-300" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <div class="mt-4">
+                                <span class="mt-2 block text-sm font-medium text-gray-500">Maximum images reached ({{ $maxImages }})</span>
+                                <p class="mt-1 text-sm text-gray-400">Remove some images to upload new ones</p>
+                            </div>
                         </div>
-                    </div>
+                    @endif
+                    
+                    @error('media') 
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p> 
+                    @enderror
                 </div>
             </div>
         </div>
@@ -513,3 +547,86 @@
         </div>
     </form>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let sortableInstance = null;
+    
+    function initializeSortable() {
+        const sortableElement = document.getElementById('sortable-images');
+        
+        // Destroy existing instance if it exists
+        if (sortableInstance) {
+            sortableInstance.destroy();
+            sortableInstance = null;
+        }
+        
+        if (sortableElement) {
+            sortableInstance = Sortable.create(sortableElement, {
+                animation: 150,
+                forceFallback: true,
+                fallbackOnBody: true,
+                swapThreshold: 0.65,
+                filter: '.remove-button',
+                preventOnFilter: false,
+                onStart: function(evt) {
+                    evt.item.style.zIndex = '9999';
+                    evt.item.style.opacity = '0.7';
+                    evt.item.style.transform = 'rotate(2deg) scale(1.05)';
+                    evt.item.classList.add('shadow-lg');
+                },
+                onEnd: function(evt) {
+                    evt.item.style.zIndex = '';
+                    evt.item.style.opacity = '';
+                    evt.item.style.transform = '';
+                    evt.item.classList.remove('shadow-lg');
+                    
+                    // Get all item IDs in new order
+                    const orderedIds = Array.from(sortableElement.children).map(child => {
+                        return child.getAttribute('data-id');
+                    }).filter(id => id !== null);
+                    
+                    console.log('New order:', orderedIds);
+                    
+                    // Call Livewire method to update order
+                    if (window.Livewire) {
+                        @this.call('reorderImages', orderedIds);
+                    }
+                }
+            });
+        }
+    }
+    
+    // Initialize on page load
+    initializeSortable();
+    
+    // Re-initialize after Livewire updates
+    document.addEventListener('livewire:morph.updated', function() {
+        setTimeout(initializeSortable, 200);
+    });
+    
+    // Also listen for Livewire navigated event
+    document.addEventListener('livewire:navigated', function() {
+        setTimeout(initializeSortable, 200);
+    });
+    
+    // Ensure remove buttons work with SortableJS
+    document.addEventListener('mousedown', function(e) {
+        if (e.target.matches('.remove-button') || e.target.closest('.remove-button')) {
+            e.stopPropagation();
+        }
+    });
+    
+    document.addEventListener('click', function(e) {
+        if (e.target.matches('.remove-button') || e.target.closest('.remove-button')) {
+            e.stopPropagation();
+        }
+    });
+    
+    // Listen for scroll-to-top events from Livewire
+    window.addEventListener('scroll-to-top', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+});
+</script>

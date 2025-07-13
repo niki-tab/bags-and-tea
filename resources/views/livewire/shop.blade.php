@@ -1,5 +1,5 @@
 <div>
-    <div class="mx-4 md:mx-12 px-4 py-8 bg-white">
+    <div class="mx-4 md:mx-12 px-4 md:px-10 py-8 bg-white">
         {{-- Header Section --}}
         <div class="text-center mb-8">
             <h1 class="text-4xl {{ preg_match('/\d/', $pageTitle) ? 'font-robotoCondensed' : 'font-[\'Lovera\']' }} text-color-2 mb-8 mt-6">
@@ -11,35 +11,6 @@
         </div>
 
 
-        {{-- Debug Section (Remove in production) --}}
-        <div class="mb-4 p-4 bg-gray-100 rounded">
-            <h4 class="font-bold mb-2">Debug Info:</h4>
-            <p><strong>Products count:</strong> {{ count($products ?? []) }}</p>
-            <p><strong>Filters count:</strong> {{ count($filters ?? []) }}</p>
-            <p><strong>Filter options:</strong> {{ json_encode(array_keys($filterOptions ?? [])) }}</p>
-            @if(isset($filterOptions['brand']))
-                <p><strong>Brand options count:</strong> {{ count($filterOptions['brand']) }}</p>
-                @if(count($filterOptions['brand']) > 0)
-                    <p><strong>First brand:</strong> {{ $filterOptions['brand'][0]->getTranslation('name', app()->getLocale()) ?? 'No name' }}</p>
-                @endif
-            @endif
-            @if(isset($filterOptions['material']))
-                <p><strong>Material options count:</strong> {{ count($filterOptions['material']) }}</p>
-                @if(count($filterOptions['material']) > 0)
-                    <p><strong>First material:</strong> {{ $filterOptions['material'][0]['name'][app()->getLocale()] ?? ($filterOptions['material'][0]->getTranslation('name', app()->getLocale()) ?? 'No name') }}</p>
-                @endif
-            @endif
-            @if(isset($filterOptions['category']))
-                <p><strong>Category options count:</strong> {{ count($filterOptions['category']) }}</p>
-            @endif
-            <p><strong>Selected filters:</strong> {{ json_encode($selectedFilters) }}</p>
-            <p><strong>Applied filters passed to use case:</strong> {{ json_encode($appliedFilters ?? []) }}</p>
-            <p><strong>Selected sort by:</strong> {{ $selectedSortBy ?: 'None' }}</p>
-            <p><strong>Price range min/max:</strong> {{ json_encode($priceRange) }}</p>
-            @if(count($products) > 0 && isset($products[0]))
-                <p><strong>First product brand_id:</strong> {{ $products[0]->brand_id ?? 'null' }}</p>
-            @endif
-        </div>
 
         {{-- Selected Filters Section --}}
         @php
@@ -282,26 +253,67 @@
         <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6" wire:loading.remove wire:key="products-container-{{ $selectedSortBy ?: 'none' }}-{{ md5(serialize($selectedFilters)) }}">
             @foreach($products as $index => $product)
                 <div wire:key="product-{{ $product->id }}-sort-{{ $selectedSortBy ?: 'none' }}" class="bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                    {{-- Product Image --}}
-                    <div class="relative bg-gray-100 h-64">
-                        @if($product->image)
-                            <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
-                        @else
+                    {{-- Product Image Carousel --}}
+                    @php
+                        $productImages = $product->media ? $product->media->where('file_type', 'image')->pluck('file_path')->toArray() : [];
+                        $totalImages = count($productImages);
+                    @endphp
+                    <div class="relative bg-transparent h-64" x-data="{ 
+                        currentImage: 0, 
+                        images: @js($productImages),
+                        totalImages: @js($totalImages)
+                    }">
+                        {{-- Main Image Display --}}
+                        <template x-if="totalImages > 0">
+                            <img :src="'{{ asset('') }}' + images[currentImage]" :alt="{{ json_encode($product->name) }}" class="w-full h-full object-contain">
+                        </template>
+                        
+                        {{-- No Image Placeholder --}}
+                        <template x-if="totalImages === 0">
                             <div class="w-full h-full flex items-center justify-center text-gray-400">
                                 <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                 </svg>
                             </div>
-                        @endif
+                        </template>
                         
-                        {{-- Image indicators (dots) --}}
-                        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-1">
-                            <div class="w-2 h-2 bg-gray-400 rounded-full"></div>
-                            <div class="w-2 h-2 bg-gray-800 rounded-full"></div>
-                            <div class="w-2 h-2 bg-gray-400 rounded-full"></div>
-                            <div class="w-2 h-2 bg-gray-400 rounded-full"></div>
-                            <div class="w-2 h-2 bg-gray-400 rounded-full"></div>
-                        </div>
+                        {{-- Navigation Arrows --}}
+                        <template x-if="totalImages > 1">
+                            <div>
+                                {{-- Previous Arrow --}}
+                                <button 
+                                    @click="currentImage = currentImage > 0 ? currentImage - 1 : totalImages - 1"
+                                    class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition-all duration-200 z-10"
+                                    title="Previous image">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                    </svg>
+                                </button>
+                                
+                                {{-- Next Arrow --}}
+                                <button 
+                                    @click="currentImage = currentImage < totalImages - 1 ? currentImage + 1 : 0"
+                                    class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition-all duration-200 z-10"
+                                    title="Next image">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </template>
+                        
+                        {{-- Image Indicators (dots) --}}
+                        <template x-if="totalImages > 1">
+                            <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-1">
+                                <template x-for="(image, index) in images" :key="index">
+                                    <button 
+                                        @click="currentImage = index"
+                                        :class="currentImage === index ? 'bg-white' : 'bg-white bg-opacity-50'"
+                                        class="w-2 h-2 rounded-full transition-all duration-200 hover:bg-opacity-80">
+                                    </button>
+                                </template>
+                            </div>
+                        </template>
                     </div>
 
                     {{-- Product Info --}}

@@ -44,7 +44,7 @@
             <button 
                 wire:click="goToPage({{ $page }})" 
                 class="relative inline-flex items-center px-3 py-2 border text-sm font-medium transition-colors duration-200
-                       {{ $page === $currentPage 
+                       {{ (int)$page === (int)$currentPage 
                           ? 'z-10 bg-color-2 border-color-2 text-white' 
                           : 'border-gray-300 bg-white text-gray-500 hover:bg-gray-50 hover:text-gray-700' }}
                        {{ $loop->first && !$this->showFirst ? 'rounded-l-md' : '' }}

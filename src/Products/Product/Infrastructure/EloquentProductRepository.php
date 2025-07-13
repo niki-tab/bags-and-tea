@@ -98,7 +98,7 @@ final class EloquentProductRepository implements ProductRepository
         }
 
         // Always include relationships for shop display
-        $query->with(['brand', 'vendor', 'quality', 'categories', 'attributes']);
+        $query->with(['brand', 'vendor', 'quality', 'categories', 'attributes', 'primaryImage', 'media']);
 
         // Apply sorting if specified
         $order = $criteria->order();
@@ -186,7 +186,7 @@ final class EloquentProductRepository implements ProductRepository
         }
 
         // Always include relationships
-        $query->with(['brand', 'vendor.user', 'quality', 'categories', 'attributes']);
+        $query->with(['brand', 'vendor.user', 'quality', 'categories', 'attributes', 'primaryImage', 'media']);
 
         // Apply sorting if specified
         $order = $criteria->order();
@@ -214,7 +214,7 @@ final class EloquentProductRepository implements ProductRepository
     public function findByVendor(string $vendorId): array
     {
         return ProductEloquentModel::where('vendor_id', $vendorId)
-            ->with(['brand', 'vendor.user', 'quality', 'categories', 'attributes'])
+            ->with(['brand', 'vendor.user', 'quality', 'categories', 'attributes', 'primaryImage', 'media'])
             ->get()
             ->all();
     }
@@ -272,7 +272,7 @@ final class EloquentProductRepository implements ProductRepository
         }
 
         // Always include relationships
-        $query->with(['brand', 'vendor.user', 'quality', 'categories', 'attributes']);
+        $query->with(['brand', 'vendor.user', 'quality', 'categories', 'attributes', 'primaryImage', 'media']);
 
         // Apply sorting if specified
         $order = $criteria->order();

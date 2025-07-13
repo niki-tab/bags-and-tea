@@ -66,6 +66,7 @@ class ProductForm extends Component
     // Media
     public $media = [];
     public $existingMedia = [];
+    public $existingNewMedia = [];
     public $mediaToDelete = [];
     
     // Add this property to make Livewire track existingMedia properly
@@ -79,6 +80,9 @@ class ProductForm extends Component
     public $categoriesByParent = [];
     public $availableAttributes = [];
     public $attributesByParent = [];
+    
+    // Computed property for unified media display
+    public $unifiedMedia = [];
     
 
     protected $rules = [
@@ -112,7 +116,7 @@ class ProductForm extends Component
         'is_hidden' => 'boolean',
         'featured' => 'boolean',
         'featured_position' => 'integer|min:0',
-        'media.*' => 'image|max:10240', // 10MB max
+        'media.*' => 'image|mimes:jpeg,jpg,png,gif,webp|max:10240', // 10MB max, includes webp
         'selectedCategories' => 'array',
         'selectedAttributes' => 'array',
     ];
@@ -173,7 +177,10 @@ class ProductForm extends Component
         // Load relationships
         $this->selectedCategories = $this->product->categories->pluck('id')->toArray();
         $this->selectedAttributes = $this->product->attributes->pluck('id')->toArray();
-        $this->existingMedia = $this->product->media->toArray();
+        $this->existingMedia = $this->product->media->sortBy('sort_order')->values()->toArray();
+        
+        // Update unified media for display
+        $this->updateUnifiedMedia();
         
         // Update validation rules for editing
         $this->rules['slug_en'] = 'required|string|max:255|unique:products,slug,' . $this->productId . ',id';
@@ -243,6 +250,46 @@ class ProductForm extends Component
         $this->slug_es = Str::slug($this->name_es);
     }
 
+    public function updatedMedia()
+    {
+        // When new files are selected, append them to existing media array
+        if (!empty($this->media)) {
+            $newFiles = is_array($this->media) ? $this->media : [$this->media];
+            
+            // Calculate current total images
+            $currentTotal = count($this->existingMedia) + count($this->existingNewMedia ?? []);
+            $maxAllowed = 12;
+            $remainingSlots = $maxAllowed - $currentTotal;
+            
+            // If no remaining slots, show error and return
+            if ($remainingSlots <= 0) {
+                $this->addError('media', 'Maximum of 12 images allowed. Please remove some images first.');
+                $this->media = [];
+                return;
+            }
+            
+            // Limit new files to remaining slots
+            if (count($newFiles) > $remainingSlots) {
+                $newFiles = array_slice($newFiles, 0, $remainingSlots);
+                $this->addError('media', "Only {$remainingSlots} more images can be added (12 max total). Some files were not included.");
+            }
+            
+            // If this is the first upload, just use the new files
+            if (empty($this->existingNewMedia)) {
+                $this->existingNewMedia = $newFiles;
+            } else {
+                // Append new files to existing ones
+                $this->existingNewMedia = array_merge($this->existingNewMedia, $newFiles);
+            }
+            
+            // Clear the media input to allow for new selections
+            $this->media = [];
+            
+            // Update unified media for display
+            $this->updateUnifiedMedia();
+        }
+    }
+
 
     public function removeMedia($mediaId)
     {
@@ -261,18 +308,119 @@ class ProductForm extends Component
         // Force Livewire to re-render by dispatching an event
         $this->dispatch('media-removed', $mediaId);
         
+        // Update unified media for display
+        $this->updateUnifiedMedia();
+        
         // Add a flash message to confirm removal
         $this->addError('media_removed', 'Image marked for removal. Save the form to permanently delete.');
     }
 
-    public function setPrimaryMedia($mediaId)
+    
+    public function removeNewMedia($index)
     {
-        // Update the existing media array to set new primary
-        foreach ($this->existingMedia as &$media) {
-            $media['is_primary'] = $media['id'] === $mediaId;
+        // Remove file from new media array
+        if (isset($this->existingNewMedia[$index])) {
+            unset($this->existingNewMedia[$index]);
+            // Re-index the array
+            $this->existingNewMedia = array_values($this->existingNewMedia);
+            
+            // Update unified media for display
+            $this->updateUnifiedMedia();
+        }
+    }
+
+    public function reorderImages($orderedIds)
+    {
+        // Create unified media array that respects the new order
+        $this->unifiedMedia = [];
+        
+        // Create lookup arrays
+        $existingMediaLookup = [];
+        foreach ($this->existingMedia as $media) {
+            $existingMediaLookup[$media['id']] = $media;
         }
         
-        // Force Livewire to re-render the component
+        $newMediaLookup = [];
+        foreach ($this->existingNewMedia as $index => $file) {
+            $newMediaLookup[$index] = $file;
+        }
+        
+        // Build unified media in the new order
+        foreach ($orderedIds as $globalIndex => $id) {
+            if (str_starts_with($id, 'existing_')) {
+                $mediaId = str_replace('existing_', '', $id);
+                if (isset($existingMediaLookup[$mediaId])) {
+                    $media = $existingMediaLookup[$mediaId];
+                    $media['sort_order'] = $globalIndex + 1;
+                    $media['is_primary'] = $globalIndex === 0;
+                    
+                    $this->unifiedMedia[] = [
+                        'type' => 'existing',
+                        'data' => $media,
+                        'id' => 'existing_' . $media['id'],
+                        'position' => $globalIndex + 1,
+                        'is_primary' => $globalIndex === 0
+                    ];
+                }
+            } elseif (str_starts_with($id, 'new_')) {
+                $newIndex = (int) str_replace('new_', '', $id);
+                if (isset($newMediaLookup[$newIndex])) {
+                    $file = $newMediaLookup[$newIndex];
+                    
+                    $this->unifiedMedia[] = [
+                        'type' => 'new',
+                        'data' => $file,
+                        'id' => 'new_' . $newIndex,
+                        'position' => $globalIndex + 1,
+                        'is_primary' => $globalIndex === 0
+                    ];
+                }
+            }
+        }
+        
+        // Rebuild separate arrays to maintain backend compatibility
+        $this->existingMedia = [];
+        $this->existingNewMedia = [];
+        
+        foreach ($this->unifiedMedia as $item) {
+            if ($item['type'] === 'existing') {
+                $this->existingMedia[] = $item['data'];
+            } else {
+                $this->existingNewMedia[] = $item['data'];
+            }
+        }
+    }
+    
+    public function updateUnifiedMedia()
+    {
+        $this->unifiedMedia = [];
+        
+        // Create unified array for display
+        $existingCount = count($this->existingMedia);
+        $newCount = count($this->existingNewMedia);
+        $totalCount = $existingCount + $newCount;
+        
+        // Add existing media
+        foreach ($this->existingMedia as $index => $media) {
+            $this->unifiedMedia[] = [
+                'type' => 'existing',
+                'data' => $media,
+                'id' => 'existing_' . $media['id'],
+                'position' => $index + 1,
+                'is_primary' => $index === 0
+            ];
+        }
+        
+        // Add new media
+        foreach ($this->existingNewMedia as $index => $file) {
+            $this->unifiedMedia[] = [
+                'type' => 'new',
+                'data' => $file,
+                'id' => 'new_' . $index,
+                'position' => $existingCount + $index + 1,
+                'is_primary' => ($existingCount === 0 && $index === 0)
+            ];
+        }
     }
     
     public function refreshComponent()
@@ -284,7 +432,12 @@ class ProductForm extends Component
 
     public function save()
     {
-        $this->validate();
+        try {
+            $this->validate();
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            $this->dispatch('scroll-to-top');
+            throw $e;
+        }
 
         $productData = [
             'name' => [
@@ -354,39 +507,52 @@ class ProductForm extends Component
             $this->mediaToDelete = []; // Clear the deletion queue
         }
         
-        // Handle primary media updates
+        // Handle existing media updates (sort_order and is_primary)
         foreach ($this->existingMedia as $mediaData) {
             ProductMediaModel::where('id', $mediaData['id'])->update([
+                'sort_order' => $mediaData['sort_order'],
                 'is_primary' => $mediaData['is_primary']
             ]);
         }
 
-        // Handle new media uploads
-        if (!empty($this->media)) {
-            $sortOrder = ProductMediaModel::where('product_id', $product->id)->max('sort_order') + 1;
-            
-            foreach ($this->media as $file) {
-                $path = $file->store('products/' . $product->id, 'public');
-                
-                ProductMediaModel::create([
-                    'id' => (string) Str::uuid(),
-                    'product_id' => $product->id,
-                    'file_path' => 'storage/' . $path,
-                    'file_name' => $file->getClientOriginalName(),
-                    'file_type' => 'image',
-                    'mime_type' => $file->getMimeType(),
-                    'file_size' => $file->getSize(),
-                    'sort_order' => $sortOrder++,
-                    'is_primary' => false,
-                ]);
+        // Handle new media uploads using unified media order
+        if (!empty($this->existingNewMedia)) {
+            // Use unified media to determine correct sort_order for new images
+            foreach ($this->unifiedMedia as $item) {
+                if ($item['type'] === 'new') {
+                    // Extract the index from the new_ id
+                    $newIndex = (int) str_replace('new_', '', $item['id']);
+                    
+                    if (isset($this->existingNewMedia[$newIndex])) {
+                        $file = $this->existingNewMedia[$newIndex];
+                        $path = $file->store('products/' . $product->id, 'public');
+                        
+                        ProductMediaModel::create([
+                            'id' => (string) Str::uuid(),
+                            'product_id' => $product->id,
+                            'file_path' => 'storage/' . $path,
+                            'file_name' => $file->getClientOriginalName(),
+                            'file_type' => 'image',
+                            'mime_type' => $file->getMimeType(),
+                            'file_size' => $file->getSize(),
+                            'sort_order' => $item['position'], // Use the unified position
+                            'is_primary' => $item['is_primary'], // Use the unified primary status
+                        ]);
+                    }
+                }
             }
-            $this->media = []; // Clear the media array after upload
+            $this->existingNewMedia = []; // Clear the new media array after upload
         }
+        
+        // Primary image is now handled correctly in the individual updates above
 
         if ($this->isEditing) {
             // Reload the existing media to reflect changes
-            $this->existingMedia = $this->product->fresh()->media->toArray();
+            $this->existingMedia = $this->product->fresh()->media->sortBy('sort_order')->values()->toArray();
+            // Update unified media for display
+            $this->updateUnifiedMedia();
             session()->flash('success', 'Product updated successfully!');
+            $this->dispatch('scroll-to-top');
             // Stay on the same page when editing
         } else {
             session()->flash('success', 'Product created successfully!');

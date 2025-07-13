@@ -15,6 +15,7 @@ use App\Models\ProducSizeVariationQuantityVariationPriceModel;
 use Src\Attributes\Infrastructure\EloquentAttributeRepository;
 use Src\Products\Product\Infrastructure\EloquentProductRepository;
 use Src\Products\Product\Infrastructure\Eloquent\ProductEloquentModel;
+use Src\Products\Product\Infrastructure\Eloquent\ProductMediaModel;
 use Src\Products\Quality\Infrastructure\Eloquent\QualityEloquentModel;
 use Src\Vendors\Infrastructure\Eloquent\VendorEloquentModel;
 
@@ -64,7 +65,6 @@ class FakeEnvironmentSeeder extends Seeder
             'stock_unit' => "unit",
             'out_of_stock' => true,
             'is_sold_out' => true,
-            'image' => 'images/product/speedy-25-imp-3-1.webp',
             'featured' => true,
             'featured_position' => 1,
 
@@ -145,7 +145,6 @@ class FakeEnvironmentSeeder extends Seeder
             'stock_unit' => "unit",
             'out_of_stock' => true,
             'is_sold_out' => true,
-            'image' => 'images/product/noe-imp-3-1.webp',
             'featured' => true,
             'featured_position' => 2,
 
@@ -247,7 +246,6 @@ class FakeEnvironmentSeeder extends Seeder
             'stock_unit' => "unit",
             'out_of_stock' => false,
             'is_sold_out' => true,
-            'image' => 'images/product/looping-gm-imp-3-1.webp',
             'featured' => true,
             'featured_position' => 3,
 
@@ -448,7 +446,6 @@ class FakeEnvironmentSeeder extends Seeder
             'stock' => 1,
             'stock_unit' => "unit",
             'out_of_stock' => true,
-            'image' => 'images/product/mero_product.jpg',
             'featured' => true,
 
         ]);
@@ -480,7 +477,6 @@ class FakeEnvironmentSeeder extends Seeder
             'stock_unit' => "unit",
             'out_of_stock' => false,
             'is_sold_out' => true,
-            'image' => 'images/product/alma-imp-3-1.webp',
             'featured' => true,
             'featured_position' => 4,
 
@@ -513,7 +509,6 @@ class FakeEnvironmentSeeder extends Seeder
             'stock_unit' => "unit",
             'out_of_stock' => false,
             'is_sold_out' => true,
-            'image' => 'images/product/petit-noe-epi-red-imp-3-1.webp',
             'featured' => true,
             'featured_position' => 5,
 
@@ -546,7 +541,6 @@ class FakeEnvironmentSeeder extends Seeder
             'stock_unit' => "unit",
             'out_of_stock' => false,
             'is_sold_out' => true,
-            'image' => 'images/product/speedy-25-imp-3-2.webp',
             'featured' => true,
             'featured_position' => 6,
 
@@ -581,7 +575,6 @@ class FakeEnvironmentSeeder extends Seeder
             'stock_unit' => "unit",
             'out_of_stock' => false,
             'is_sold_out' => true,
-            'image' => 'images/product/looping-pm-imp-3-1.webp',
             'featured' => true,
             'featured_position' => 7,
 
@@ -615,7 +608,6 @@ class FakeEnvironmentSeeder extends Seeder
             'stock_unit' => "unit",
             'out_of_stock' => false,
             'is_sold_out' => true,
-            'image' => 'images/product/noe-imp-3-2.webp',
             'featured' => true,
             'featured_position' => 8,
 
@@ -649,7 +641,6 @@ class FakeEnvironmentSeeder extends Seeder
             'stock_unit' => "unit",
             'out_of_stock' => false,
             'is_sold_out' => true,
-            'image' => 'images/product/alma-imp-3-2.webp',
             'featured' => true,
             'featured_position' => 9,
 
@@ -699,6 +690,19 @@ class FakeEnvironmentSeeder extends Seeder
             $bag7->id,
             $bag8->id,
             $bag9->id
+        ]);
+
+        // Create product media entries for all products
+        $this->createProductMediaEntries([
+            ['product' => $bag1, 'image_path' => 'images/product/speedy-25-imp-3-1.webp'],
+            ['product' => $bag2, 'image_path' => 'images/product/noe-imp-3-1.webp'],
+            ['product' => $bag3, 'image_path' => 'images/product/looping-gm-imp-3-1.webp'],
+            ['product' => $bag4, 'image_path' => 'images/product/alma-imp-3-1.webp'],
+            ['product' => $bag5, 'image_path' => 'images/product/petit-noe-epi-red-imp-3-1.webp'],
+            ['product' => $bag6, 'image_path' => 'images/product/speedy-25-imp-3-2.webp'],
+            ['product' => $bag7, 'image_path' => 'images/product/looping-pm-imp-3-1.webp'],
+            ['product' => $bag8, 'image_path' => 'images/product/noe-imp-3-2.webp'],
+            ['product' => $bag9, 'image_path' => 'images/product/alma-imp-3-2.webp']
         ]);
     }
 
@@ -790,6 +794,41 @@ class FakeEnvironmentSeeder extends Seeder
                 $productId,
                 $randomManufacturedYear->id
             );
+        }
+    }
+
+    /**
+     * Create product media entries for products
+     */
+    private function createProductMediaEntries(array $productData): void
+    {
+        foreach ($productData as $data) {
+            $product = $data['product'];
+            $imagePath = $data['image_path'];
+            $extension = pathinfo($imagePath, PATHINFO_EXTENSION);
+            
+            // Determine MIME type based on file extension
+            $mimeType = match($extension) {
+                'webp' => 'image/webp',
+                'jpg', 'jpeg' => 'image/jpeg',
+                'png' => 'image/png',
+                'gif' => 'image/gif',
+                default => 'image/webp'
+            };
+            
+            ProductMediaModel::create([
+                'id' => (string) Str::uuid(),
+                'product_id' => $product->id,
+                'file_path' => $imagePath,
+                'file_name' => basename($imagePath),
+                'file_type' => 'image',
+                'mime_type' => $mimeType,
+                'file_size' => 150000, // Default 150KB for seeder data
+                'sort_order' => 1,
+                'is_primary' => true,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
         }
     }
 }

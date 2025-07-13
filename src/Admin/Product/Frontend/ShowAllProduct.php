@@ -5,10 +5,12 @@ namespace Src\Admin\Product\Frontend;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Src\Shared\Domain\Criteria\Order;
 use Src\Shared\Domain\Criteria\Filters;
 use Src\Shared\Domain\Criteria\Criteria;
 use Src\Products\Product\Infrastructure\EloquentProductRepository;
+use Src\Products\Product\Infrastructure\Eloquent\ProductEloquentModel;
 
 class ShowAllProduct extends Component
 {
@@ -103,6 +105,130 @@ class ShowAllProduct extends Component
     {
         $user = Auth::user();
         return $user && $user->hasRole('admin');
+    }
+
+    public function deleteProduct($productId)
+    {
+        try {
+            $eloquentProductRepository = new EloquentProductRepository();
+            $product = $eloquentProductRepository->search($productId);
+            
+            if (!$product) {
+                session()->flash('error', 'Product not found.');
+                return;
+            }
+
+            // Check permissions - only admin or product owner can delete
+            $user = Auth::user();
+            if (!$user->hasRole('admin') && $product->vendor_id !== $user->vendor?->id) {
+                session()->flash('error', 'You do not have permission to delete this product.');
+                return;
+            }
+
+            // Delete related records first
+            // Delete product media
+            $product->media()->delete();
+            
+            // Detach categories (removes pivot table entries)
+            $product->categories()->detach();
+            
+            // Detach attributes (removes pivot table entries)  
+            $product->attributes()->detach();
+            
+            // Delete the product itself
+            $product->delete();
+            
+            session()->flash('success', 'Product and all related data deleted successfully.');
+            
+            // Reload products
+            $this->loadProducts();
+            
+        } catch (\Exception $e) {
+            session()->flash('error', 'An error occurred while deleting the product.');
+        }
+    }
+
+    public function duplicateProduct($productId)
+    {
+        try {
+            $eloquentProductRepository = new EloquentProductRepository();
+            $originalProduct = $eloquentProductRepository->search($productId);
+            
+            if (!$originalProduct) {
+                session()->flash('error', 'Product not found.');
+                return;
+            }
+
+            // Check permissions - only admin or product owner can duplicate
+            $user = Auth::user();
+            if (!$user->hasRole('admin') && $originalProduct->vendor_id !== $user->vendor?->id) {
+                session()->flash('error', 'You do not have permission to duplicate this product.');
+                return;
+            }
+
+            // Create a copy of the product
+            $newProductData = $originalProduct->toArray();
+            
+            // Generate new unique identifiers
+            $newProductData['id'] = (string) Str::uuid();
+            $newProductData['slug'] = $originalProduct->slug . '-copy-' . time();
+            $newProductData['name'] = $originalProduct->name . ' (Copy)';
+            $newProductData['featured'] = false; // Don't duplicate featured status
+            $newProductData['featured_position'] = null;
+            
+            // Remove timestamps to let Laravel handle them
+            unset($newProductData['created_at'], $newProductData['updated_at']);
+            
+            // Create the new product
+            $newProduct = ProductEloquentModel::create($newProductData);
+            
+            // Copy translations using a more robust approach
+            $translatableFields = $originalProduct->getTranslatableAttributes();
+            $availableLocales = config('app.available_locales', ['en', 'es']); // Fallback to common locales
+            
+            foreach ($availableLocales as $locale) {
+                foreach ($translatableFields as $field) {
+                    $originalValue = $originalProduct->getTranslation($field, $locale, false); // Don't fallback
+                    
+                    if ($originalValue) {
+                        if ($field === 'name') {
+                            $newProduct->setTranslation($field, $locale, $originalValue . ' (Copy)');
+                        } elseif ($field === 'slug') {
+                            $newProduct->setTranslation($field, $locale, $originalValue . '-copy-' . time());
+                        } else {
+                            $newProduct->setTranslation($field, $locale, $originalValue);
+                        }
+                    }
+                }
+            }
+            $newProduct->save();
+            
+            // Copy categories
+            $categoryIds = $originalProduct->categories()->pluck('categories.id')->toArray();
+            $newProduct->categories()->attach($categoryIds);
+            
+            // Copy attributes
+            $attributeIds = $originalProduct->attributes()->pluck('attributes.id')->toArray();
+            $newProduct->attributes()->attach($attributeIds);
+            
+            // Copy media
+            foreach ($originalProduct->media as $media) {
+                $newMediaData = $media->toArray();
+                $newMediaData['id'] = (string) Str::uuid();
+                $newMediaData['product_id'] = $newProduct->id;
+                unset($newMediaData['created_at'], $newMediaData['updated_at']);
+                
+                \Src\Products\Product\Infrastructure\Eloquent\ProductMediaModel::create($newMediaData);
+            }
+            
+            session()->flash('success', 'Product duplicated successfully. You can now edit the copy.');
+            
+            // Reload products
+            $this->loadProducts();
+            
+        } catch (\Exception $e) {
+            session()->flash('error', 'An error occurred while duplicating the product.');
+        }
     }
 
     public function render()

@@ -76,7 +76,7 @@ class Shop extends Component
     #[Url(as: 'page')]
     public $currentPage = 1;
 
-    public $perPage = 2;
+    public $perPage = 12;
 
     public $totalProducts = 0;
 
