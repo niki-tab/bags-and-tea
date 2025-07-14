@@ -46,16 +46,16 @@
                     {{ trans('components/cookie-banner.accept-all') }}
                 </button>
                 <button 
-                    @click="personalize()" 
-                    class="border border-white text-white w-full py-2 rounded font-medium text-sm hover:bg-white hover:text-[#482727] transition"
-                >
-                    {{ trans('components/cookie-banner.personalize') }}
-                </button>
-                <button 
                     @click="reject()" 
                     class="border border-white text-white w-full py-2 rounded font-medium text-sm hover:bg-white hover:text-[#482727] transition"
                 >
                     {{ trans('components/cookie-banner.reject') }}
+                </button>
+                <button 
+                    @click="personalize()" 
+                    class="border border-white text-white w-full py-2 rounded font-medium text-sm hover:bg-white hover:text-[#482727] transition"
+                >
+                    {{ trans('components/cookie-banner.personalize') }}
                 </button>
             </div>
         </div>
