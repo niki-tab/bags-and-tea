@@ -31,8 +31,14 @@ COPY docker/php/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
 # Copy application files
 COPY . /var/www/html
 
-# Set permissions (optional, but usually necessary)
-RUN chown -R appuser:appuser /var/www/html \
+# Create directories and set permissions
+RUN mkdir -p /var/www/html/bootstrap/cache \
+    && mkdir -p /var/www/html/storage/app/public \
+    && mkdir -p /var/www/html/storage/framework/cache \
+    && mkdir -p /var/www/html/storage/framework/sessions \
+    && mkdir -p /var/www/html/storage/framework/views \
+    && mkdir -p /var/www/html/storage/logs \
+    && chown -R appuser:appuser /var/www/html \
     && chmod -R 775 /var/www/html/storage \
     && chmod -R 775 /var/www/html/bootstrap/cache
 

@@ -58,5 +58,54 @@
     {{--  @if(request()->routeIs('we-buy-your-bag.show.es') || request()->routeIs('we-buy-your-bag.show.en')) --}}
         @livewire('shared/whatsapp-widget')
         {{-- @endif --}}
+
+        <x-cookie-banner />
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+        <script>
+        function cookieConsent() {
+            return {
+                show: localStorage.getItem('cookieConsent') === null,
+                showModal: false,
+                preferences: {
+                    necessary: true,
+                    analytics: true,
+                    marketing: true,
+                    functional: true
+                },
+                accept() {
+                    localStorage.setItem('cookieConsent', 'accepted');
+                    localStorage.setItem('cookiePreferences', JSON.stringify(this.preferences));
+                    this.show = false;
+                    this.showModal = false;
+                },
+                reject() {
+                    this.preferences = {
+                        necessary: true,
+                        analytics: false,
+                        marketing: false,
+                        functional: false
+                    };
+                    localStorage.setItem('cookieConsent', 'rejected');
+                    localStorage.setItem('cookiePreferences', JSON.stringify(this.preferences));
+                    this.show = false;
+                    this.showModal = false;
+                },
+                personalize() {
+                    this.showModal = true;
+                },
+                savePreferences() {
+                    localStorage.setItem('cookieConsent', 'customized');
+                    localStorage.setItem('cookiePreferences', JSON.stringify(this.preferences));
+                    this.show = false;
+                    this.showModal = false;
+                },
+                closeModal() {
+                    this.showModal = false;
+                }
+            }
+        }
+        </script>
 </body>
 </html>
