@@ -70,15 +70,6 @@
                                 onmouseout="this.style.filter='none'">
                         </a>
                     </div>
-                    <div class="flex-1 flex justify-center px-1">
-                        <a target="_blank" href="https://es.vestiairecollective.com/profile/30176798/?sortBy=relevance&tab=items-for-sale">
-                            <img src="{{ asset('images/icons/icon_vestaire_collective.svg') }}" 
-                                class="w-7 h-5 cursor-pointer mt-[3px]"
-                                onmouseover="this.style.filter='brightness(0) saturate(100%) invert(23%) sepia(98%) saturate(2074%) hue-rotate(353deg) brightness(83%) contrast(94%)'"
-                                onmouseout="this.style.filter='none'">
-                        </a>
-                    </div>
-                    
                     
                 </div>
             </div>
@@ -109,7 +100,7 @@
                 <a href="{{ route(app()->getLocale() === 'es' ? 'contact.send.es' : 'contact.send.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('contact.send.es') || request()->routeIs('contact.send.en') ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-14 flex items-center justify-center text-color-2 font-robotoCondensed text-base font-medium hover:text-color-3 pb-2 px-4 whitespace-nowrap">{{ trans('components/header.menu-option-6') }}</a>
             </nav>
             <!-- Botón alineado a la derecha -->
-            <div class="flex items-center w-[160px] justify-end">
+            <div class="flex items-center w-[160px] justify-end mr-8">
                 <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}"
                     class="mb-2 px-8 h-8 py-1.5 font-robotoCondensed bg-background-color-2 text-white rounded-full text-sm font-regular hover:bg-background-color-3 transition whitespace-nowrap">
                     {{ trans('components/header.button-sell-your-bag') }}

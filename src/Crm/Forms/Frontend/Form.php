@@ -68,14 +68,19 @@ class Form extends Component
                     if ($field['type'] === 'file') {
                         $fieldName = "files.{$field['name']}";
                         //$rules[$fieldName] = 'required|max:2048';
-                        $rules[$fieldName] = 'max:2048';
+                        $rules[$fieldName] = 'file|image|mimes:jpeg,jpg,png,gif,webp|max:10240';
                     } else {
                         $rules[$fieldName] = 'required';
                     }
                     break;
 
                 default:
-                    $rules[$fieldName] = 'nullable';
+                    if ($field['type'] === 'file') {
+                        $fieldName = "files.{$field['name']}";
+                        $rules[$fieldName] = 'nullable|file|image|mimes:jpeg,jpg,png,gif,webp|max:10240';
+                    } else {
+                        $rules[$fieldName] = 'nullable';
+                    }
                     break;
             }
         }
