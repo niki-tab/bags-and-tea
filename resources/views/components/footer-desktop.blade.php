@@ -21,7 +21,6 @@
                     <div class="flex justify-center items-center pt-4 gap-4">
                         <a target="_blank" href="https://www.instagram.com/bags.and.tea?igsh=NTgwcGU2a21paGxk&utm_source=qr"><img src="{{ asset('images/icons/RRSS_insta_b_5.svg') }}" class="w-8 h-8 cursor-pointer"></a>  
                         <a target="_blank" href="https://www.vinted.es/member/250362636-bagsandtea"><img src="{{ asset('images/icons/icon_vinted.svg') }}" class="w-8 h-8 cursor-pointer"></a>
-                        <a target="_blank" href="https://es.vestiairecollective.com/profile/30176798/?sortBy=relevance&tab=items-for-sale"><img src="{{ asset('images/icons/icon_vestaire_collective.svg') }}" class="w-8 h-8 cursor-pointer"></a>
                     </div>
                 </nav>
             </div>
