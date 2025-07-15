@@ -39,7 +39,7 @@ class AppServiceProvider extends ServiceProvider
         Livewire::component('shared/whatsapp-widget', \Src\Shared\Frontend\WhatsappWidget::class);
         Livewire::component('products/show', \Src\Admin\Product\Frontend\ShowAllProduct::class);
         Livewire::component('admin.products.product-form', \App\Livewire\Admin\Products\ProductForm::class);
-        Livewire::component('src.products.product.frontend.product-detail', \Src\Products\Product\Frontend\ProductDetail::class);
+        Livewire::component('src.products.product.show', \Src\Products\Product\Frontend\ProductDetail::class);
 
         $this->app->bind(FormRepository::class, EloquentFormRepository::class);
     }

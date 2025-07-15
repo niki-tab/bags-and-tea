@@ -102,6 +102,30 @@
                             @error('description_2_en') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                         </div>
                     </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Meta Title (English)</label>
+                            <input 
+                                type="text" 
+                                wire:model="meta_title_en"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="SEO meta title in English"
+                            >
+                            @error('meta_title_en') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Meta Description (English)</label>
+                            <textarea 
+                                wire:model="meta_description_en"
+                                rows="2"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="SEO meta description in English"
+                            ></textarea>
+                            @error('meta_description_en') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Spanish Section -->
@@ -153,6 +177,30 @@
                                 placeholder="Second description in Spanish"
                             ></textarea>
                             @error('description_2_es') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Meta Title (Spanish)</label>
+                            <input 
+                                type="text" 
+                                wire:model="meta_title_es"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="SEO meta title in Spanish"
+                            >
+                            @error('meta_title_es') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Meta Description (Spanish)</label>
+                            <textarea 
+                                wire:model="meta_description_es"
+                                rows="2"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="SEO meta description in Spanish"
+                            ></textarea>
+                            @error('meta_description_es') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                         </div>
                     </div>
                 </div>

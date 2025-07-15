@@ -27,6 +27,8 @@ class CategoryEloquentModel extends Model
         'slug',
         'description_1',
         'description_2',
+        'meta_title',
+        'meta_description',
         'parent_id',
         'display_order',
         'is_active',
@@ -39,11 +41,13 @@ class CategoryEloquentModel extends Model
         'slug' => 'string',
         'description_1' => 'string',
         'description_2' => 'string',
+        'meta_title' => 'string',
+        'meta_description' => 'string',
         'display_order' => 'integer',
         'is_active' => 'boolean',
     ];
 
-    public $translatable = ['name', 'slug', 'description_1', 'description_2'];
+    public $translatable = ['name', 'slug', 'description_1', 'description_2', 'meta_title', 'meta_description'];
 
     public function parent(): BelongsTo
     {
