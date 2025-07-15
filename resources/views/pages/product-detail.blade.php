@@ -10,7 +10,7 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
 
 <meta name="robots" content="noindex, nofollow" />
 @section('content')
-        @livewire('src.products.product.frontend.product-detail', ['productSlug' => $productSlug])
+        @livewire('src.products.product.show', ['productSlug' => $productSlug])
 @endsection
 
 @metadata

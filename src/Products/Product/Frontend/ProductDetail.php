@@ -143,6 +143,6 @@ class ProductDetail extends Component
 
     public function render()
     {
-        return view('livewire.products.product');
+        return view('livewire.products.product.show');
     }
 }
