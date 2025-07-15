@@ -76,7 +76,7 @@ class Shop extends Component
     #[Url(as: 'page')]
     public $currentPage = 1;
 
-    public $perPage = 16;
+    public $perPage = 8;
 
     public $totalProducts = 0;
 
@@ -302,6 +302,10 @@ class Shop extends Component
     public function handlePageChanged($page)
     {
         $this->currentPage = $page;
+        
+        // Small delay to make loading state visible (remove in production if not needed)
+        usleep(500000); // 0.5 seconds
+        
         $this->loadShopData();
     }
 

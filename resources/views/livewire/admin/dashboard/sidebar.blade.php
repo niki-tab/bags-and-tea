@@ -48,7 +48,7 @@
                 </div>
                 <div class="ml-3 flex-1 min-w-0">
                     <p class="text-sm font-semibold text-white truncate">{{ $currentUser->name }}</p>
-                    <p class="text-xs text-slate-300">Administrator</p>
+                    <p class="text-xs text-slate-300">{{ $userRoleDisplay }}</p>
                 </div>
                 <!-- Online indicator -->
                 <div class="flex-shrink-0">
