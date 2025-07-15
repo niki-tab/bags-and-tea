@@ -3,7 +3,6 @@
 use App\Livewire\Cart;
 use App\Livewire\Shop;
 
-use App\Livewire\ProductDetail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
@@ -67,12 +66,12 @@ Route::prefix('admin-panel')->name('admin.')->group(function () {
             
             // Blog Articles Management
             Route::prefix('blog/articles')->name('blog.articles.')->group(function () {
-                Route::get('/create', function () {
-                    return view('pages.admin-panel.dashboard.blog.articles.show');
+                Route::get('/create/{uuid}', function ($uuid) {
+                    return view('pages.admin-panel.dashboard.blog.articles.show', ['uuid' => $uuid, 'mode' => 'create']);
                 })->name('create');
                 
                 Route::get('/edit/{id}', function ($id) {
-                    return view('pages.admin-panel.dashboard.blog.articles.show', ['id' => $id]);
+                    return view('pages.admin-panel.dashboard.blog.articles.show', ['id' => $id, 'mode' => 'edit']);
                 })->name('edit');
             });
             
@@ -124,12 +123,12 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
         return view('pages/shop', ['categorySlug' => $slug]);
     })->name('shop.show.en')->where('locale', 'en');
 
-    Route::get('/tienda/producto/{productSlug}', function () {
-        return view('pages/product-detail');
+    Route::get('/tienda/producto/{productSlug}', function ($locale, $productSlug) {
+        return view('pages/product-detail', ['productSlug' => $productSlug]);
     })->name('product.show.es')->where('locale', 'es');
 
-    Route::get('/shop/product/{productSlug}', function () {
-        return view('pages/product-detail');
+    Route::get('/shop/product/{productSlug}', function ($locale, $productSlug) {
+        return view('pages/product-detail', ['productSlug' => $productSlug]);
     })->name('product.show.en')->where('locale', 'en');
 
     /*Route::get('/carrito', function () {

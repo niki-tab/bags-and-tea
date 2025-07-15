@@ -13,7 +13,9 @@ class AddEditArticle extends Component
     use WithFileUploads;
 
     public $articleId;
+    public $articleUuid;
     public $article;
+    public $mode;
     public $currentLocale;
     public $availableLocales = ['en', 'es'];
     
@@ -62,17 +64,29 @@ class AddEditArticle extends Component
         'state.in' => 'State must be draft, published, or archived.',
     ];
 
-    public function mount($id = null)
+    public function mount($id = null, $uuid = null, $mode = null)
     {
         $this->currentLocale = app()->getLocale();
         $this->articleId = $id;
+        $this->articleUuid = $uuid;
+        $this->mode = $mode;
         
-        if ($id) {
+        if ($mode === 'edit' && $id) {
             $this->isEditing = true;
             $this->loadArticle($id);
-        } else {
+        } elseif ($mode === 'create' && $uuid) {
             $this->isEditing = false;
+            $this->articleUuid = $uuid;
             $this->initializeEmptyArticle();
+        } else {
+            // Fallback for backward compatibility
+            if ($id) {
+                $this->isEditing = true;
+                $this->loadArticle($id);
+            } else {
+                $this->isEditing = false;
+                $this->initializeEmptyArticle();
+            }
         }
     }
 
@@ -121,6 +135,7 @@ class AddEditArticle extends Component
     {
         if (in_array($locale, $this->availableLocales)) {
             $this->currentLocale = $locale;
+            $this->clearMessages();
             $this->dispatch('locale-changed', locale: $locale);
         }
     }
@@ -143,7 +158,18 @@ class AddEditArticle extends Component
 
     public function save()
     {
-        $this->validate();
+        try {
+            $this->validate();
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Show validation errors in global message area
+            $this->showErrorMessage = true;
+            $errors = [];
+            foreach ($e->validator->errors()->all() as $error) {
+                $errors[] = $error;
+            }
+            $this->errorMessage = 'Please fix the following errors: ' . implode(' ', $errors);
+            return;
+        }
 
         try {
             $repository = new EloquentArticleRepository();
@@ -154,7 +180,7 @@ class AddEditArticle extends Component
             } else {
                 // Create new article
                 $article = new ArticleModel();
-                $article->id = Uuid::uuid4()->toString();
+                $article->id = $this->articleUuid ?: Uuid::uuid4()->toString();
             }
 
             // Set translatable fields
@@ -196,6 +222,27 @@ class AddEditArticle extends Component
     {
         return $this->redirect('/admin-panel/blog');
     }
+
+    public function clearMessages()
+    {
+        $this->showSuccessMessage = false;
+        $this->showErrorMessage = false;
+        $this->successMessage = '';
+        $this->errorMessage = '';
+    }
+
+    public function updated($propertyName)
+    {
+        // Clear messages when user starts typing or switches tabs
+        $this->clearMessages();
+        
+        // Auto-generate slug when title changes
+        if (str_contains($propertyName, 'title.')) {
+            $locale = str_replace('title.', '', $propertyName);
+            $this->generateSlug($locale);
+        }
+    }
+
 
     public function getStateOptions()
     {

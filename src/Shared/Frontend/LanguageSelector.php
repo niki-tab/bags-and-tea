@@ -47,6 +47,10 @@ class LanguageSelector extends Component
         if($this->currentRouteName == "article.show.es" || $this->currentRouteName == "article.show.en"){
             $this->paramsSpanish = ["locale" => "es", 'articleSlug' => request()->route('articleSlug')];
             $this->paramsEnglish = ["locale" => "en", 'articleSlug' => request()->route('articleSlug')];
+        }elseif($this->currentRouteName == "product.show.es" || $this->currentRouteName == "product.show.en"){
+            $productSlug = request()->route('productSlug');
+            $this->paramsSpanish = ["locale" => "es", 'productSlug' => $productSlug];
+            $this->paramsEnglish = ["locale" => "en", 'productSlug' => $productSlug];
         }else{
             $this->paramsSpanish = ["locale" => "es"];
             $this->paramsEnglish = ["locale" => "en"];

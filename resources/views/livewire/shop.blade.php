@@ -250,9 +250,15 @@
         @endif
 
         {{-- Products Grid --}}
-        <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6" wire:loading.remove wire:key="products-container-{{ $selectedSortBy ?: 'none' }}-{{ md5(serialize($selectedFilters)) }}">
+        <div id="products-grid" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6" wire:loading.remove wire:key="products-container-{{ $selectedSortBy ?: 'none' }}-{{ md5(serialize($selectedFilters)) }}">
             @foreach($products as $index => $product)
-                <div wire:key="product-{{ $product->id }}-sort-{{ $selectedSortBy ?: 'none' }}" class="bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                @php
+                    $productSlug = $product->getTranslation('slug', app()->getLocale());
+                    $productDetailRoute = app()->getLocale() === 'es' 
+                        ? route('product.show.es', ['locale' => 'es', 'productSlug' => $productSlug])
+                        : route('product.show.en', ['locale' => 'en', 'productSlug' => $productSlug]);
+                @endphp
+                <a href="{{ $productDetailRoute }}" wire:key="product-{{ $product->id }}-sort-{{ $selectedSortBy ?: 'none' }}" class="bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 block">
                     {{-- Product Image Carousel --}}
                     @php
                         $productImages = $product->media ? $product->media->where('file_type', 'image')->pluck('file_path')->toArray() : [];
@@ -332,7 +338,7 @@
                             €{{ number_format($product->price ?? 450, 0) }}
                         </div>
                     </div>
-                </div>
+                </a>
             @endforeach
         </div>
 
@@ -370,3 +376,25 @@
             </p>
     </div>
 </div>
+
+<script>
+document.addEventListener('livewire:init', () => {
+    Livewire.on('scrollToProducts', () => {
+        // Only scroll on mobile devices
+        if (window.innerWidth <= 768) {
+            const productsGrid = document.getElementById('products-grid');
+            if (productsGrid) {
+                // Smooth scroll to the products grid with some offset
+                const offset = 100; // Adjust this value as needed
+                const elementPosition = productsGrid.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    });
+});
+</script>
