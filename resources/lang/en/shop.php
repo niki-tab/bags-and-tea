@@ -24,6 +24,7 @@ return [
     // Messages
     'no_products_found' => 'No products found',
     'adjust_filters_message' => 'Try adjusting the filters to see more results',
+    'loading_products' => 'Loading Products...',
     
     // Pagination
     'previous' => 'Previous',

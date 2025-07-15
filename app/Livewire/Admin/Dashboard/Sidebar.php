@@ -102,6 +102,22 @@ class Sidebar extends Component
         return Auth::user();
     }
 
+    public function getUserRoleDisplay()
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return 'Guest';
+        }
+        
+        if ($user->hasRole('admin')) {
+            return 'Administrator';
+        } elseif ($user->hasRole('vendor')) {
+            return 'Vendor';
+        }
+        
+        return 'User';
+    }
+
     public function isActiveRoute(string $routeName): bool
     {
         return request()->routeIs($routeName) || request()->routeIs($routeName . '.*');
@@ -111,7 +127,8 @@ class Sidebar extends Component
     {
         return view('livewire.admin.dashboard.sidebar', [
             'navigationItems' => $this->getNavigationItems(),
-            'currentUser' => $this->getCurrentUser()
+            'currentUser' => $this->getCurrentUser(),
+            'userRoleDisplay' => $this->getUserRoleDisplay()
         ]);
     }
 }

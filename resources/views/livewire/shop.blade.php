@@ -249,8 +249,27 @@
             </div>
         @endif
 
-        {{-- Products Grid --}}
-        <div id="products-grid" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6" wire:loading.remove wire:key="products-container-{{ $selectedSortBy ?: 'none' }}-{{ md5(serialize($selectedFilters)) }}">
+        {{-- Products Grid with Loading State --}}
+        <div class="relative min-h-[600px] md:min-h-[800px]">
+            {{-- Loading State --}}
+            <div wire:loading.flex class="absolute inset-0 bg-gray-50 flex items-center justify-center z-10 rounded-lg">
+                <div class="text-center bg-white p-8 rounded-lg shadow-lg">
+                    @php
+                        $loadingGifPath = public_path('assets/images/loading.gif');
+                    @endphp
+                    @if(file_exists($loadingGifPath))
+                        <img src="{{ asset('assets/images/loading.gif') }}" alt="Loading..." class="mx-auto mb-4 w-12 h-12">
+                    @else
+                        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"></div>
+                    @endif
+                    <p class="text-lg font-medium text-gray-700">{{ __('shop.loading_products') }}</p>
+                </div>
+            </div>
+            
+            {{-- Products Grid --}}
+            <div id="products-grid" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6" 
+                 wire:loading.remove 
+                 wire:key="products-container-{{ $selectedSortBy ?: 'none' }}-{{ md5(serialize($selectedFilters)) }}">
             @foreach($products as $index => $product)
                 @php
                     $productSlug = $product->getTranslation('slug', app()->getLocale());
@@ -340,6 +359,7 @@
                     </div>
                 </a>
             @endforeach
+            </div>
         </div>
 
         {{-- Empty State --}}
@@ -380,20 +400,17 @@
 <script>
 document.addEventListener('livewire:init', () => {
     Livewire.on('scrollToProducts', () => {
-        // Only scroll on mobile devices
-        if (window.innerWidth <= 768) {
-            const productsGrid = document.getElementById('products-grid');
-            if (productsGrid) {
-                // Smooth scroll to the products grid with some offset
-                const offset = 100; // Adjust this value as needed
-                const elementPosition = productsGrid.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - offset;
+        const productsGrid = document.getElementById('products-grid');
+        if (productsGrid) {
+            // Smooth scroll to the products grid with some offset
+            const offset = 100; // Adjust this value as needed
+            const elementPosition = productsGrid.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
 
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-            }
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
         }
     });
 });
