@@ -1,6 +1,6 @@
 <div 
     x-data="cookieConsent()" 
-    x-show="show" 
+    x-show="shouldShowBanner" 
     x-cloak
     class="fixed inset-0 z-50 flex md:items-end md:justify-center items-center justify-center bg-black/50"
 >
@@ -17,13 +17,13 @@
                 {{ trans('components/cookie-banner.personalize') }} <span class="ml-1">▼</span>
             </button>
             <button 
-                @click="reject()" 
+                @click="rejectAll()" 
                 class="border border-white px-6 py-2 h-10 text-xs md:text-sm hover:bg-white hover:text-[#482727] transition min-w-[100px]"
             >
                 {{ trans('components/cookie-banner.reject') }}
             </button>
             <button 
-                @click="accept()" 
+                @click="acceptAll()" 
                 class="bg-white text-[#482727] px-6 py-2 h-10 text-xs md:text-sm hover:opacity-90 transition min-w-[100px]"
             >
                 {{ trans('components/cookie-banner.accept') }}
@@ -40,13 +40,13 @@
             <div class="border-t border-white/40 my-4"></div>
             <div class="flex flex-col gap-2">
                 <button 
-                    @click="accept()" 
+                    @click="acceptAll()" 
                     class="bg-white text-[#482727] w-full py-2 rounded font-medium text-sm hover:opacity-90 transition"
                 >
                     {{ trans('components/cookie-banner.accept-all') }}
                 </button>
                 <button 
-                    @click="reject()" 
+                    @click="rejectAll()" 
                     class="border border-white text-white w-full py-2 rounded font-medium text-sm hover:bg-white hover:text-[#482727] transition"
                 >
                     {{ trans('components/cookie-banner.reject') }}
@@ -131,7 +131,7 @@
             </div>
 
             <div class="sticky bottom-0 bg-gray-50 px-6 py-4 flex gap-3">
-                <button @click="savePreferences()" class="flex-1 bg-[#482727] text-white px-4 py-2 rounded hover:bg-[#3a1f1f] transition">
+                <button @click="saveCustomPreferences()" class="flex-1 bg-[#482727] text-white px-4 py-2 rounded hover:bg-[#3a1f1f] transition">
                     {{ trans('components/cookie-banner.save_preferences') }}
                 </button>
                 <button @click="closeModal()" class="px-4 py-2 border border-gray-300 rounded text-gray-600 hover:bg-gray-100 transition">
@@ -141,3 +141,67 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('alpine:init', () => {
+    Alpine.data('cookieConsent', () => ({
+        showModal: false,
+        shouldShowBanner: localStorage.getItem('cookieConsent') === null,
+        preferences: {
+            analytics: false,
+            marketing: false,
+            functional: false
+        },
+        
+        init() {
+            // Force show banner on first load if no choice made
+            if (localStorage.getItem('cookieConsent') === null) {
+                this.$wire.showBanner = true;
+            }
+        },
+        
+        personalize() {
+            this.showModal = true;
+        },
+        
+        closeModal() {
+            this.showModal = false;
+        },
+        
+        acceptAll() {
+            localStorage.setItem('cookieConsent', 'accepted');
+            localStorage.setItem('cookiePreferences', JSON.stringify({
+                necessary: true,
+                analytics: true,
+                marketing: true,
+                functional: true
+            }));
+            this.shouldShowBanner = false;
+            this.$wire.call('acceptAll');
+        },
+        
+        rejectAll() {
+            localStorage.setItem('cookieConsent', 'rejected');
+            localStorage.setItem('cookiePreferences', JSON.stringify({
+                necessary: true,
+                analytics: false,
+                marketing: false,
+                functional: false
+            }));
+            this.shouldShowBanner = false;
+            this.$wire.call('rejectAll');
+        },
+        
+        saveCustomPreferences() {
+            // Save to localStorage as well
+            localStorage.setItem('cookieConsent', 'customized');
+            localStorage.setItem('cookiePreferences', JSON.stringify(this.preferences));
+            this.shouldShowBanner = false;
+            
+            // Call the Livewire method with current preferences
+            this.$wire.call('saveCustomPreferences', this.preferences);
+            this.closeModal();
+        }
+    }));
+});
+</script>
