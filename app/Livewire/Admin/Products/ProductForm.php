@@ -59,6 +59,11 @@ class ProductForm extends Component
     public $featured = false;
     public $featured_position = 0;
     
+    // Dimensions
+    public $width = '';
+    public $height = '';
+    public $depth = '';
+    
     // Categories and attributes
     public $selectedCategories = [];
     public $selectedAttributes = [];
@@ -116,6 +121,9 @@ class ProductForm extends Component
         'is_hidden' => 'boolean',
         'featured' => 'boolean',
         'featured_position' => 'integer|min:0',
+        'width' => 'nullable|numeric|min:0',
+        'height' => 'nullable|numeric|min:0',
+        'depth' => 'nullable|numeric|min:0',
         'media.*' => 'image|mimes:jpeg,jpg,png,gif,webp|max:10240', // 10MB max, includes webp
         'selectedCategories' => 'array',
         'selectedAttributes' => 'array',
@@ -173,6 +181,9 @@ class ProductForm extends Component
         $this->is_hidden = $this->product->is_hidden;
         $this->featured = $this->product->featured;
         $this->featured_position = $this->product->featured_position;
+        $this->width = $this->product->width;
+        $this->height = $this->product->height;
+        $this->depth = $this->product->depth;
         
         // Load relationships
         $this->selectedCategories = $this->product->categories->pluck('id')->toArray();
@@ -482,6 +493,9 @@ class ProductForm extends Component
             'is_hidden' => $this->is_hidden,
             'featured' => $this->featured,
             'featured_position' => $this->featured_position,
+            'width' => $this->width ?: null,
+            'height' => $this->height ?: null,
+            'depth' => $this->depth ?: null,
         ];
 
         if ($this->isEditing) {

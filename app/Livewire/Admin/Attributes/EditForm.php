@@ -16,12 +16,16 @@ class EditForm extends Component
     public $slug_en = '';
     public $description_1_en = '';
     public $description_2_en = '';
+    public $meta_title_en = '';
+    public $meta_description_en = '';
     
     // Spanish fields
     public $name_es = '';
     public $slug_es = '';
     public $description_1_es = '';
     public $description_2_es = '';
+    public $meta_title_es = '';
+    public $meta_description_es = '';
     
     // Other fields
     public $parent_id = '';
@@ -40,6 +44,10 @@ class EditForm extends Component
         'description_1_es' => 'nullable|string|max:1000',
         'description_2_en' => 'nullable|string|max:1000',
         'description_2_es' => 'nullable|string|max:1000',
+        'meta_title_en' => 'nullable|string|max:255',
+        'meta_title_es' => 'nullable|string|max:255',
+        'meta_description_en' => 'nullable|string|max:1000',
+        'meta_description_es' => 'nullable|string|max:1000',
         'parent_id' => 'nullable|exists:attributes,id',
         'display_order' => 'required|integer|min:0',
         'is_active' => 'boolean',
@@ -65,6 +73,10 @@ class EditForm extends Component
         $this->description_1_es = $this->attribute->getTranslation('description_1', 'es');
         $this->description_2_en = $this->attribute->getTranslation('description_2', 'en');
         $this->description_2_es = $this->attribute->getTranslation('description_2', 'es');
+        $this->meta_title_en = $this->attribute->getTranslation('meta_title', 'en') ?? '';
+        $this->meta_title_es = $this->attribute->getTranslation('meta_title', 'es') ?? '';
+        $this->meta_description_en = $this->attribute->getTranslation('meta_description', 'en') ?? '';
+        $this->meta_description_es = $this->attribute->getTranslation('meta_description', 'es') ?? '';
         
         // Load other fields
         $this->parent_id = $this->attribute->parent_id ?? '';
@@ -110,6 +122,14 @@ class EditForm extends Component
             'description_2' => [
                 'en' => $this->description_2_en,
                 'es' => $this->description_2_es,
+            ],
+            'meta_title' => [
+                'en' => $this->meta_title_en,
+                'es' => $this->meta_title_es,
+            ],
+            'meta_description' => [
+                'en' => $this->meta_description_en,
+                'es' => $this->meta_description_es,
             ],
             'parent_id' => $this->parent_id ?: null,
             'display_order' => $this->display_order,

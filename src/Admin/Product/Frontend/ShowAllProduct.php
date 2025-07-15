@@ -80,6 +80,12 @@ class ShowAllProduct extends Component
         $name = $product->getTranslation('name', $this->lang);
         return $name ?: $product->name;
     }
+    
+    public function getProductSlug($product)
+    {
+        $slug = $product->getTranslation('slug', $this->lang);
+        return $slug ?: $product->slug;
+    }
 
     public function getProductBrand($product)
     {

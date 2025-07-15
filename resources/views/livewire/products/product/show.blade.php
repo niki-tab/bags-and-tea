@@ -93,7 +93,7 @@
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="space-y-4 mb-12 flex flex-col items-center ml-10">
+                <div class="space-y-4 mb-12 flex flex-col items-center mx-10 lg:mx-0 lg:ml-10">
                     <button disabled class="w-full bg-gray-400 text-white py-4 px-6 text-lg font-medium cursor-not-allowed opacity-60 font-['Lora']">
                         {{ app()->getLocale() === 'es' ? 'Web en construcción' : 'Website under construction' }}
                     </button>
