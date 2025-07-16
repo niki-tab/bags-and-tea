@@ -30,6 +30,7 @@ class ProductForm extends Component
     public $description_2_en = '';
     public $origin_country = '';
     public $status = "approved";
+    public $sku = '';
     public $meta_title_en = '';
     public $meta_description_en = '';
     
@@ -109,6 +110,7 @@ class ProductForm extends Component
         'quality_id' => 'nullable|exists:qualities,id',
         'product_type' => 'required|string|max:100',
         'status' => 'required|string|max:100',
+        'sku' => 'nullable|string|max:100|unique:products,sku',
         'price' => 'required|numeric|min:0',
         'discounted_price' => 'nullable|numeric|min:0',
         'deal_price' => 'nullable|numeric|min:0',
@@ -169,6 +171,7 @@ class ProductForm extends Component
         $this->origin_country = $this->product->origin_country;
         $this->product_type = $this->product->product_type;
         $this->status = $this->product->status;
+        $this->sku = $this->product->sku;
         $this->price = $this->product->price;
         $this->discounted_price = $this->product->discounted_price;
         $this->deal_price = $this->product->deal_price;
@@ -196,6 +199,7 @@ class ProductForm extends Component
         // Update validation rules for editing
         $this->rules['slug_en'] = 'required|string|max:255|unique:products,slug,' . $this->productId . ',id';
         $this->rules['slug_es'] = 'required|string|max:255|unique:products,slug,' . $this->productId . ',id';
+        $this->rules['sku'] = 'nullable|string|max:100|unique:products,sku,' . $this->productId . ',id';
     }
 
     public function loadOptions()
@@ -481,6 +485,7 @@ class ProductForm extends Component
             'quality_id' => $this->quality_id ?: null,
             'product_type' => $this->product_type,
             'status' => $this->status ?: "approved",
+            'sku' => $this->sku ?: null,
             'price' => $this->price,
             'discounted_price' => $this->discounted_price ?: null,
             'deal_price' => $this->deal_price ?: null,
