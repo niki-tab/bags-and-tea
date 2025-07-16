@@ -307,9 +307,10 @@
                             <div>
                                 {{-- Previous Arrow --}}
                                 <button 
-                                    @click.stop="currentImage = currentImage > 0 ? currentImage - 1 : totalImages - 1"
+                                    @click.stop.prevent="currentImage = currentImage > 0 ? currentImage - 1 : totalImages - 1"
                                     class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition-all duration-200 z-10"
-                                    title="Previous image">
+                                    title="Previous image"
+                                    onclick="event.stopPropagation(); event.preventDefault(); return false;">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                                     </svg>
@@ -317,9 +318,10 @@
                                 
                                 {{-- Next Arrow --}}
                                 <button 
-                                    @click.stop="currentImage = currentImage < totalImages - 1 ? currentImage + 1 : 0"
+                                    @click.stop.prevent="currentImage = currentImage < totalImages - 1 ? currentImage + 1 : 0"
                                     class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition-all duration-200 z-10"
-                                    title="Next image">
+                                    title="Next image"
+                                    onclick="event.stopPropagation(); event.preventDefault(); return false;">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                     </svg>
@@ -332,9 +334,10 @@
                             <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-1">
                                 <template x-for="(image, index) in images" :key="index">
                                     <button 
-                                        @click.stop="currentImage = index"
+                                        @click.stop.prevent="currentImage = index"
                                         :class="currentImage === index ? 'bg-white' : 'bg-white bg-opacity-50'"
-                                        class="w-2 h-2 rounded-full transition-all duration-200 hover:bg-opacity-80">
+                                        class="w-2 h-2 rounded-full transition-all duration-200 hover:bg-opacity-80"
+                                        onclick="event.stopPropagation(); event.preventDefault(); return false;">
                                     </button>
                                 </template>
                             </div>
