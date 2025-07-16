@@ -224,7 +224,7 @@
                             <option value="ES">Spain</option>
                             <option value="IT">Italy</option>
                         </select>
-                        @error('vendor_id') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        @error('origin_country') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
@@ -233,7 +233,20 @@
                             <option value="approved">Approved</option>
                             <option value="pending-review">Pending Review</option>
                         </select>
-                        @error('quality_id') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        @error('status') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    </div>
+                </div>
+
+                <!-- SKU -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">SKU (Stock Keeping Unit)</label>
+                        <input wire:model="sku" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter product SKU">
+                        @error('sku') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        <p class="mt-1 text-sm text-gray-500">Optional unique identifier for inventory management</p>
+                    </div>
+                    <div>
+                        <!-- Empty column for alignment -->
                     </div>
                 </div>
             </div>
