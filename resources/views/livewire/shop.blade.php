@@ -283,7 +283,7 @@
                         $productImages = $product->media ? $product->media->where('file_type', 'image')->pluck('file_path')->toArray() : [];
                         $totalImages = count($productImages);
                     @endphp
-                    <div class="relative bg-transparent h-64" x-data="{ 
+                    <div class="relative bg-transparent h-64 overflow-hidden" x-data="{ 
                         currentImage: 0, 
                         images: @js($productImages),
                         totalImages: @js($totalImages)
@@ -342,6 +342,21 @@
                                 </template>
                             </div>
                         </template>
+                        
+                        {{-- Diagonal Sold Out Banner --}}
+                        @if($product->is_sold_out === true)
+                            <div class="absolute inset-0 pointer-events-none">
+                                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 translate-y-8 -rotate-[15deg] bg-[#C12637] w-96 h-10 flex items-center justify-center shadow-[0_6px_8px_0px_rgba(0,0,0,0.4)]">
+                                    <span class="text-white text-sm font-robotoCondensed font-medium uppercase tracking-wide">
+                                        @if(app()->getLocale() === 'es')
+                                            Agotado
+                                        @else
+                                            Sold Out
+                                        @endif
+                                    </span>
+                                </div>
+                            </div>
+                        @endif
                     </div>
 
                     {{-- Product Info --}}
