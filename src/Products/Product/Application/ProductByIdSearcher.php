@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Src\Products\Product\Application;
 
-use ChannelManager\Core\Bookings\Domain\BookingRepository;
-use ChannelManager\Core\Bookings\Infrastructure\Eloquent\BookingEloquentModel;
+use Src\Products\Product\Domain\ProductRepository;
+use Src\Products\Product\Infrastructure\Eloquent\ProductEloquentModel;
 
 final class ProductByIdSearcher
 {

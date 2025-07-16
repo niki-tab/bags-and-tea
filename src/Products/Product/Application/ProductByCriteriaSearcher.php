@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace ChannelManager\Core\Bookings\Application\UseCases;
+namespace Src\Products\Product\Application;
 
-use ChannelManager\Shared\Domain\Criteria\Order;
-use ChannelManager\Shared\Domain\Criteria\Filters;
-use ChannelManager\Shared\Domain\Criteria\Criteria;
-use ChannelManager\Core\Bookings\Domain\BookingRepository;
+use Src\Shared\Domain\Criteria\Order;
+use Src\Shared\Domain\Criteria\Filters;
+use Src\Shared\Domain\Criteria\Criteria;
+use Src\Products\Product\Domain\ProductRepository;
 
-final class BookingsByCriteriaSearcher
+final class ProductByCriteriaSearcher
 {
     public function __construct(private ProductRepository $productRepository) {}
 
@@ -24,7 +24,7 @@ final class BookingsByCriteriaSearcher
         $order = Order::fromValues($orderBy, $order);
         $criteria = new Criteria($filters, $order, $offset, $limit);
 
-        $reservations = $this->productRepository->searchByCriteria($criteria);
-        return $reservations;
+        $products = $this->productRepository->searchByCriteria($criteria);
+        return $products;
     }
 }
