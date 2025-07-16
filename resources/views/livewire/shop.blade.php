@@ -346,7 +346,7 @@
                         {{-- Diagonal Sold Out Banner --}}
                         @if($product->is_sold_out === true)
                             <div class="absolute inset-0 pointer-events-none">
-                                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 translate-y-8 -rotate-[15deg] bg-[#C12637] w-96 h-10 flex items-center justify-center shadow-[0_6px_8px_0px_rgba(0,0,0,0.4)]">
+                                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 translate-y-8 -rotate-[15deg] bg-[#C12637] bg-opacity-75 w-[120%] h-10 flex items-center justify-center shadow-[0_3px_4px_0px_rgba(0,0,0,0.25)]">
                                     <span class="text-white text-sm font-robotoCondensed font-medium uppercase tracking-wide">
                                         @if(app()->getLocale() === 'es')
                                             Agotado
