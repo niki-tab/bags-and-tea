@@ -307,7 +307,7 @@
                             <div>
                                 {{-- Previous Arrow --}}
                                 <button 
-                                    @click="currentImage = currentImage > 0 ? currentImage - 1 : totalImages - 1"
+                                    @click.stop="currentImage = currentImage > 0 ? currentImage - 1 : totalImages - 1"
                                     class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition-all duration-200 z-10"
                                     title="Previous image">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -317,7 +317,7 @@
                                 
                                 {{-- Next Arrow --}}
                                 <button 
-                                    @click="currentImage = currentImage < totalImages - 1 ? currentImage + 1 : 0"
+                                    @click.stop="currentImage = currentImage < totalImages - 1 ? currentImage + 1 : 0"
                                     class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition-all duration-200 z-10"
                                     title="Next image">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -332,7 +332,7 @@
                             <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-1">
                                 <template x-for="(image, index) in images" :key="index">
                                     <button 
-                                        @click="currentImage = index"
+                                        @click.stop="currentImage = index"
                                         :class="currentImage === index ? 'bg-white' : 'bg-white bg-opacity-50'"
                                         class="w-2 h-2 rounded-full transition-all duration-200 hover:bg-opacity-80">
                                     </button>
