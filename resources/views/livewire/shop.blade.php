@@ -52,6 +52,13 @@
         </div>
         @endif
 
+        {{-- Test Button --}}
+        <div class="mb-4 mx-4 md:mx-16 lg:mx-32">
+            <button wire:click="testUrlParam" class="bg-red-500 text-white px-4 py-2 rounded">
+                Test URL Parameter (Current: {{ $testParam ?: 'none' }})
+            </button>
+        </div>
+
         {{-- Filter Section --}}
         <div class="mb-8 md:mb-20 mx-4 md:mx-16 lg:mx-32">
             <div class="flex flex-wrap items-center gap-4 mb-4">
@@ -471,4 +478,5 @@ document.addEventListener('click', function(event) {
         }
     });
 });
+
 </script>
