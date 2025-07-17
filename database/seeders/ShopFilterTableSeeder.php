@@ -35,6 +35,25 @@ class ShopFilterTableSeeder extends Seeder
             [
                 'id' => (string) Str::uuid(),
                 'name' => json_encode([
+                    'en' => 'Bags',
+                    'es' => 'Bolsos'
+                ]),
+                'type' => 'category',
+                'reference_table' => 'categories',
+                'product_column' => null,
+                'config' => json_encode([
+                    'multiple' => true,
+                    'display_type' => 'checkbox',
+                    'filter_slug' => 'bags'
+                ]),
+                'display_order' => 2,
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => (string) Str::uuid(),
+                'name' => json_encode([
                     'en' => 'Color',
                     'es' => 'Color'
                 ]),
@@ -46,7 +65,7 @@ class ShopFilterTableSeeder extends Seeder
                     'display_type' => 'checkbox',
                     'filter_slug' => 'color'
                 ]),
-                'display_order' => 2,
+                'display_order' => 3,
                 'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -64,7 +83,7 @@ class ShopFilterTableSeeder extends Seeder
                     'multiple' => true,
                     'display_type' => 'checkbox'
                 ]),
-                'display_order' => 3,
+                'display_order' => 4,
                 'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -83,7 +102,7 @@ class ShopFilterTableSeeder extends Seeder
                     'display_type' => 'checkbox',
                     'filter_slug' => 'material'
                 ]),
-                'display_order' => 4,
+                'display_order' => 5,
                 'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -102,7 +121,7 @@ class ShopFilterTableSeeder extends Seeder
                     'display_type' => 'checkbox',
                     'filter_slug' => 'bag-type'
                 ]),
-                'display_order' => 5,
+                'display_order' => 6,
                 'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -121,7 +140,7 @@ class ShopFilterTableSeeder extends Seeder
                     'display_type' => 'checkbox',
                     'filter_slug' => 'size'
                 ]),
-                'display_order' => 6,
+                'display_order' => 7,
                 'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -146,7 +165,7 @@ class ShopFilterTableSeeder extends Seeder
                         ['min' => 2000, 'max' => null, 'label' => '€2,000+'],
                     ]
                 ]),
-                'display_order' => 7,
+                'display_order' => 8,
                 'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),

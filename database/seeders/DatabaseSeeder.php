@@ -31,7 +31,8 @@ class DatabaseSeeder extends Seeder
       FakeEnvironmentSeeder::class,
       UserTableSeeder::class,
       FormTableSeeder::class,
-      FormSubmissionTableSeeder::class
+      FormSubmissionTableSeeder::class,
+      BagsCategorySeeder::class,
       
     ]);
 
