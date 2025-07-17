@@ -74,8 +74,8 @@
                 {{-- Dynamic Filters --}}
                 @foreach($filterOptions as $filterKey => $options)
                     @if(!empty($options) && $filterKey !== 'price')
-                        <details class="relative" wire:key="filter-{{ $filterKey }}-{{ md5(serialize($selectedFilters)) }}">
-                            <summary class="appearance-none border border-gray-300 rounded px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white min-w-[120px] text-left cursor-pointer list-none">
+                        <div class="relative dropdown-container" wire:key="filter-{{ $filterKey }}-{{ md5(serialize($selectedFilters)) }}">
+                            <button type="button" class="dropdown-toggle appearance-none border border-gray-300 rounded px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white min-w-[120px] text-left cursor-pointer" onclick="toggleDropdown(this)">
                                 @php
                                     $selectedCount = isset($selectedFilters[$filterKey]) ? count($selectedFilters[$filterKey]) : 0;
                                     $filterLabel = __('shop.' . $filterKey, [], app()->getLocale());
@@ -89,11 +89,11 @@
                                 @else
                                     {{ $filterLabel }}
                                 @endif
-                                <svg class="w-4 h-4 text-gray-400 float-right mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="dropdown-arrow w-4 h-4 text-gray-400 float-right mt-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
-                            </summary>
-                            <div class="absolute z-10 mt-1 bg-white border border-gray-300 rounded shadow-lg max-h-60 overflow-y-auto min-w-[200px]">
+                            </button>
+                            <div class="dropdown-content absolute z-10 mt-1 bg-white border border-gray-300 rounded shadow-lg max-h-60 overflow-y-auto min-w-[200px] hidden">
                                 @foreach($options as $option)
                                     <label class="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
                                         @php
@@ -171,14 +171,14 @@
                                     </label>
                                 @endforeach
                             </div>
-                        </details>
+                        </div>
                     @endif
                 @endforeach
 
                 {{-- Price Filter (Special handling) --}}
                 @if(isset($filterOptions['price']) && !empty($filterOptions['price']))
-                <details class="relative">
-                    <summary class="appearance-none border border-gray-300 rounded px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white min-w-[120px] text-left cursor-pointer list-none">
+                <div class="relative dropdown-container">
+                    <button type="button" class="dropdown-toggle appearance-none border border-gray-300 rounded px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white min-w-[120px] text-left cursor-pointer" onclick="toggleDropdown(this)">
                         @php
                             $selectedPriceCount = isset($selectedFilters['price']) ? count($selectedFilters['price']) : 0;
                         @endphp
@@ -187,11 +187,11 @@
                         @else
                             {{ __('shop.price') }}
                         @endif
-                        <svg class="w-4 h-4 text-gray-400 float-right mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="dropdown-arrow w-4 h-4 text-gray-400 float-right mt-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
-                    </summary>
-                    <div class="absolute z-10 mt-1 bg-white border border-gray-300 rounded shadow-lg max-h-60 overflow-y-auto min-w-[200px]">
+                    </button>
+                    <div class="dropdown-content absolute z-10 mt-1 bg-white border border-gray-300 rounded shadow-lg max-h-60 overflow-y-auto min-w-[200px] hidden">
                         <label class="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
                             <input type="checkbox" 
                                    wire:change="toggleFilter('price', '0-100')"
@@ -233,7 +233,7 @@
                             <span class="text-sm">€2,000+</span>
                         </label>
                     </div>
-                </details>
+                </div>
                 @endif
 
 
@@ -431,6 +431,43 @@ document.addEventListener('livewire:init', () => {
                 top: offsetPosition,
                 behavior: 'smooth'
             });
+        }
+    });
+});
+
+// Dropdown functionality
+function toggleDropdown(button) {
+    const container = button.closest('.dropdown-container');
+    const content = container.querySelector('.dropdown-content');
+    const arrow = container.querySelector('.dropdown-arrow');
+    
+    // Close all other dropdowns
+    document.querySelectorAll('.dropdown-container').forEach(otherContainer => {
+        if (otherContainer !== container) {
+            const otherContent = otherContainer.querySelector('.dropdown-content');
+            const otherArrow = otherContainer.querySelector('.dropdown-arrow');
+            otherContent.classList.add('hidden');
+            otherArrow.classList.remove('rotate-180');
+        }
+    });
+    
+    // Toggle current dropdown
+    content.classList.toggle('hidden');
+    arrow.classList.toggle('rotate-180');
+}
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', function(event) {
+    const dropdownContainers = document.querySelectorAll('.dropdown-container');
+    
+    dropdownContainers.forEach(container => {
+        const content = container.querySelector('.dropdown-content');
+        const arrow = container.querySelector('.dropdown-arrow');
+        
+        // If click is outside the dropdown container
+        if (!container.contains(event.target)) {
+            content.classList.add('hidden');
+            arrow.classList.remove('rotate-180');
         }
     });
 });

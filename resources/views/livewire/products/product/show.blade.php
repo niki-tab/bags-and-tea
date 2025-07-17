@@ -26,7 +26,7 @@
             </div>
         </div>
         
-        <div class="grid grid-cols-1 lg:grid-cols-[10%_50%_30%] gap-8 mb-16 mt-14">
+        <div class="grid grid-cols-1 lg:grid-cols-[10%_45%_35%] gap-8 mb-16 mt-14">
             <!-- Column 1: Thumbnail Carousel (20%) -->
             <div class="flex flex-col">
                 <div class="flex lg:flex-col gap-3 lg:h-96 overflow-x-auto lg:overflow-y-auto lg:overflow-x-visible">
@@ -88,18 +88,23 @@
             <!-- Column 3: Product Information (30%) -->
             <div class="flex flex-col">
                 <!-- Price -->
-                <div class="text-3xl font-robotoCondensed text-[#CA2530] mb-12 text-left ml-10">
+                <div class="text-3xl font-robotoCondensed text-[#CA2530] mb-12 text-left ml-14">
                     € &nbsp;&nbsp;{{ number_format($product->price, 2, ',', '.') }}
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="space-y-4 mb-12 flex flex-col items-center mx-10 lg:mx-0 lg:ml-10">
+                <div class="space-y-4 mb-10 flex flex-col items-center mx-10 lg:mx-0 lg:ml-10 px-0 lg:px-4">
                     <button disabled class="w-full bg-gray-400 text-white py-4 px-6 text-lg font-medium cursor-not-allowed opacity-60 font-['Lora']">
                         {{ app()->getLocale() === 'es' ? 'Web en construcción' : 'Website under construction' }}
                     </button>
                     <button disabled class="w-full border-2 border-gray-400 text-gray-400 py-4 px-6 text-lg font-medium cursor-not-allowed opacity-60 font-['Lora']">
                         {{ app()->getLocale() === 'es' ? 'Web en construcción' : 'Website under construction' }}
                     </button>
+                </div>
+
+                <!-- Certificado Autenticidad -->
+                <div style="background-color: #C12637; height: 2rem;" class="flex items-center justify-center mx-auto ml-0 lg:ml-5 w-full mb-8">
+                    <span style="color: white;" class="font-medium">Certificado Autenticidad</span>
                 </div>
 
                 <!-- Product Description -->
