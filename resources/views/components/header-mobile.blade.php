@@ -47,12 +47,6 @@
                     onmouseover="this.src='{{asset('images/icons/mobile_header_vinted_hover.svg') }}'"
                     onmouseout="this.src='{{asset('images/icons/mobile_header_vinted.svg') }}'">
             </a>
-            <a target="_blank" href="https://es.vestiairecollective.com/profile/30176798/?sortBy=relevance&tab=items-for-sale">
-                <img src="{{asset('images/icons/mobile_header_vestaire.svg') }}" 
-                    class="w-6 h-6 cursor-pointer"
-                    onmouseover="this.src='{{asset('images/icons/mobile_header_vestaire_hover.svg') }}'"
-                    onmouseout="this.src='{{asset('images/icons/mobile_header_vestaire.svg') }}'">
-            </a>
             <a href="{{ route(app()->getLocale() === 'es' ? 'login.show.en-es' : 'login.show.en-es', ['locale' => app()->getLocale()]) }}" class="ml-6">
                 <img src="{{ request()->routeIs('login.show.en-es') ? asset('images/icons/mobile_user_avatar_clicked.svg') : asset('images/icons/mobile_user_avatar.svg') }}" 
                     class="w-6 h-6 cursor-pointer"

@@ -60,5 +60,9 @@
     {{--  @if(request()->routeIs('we-buy-your-bag.show.es') || request()->routeIs('we-buy-your-bag.show.en')) --}}
         @livewire('shared/whatsapp-widget')
         {{-- @endif --}}
+
+        @livewire('shared/cookie-banner')
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </body>
 </html>
