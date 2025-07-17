@@ -76,9 +76,6 @@ class Shop extends Component
     #[Url(as: 'page')]
     public $currentPage = 1;
 
-    #[Url(as: 'test')]
-    public $testParam = '';
-
     public $perPage = 16;
 
     public $totalProducts = 0;
@@ -312,11 +309,6 @@ class Shop extends Component
         $this->loadShopData();
     }
 
-    public function testUrlParam()
-    {
-        $this->testParam = 'hello-world-' . time();
-        error_log('Test URL param set to: ' . $this->testParam);
-    }
 
     public function getActiveFilters()
     {
