@@ -103,8 +103,12 @@
                 </div>
 
                 <!-- Certificado Autenticidad -->
-                <div style="background-color: #C12637; height: 2rem;" class="flex items-center justify-center mx-auto ml-0 lg:ml-5 w-full mb-8">
-                    <span style="color: white;" class="font-medium">Certificado Autenticidad</span>
+                <div style="background-color: #C12637; padding: 1rem;" class="flex flex-col justify-center mx-auto ml-0 lg:ml-5 w-full mb-8">
+                    <span style="color: white;" class="font-medium mb-2 ml-4">{{ __('pages/product-detail.certificate-title') }}</span>
+                    <div class="flex ml-4">
+                        <img src="{{ asset('images/icons/safe_icon.svg') }}" alt="Safe icon" class="w-10 h-10 mr-2">
+                        <span style="color: white;" class="text-sm font-normal">{{ __('pages/product-detail.certificate-text') }}</span>
+                    </div>
                 </div>
 
                 <!-- Product Description -->
