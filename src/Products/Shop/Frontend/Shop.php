@@ -309,6 +309,7 @@ class Shop extends Component
         $this->loadShopData();
     }
 
+
     public function getActiveFilters()
     {
         $activeFilters = [];
