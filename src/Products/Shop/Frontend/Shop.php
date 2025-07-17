@@ -804,6 +804,9 @@ class Shop extends Component
                     break;
             }
         }
+        
+        // Force Livewire to update the URL immediately
+        $this->dispatch('$refresh');
     }
     
     private function clearUrlParameters()

@@ -148,7 +148,7 @@
                                                @if($isSelected) checked @endif
                                                wire:key="checkbox-{{ $filterKey }}-{{ $optionValue }}-{{ $isSelected ? 'checked' : 'unchecked' }}"
                                                class="mr-2"
-                                               onchange="console.log('SHOP DEBUG: Checkbox changed', { filterKey: '{{ $filterKey }}', optionValue: '{{ $optionValue }}', checked: this.checked, timestamp: new Date().toISOString() })">
+                                               onchange="console.log('SHOP DEBUG: Checkbox changed', { filterKey: '{{ $filterKey }}', optionValue: '{{ $optionValue }}', checked: this.checked, timestamp: new Date().toISOString() }); setTimeout(() => { console.log('SHOP DEBUG: URL after filter change:', window.location.href); }, 1000);">
                                         <span class="text-sm">
                                             @if(is_object($option) && method_exists($option, 'getTranslation'))
                                                 {{ $option->getTranslation('name', app()->getLocale()) }}
