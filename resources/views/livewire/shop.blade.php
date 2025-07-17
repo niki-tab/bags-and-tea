@@ -74,8 +74,8 @@
                 {{-- Dynamic Filters --}}
                 @foreach($filterOptions as $filterKey => $options)
                     @if(!empty($options) && $filterKey !== 'price')
-                        <div class="relative" x-data="{ open: false }" wire:key="filter-{{ $filterKey }}-{{ md5(serialize($selectedFilters)) }}">
-                            <button @click="open = !open" class="appearance-none border border-gray-300 rounded px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white min-w-[120px] text-left">
+                        <details class="relative" wire:key="filter-{{ $filterKey }}-{{ md5(serialize($selectedFilters)) }}">
+                            <summary class="appearance-none border border-gray-300 rounded px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white min-w-[120px] text-left cursor-pointer list-none">
                                 @php
                                     $selectedCount = isset($selectedFilters[$filterKey]) ? count($selectedFilters[$filterKey]) : 0;
                                     $filterLabel = __('shop.' . $filterKey, [], app()->getLocale());
@@ -89,13 +89,11 @@
                                 @else
                                     {{ $filterLabel }}
                                 @endif
-                            </button>
-                            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4 text-gray-400 float-right mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
-                            </div>
-                            <div x-show="open" @click.away="open = false" class="absolute z-10 mt-1 bg-white border border-gray-300 rounded shadow-lg max-h-60 overflow-y-auto min-w-[200px]">
+                            </summary>
+                            <div class="absolute z-10 mt-1 bg-white border border-gray-300 rounded shadow-lg max-h-60 overflow-y-auto min-w-[200px]">
                                 @foreach($options as $option)
                                     <label class="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
                                         @php
@@ -149,7 +147,8 @@
                                                wire:change="toggleFilter('{{ $filterKey }}', '{{ $optionValue }}')"
                                                @if($isSelected) checked @endif
                                                wire:key="checkbox-{{ $filterKey }}-{{ $optionValue }}-{{ $isSelected ? 'checked' : 'unchecked' }}"
-                                               class="mr-2">
+                                               class="mr-2"
+                                               onchange="console.log('SHOP DEBUG: Checkbox changed', { filterKey: '{{ $filterKey }}', optionValue: '{{ $optionValue }}', checked: this.checked, timestamp: new Date().toISOString() })">
                                         <span class="text-sm">
                                             @if(is_object($option) && method_exists($option, 'getTranslation'))
                                                 {{ $option->getTranslation('name', app()->getLocale()) }}
@@ -172,14 +171,14 @@
                                     </label>
                                 @endforeach
                             </div>
-                        </div>
+                        </details>
                     @endif
                 @endforeach
 
                 {{-- Price Filter (Special handling) --}}
                 @if(isset($filterOptions['price']) && !empty($filterOptions['price']))
-                <div class="relative" x-data="{ open: false }">
-                    <button @click="open = !open" class="appearance-none border border-gray-300 rounded px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white min-w-[120px] text-left">
+                <details class="relative">
+                    <summary class="appearance-none border border-gray-300 rounded px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white min-w-[120px] text-left cursor-pointer list-none">
                         @php
                             $selectedPriceCount = isset($selectedFilters['price']) ? count($selectedFilters['price']) : 0;
                         @endphp
@@ -188,50 +187,53 @@
                         @else
                             {{ __('shop.price') }}
                         @endif
-                    </button>
-                    <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 text-gray-400 float-right mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
-                    </div>
-                    <div x-show="open" @click.away="open = false" class="absolute z-10 mt-1 bg-white border border-gray-300 rounded shadow-lg max-h-60 overflow-y-auto min-w-[200px]">
+                    </summary>
+                    <div class="absolute z-10 mt-1 bg-white border border-gray-300 rounded shadow-lg max-h-60 overflow-y-auto min-w-[200px]">
                         <label class="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
                             <input type="checkbox" 
                                    wire:change="toggleFilter('price', '0-100')"
                                    @if(isset($selectedFilters['price']) && in_array('0-100', $selectedFilters['price'])) checked @endif
-                                   class="mr-2">
+                                   class="mr-2"
+                                   onchange="console.log('SHOP DEBUG: Price checkbox changed', { filterKey: 'price', optionValue: '0-100', checked: this.checked, timestamp: new Date().toISOString() })">
                             <span class="text-sm">€0 - €100</span>
                         </label>
                         <label class="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
                             <input type="checkbox" 
                                    wire:change="toggleFilter('price', '100-500')"
                                    @if(isset($selectedFilters['price']) && in_array('100-500', $selectedFilters['price'])) checked @endif
-                                   class="mr-2">
+                                   class="mr-2"
+                                   onchange="console.log('SHOP DEBUG: Price checkbox changed', { filterKey: 'price', optionValue: '100-500', checked: this.checked, timestamp: new Date().toISOString() })">
                             <span class="text-sm">€100 - €500</span>
                         </label>
                         <label class="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
                             <input type="checkbox" 
                                    wire:change="toggleFilter('price', '500-1000')"
                                    @if(isset($selectedFilters['price']) && in_array('500-1000', $selectedFilters['price'])) checked @endif
-                                   class="mr-2">
+                                   class="mr-2"
+                                   onchange="console.log('SHOP DEBUG: Price checkbox changed', { filterKey: 'price', optionValue: '500-1000', checked: this.checked, timestamp: new Date().toISOString() })">
                             <span class="text-sm">€500 - €1,000</span>
                         </label>
                         <label class="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
                             <input type="checkbox" 
                                    wire:change="toggleFilter('price', '1000-2000')"
                                    @if(isset($selectedFilters['price']) && in_array('1000-2000', $selectedFilters['price'])) checked @endif
-                                   class="mr-2">
+                                   class="mr-2"
+                                   onchange="console.log('SHOP DEBUG: Price checkbox changed', { filterKey: 'price', optionValue: '1000-2000', checked: this.checked, timestamp: new Date().toISOString() })">
                             <span class="text-sm">€1,000 - €2,000</span>
                         </label>
                         <label class="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
                             <input type="checkbox" 
                                    wire:change="toggleFilter('price', '2000+')"
                                    @if(isset($selectedFilters['price']) && in_array('2000+', $selectedFilters['price'])) checked @endif
-                                   class="mr-2">
+                                   class="mr-2"
+                                   onchange="console.log('SHOP DEBUG: Price checkbox changed', { filterKey: 'price', optionValue: '2000+', checked: this.checked, timestamp: new Date().toISOString() })">
                             <span class="text-sm">€2,000+</span>
                         </label>
                     </div>
-                </div>
+                </details>
                 @endif
 
 
