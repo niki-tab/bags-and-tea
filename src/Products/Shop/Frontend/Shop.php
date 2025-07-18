@@ -404,6 +404,22 @@ class Shop extends Component
         return $activeFilters;
     }
 
+    public function getSelectedFiltersText()
+    {
+        $activeFilters = $this->getActiveFilters();
+        
+        if (empty($activeFilters)) {
+            return '';
+        }
+
+        $filterTexts = [];
+        foreach ($activeFilters as $filter) {
+            $filterTexts[] = $filter['label'];
+        }
+
+        return implode(', ', $filterTexts);
+    }
+
     private function parsePriceRanges($values)
     {
         if (empty($values) || ! is_array($values)) {

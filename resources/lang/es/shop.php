@@ -26,6 +26,11 @@ return [
     'adjust_filters_message' => 'Intenta ajustar los filtros para ver más resultados',
     'loading_products' => 'Cargando Productos...',
     
+    // Enhanced no products found messages
+    'no_products_found_with_filters' => 'No se encontraron productos con los filtros aplicados',
+    'no_products_found_message' => 'Lamentablemente no hemos encontrado ningún producto que cumpla con lo que buscas: :filters. Puedes escribirnos tu petición haciendo click',
+    'contact_us_here' => 'aquí',
+    
     // Pagination
     'previous' => 'Anterior',
     'next' => 'Siguiente',
