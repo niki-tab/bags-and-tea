@@ -423,25 +423,12 @@ document.addEventListener('livewire:init', () => {
         const isMobile = window.innerWidth < 768;
         
         if (isMobile) {
-            // For mobile, scroll to the first line of products with a small delay
+            // For mobile, scroll to 400px from the top with a small delay
             setTimeout(() => {
-                const productsGrid = document.getElementById('products-grid');
-                if (productsGrid) {
-                    const offset = 50; // Small offset for better positioning
-                    const elementPosition = productsGrid.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - offset;
-                    
-                    window.scrollTo({
-                        top: Math.max(0, offsetPosition),
-                        behavior: 'smooth'
-                    });
-                } else {
-                    // Fallback to 400px if products grid not found
-                    window.scrollTo({
-                        top: 400,
-                        behavior: 'smooth'
-                    });
-                }
+                window.scrollTo({
+                    top: 400,
+                    behavior: 'smooth'
+                });
             }, 100);
         } else {
             // Desktop behavior - scroll to products grid
