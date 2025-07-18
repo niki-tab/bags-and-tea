@@ -423,11 +423,13 @@ document.addEventListener('livewire:init', () => {
         const isMobile = window.innerWidth < 768;
         
         if (isMobile) {
-            // For mobile, simply scroll to top minus 200px
-            window.scrollTo({
-                top: 200,
-                behavior: 'smooth'
-            });
+            // For mobile, force scroll to the very top of the page with a small delay
+            setTimeout(() => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }, 100);
         } else {
             // Desktop behavior - scroll to products grid
             const productsGrid = document.getElementById('products-grid');
