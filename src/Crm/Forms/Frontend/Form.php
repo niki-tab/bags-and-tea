@@ -39,8 +39,9 @@ class Form extends Component
                 continue;
             }
             if ($field['type'] === 'file') {
-                $fieldName = trans($field['name']);
+                $fieldName = $field['name'];
                 $messages["files.{$fieldName}.required"] = trans('components/form-show.validation-required');
+                $messages["files.{$fieldName}.file"] = trans('components/form-show.validation-required');
             } else {
                 $fieldName = trans($field['name']);
                 $messages["formData.{$fieldName}.required"] = trans('components/form-show.validation-required');
@@ -67,8 +68,8 @@ class Form extends Component
                 case true:
                     if ($field['type'] === 'file') {
                         $fieldName = "files.{$field['name']}";
-                        //$rules[$fieldName] = 'required|max:2048';
-                        $rules[$fieldName] = 'file|image|mimes:jpeg,jpg,png,gif,webp|max:10240';
+                        $rules[$fieldName] = 'required|array';
+                        $rules[$fieldName . '.*'] = 'file|image|mimes:jpeg,jpg,png,gif,webp|max:10240';
                     } else {
                         $rules[$fieldName] = 'required';
                     }
@@ -77,7 +78,8 @@ class Form extends Component
                 default:
                     if ($field['type'] === 'file') {
                         $fieldName = "files.{$field['name']}";
-                        $rules[$fieldName] = 'nullable|file|image|mimes:jpeg,jpg,png,gif,webp|max:10240';
+                        $rules[$fieldName] = 'nullable|array';
+                        $rules[$fieldName . '.*'] = 'file|image|mimes:jpeg,jpg,png,gif,webp|max:10240';
                     } else {
                         $rules[$fieldName] = 'nullable';
                     }
@@ -106,7 +108,9 @@ class Form extends Component
 
     public function submit()
     {   
-
+        // Debug: Check what files are actually present
+        \Log::info('Files array before validation:', $this->files);
+        
         $this->validate();
 
         foreach ($this->files as $fieldName => $file) {
