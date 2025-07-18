@@ -420,27 +420,18 @@
 <script>
 document.addEventListener('livewire:init', () => {
     Livewire.on('scrollToProducts', () => {
-        const productsGrid = document.getElementById('products-grid');
-        if (productsGrid) {
-            // Different scroll behavior for mobile vs desktop
-            const isMobile = window.innerWidth < 768;
-            
-            if (isMobile) {
-                // For mobile, use a more reliable method
-                const offset = 50; // Smaller offset for mobile
-                const elementPosition = productsGrid.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - offset;
-                
-                // Ensure we don't scroll past the element
-                const maxScrollTop = document.documentElement.scrollHeight - window.innerHeight;
-                const targetScrollTop = Math.min(offsetPosition, maxScrollTop);
-                
-                window.scrollTo({
-                    top: Math.max(0, targetScrollTop),
-                    behavior: 'smooth'
-                });
-            } else {
-                // Desktop behavior (unchanged)
+        const isMobile = window.innerWidth < 768;
+        
+        if (isMobile) {
+            // For mobile, simply scroll to top minus 200px
+            window.scrollTo({
+                top: 200,
+                behavior: 'smooth'
+            });
+        } else {
+            // Desktop behavior - scroll to products grid
+            const productsGrid = document.getElementById('products-grid');
+            if (productsGrid) {
                 const offset = 100;
                 const elementPosition = productsGrid.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - offset;
