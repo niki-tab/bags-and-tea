@@ -423,10 +423,10 @@ document.addEventListener('livewire:init', () => {
         const isMobile = window.innerWidth < 768;
         
         if (isMobile) {
-            // For mobile, scroll to 600px from the top with a small delay
+            // For mobile, scroll to 500px from the top with a small delay
             setTimeout(() => {
                 window.scrollTo({
-                    top: 600,
+                    top: 500,
                     behavior: 'smooth'
                 });
             }, 100);
