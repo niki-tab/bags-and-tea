@@ -448,7 +448,15 @@ class ProductForm extends Component
     public function save()
     {
         try {
-            $this->validate();
+            // Get validation rules and exclude current product from unique checks if editing
+            $rules = $this->rules;
+            if ($this->isEditing) {
+                $rules['slug_en'] = 'required|string|max:255|unique:products,slug,' . $this->productId . ',id';
+                $rules['slug_es'] = 'required|string|max:255|unique:products,slug,' . $this->productId . ',id';
+                $rules['sku'] = 'nullable|string|max:100|unique:products,sku,' . $this->productId . ',id';
+            }
+            
+            $this->validate($rules);
         } catch (\Illuminate\Validation\ValidationException $e) {
             $this->dispatch('scroll-to-top');
             throw $e;
