@@ -127,7 +127,7 @@ class ProductDetail extends Component
             ->title($brandName.' '.$productName, env('APP_NAME'))
             ->description($productDescription ?: 'Luxury handbag from '.$brandName.' - authentic pre-owned designer bags at Bags & Tea')
             ->images(
-                !empty($this->productImages) ? asset($this->productImages[0]['file_path']) : env('APP_LOGO_1_PATH'),
+                !empty($this->productImages) ? $this->getImageUrl($this->productImages[0]['file_path']) : env('APP_LOGO_1_PATH'),
                 env('APP_LOGO_2_PATH'),
             );
         }else{
@@ -135,9 +135,22 @@ class ProductDetail extends Component
             ->title($brandName.' '.$productName, env('APP_NAME'))
             ->description($productDescription ?: 'Bolso de lujo de '.$brandName.' - bolsos de diseñador auténticos de segunda mano en Bags & Tea')
             ->images(
-                !empty($this->productImages) ? asset($this->productImages[0]['file_path']) : env('APP_LOGO_1_PATH'),
+                !empty($this->productImages) ? $this->getImageUrl($this->productImages[0]['file_path']) : env('APP_LOGO_1_PATH'),
                 env('APP_LOGO_2_PATH'),
             );
+        }
+    }
+
+    /**
+     * Get the correct image URL for both R2 and local storage
+     */
+    private function getImageUrl($filePath)
+    {
+        // Check if it's an R2 URL (full URL) or local storage path
+        if (str_starts_with($filePath, 'https://') || str_contains($filePath, 'r2.cloudflarestorage.com')) {
+            return $filePath; // Use R2 URL directly
+        } else {
+            return asset($filePath); // Use asset() for local storage
         }
     }
 

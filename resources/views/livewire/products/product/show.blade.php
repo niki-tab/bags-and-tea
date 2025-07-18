@@ -34,7 +34,7 @@
                         @foreach($productImages as $index => $image)
                             <div class="flex-shrink-0 cursor-pointer transition-all duration-200 hover:opacity-75 {{ $currentImageIndex === $index ? 'ring-2 ring-color-2' : '' }}"
                                  wire:click="setCurrentImage({{ $index }})">
-                                <img src="{{ asset($image['file_path']) }}" 
+                                <img src="{{ str_starts_with($image['file_path'], 'https://') || str_contains($image['file_path'], 'r2.cloudflarestorage.com') ? $image['file_path'] : asset($image['file_path']) }}" 
                                      alt="Product image {{ $index + 1 }}" 
                                      class="w-24 h-24 lg:w-full lg:h-24 object-contain bg-transparent rounded-lg">
                             </div>
@@ -47,7 +47,7 @@
             <div class="relative">
                 <div class="relative bg-transparent aspect-square mx-auto">
                     @if(!empty($productImages) && isset($productImages[$currentImageIndex]))
-                        <img src="{{ asset($productImages[$currentImageIndex]['file_path']) }}" 
+                        <img src="{{ str_starts_with($productImages[$currentImageIndex]['file_path'], 'https://') || str_contains($productImages[$currentImageIndex]['file_path'], 'r2.cloudflarestorage.com') ? $productImages[$currentImageIndex]['file_path'] : asset($productImages[$currentImageIndex]['file_path']) }}" 
                              alt="{{ $product->getTranslation('name', app()->getLocale()) }}" 
                              class="w-full h-full object-contain">
                     @else

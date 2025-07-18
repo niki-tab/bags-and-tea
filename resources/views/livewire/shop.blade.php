@@ -283,7 +283,14 @@
                     <a href="{{ $productDetailRoute }}" wire:key="product-{{ $product->id }}-sort-{{ $selectedSortBy ?: 'none' }}" class="bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 block">
                         {{-- Product Image Carousel --}}
                         @php
-                            $productImages = $product->media ? $product->media->where('file_type', 'image')->pluck('file_path')->toArray() : [];
+                            $productImages = $product->media ? $product->media->where('file_type', 'image')->map(function($media) {
+                                // Check if it's an R2 URL (full URL) or local storage path
+                                if (str_starts_with($media->file_path, 'https://') || str_contains($media->file_path, 'r2.cloudflarestorage.com')) {
+                                    return $media->file_path; // Use R2 URL directly
+                                } else {
+                                    return asset($media->file_path); // Use asset() for local storage
+                                }
+                            })->toArray() : [];
                             $totalImages = count($productImages);
                         @endphp
                         <div class="relative bg-transparent h-64 overflow-hidden" x-data="{ 
@@ -293,7 +300,7 @@
                         }">
                             {{-- Main Image Display --}}
                             <template x-if="totalImages > 0">
-                                <img :src="'{{ asset('') }}' + images[currentImage]" :alt="{{ json_encode($product->name) }}" class="w-full h-full object-contain">
+                                <img :src="images[currentImage]" :alt="{{ json_encode($product->name) }}" class="w-full h-full object-contain">
                             </template>
                             
                             {{-- No Image Placeholder --}}

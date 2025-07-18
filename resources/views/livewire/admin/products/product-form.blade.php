@@ -273,7 +273,7 @@
                                     @if($item['type'] === 'existing')
                                         <!-- Existing Media -->
                                         <div class="relative group cursor-move w-40 h-40 flex-shrink-0" wire:key="media-{{ $item['data']['id'] }}" data-id="{{ $item['id'] }}">
-                                            <img src="{{ asset($item['data']['file_path']) }}" alt="{{ $item['data']['alt_text'] ?? '' }}" class="w-full h-40 object-cover rounded-lg shadow-sm border-2 {{ $item['is_primary'] ? 'border-indigo-500' : 'border-gray-200' }}">
+                                            <img src="{{ str_starts_with($item['data']['file_path'], 'https://') || str_contains($item['data']['file_path'], 'r2.cloudflarestorage.com') ? $item['data']['file_path'] : asset($item['data']['file_path']) }}" alt="{{ $item['data']['alt_text'] ?? '' }}" class="w-full h-40 object-cover rounded-lg shadow-sm border-2 {{ $item['is_primary'] ? 'border-indigo-500' : 'border-gray-200' }}">
                                             @if($item['is_primary'])
                                                 <div class="absolute top-2 left-2 bg-indigo-600 text-white text-xs px-2 py-1 rounded">
                                                     Primary
