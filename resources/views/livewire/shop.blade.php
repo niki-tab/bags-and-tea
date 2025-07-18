@@ -422,15 +422,34 @@ document.addEventListener('livewire:init', () => {
     Livewire.on('scrollToProducts', () => {
         const productsGrid = document.getElementById('products-grid');
         if (productsGrid) {
-            // Smooth scroll to the products grid with some offset
-            const offset = 100; // Adjust this value as needed
-            const elementPosition = productsGrid.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - offset;
+            // Different scroll behavior for mobile vs desktop
+            const isMobile = window.innerWidth < 768;
+            
+            if (isMobile) {
+                // For mobile, use a more reliable method
+                const offset = 50; // Smaller offset for mobile
+                const elementPosition = productsGrid.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+                
+                // Ensure we don't scroll past the element
+                const maxScrollTop = document.documentElement.scrollHeight - window.innerHeight;
+                const targetScrollTop = Math.min(offsetPosition, maxScrollTop);
+                
+                window.scrollTo({
+                    top: Math.max(0, targetScrollTop),
+                    behavior: 'smooth'
+                });
+            } else {
+                // Desktop behavior (unchanged)
+                const offset = 100;
+                const elementPosition = productsGrid.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
 
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-            });
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
         }
     });
 });
