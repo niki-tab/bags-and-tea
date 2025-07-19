@@ -119,6 +119,10 @@
                 </div>
             </div>
         </div>
+
+        <!-- Additional Product Information Section -->
+        @livewire('src.products.product.additional-information')
+
     @else
         <div class="text-center py-16">
             <h1 class="text-2xl text-gray-600">

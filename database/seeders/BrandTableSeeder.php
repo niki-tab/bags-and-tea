@@ -139,12 +139,12 @@ class BrandTableSeeder extends Seeder
             [
                 'id' => (string) Str::uuid(),
                 'name' => json_encode([
-                    'en' => 'Dior',
-                    'es' => 'Dior'
+                    'en' => 'Christian Dior',
+                    'es' => 'Christian Dior'
                 ]),
                 'slug' => json_encode([
-                    'en' => 'dior',
-                    'es' => 'dior'
+                    'en' => 'christian-dior',
+                    'es' => 'christian-dior'
                 ]),
                 'description_1' => json_encode([
                     'en' => 'Dior luxury fashion, perfumes and accessories.',
