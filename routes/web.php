@@ -124,11 +124,11 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
     })->name('shop.show.en')->where('locale', 'en');
 
     Route::get('/tienda/producto/{productSlug}', function ($locale, $productSlug) {
-        return view('pages/product-detail', ['productSlug' => $productSlug]);
+        return view('pages/product-detail/show', ['productSlug' => $productSlug]);
     })->name('product.show.es')->where('locale', 'es');
 
     Route::get('/shop/product/{productSlug}', function ($locale, $productSlug) {
-        return view('pages/product-detail', ['productSlug' => $productSlug]);
+        return view('pages/product-detail/show', ['productSlug' => $productSlug]);
     })->name('product.show.en')->where('locale', 'en');
 
     /*Route::get('/carrito', function () {

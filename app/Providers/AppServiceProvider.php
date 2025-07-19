@@ -40,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
         Livewire::component('products/show', \Src\Admin\Product\Frontend\ShowAllProduct::class);
         Livewire::component('admin.products.product-form', \App\Livewire\Admin\Products\ProductForm::class);
         Livewire::component('src.products.product.show', \Src\Products\Product\Frontend\ProductDetail::class);
+        Livewire::component('src.products.product.additional-information', \Src\Products\Product\Frontend\ProductAdditionalInformation::class);
 
         $this->app->bind(FormRepository::class, EloquentFormRepository::class);
     }
