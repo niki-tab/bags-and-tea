@@ -2,12 +2,12 @@
     <div class="container mx-auto px-4 py-14 max-w-7xl">
     @if($product)
         <!-- Product Title - Above everything -->
-        <h1 class="text-3xl lg:text-4xl font-light text-gray-800 mb-8 text-center font-['Lovera'] mb-14" style="color: #482626;">
+        <h1 class="text-3xl lg:text-4xl font-light text-gray-800 mb-8 text-center font-['Lovera']" style="color: #482626;">
             {{ strtoupper($product->brand ? $product->brand->name : '') }} {{ strtoupper($product->getTranslation('name', app()->getLocale())) }}
         </h1>
         
         <!-- Product Specifications - Below title, above grid -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-16 mb-8 text-sm w-96 lg:w-auto max-w-6xl mx-auto">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-16 mb-8 text-sm w-96 lg:w-auto max-w-6xl mx-auto mt-10">
             <div class="text-left whitespace-nowrap">
                 <span class="text-color-2 font-medium text-base lg:text-lg">{{ app()->getLocale() === 'es' ? 'Estado:' : 'Condition:' }}</span>
                 <span class="font-medium text-base lg:text-lg text-[#AC2231]"> {{ $specifications['estado'] ?? 'N/A' }}</span>
@@ -32,11 +32,11 @@
                 <div class="flex lg:flex-col gap-3 lg:h-96 overflow-x-auto lg:overflow-y-auto lg:overflow-x-visible">
                     @if(!empty($productImages))
                         @foreach($productImages as $index => $image)
-                            <div class="flex-shrink-0 cursor-pointer transition-all duration-200 hover:opacity-75 {{ $currentImageIndex === $index ? 'ring-2 ring-color-2' : '' }}"
+                            <div class="flex-shrink-0 cursor-pointer transition-all duration-200 hover:opacity-75 {{ $currentImageIndex === $index ? 'border-2 border-color-2' : 'border-2 border-transparent' }}"
                                  wire:click="setCurrentImage({{ $index }})">
                                 <img src="{{ str_starts_with($image['file_path'], 'https://') || str_contains($image['file_path'], 'r2.cloudflarestorage.com') ? $image['file_path'] : asset($image['file_path']) }}" 
                                      alt="Product image {{ $index + 1 }}" 
-                                     class="w-24 h-24 lg:w-full lg:h-24 object-contain bg-transparent rounded-lg">
+                                     class="w-24 lg:w-full object-contain bg-transparent rounded-lg aspect-square">
                             </div>
                         @endforeach
                     @endif
@@ -88,8 +88,8 @@
             <!-- Column 3: Product Information (30%) -->
             <div class="flex flex-col">
                 <!-- Price -->
-                <div class="text-3xl font-robotoCondensed text-[#CA2530] mb-12 text-left ml-14">
-                    € &nbsp;&nbsp;{{ number_format($product->price, 2, ',', '.') }}
+                <div class="text-3xl font-robotoCondensed text-[#CA2530] mb-8 lg:mb-10 text-left ml-9 lg:ml-14">
+                    € {{ number_format($product->price, 2, ',', '.') }}
                 </div>
 
                 <!-- Action Buttons -->
