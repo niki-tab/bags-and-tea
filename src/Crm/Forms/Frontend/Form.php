@@ -71,7 +71,7 @@ class Form extends Component
                 case true:
                     if ($field['type'] === 'file') {
                         $fieldName = "files.{$field['name']}";
-                        $rules[$fieldName] = 'required|array';
+                        //$rules[$fieldName] = 'required|array';
                         $rules[$fieldName . '.*'] = 'file|image|mimes:jpeg,jpg,png,gif,webp|max:10240';
                     } elseif ($field['type'] === 'tel') {
                         $rules[$fieldName] = 'required|regex:/^[+]?[0-9\s\-\(\)]{7,20}$/';
