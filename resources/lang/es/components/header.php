@@ -5,7 +5,7 @@ return [
     'company-name' => 'Bags & Tea',
     'menu-option-1' => 'Certifica tu bolso',
     'menu-option-2' => 'Compramos tu bolso',
-    'menu-option-3' => 'Nuestros bolsos',
+    'menu-option-3' => 'Tienda',
     'menu-option-4' => 'Nosotros',
     'menu-option-5' => 'Blog',
     'menu-option-6' => 'Contacto',
