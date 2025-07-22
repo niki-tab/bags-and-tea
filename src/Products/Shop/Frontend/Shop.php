@@ -41,9 +41,6 @@ class Shop extends Component
 
     // Individual URL parameters for clean URLs
     #[Url]
-    public $brand = '';
-    
-    #[Url]
     public $category = '';
     
     #[Url]
@@ -69,6 +66,9 @@ class Shop extends Component
     
     #[Url(as: 'bag-type')]
     public $bagType = '';
+
+    #[Url]
+    public $bags = '';
 
     #[Url(as: 'sort')]
     public $selectedSortBy = '';
@@ -97,7 +97,11 @@ class Shop extends Component
 
         // Set default content if no specific content was set (no brand, category, or attribute match)
         if (empty($this->pageTitle)) {
-            $this->setBrandData(null, app()->getLocale());
+            // $this->setBrandData(null, app()->getLocale());
+            $this->brandData = null;
+            $this->pageTitle = __('shop.page_title');
+            $this->pageDescription = __('shop.page_description');
+            $this->pageDescription2 = __('shop.default_description_2');
         }
 
         $this->loadShopData();
@@ -134,6 +138,7 @@ class Shop extends Component
     {
         // Reset pagination when sorting changes
         $this->currentPage = 1;
+        $this->syncUrlParameters();
         $this->loadShopData();
     }
 
@@ -150,7 +155,7 @@ class Shop extends Component
         $this->priceRange = ['min' => null, 'max' => null];
         
         // Clear all URL properties
-        $this->brand = '';
+        // $this->brand = '';
         $this->category = '';
         $this->attribute = '';
         $this->quality = '';
@@ -160,6 +165,7 @@ class Shop extends Component
         $this->color = '';
         $this->material = '';
         $this->bagType = '';
+        $this->bags = '';
         
         $this->loadShopData();
     }
@@ -170,10 +176,10 @@ class Shop extends Component
         $internalValue = $value; // Default fallback
         
         switch ($type) {
-            case 'brand':
-                $ids = $this->convertBrandSlugsToIds([$value]);
-                $internalValue = !empty($ids) ? $ids[0] : $value;
-                break;
+            // case 'brand':
+            //     $ids = $this->convertBrandSlugsToIds([$value]);
+            //     $internalValue = !empty($ids) ? $ids[0] : $value;
+            //     break;
             case 'category':
                 $ids = $this->convertCategorySlugsToIds([$value]);
                 $internalValue = !empty($ids) ? $ids[0] : $value;
@@ -231,10 +237,10 @@ class Shop extends Component
         $internalValue = $value; // Default fallback
         
         switch ($type) {
-            case 'brand':
-                $ids = $this->convertBrandSlugsToIds([$value]);
-                $internalValue = !empty($ids) ? $ids[0] : $value;
-                break;
+            // case 'brand':
+            //     $ids = $this->convertBrandSlugsToIds([$value]);
+            //     $internalValue = !empty($ids) ? $ids[0] : $value;
+            //     break;
             case 'category':
                 $ids = $this->convertCategorySlugsToIds([$value]);
                 $internalValue = !empty($ids) ? $ids[0] : $value;
@@ -362,10 +368,10 @@ class Shop extends Component
                             // Convert ID to slug/code for removal
                             $displayValue = $value; // Fallback
                             switch ($filterType) {
-                                case 'brand':
-                                    $slugs = $this->convertBrandIdsToSlugs([$value]);
-                                    $displayValue = !empty($slugs) ? $slugs[0] : $value;
-                                    break;
+                                // case 'brand':
+                                //     $slugs = $this->convertBrandIdsToSlugs([$value]);
+                                //     $displayValue = !empty($slugs) ? $slugs[0] : $value;
+                                //     break;
                                 case 'category':
                                     $slugs = $this->convertCategoryIdsToSlugs([$value]);
                                     $displayValue = !empty($slugs) ? $slugs[0] : $value;
@@ -476,22 +482,22 @@ class Shop extends Component
         }
 
         // Check if the slug corresponds to a brand, category or attribute (in that order)
-        $brandRepository = new EloquentBrandRepository;
+        // $brandRepository = new EloquentBrandRepository;
         $categoryRepository = new EloquentCategoryRepository;
         $attributeRepository = new EloquentAttributeRepository;
         $currentLocale = app()->getLocale();
 
         // First check if it's a brand slug
-        $brands = $brandRepository->findActive();
-        foreach ($brands as $brand) {
-            // Check current locale first, then fallback to English
-            if ($brand->getTranslation('slug', $currentLocale) === $this->categorySlug || 
-                $brand->getTranslation('slug', 'en') === $this->categorySlug) {
-                $this->setBrandData($brand, $currentLocale);
-                $this->urlBasedFilters['urlBasedBrands'] = [$brand->id];
-                return;
-            }
-        }
+        // $brands = $brandRepository->findActive();
+        // foreach ($brands as $brand) {
+        //     // Check current locale first, then fallback to English
+        //     if ($brand->getTranslation('slug', $currentLocale) === $this->categorySlug || 
+        //         $brand->getTranslation('slug', 'en') === $this->categorySlug) {
+        //         $this->setBrandData($brand, $currentLocale);
+        //         $this->urlBasedFilters['urlBasedBrands'] = [$brand->id];
+        //         return;
+        //     }
+        // }
 
         // First check if it's a category
         $categories = $categoryRepository->findActive();
@@ -534,22 +540,22 @@ class Shop extends Component
         }
     }
 
-    private function setBrandData($brand = null, $locale = null)
-    {
-        if ($brand) {
-            // Set brand data for dynamic content
-            $this->brandData = $brand;
-            $this->pageTitle = $this->getTranslationValue($brand->name, $locale) ?: $brand->name;
-            $this->pageDescription = $this->getTranslationValue($brand->description_1, $locale) ?: '';
-            $this->pageDescription2 = $this->getTranslationValue($brand->description_2, $locale) ?: '';
-        } else {
-            // Set default content
-            $this->brandData = null;
-            $this->pageTitle = __('shop.page_title');
-            $this->pageDescription = __('shop.page_description');
-            $this->pageDescription2 = __('shop.default_description_2');
-        }
-    }
+    // private function setBrandData($brand = null, $locale = null)
+    // {
+    //     if ($brand) {
+    //         // Set brand data for dynamic content
+    //         $this->brandData = $brand;
+    //         $this->pageTitle = $this->getTranslationValue($brand->name, $locale) ?: $brand->name;
+    //         $this->pageDescription = $this->getTranslationValue($brand->description_1, $locale) ?: '';
+    //         $this->pageDescription2 = $this->getTranslationValue($brand->description_2, $locale) ?: '';
+    //     } else {
+    //         // Set default content
+    //         $this->brandData = null;
+    //         $this->pageTitle = __('shop.page_title');
+    //         $this->pageDescription = __('shop.page_description');
+    //         $this->pageDescription2 = __('shop.default_description_2');
+    //     }
+    // }
 
     private function getTranslationValue($translatedField, $locale)
     {
@@ -608,9 +614,9 @@ class Shop extends Component
             if (!empty($filterValues)) {
                 // Map filter types to expected keys for GetShopData
                 switch ($filterType) {
-                    case 'brand':
-                        $this->appliedFilters['brands'] = array_merge($this->appliedFilters['brands'] ?? [], $filterValues);
-                        break;
+                    // case 'brand':
+                    //     $this->appliedFilters['brands'] = array_merge($this->appliedFilters['brands'] ?? [], $filterValues);
+                    //     break;
                     case 'category':
                         $this->appliedFilters['categories'] = array_merge($this->appliedFilters['categories'] ?? [], $filterValues);
                         break;
@@ -659,10 +665,10 @@ class Shop extends Component
         $this->filterOptions = $result['filterOptions'];
 
         // Fallback: If no shop filters are configured, manually add brand filter
-        if (empty($this->filterOptions['brand'])) {
-            $brandRepository = new EloquentBrandRepository;
-            $this->filterOptions['brand'] = $brandRepository->findActive();
-        }
+        // if (empty($this->filterOptions['brand'])) {
+        //     $brandRepository = new EloquentBrandRepository;
+        //     $this->filterOptions['brand'] = $brandRepository->findActive();
+        // }
 
         $this->loading = false;
     }
@@ -689,139 +695,77 @@ class Shop extends Component
         );
     }
 
+    public function setSeo()
+    {
+        $title = trans('shop.page-seo-title');
+        $description = trans('shop.page-seo-description');
+
+        // Check if we have specific attribute/category data with meta info
+        if ($this->categorySlug) {
+            // $brandRepository = new EloquentBrandRepository;
+            $categoryRepository = new EloquentCategoryRepository;
+            $attributeRepository = new EloquentAttributeRepository;
+            $currentLocale = app()->getLocale();
+
+            // Check for brand first
+            // $brands = $brandRepository->findActive();
+            // foreach ($brands as $brand) {
+            //     if ($brand->getTranslation('slug', $currentLocale) === $this->categorySlug || 
+            //         $brand->getTranslation('slug', 'en') === $this->categorySlug) {
+            //         $metaTitle = $brand->getTranslation('meta_title', $currentLocale) ?: $brand->getTranslation('meta_title', 'en');
+            //         $metaDescription = $brand->getTranslation('meta_description', $currentLocale) ?: $brand->getTranslation('meta_description', 'en');
+            //         if ($metaTitle) $title = $metaTitle;
+            //         if ($metaDescription) $description = $metaDescription;
+            //         break;
+            //     }
+            // }
+
+            // Check for category
+            // if ($title === trans('shop.page-seo-title')) { // Only if we haven't found brand meta
+                $categories = $categoryRepository->findActive();
+                foreach ($categories as $category) {
+                    if ($category->getTranslation('slug', $currentLocale) === $this->categorySlug || 
+                        $category->getTranslation('slug', 'en') === $this->categorySlug) {
+                        $metaTitle = $category->getTranslation('meta_title', $currentLocale) ?: $category->getTranslation('meta_title', 'en');
+                        $metaDescription = $category->getTranslation('meta_description', $currentLocale) ?: $category->getTranslation('meta_description', 'en');
+                        if ($metaTitle) $title = $metaTitle;
+                        if ($metaDescription) $description = $metaDescription;
+                        break;
+                    }
+                }
+            // }
+
+            // Check for attribute
+            if ($title === trans('shop.page-seo-title')) { // Only if we haven't found category meta
+                $attributes = $attributeRepository->findActive();
+                foreach ($attributes as $attribute) {
+                    if ($attribute->getTranslation('slug', $currentLocale) === $this->categorySlug || 
+                        $attribute->getTranslation('slug', 'en') === $this->categorySlug) {
+                        $metaTitle = $attribute->getTranslation('meta_title', $currentLocale) ?: $attribute->getTranslation('meta_title', 'en');
+                        $metaDescription = $attribute->getTranslation('meta_description', $currentLocale) ?: $attribute->getTranslation('meta_description', 'en');
+                        if ($metaTitle) $title = $metaTitle;
+                        if ($metaDescription) $description = $metaDescription;
+                        break;
+                    }
+                }
+            }
+        }
+
+        seo()
+        ->title($title, env('APP_NAME'))
+        ->description($description)
+        ->images(
+            env('APP_LOGO_1_PATH'),
+            env('APP_LOGO_2_PATH'),
+        );
+    }
+
     public function render()
     {
+        $this->setSeo();
         return view('livewire.shop')->extends('layouts.app');
     }
 
-    private function parseUrlParameters()
-    {
-        $this->selectedFilters = [];
-        
-        // Map URL properties to selectedFilters with conversion
-        $urlMappings = [
-            'brand' => $this->brand,
-            'category' => $this->category,
-            'attribute' => $this->attribute,
-            'quality' => $this->quality,
-            'price' => $this->price,
-            'year-of-manufacture' => $this->yearOfManufacture,
-            'size' => $this->size,
-            'color' => $this->color,
-            'material' => $this->material,
-            'bag-type' => $this->bagType,
-        ];
-        
-        foreach ($urlMappings as $filterType => $urlValue) {
-            if (empty($urlValue)) {
-                continue;
-            }
-            
-            // Convert comma-separated values to array
-            $filterValues = explode(',', $urlValue);
-            $filterValues = array_filter($filterValues); // Remove empty values
-            
-            if (empty($filterValues)) {
-                continue;
-            }
-            
-            // Convert slugs/codes back to IDs for internal use
-            switch ($filterType) {
-                case 'brand':
-                    $this->selectedFilters[$filterType] = $this->convertBrandSlugsToIds($filterValues);
-                    break;
-                case 'category':
-                    $this->selectedFilters[$filterType] = $this->convertCategorySlugsToIds($filterValues);
-                    break;
-                case 'attribute':
-                    $this->selectedFilters[$filterType] = $this->convertAttributeSlugsToIds($filterValues);
-                    break;
-                case 'quality':
-                    $this->selectedFilters[$filterType] = $this->convertQualityCodesToIds($filterValues);
-                    break;
-                case 'price':
-                    // Price ranges stay as-is (they're already user-friendly)
-                    $this->selectedFilters[$filterType] = $filterValues;
-                    break;
-                default:
-                    // For dynamic category/attribute filters, check the filter type
-                    if ($this->isAttributeFilterType($filterType)) {
-                        $this->selectedFilters[$filterType] = $this->convertAttributeSlugsToIds($filterValues);
-                    } elseif ($this->isCategoryFilterType($filterType)) {
-                        $this->selectedFilters[$filterType] = $this->convertCategorySlugsToIds($filterValues);
-                    } else {
-                        // Fallback for other filter types
-                        $this->selectedFilters[$filterType] = $filterValues;
-                    }
-                    break;
-            }
-        }
-    }
-
-    private function syncUrlParameters()
-    {
-        // Update individual URL properties based on selectedFilters
-        $this->brand = '';
-        $this->category = '';
-        $this->attribute = '';
-        $this->quality = '';
-        $this->price = '';
-        $this->yearOfManufacture = '';
-        $this->size = '';
-        $this->color = '';
-        $this->material = '';
-        $this->bagType = '';
-        
-        foreach ($this->selectedFilters as $filterType => $filterValues) {
-            if (empty($filterValues)) {
-                continue;
-            }
-            
-            // Convert IDs to slugs for URL
-            $urlValues = [];
-            switch ($filterType) {
-                case 'brand':
-                    $urlValues = $this->convertBrandIdsToSlugs($filterValues);
-                    $this->brand = implode(',', $urlValues);
-                    break;
-                case 'category':
-                    $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
-                    $this->category = implode(',', $urlValues);
-                    break;
-                case 'attribute':
-                    $urlValues = $this->convertAttributeIdsToSlugs($filterValues);
-                    $this->attribute = implode(',', $urlValues);
-                    break;
-                case 'quality':
-                    $urlValues = $this->convertQualityIdsToCodes($filterValues);
-                    $this->quality = implode(',', $urlValues);
-                    break;
-                case 'price':
-                    $this->price = implode(',', $filterValues);
-                    break;
-                case 'year-of-manufacture':
-                    $urlValues = $this->convertAttributeIdsToSlugs($filterValues);
-                    $this->yearOfManufacture = implode(',', $urlValues);
-                    break;
-                case 'size':
-                    $urlValues = $this->convertAttributeIdsToSlugs($filterValues);
-                    $this->size = implode(',', $urlValues);
-                    break;
-                case 'color':
-                    $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
-                    $this->color = implode(',', $urlValues);
-                    break;
-                case 'material':
-                    $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
-                    $this->material = implode(',', $urlValues);
-                    break;
-                case 'bag-type':
-                    $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
-                    $this->bagType = implode(',', $urlValues);
-                    break;
-            }
-        }
-    }
     
     private function clearUrlParameters()
     {
@@ -875,57 +819,57 @@ class Shop extends Component
     }
 
     // Helper methods to convert between IDs and slugs/codes
-    private function convertBrandSlugsToIds(array $slugs): array
-    {
-        if (empty($slugs)) {
-            return [];
-        }
+    // private function convertBrandSlugsToIds(array $slugs): array
+    // {
+    //     if (empty($slugs)) {
+    //         return [];
+    //     }
 
-        $brandRepository = new EloquentBrandRepository;
-        $brands = $brandRepository->findActive();
-        $currentLocale = app()->getLocale();
-        $ids = [];
+    //     $brandRepository = new EloquentBrandRepository;
+    //     $brands = $brandRepository->findActive();
+    //     $currentLocale = app()->getLocale();
+    //     $ids = [];
 
-        foreach ($slugs as $slug) {
-            foreach ($brands as $brand) {
-                // Check current locale first, then fallback to English
-                if ($brand->getTranslation('slug', $currentLocale) === $slug || 
-                    $brand->getTranslation('slug', 'en') === $slug) {
-                    $ids[] = $brand->id;
-                    break;
-                }
-            }
-        }
+    //     foreach ($slugs as $slug) {
+    //         foreach ($brands as $brand) {
+    //             // Check current locale first, then fallback to English
+    //             if ($brand->getTranslation('slug', $currentLocale) === $slug || 
+    //                 $brand->getTranslation('slug', 'en') === $slug) {
+    //                 $ids[] = $brand->id;
+    //                 break;
+    //             }
+    //         }
+    //     }
 
-        return $ids;
-    }
+    //     return $ids;
+    // }
 
-    private function convertBrandIdsToSlugs(array $ids): array
-    {
-        if (empty($ids)) {
-            return [];
-        }
+    // private function convertBrandIdsToSlugs(array $ids): array
+    // {
+    //     if (empty($ids)) {
+    //         return [];
+    //     }
 
-        $brandRepository = new EloquentBrandRepository;
-        $brands = $brandRepository->findActive();
-        $currentLocale = app()->getLocale();
-        $slugs = [];
+    //     $brandRepository = new EloquentBrandRepository;
+    //     $brands = $brandRepository->findActive();
+    //     $currentLocale = app()->getLocale();
+    //     $slugs = [];
 
-        foreach ($ids as $id) {
-            foreach ($brands as $brand) {
-                if ($brand->id === $id) {
-                    // Use current locale, fallback to English
-                    $slug = $brand->getTranslation('slug', $currentLocale) ?: $brand->getTranslation('slug', 'en');
-                    if ($slug) {
-                        $slugs[] = $slug;
-                    }
-                    break;
-                }
-            }
-        }
+    //     foreach ($ids as $id) {
+    //         foreach ($brands as $brand) {
+    //             if ($brand->id === $id) {
+    //                 // Use current locale, fallback to English
+    //                 $slug = $brand->getTranslation('slug', $currentLocale) ?: $brand->getTranslation('slug', 'en');
+    //                 if ($slug) {
+    //                     $slugs[] = $slug;
+    //                 }
+    //                 break;
+    //             }
+    //         }
+    //     }
 
-        return $slugs;
-    }
+    //     return $slugs;
+    // }
 
     private function convertCategorySlugsToIds(array $slugs): array
     {
@@ -1073,5 +1017,131 @@ class Shop extends Component
         }
 
         return $slugs;
+    }
+
+    private function parseUrlParameters()
+    {
+        $this->selectedFilters = [];
+        
+        // Map URL properties to selectedFilters with conversion
+        $urlMappings = [
+            'category' => $this->category,
+            'attribute' => $this->attribute,
+            'quality' => $this->quality,
+            'price' => $this->price,
+            'year-of-manufacture' => $this->yearOfManufacture,
+            'size' => $this->size,
+            'color' => $this->color,
+            'material' => $this->material,
+            'bag-type' => $this->bagType,
+            'bags' => $this->bags,
+        ];
+        
+        foreach ($urlMappings as $filterType => $urlValue) {
+            if (empty($urlValue)) {
+                continue;
+            }
+            
+            // Convert comma-separated values to array
+            $filterValues = explode(',', $urlValue);
+            $filterValues = array_filter($filterValues); // Remove empty values
+            
+            if (empty($filterValues)) {
+                continue;
+            }
+            
+            // Convert slugs/codes back to IDs for internal use
+            switch ($filterType) {
+                case 'category':
+                    $this->selectedFilters[$filterType] = $this->convertCategorySlugsToIds($filterValues);
+                    break;
+                case 'attribute':
+                    $this->selectedFilters[$filterType] = $this->convertAttributeSlugsToIds($filterValues);
+                    break;
+                case 'quality':
+                    $this->selectedFilters[$filterType] = $this->convertQualityCodesToIds($filterValues);
+                    break;
+                case 'price':
+                    // Price ranges stay as-is (they're already user-friendly)
+                    $this->selectedFilters[$filterType] = $filterValues;
+                    break;
+                default:
+                    // For dynamic category/attribute filters, check the filter type
+                    if ($this->isAttributeFilterType($filterType)) {
+                        $this->selectedFilters[$filterType] = $this->convertAttributeSlugsToIds($filterValues);
+                    } elseif ($this->isCategoryFilterType($filterType)) {
+                        $this->selectedFilters[$filterType] = $this->convertCategorySlugsToIds($filterValues);
+                    } else {
+                        // Fallback for other filter types
+                        $this->selectedFilters[$filterType] = $filterValues;
+                    }
+                    break;
+            }
+        }
+    }
+
+    private function syncUrlParameters()
+    {
+        // Update individual URL properties based on selectedFilters
+        $this->category = '';
+        $this->attribute = '';
+        $this->quality = '';
+        $this->price = '';
+        $this->yearOfManufacture = '';
+        $this->size = '';
+        $this->color = '';
+        $this->material = '';
+        $this->bagType = '';
+        $this->bags = '';
+        
+        foreach ($this->selectedFilters as $filterType => $filterValues) {
+            if (empty($filterValues)) {
+                continue;
+            }
+            
+            // Convert IDs to slugs for URL
+            $urlValues = [];
+            switch ($filterType) {
+                case 'category':
+                    $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
+                    $this->category = implode(',', $urlValues);
+                    break;
+                case 'attribute':
+                    $urlValues = $this->convertAttributeIdsToSlugs($filterValues);
+                    $this->attribute = implode(',', $urlValues);
+                    break;
+                case 'quality':
+                    $urlValues = $this->convertQualityIdsToCodes($filterValues);
+                    $this->quality = implode(',', $urlValues);
+                    break;
+                case 'price':
+                    $this->price = implode(',', $filterValues);
+                    break;
+                case 'year-of-manufacture':
+                    $urlValues = $this->convertAttributeIdsToSlugs($filterValues);
+                    $this->yearOfManufacture = implode(',', $urlValues);
+                    break;
+                case 'size':
+                    $urlValues = $this->convertAttributeIdsToSlugs($filterValues);
+                    $this->size = implode(',', $urlValues);
+                    break;
+                case 'color':
+                    $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
+                    $this->color = implode(',', $urlValues);
+                    break;
+                case 'material':
+                    $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
+                    $this->material = implode(',', $urlValues);
+                    break;
+                case 'bag-type':
+                    $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
+                    $this->bagType = implode(',', $urlValues);
+                    break;
+                case 'bags':
+                    $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
+                    $this->bags = implode(',', $urlValues);
+                    break;
+            }
+        }
     }
 }

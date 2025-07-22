@@ -78,10 +78,25 @@
                             <button type="button" class="dropdown-toggle appearance-none border border-gray-300 rounded px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white min-w-[120px] text-left cursor-pointer" onclick="toggleDropdown(this)">
                                 @php
                                     $selectedCount = isset($selectedFilters[$filterKey]) ? count($selectedFilters[$filterKey]) : 0;
-                                    $filterLabel = __('shop.' . $filterKey, [], app()->getLocale());
-                                    if ($filterLabel === 'shop.' . $filterKey) {
-                                        // Fallback to capitalized filter key if translation doesn't exist
-                                        $filterLabel = ucfirst(str_replace('-', ' ', $filterKey));
+                                    
+                                    // Find the filter object for this filter key to get the translated name
+                                    $filterLabel = ucfirst(str_replace('-', ' ', $filterKey)); // Fallback
+                                    foreach($filters as $filter) {
+                                        $config = is_array($filter->config) ? $filter->config : json_decode($filter->config, true);
+                                        $configFilterKey = ($filter->type === 'category' || $filter->type === 'attribute') && !empty($config['filter_slug']) 
+                                            ? $config['filter_slug'] 
+                                            : $filter->type;
+                                        if ($configFilterKey === $filterKey) {
+                                            // Use the translated name from the shop filter database record
+                                            if (method_exists($filter, 'getTranslation')) {
+                                                $filterLabel = $filter->getTranslation('name', app()->getLocale());
+                                            } elseif (is_array($filter->name)) {
+                                                $filterLabel = $filter->name[app()->getLocale()] ?? $filter->name['en'] ?? $filterLabel;
+                                            } else {
+                                                $filterLabel = $filter->name ?? $filterLabel;
+                                            }
+                                            break;
+                                        }
                                     }
                                 @endphp
                                 @if($selectedCount > 0)
@@ -181,11 +196,26 @@
                     <button type="button" class="dropdown-toggle appearance-none border border-gray-300 rounded px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white min-w-[120px] text-left cursor-pointer" onclick="toggleDropdown(this)">
                         @php
                             $selectedPriceCount = isset($selectedFilters['price']) ? count($selectedFilters['price']) : 0;
+                            
+                            // Find the price filter to get the translated name
+                            $priceLabel = __('shop.price'); // Fallback to translation file
+                            foreach($filters as $filter) {
+                                if ($filter->type === 'price') {
+                                    if (method_exists($filter, 'getTranslation')) {
+                                        $priceLabel = $filter->getTranslation('name', app()->getLocale());
+                                    } elseif (is_array($filter->name)) {
+                                        $priceLabel = $filter->name[app()->getLocale()] ?? $filter->name['en'] ?? $priceLabel;
+                                    } else {
+                                        $priceLabel = $filter->name ?? $priceLabel;
+                                    }
+                                    break;
+                                }
+                            }
                         @endphp
                         @if($selectedPriceCount > 0)
-                            {{ $selectedPriceCount }} {{ __('shop.price') }}(s)
+                            {{ $selectedPriceCount }} {{ $priceLabel }}(s)
                         @else
-                            {{ __('shop.price') }}
+                            {{ $priceLabel }}
                         @endif
                         <svg class="dropdown-arrow w-4 h-4 text-gray-400 float-right mt-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
