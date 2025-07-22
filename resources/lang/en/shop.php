@@ -39,4 +39,8 @@ return [
     'page_title' => 'LUXURY HANDBAGS',
     'page_description' => 'Discover our curated collection of authentic luxury handbags from the world\'s most prestigious brands.',
     'default_description_2' => 'Exceptional quality and timeless elegance in every piece.',
+    
+    // SEO content
+    'page-seo-title' => 'Pre-owned Luxury Handbags Shop- Authentic Designer Bags',
+    'page-seo-description' => 'Shop authentic luxury handbags from top designer brands. Curated collection of pre-owned and new designer bags with guaranteed authenticity.',
 ];

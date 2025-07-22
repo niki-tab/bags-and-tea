@@ -39,4 +39,8 @@ return [
     'page_title' => 'BOLSOS DE LUJO',
     'page_description' => 'Descubre nuestra colección curada de bolsos de lujo auténticos de las marcas más prestigiosas del mundo.',
     'default_description_2' => 'Calidad excepcional y elegancia atemporal en cada pieza.',
+    
+    // SEO content
+    'page-seo-title' => 'Tienda de Bolsos de Lujo de segunda mano- Bolsos de Diseñador Auténticos',
+    'page-seo-description' => 'Compra bolsos de lujo auténticos de las mejores marcas de diseñadores. Colección curada de bolsos de diseñador nuevos y de segunda mano con autenticidad garantizada.',
 ];

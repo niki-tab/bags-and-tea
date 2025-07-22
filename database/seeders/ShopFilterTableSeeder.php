@@ -14,7 +14,7 @@ class ShopFilterTableSeeder extends Seeder
     public function run(): void
     {
         $shopFilters = [
-            [
+            /*[
                 'id' => (string) Str::uuid(),
                 'name' => json_encode([
                     'en' => 'Brand',
@@ -31,7 +31,7 @@ class ShopFilterTableSeeder extends Seeder
                 'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
+            ],*/
             [
                 'id' => (string) Str::uuid(),
                 'name' => json_encode([
