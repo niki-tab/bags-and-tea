@@ -252,7 +252,7 @@
         @endif
 
         {{-- Products Grid with Loading State --}}
-        <div class="relative min-h-[600px] md:min-h-[800px]">
+        <div class="relative {{ empty($products) && !$loading ? 'min-h-[400px]' : 'min-h-[600px] md:min-h-[800px]' }}">
             {{-- Loading State --}}
             <div wire:loading.flex class="absolute inset-0 bg-gray-50 flex items-center justify-center z-10 rounded-lg">
                 <div class="text-center bg-white p-8 rounded-lg shadow-lg">
@@ -272,126 +272,155 @@
             <div id="products-grid" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6" 
                  wire:loading.remove 
                  wire:key="products-container-{{ $selectedSortBy ?: 'none' }}-{{ md5(serialize($selectedFilters)) }}">
-            @foreach($products as $index => $product)
-                @php
-                    $productSlug = $product->getTranslation('slug', app()->getLocale());
-                    $productDetailRoute = app()->getLocale() === 'es' 
-                        ? route('product.show.es', ['locale' => 'es', 'productSlug' => $productSlug])
-                        : route('product.show.en', ['locale' => 'en', 'productSlug' => $productSlug]);
-                @endphp
-                <a href="{{ $productDetailRoute }}" wire:key="product-{{ $product->id }}-sort-{{ $selectedSortBy ?: 'none' }}" class="bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 block">
-                    {{-- Product Image Carousel --}}
+            @if(!empty($products))
+                @foreach($products as $index => $product)
                     @php
-                        $productImages = $product->media ? $product->media->where('file_type', 'image')->pluck('file_path')->toArray() : [];
-                        $totalImages = count($productImages);
+                        $productSlug = $product->getTranslation('slug', app()->getLocale());
+                        $productDetailRoute = app()->getLocale() === 'es' 
+                            ? route('product.show.es', ['locale' => 'es', 'productSlug' => $productSlug])
+                            : route('product.show.en', ['locale' => 'en', 'productSlug' => $productSlug]);
                     @endphp
-                    <div class="relative bg-transparent h-64 overflow-hidden" x-data="{ 
-                        currentImage: 0, 
-                        images: @js($productImages),
-                        totalImages: @js($totalImages)
-                    }">
-                        {{-- Main Image Display --}}
-                        <template x-if="totalImages > 0">
-                            <img :src="'{{ asset('') }}' + images[currentImage]" :alt="{{ json_encode($product->name) }}" class="w-full h-full object-contain">
-                        </template>
-                        
-                        {{-- No Image Placeholder --}}
-                        <template x-if="totalImages === 0">
-                            <div class="w-full h-full flex items-center justify-center text-gray-400">
-                                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                </svg>
-                            </div>
-                        </template>
-                        
-                        {{-- Navigation Arrows --}}
-                        <template x-if="totalImages > 1">
-                            <div>
-                                {{-- Previous Arrow --}}
-                                <button 
-                                    @click.stop.prevent="currentImage = currentImage > 0 ? currentImage - 1 : totalImages - 1"
-                                    class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition-all duration-200 z-10"
-                                    title="Previous image"
-                                    onclick="event.stopPropagation(); event.preventDefault(); return false;">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    <a href="{{ $productDetailRoute }}" wire:key="product-{{ $product->id }}-sort-{{ $selectedSortBy ?: 'none' }}" class="bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 block">
+                        {{-- Product Image Carousel --}}
+                        @php
+                            $productImages = $product->media ? $product->media->where('file_type', 'image')->map(function($media) {
+                                // Check if it's an R2 URL (full URL) or local storage path
+                                if (str_starts_with($media->file_path, 'https://') || str_contains($media->file_path, 'r2.cloudflarestorage.com')) {
+                                    return $media->file_path; // Use R2 URL directly
+                                } else {
+                                    return asset($media->file_path); // Use asset() for local storage
+                                }
+                            })->toArray() : [];
+                            $totalImages = count($productImages);
+                        @endphp
+                        <div class="relative bg-transparent h-64 overflow-hidden" x-data="{ 
+                            currentImage: 0, 
+                            images: @js($productImages),
+                            totalImages: @js($totalImages)
+                        }">
+                            {{-- Main Image Display --}}
+                            <template x-if="totalImages > 0">
+                                <img :src="images[currentImage]" :alt="{{ json_encode($product->name) }}" class="w-full h-full object-contain">
+                            </template>
+                            
+                            {{-- No Image Placeholder --}}
+                            <template x-if="totalImages === 0">
+                                <div class="w-full h-full flex items-center justify-center text-gray-400">
+                                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                     </svg>
-                                </button>
-                                
-                                {{-- Next Arrow --}}
-                                <button 
-                                    @click.stop.prevent="currentImage = currentImage < totalImages - 1 ? currentImage + 1 : 0"
-                                    class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition-all duration-200 z-10"
-                                    title="Next image"
-                                    onclick="event.stopPropagation(); event.preventDefault(); return false;">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </template>
-                        
-                        {{-- Image Indicators (dots) --}}
-                        <template x-if="totalImages > 1">
-                            <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-1">
-                                <template x-for="(image, index) in images" :key="index">
-                                    <button 
-                                        @click.stop.prevent="currentImage = index"
-                                        :class="currentImage === index ? 'bg-white' : 'bg-white bg-opacity-50'"
-                                        class="w-2 h-2 rounded-full transition-all duration-200 hover:bg-opacity-80"
-                                        onclick="event.stopPropagation(); event.preventDefault(); return false;">
-                                    </button>
-                                </template>
-                            </div>
-                        </template>
-                        
-                        {{-- Diagonal Sold Out Banner --}}
-                        @if($product->is_sold_out === true)
-                            <div class="absolute inset-0 pointer-events-none">
-                                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 translate-y-8 -rotate-[15deg] bg-[#C12637] bg-opacity-75 w-[120%] h-10 flex items-center justify-center shadow-[0_3px_4px_0px_rgba(0,0,0,0.25)]">
-                                    <span class="text-white text-sm font-robotoCondensed font-medium uppercase tracking-wide">
-                                        @if(app()->getLocale() === 'es')
-                                            Agotado
-                                        @else
-                                            Sold Out
-                                        @endif
-                                    </span>
                                 </div>
-                            </div>
-                        @endif
-                    </div>
-
-                    {{-- Product Info --}}
-                    <div class="p-4">
-                        <div class="text-xs text-gray-500 uppercase tracking-wide mb-1">
-                            @if($product->brand)
-                                {{ $product->brand->getTranslation('name', app()->getLocale()) }}
-                            @else
-                                {{ __('MARCA') }}
+                            </template>
+                            
+                            {{-- Navigation Arrows --}}
+                            <template x-if="totalImages > 1">
+                                <div>
+                                    {{-- Previous Arrow --}}
+                                    <button 
+                                        @click.stop.prevent="currentImage = currentImage > 0 ? currentImage - 1 : totalImages - 1"
+                                        class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition-all duration-200 z-10"
+                                        title="Previous image"
+                                        onclick="event.stopPropagation(); event.preventDefault(); return false;">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                        </svg>
+                                    </button>
+                                    
+                                    {{-- Next Arrow --}}
+                                    <button 
+                                        @click.stop.prevent="currentImage = currentImage < totalImages - 1 ? currentImage + 1 : 0"
+                                        class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition-all duration-200 z-10"
+                                        title="Next image"
+                                        onclick="event.stopPropagation(); event.preventDefault(); return false;">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </template>
+                            
+                            {{-- Image Indicators (dots) --}}
+                            <template x-if="totalImages > 1">
+                                <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-1">
+                                    <template x-for="(image, index) in images" :key="index">
+                                        <button 
+                                            @click.stop.prevent="currentImage = index"
+                                            :class="currentImage === index ? 'bg-white' : 'bg-white bg-opacity-50'"
+                                            class="w-2 h-2 rounded-full transition-all duration-200 hover:bg-opacity-80"
+                                            onclick="event.stopPropagation(); event.preventDefault(); return false;">
+                                        </button>
+                                    </template>
+                                </div>
+                            </template>
+                            
+                            {{-- Diagonal Sold Out Banner --}}
+                            @if($product->is_sold_out === true)
+                                <div class="absolute inset-0 pointer-events-none">
+                                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 translate-y-8 -rotate-[15deg] bg-[#C12637] bg-opacity-75 w-[120%] h-10 flex items-center justify-center shadow-[0_3px_4px_0px_rgba(0,0,0,0.25)]">
+                                        <span class="text-white text-sm font-robotoCondensed font-medium uppercase tracking-wide">
+                                            @if(app()->getLocale() === 'es')
+                                                Agotado
+                                            @else
+                                                Sold Out
+                                            @endif
+                                        </span>
+                                    </div>
+                                </div>
                             @endif
                         </div>
-                        <h3 class="text-sm font-medium text-gray-900 mb-2">
-                            {{ $product->getTranslation('name', app()->getLocale()) ?? __('Modelo') }}
-                        </h3>
-                        <div class="text-lg font-bold text-gray-900">
-                            €{{ number_format($product->price ?? 450, 0) }}
-                        </div>
-                    </div>
-                </a>
-            @endforeach
-            </div>
-        </div>
 
-        {{-- Empty State --}}
-        @if(empty($products) && !$loading)
-            <div class="text-center py-12">
-                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
-                </svg>
-                <h3 class="mt-2 text-sm font-medium text-gray-900">{{ __('shop.no_products_found') }}</h3>
-                <p class="mt-1 text-sm text-gray-500">{{ __('shop.adjust_filters_message') }}</p>
+                        {{-- Product Info --}}
+                        <div class="p-4">
+                            <div class="text-xs text-gray-500 uppercase tracking-wide mb-1">
+                                @if($product->brand)
+                                    {{ $product->brand->getTranslation('name', app()->getLocale()) }}
+                                @else
+                                    {{ __('MARCA') }}
+                                @endif
+                            </div>
+                            <h3 class="text-sm font-medium text-gray-900 mb-2">
+                                {{ $product->getTranslation('name', app()->getLocale()) ?? __('Modelo') }}
+                            </h3>
+                            <div class="text-lg font-bold text-gray-900">
+                                €{{ number_format($product->price ?? 450, 0) }}
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            @endif
             </div>
-        @endif
+            
+            {{-- Empty State - Now positioned inside the grid container --}}
+            @if(empty($products) && !$loading)
+                <div class="absolute inset-0 flex justify-center items-start pt-[0px] top-[60px] lg:top-[0px] mx-10 lg:mx-0">
+                    <div class="text-center py-12">
+                        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+                        </svg>
+                        
+                        @php
+                            $selectedFiltersText = $this->getSelectedFiltersText();
+                        @endphp
+                        
+                        @if(!empty($selectedFiltersText))
+                            {{-- Enhanced message with selected filters --}}
+                            <h3 class="mt-2 text-sm font-medium text-gray-900">{{ __('shop.no_products_found_with_filters') }}</h3>
+                            <p class="mt-1 text-sm text-gray-500">
+                                {{ __('shop.no_products_found_message', ['filters' => $selectedFiltersText]) }}
+                                <a href="{{ app()->getLocale() === 'es' ? route('contact.send.es', ['locale' => 'es']) : route('contact.send.en', ['locale' => 'en']) }}" 
+                                   class="text-color-2 hover:text-color-2/80 underline font-medium">
+                                    {{ __('shop.contact_us_here') }}
+                                </a>.
+                            </p>
+                        @else
+                            {{-- Original fallback message --}}
+                            <h3 class="mt-2 text-sm font-medium text-gray-900">{{ __('shop.no_products_found') }}</h3>
+                            <p class="mt-1 text-sm text-gray-500">{{ __('shop.adjust_filters_message') }}</p>
+                        @endif
+                    </div>
+                </div>
+            @endif
+        </div>
 
         {{-- Pagination Component --}}
         @if(!$loading && !empty($products))
@@ -420,17 +449,29 @@
 <script>
 document.addEventListener('livewire:init', () => {
     Livewire.on('scrollToProducts', () => {
-        const productsGrid = document.getElementById('products-grid');
-        if (productsGrid) {
-            // Smooth scroll to the products grid with some offset
-            const offset = 100; // Adjust this value as needed
-            const elementPosition = productsGrid.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - offset;
+        const isMobile = window.innerWidth < 768;
+        
+        if (isMobile) {
+            // For mobile, scroll to 500px from the top with a small delay
+            setTimeout(() => {
+                window.scrollTo({
+                    top: 500,
+                    behavior: 'smooth'
+                });
+            }, 100);
+        } else {
+            // Desktop behavior - scroll to products grid
+            const productsGrid = document.getElementById('products-grid');
+            if (productsGrid) {
+                const offset = 100;
+                const elementPosition = productsGrid.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
 
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-            });
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
         }
     });
 });

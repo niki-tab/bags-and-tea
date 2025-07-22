@@ -52,7 +52,12 @@ class ProductMediaModel extends Model
 
     public function getFullUrlAttribute(): string
     {
-        return asset($this->file_path);
+        // Check if it's an R2 URL (full URL) or local storage path
+        if (str_starts_with($this->file_path, 'https://') || str_contains($this->file_path, 'r2.cloudflarestorage.com')) {
+            return $this->file_path; // Use R2 URL directly
+        } else {
+            return asset($this->file_path); // Use asset() for local storage
+        }
     }
 
     public function getFileSizeHumanAttribute(): string

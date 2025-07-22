@@ -123,7 +123,7 @@ class Pagination extends Component
         // Dispatch event for parent components to listen to
         $this->dispatch('pageChanged', $this->currentPage);
         
-        // Scroll to products section on mobile after page change
+        // Scroll to products section after page change
         $this->dispatch('scrollToProducts');
         
         // Update URL with current page (handled automatically by Livewire 3)

@@ -26,6 +26,11 @@ return [
     'adjust_filters_message' => 'Try adjusting the filters to see more results',
     'loading_products' => 'Loading Products...',
     
+    // Enhanced no products found messages
+    'no_products_found_with_filters' => 'No products found with applied filters',
+    'no_products_found_message' => 'Unfortunately we haven\'t found any product that meets what you are looking for: :filters. You can write us your request by clicking',
+    'contact_us_here' => 'here',
+    
     // Pagination
     'previous' => 'Previous',
     'next' => 'Next',

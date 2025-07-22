@@ -7,6 +7,7 @@ use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Ramsey\Uuid\Uuid;
 use Src\Products\Product\Infrastructure\Eloquent\ProductEloquentModel;
 use Src\Products\Product\Infrastructure\Eloquent\ProductMediaModel;
 use Src\Products\Brands\Infrastructure\Eloquent\BrandEloquentModel;
@@ -444,11 +445,41 @@ class ProductForm extends Component
         // It forces Livewire to re-render the component
     }
 
+    /**
+     * Check if a file path is stored on R2 (Cloudflare) or local storage
+     */
+    private function isR2Url($filePath)
+    {
+        return str_contains($filePath, 'r2.cloudflarestorage.com') || 
+               str_contains($filePath, 'cloudflare') ||
+               (str_starts_with($filePath, 'https://') && !str_contains($filePath, 'storage/'));
+    }
+
+    /**
+     * Extract the file path from R2 URL for deletion
+     */
+    private function extractPathFromR2Url($url)
+    {
+        // Parse the URL to get the path component
+        $parsedUrl = parse_url($url);
+        
+        // Remove the leading slash from the path
+        return ltrim($parsedUrl['path'], '/');
+    }
+
 
     public function save()
     {
         try {
-            $this->validate();
+            // Get validation rules and exclude current product from unique checks if editing
+            $rules = $this->rules;
+            if ($this->isEditing) {
+                $rules['slug_en'] = 'required|string|max:255|unique:products,slug,' . $this->productId . ',id';
+                $rules['slug_es'] = 'required|string|max:255|unique:products,slug,' . $this->productId . ',id';
+                $rules['sku'] = 'nullable|string|max:100|unique:products,sku,' . $this->productId . ',id';
+            }
+            
+            $this->validate($rules);
         } catch (\Illuminate\Validation\ValidationException $e) {
             $this->dispatch('scroll-to-top');
             throw $e;
@@ -520,7 +551,15 @@ class ProductForm extends Component
         // Handle media deletion
         if (!empty($this->mediaToDelete)) {
             ProductMediaModel::whereIn('id', $this->mediaToDelete)->each(function($media) {
-                Storage::disk('public')->delete($media->file_path);
+                // Check if the file is stored on R2 or local storage
+                if ($this->isR2Url($media->file_path)) {
+                    // Delete from R2 (Cloudflare)
+                    $path = $this->extractPathFromR2Url($media->file_path);
+                    Storage::disk('r2')->delete($path);
+                } else {
+                    // Delete from local storage (existing images)
+                    Storage::disk('public')->delete($media->file_path);
+                }
                 $media->delete();
             });
             $this->mediaToDelete = []; // Clear the deletion queue
@@ -544,12 +583,20 @@ class ProductForm extends Component
                     
                     if (isset($this->existingNewMedia[$newIndex])) {
                         $file = $this->existingNewMedia[$newIndex];
-                        $path = $file->store('products/' . $product->id, 'public');
+                        
+                        // Upload to R2 (Cloudflare) instead of local storage
+                        $uuid = Uuid::uuid4()->toString();
+                        $filename = $uuid . '_' . time() . '.' . $file->getClientOriginalExtension();
+                        $path = $file->storeAs('products/' . $product->id, $filename, ['disk' => 'r2', 'visibility' => 'public']);
+                        
+                        // Get the R2 URL and ensure it has the bags-and-tea prefix
+                        $baseUrl = Storage::disk('r2')->url('');
+                        $url = $baseUrl . 'bags-and-tea/' . $path;
                         
                         ProductMediaModel::create([
                             'id' => (string) Str::uuid(),
                             'product_id' => $product->id,
-                            'file_path' => 'storage/' . $path,
+                            'file_path' => $url, // Store the full R2 URL
                             'file_name' => $file->getClientOriginalName(),
                             'file_type' => 'image',
                             'mime_type' => $file->getMimeType(),
