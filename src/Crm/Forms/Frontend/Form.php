@@ -45,6 +45,9 @@ class Form extends Component
             } else {
                 $fieldName = trans($field['name']);
                 $messages["formData.{$fieldName}.required"] = trans('components/form-show.validation-required');
+                if ($field['type'] === 'tel') {
+                    $messages["formData.{$fieldName}.regex"] = 'El teléfono debe contener solo números, espacios, guiones y paréntesis (7-20 caracteres)';
+                }
             }
         }
         $messages["formData.termsAndConditions.required"] = trans('components/form-show.validation-required');
@@ -70,6 +73,8 @@ class Form extends Component
                         $fieldName = "files.{$field['name']}";
                         $rules[$fieldName] = 'required|array';
                         $rules[$fieldName . '.*'] = 'file|image|mimes:jpeg,jpg,png,gif,webp|max:10240';
+                    } elseif ($field['type'] === 'tel') {
+                        $rules[$fieldName] = 'required|regex:/^[+]?[0-9\s\-\(\)]{7,20}$/';
                     } else {
                         $rules[$fieldName] = 'required';
                     }
@@ -80,6 +85,8 @@ class Form extends Component
                         $fieldName = "files.{$field['name']}";
                         $rules[$fieldName] = 'nullable|array';
                         $rules[$fieldName . '.*'] = 'file|image|mimes:jpeg,jpg,png,gif,webp|max:10240';
+                    } elseif ($field['type'] === 'tel') {
+                        $rules[$fieldName] = 'nullable|regex:/^[+]?[0-9\s\-\(\)]{7,20}$/';
                     } else {
                         $rules[$fieldName] = 'nullable';
                     }
@@ -108,10 +115,13 @@ class Form extends Component
 
     public function submit()
     {   
-        // Debug: Check what files are actually present
-        \Log::info('Files array before validation:', $this->files);
-        
-        $this->validate();
+        try {
+            $this->validate();
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Scroll to first error when validation fails
+            $this->dispatch('scrollToFirstError', formIdentifier: $this->formIdentifier);
+            throw $e;
+        }
 
         foreach ($this->files as $fieldName => $file) {
             if ($file) {

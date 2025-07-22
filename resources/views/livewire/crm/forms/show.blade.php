@@ -26,7 +26,7 @@
                 @endif
             </div>    
             @error('formData.' . trans($field['name']))
-                <span class="text-[#B92334] text-xs relative top-[-12px]">{{ $message }}</span>
+                <span class="text-[#B92334] text-xs relative top-[-12px] form-error" id="error-{{ $formIdentifier }}-{{ trans($field['name']) }}">{{ $message }}</span>
             @enderror
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-10 md:gap-y-4 mt-8 md:mt-10"> <!-- Added grid container -->
                     @elseif ($field['type'] === 'section-title')
@@ -45,7 +45,7 @@
                                     <span class="text-color-3 font-robotoCondensed font-light absolute top-[-8px] right-2 md:right-0">{{ trans('components/form-show.label-required') }}</span>
                                 @endif
                                 @error('formData.' . trans($field['name']))
-                                    <span class="text-[#B92334] text-xs relative top-[-12px]">{{ $message }}</span>
+                                    <span class="text-[#B92334] text-xs relative top-[-12px] form-error" id="error-{{ $formIdentifier }}-{{ trans($field['name']) }}">{{ $message }}</span>
                                 @enderror
                         @elseif ($field['type'] === 'email')
                             <input type="email" 
@@ -57,19 +57,23 @@
                                     <span class="text-color-3 font-robotoCondensed font-light absolute top-[-8px] right-2 md:right-0">{{ trans('components/form-show.label-required') }}</span>
                                 @endif
                                 @error('formData.' . trans($field['name']))
-                                    <span class="text-[#B92334] text-xs relative top-[-12px]">{{ $message }}</span>
+                                    <span class="text-[#B92334] text-xs relative top-[-12px] form-error" id="error-{{ $formIdentifier }}-{{ trans($field['name']) }}">{{ $message }}</span>
                                 @enderror
                         @elseif ($field['type'] === 'tel')
                             <input type="tel" 
                                 wire:model="formData.{{ trans($field['name']) }}"
                                 name="{{ trans($field['name']) }}" 
                                 class="font-robotoCondensed h-8 w-full mb-6 bg-transparent border-b border-color-2 placeholder-color-2 placeholder-font-robotoCondensed pl-4 focus:outline-none focus:ring-0"
-                                placeholder="{{ trans($field['placeholder']) }}">
+                                placeholder="{{ trans($field['placeholder']) }}"
+                                pattern="[+]?[0-9\s\-\(\)]{7,20}"
+                                title="Ingrese un número de teléfono válido (solo números, espacios, guiones y paréntesis)"
+                                oninput="this.value = this.value.replace(/[^+0-9\s\-\(\)]/g, '')"
+                                maxlength="20">
                                 @if ($field['required'])
                                     <span class="text-color-3 font-robotoCondensed font-light absolute top-[-8px] right-2 md:right-0">{{ trans('components/form-show.label-required') }}</span>
                                 @endif    
                                 @error('formData.' . trans($field['name']))
-                                    <span class="text-[#B92334] text-xs relative top-[-12px]">{{ $message }}</span>
+                                    <span class="text-[#B92334] text-xs relative top-[-12px] form-error" id="error-{{ $formIdentifier }}-{{ trans($field['name']) }}">{{ $message }}</span>
                                 @enderror
                         @elseif ($field['type'] === 'radio')
                             <div class="inline-flex items-center mb-2 text-center md:text-left w-full md:w-auto justify-center md:justify-start">
@@ -96,7 +100,7 @@
                                 </div>
                             @endforeach
                             @error('formData.' . trans($field['name']))
-                                    <span class="text-[#B92334] text-xs relative top-[0px]">{{ $message }}</span>
+                                    <span class="text-[#B92334] text-xs relative top-[0px] form-error" id="error-{{ $formIdentifier }}-{{ trans($field['name']) }}">{{ $message }}</span>
                             @enderror
                     @elseif ($field['type'] === 'file')
                         <div class="mb-4">
@@ -128,12 +132,12 @@
                                 <div class="mt-4"> <!-- Consistent top margin -->
                                     <img src="{{ asset($field['image']) }}" 
                                         alt="{{ trans($field['label']) }}" 
-                                        class="mx-auto md:mx-0 w-full max-w-xs md:w-1/2 md:h-1/2 object-contain {{ !empty($files[$field['name']]) ? 'border-2 border-[#A2DEA2] p-2' : '' }}">
+                                        class="mx-auto md:mx-0 w-full max-w-xs md:w-1/2 md:h-1/2 object-contain {{ isset($files[$field['name']]) && $files[$field['name']] && count($files[$field['name']]) > 0 ? 'border-2 border-[#A2DEA2] p-2' : '' }}">
                                 </div>
                             @endif
                         </div>
                         @error('files.' . trans($field['name']))
-                            <span class="text-[#B92334] text-xs">{{ $message }}</span>
+                            <span class="text-[#B92334] text-xs form-error" id="error-{{ $formIdentifier }}-files-{{ trans($field['name']) }}">{{ $message }}</span>
                         @enderror
                     @endif
                         </div>
@@ -145,7 +149,7 @@
                 <input type="checkbox" wire:model="formData.termsAndConditions" name="termsAndConditions" id="termsAndConditions">
                 <label for="termsAndConditions" class="ml-2 text-color-2 text-sm font-robotoCondensed font-regular">{{ trans('components/contact-form.label-terms-and-conditions-1') }} <a href="{{ route(app()->getLocale() === 'es' ? 'privacy.show.es' : 'privacy.show.en', ['locale' => app()->getLocale()]) }}" class="text-[#B92334] font-robotoCondensed font-bold underline">{{ trans('components/contact-form.label-terms-and-conditions-2') }}</a></label>
                 @error('formData.termsAndConditions')
-                    <span class="text-[#B92334] text-xs relative left-[12px]">{{ $message }}</span>
+                    <span class="text-[#B92334] text-xs relative left-[12px] form-error" id="error-{{ $formIdentifier }}-termsAndConditions">{{ $message }}</span>
                 @enderror
             </p>
             @endif
@@ -171,6 +175,23 @@ document.addEventListener('livewire:init', () => {
                     behavior: 'smooth', 
                     block: 'center' 
                 });
+            }
+        }, 100);
+    });
+
+    Livewire.on('scrollToFirstError', (event) => {
+        setTimeout(() => {
+            const firstError = document.querySelector('.form-error');
+            if (firstError) {
+                firstError.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+                // Optional: Add a visual highlight to the error
+                firstError.style.backgroundColor = '#ffe6e6';
+                setTimeout(() => {
+                    firstError.style.backgroundColor = '';
+                }, 2000);
             }
         }, 100);
     });
