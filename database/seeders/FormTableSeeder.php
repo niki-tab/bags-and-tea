@@ -103,7 +103,7 @@ class FormTableSeeder extends Seeder
                     'image' => '/images/forms/bag-image-1.svg',
                     'type' => 'file',
                     'name' => 'file-1',
-                    'required' => false,
+                    'required' => true,
                 ],
                 [
                     'label' => 'pages/we-buy-your-bag.form-file-2',
@@ -111,7 +111,7 @@ class FormTableSeeder extends Seeder
                     'image' => '/images/forms/bag-image-2.svg',
                     'type' => 'file',
                     'name' => 'file-2',
-                    'required' => false,
+                    'required' => true,
                 ],
                 [
                     'label' => 'pages/we-buy-your-bag.form-file-3',
@@ -119,7 +119,7 @@ class FormTableSeeder extends Seeder
                     'image' => '/images/forms/bag-image-3.svg',
                     'type' => 'file',
                     'name' => 'file-3',
-                    'required' => false,
+                    'required' => true,
                 ],
                 [
                     'label' => 'pages/we-buy-your-bag.form-file-4',
@@ -127,7 +127,7 @@ class FormTableSeeder extends Seeder
                     'image' => '/images/forms/bag-image-4.svg',
                     'type' => 'file',
                     'name' => 'file-4',
-                    'required' => false,
+                    'required' => true,
                 ],
                 [
                     'label' => 'pages/we-buy-your-bag.form-file-5',
