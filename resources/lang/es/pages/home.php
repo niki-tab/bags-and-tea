@@ -55,7 +55,7 @@ return [
     'faq_5_answer' => 'Sí, dispones de un plazo para solicitar la devolución si el bolso no cumple tus expectativas. Nuestra prioridad es tu satisfacción y confianza al comprar bolsos de lujo de segunda mano con nosotros.',
 
     'faq_6_question' => '¿Qué marcas de bolsos de lujo de segunda mano tenéis disponibles?',
-    'faq_6_answer' => 'Vendemos bolsos de Chanel, Hermès, Louis Vuitton, Dior, Saint Laurent, Fendi, Loewe, Prada, Gucci, Balenciaga, Céline, Bottega Veneta, y Polène. Estas son las marcas en las que somos expertos. Siempre estamos evolucionando, y esperamos expandir esta lista en el futuro.',
+    'faq_6_answer' => 'Vendemos bolsos de Chanel, Hermès, Louis Vuitton, Dior, Yves Saint Laurent, Fendi, Loewe, Prada, Gucci, Balenciaga, Céline, Bottega Veneta, y Polène. Estas son las marcas en las que somos expertos. Siempre estamos evolucionando, y esperamos expandir esta lista en el futuro.',
     
     'faq_7_question' => ' ¿Cómo funcionan los envíos y cuánto tardan en llegar los bolsos de segunda mano?',
     'faq_7_answer' => 'Ofrecemos envíos rápidos y asegurados a toda España y otros destinos europeos. En general, tu bolso llegará en un plazo de entre 2 y 5 días laborables, cuidadosamente protegido y listo para ser disfrutado.',

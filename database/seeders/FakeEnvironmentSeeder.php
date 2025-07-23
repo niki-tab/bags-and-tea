@@ -5,19 +5,26 @@ namespace Database\Seeders;
 use Illuminate\Support\Str;
 use App\Models\ProductModel;
 use Illuminate\Database\Seeder;
+use Src\Shared\Domain\Criteria\Order;
+use Src\Shared\Domain\Criteria\Filter;
+use Src\Shared\Domain\Criteria\Filters;
+use Src\Shared\Domain\Criteria\Criteria;
 use App\Models\ProductSizeVariationModel;
+use Src\Shared\Domain\Criteria\FilterField;
+use Src\Shared\Domain\Criteria\FilterValue;
 use App\Models\ProductQuantityVariationModel;
+use Src\Shared\Domain\Criteria\FilterOperator;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Src\Products\Product\Application\AddCategoryToProduct;
 use Src\Products\Product\Application\AddAttributeToProduct;
+use Src\Vendors\Infrastructure\Eloquent\VendorEloquentModel;
 use Src\Categories\Infrastructure\EloquentCategoryRepository;
 use App\Models\ProducSizeVariationQuantityVariationPriceModel;
 use Src\Attributes\Infrastructure\EloquentAttributeRepository;
 use Src\Products\Product\Infrastructure\EloquentProductRepository;
-use Src\Products\Product\Infrastructure\Eloquent\ProductEloquentModel;
 use Src\Products\Product\Infrastructure\Eloquent\ProductMediaModel;
+use Src\Products\Product\Infrastructure\Eloquent\ProductEloquentModel;
 use Src\Products\Quality\Infrastructure\Eloquent\QualityEloquentModel;
-use Src\Vendors\Infrastructure\Eloquent\VendorEloquentModel;
 
 class FakeEnvironmentSeeder extends Seeder
 {
@@ -692,6 +699,19 @@ class FakeEnvironmentSeeder extends Seeder
             $bag9->id
         ]);
 
+        // Assign louis vuitton category
+        $this->assignLouisVuittonCategory([
+            $bag1->id,
+            $bag2->id, 
+            $bag3->id,
+            $bag4->id,
+            $bag5->id,
+            $bag6->id,
+            $bag7->id,
+            $bag8->id,
+            $bag9->id
+        ]);
+
         // Create product media entries for all products
         $this->createProductMediaEntries([
             ['product' => $bag1, 'image_path' => 'images/product/speedy-25-imp-3-1.webp'],
@@ -793,6 +813,45 @@ class FakeEnvironmentSeeder extends Seeder
             $addAttributeToProductUseCase->execute(
                 $productId,
                 $randomManufacturedYear->id
+            );
+        }
+    }
+
+    private function assignLouisVuittonCategory(array $productIds): void
+    {
+        $categoryRepository = new EloquentCategoryRepository();
+
+        $filters = [
+            new Filter(
+                new FilterField('name->en'),
+                new FilterOperator('='),
+                new FilterValue('Louis Vuitton Bags')
+            )
+        ];
+
+        $criteria = new Criteria(new Filters($filters), Order::none(), null, null);
+        $category = $categoryRepository->searchByCriteria($criteria);
+
+        // If no attributes found, return early
+        if (empty($category) || $category === null) {
+
+            return;
+        }
+
+        $categoryId = $category[0]->id;
+
+        foreach ($productIds as $productId) {
+
+            // Manually create dependencies instead of using DI container
+            $productRepository = new EloquentProductRepository();
+            $addCategoryToProductUseCase = new AddCategoryToProduct(
+                $productRepository,
+                $categoryRepository
+            );
+            
+            $addCategoryToProductUseCase->execute(
+                $productId,
+                $categoryId
             );
         }
     }

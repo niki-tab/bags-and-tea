@@ -187,16 +187,16 @@ class BrandTableSeeder extends Seeder
             [
                 'id' => (string) Str::uuid(),
                 'name' => json_encode([
-                    'en' => 'Saint Laurent',
-                    'es' => 'Saint Laurent'
+                    'en' => 'Yves Saint Laurent',
+                    'es' => 'Yves Saint Laurent'
                 ]),
                 'slug' => json_encode([
                     'en' => 'saint-laurent',
                     'es' => 'saint-laurent'
                 ]),
                 'description_1' => json_encode([
-                    'en' => 'Saint Laurent luxury fashion and accessories.',
-                    'es' => 'Saint Laurent moda de lujo y accesorios.'
+                    'en' => 'Yves Saint Laurent luxury fashion and accessories.',
+                    'es' => 'Yves Saint Laurent moda de lujo y accesorios.'
                 ]),
                 'description_2' => json_encode([
                     'en' => 'Parisian luxury and rock \'n\' roll spirit.',
