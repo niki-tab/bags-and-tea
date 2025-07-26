@@ -3,6 +3,7 @@
 namespace Src\Shared\Frontend;
 
 use Livewire\Component;
+use Src\Products\Product\Infrastructure\Eloquent\ProductEloquentModel;
 
 class LanguageSelector extends Component
 {
@@ -49,8 +50,15 @@ class LanguageSelector extends Component
             $this->paramsEnglish = ["locale" => "en", 'articleSlug' => request()->route('articleSlug')];
         }elseif($this->currentRouteName == "product.show.es" || $this->currentRouteName == "product.show.en"){
             $productSlug = request()->route('productSlug');
-            $this->paramsSpanish = ["locale" => "es", 'productSlug' => $productSlug];
-            $this->paramsEnglish = ["locale" => "en", 'productSlug' => $productSlug];
+            
+            // Find the product and get translated slugs
+            $translatedSlugs = $this->getProductTranslatedSlugs($productSlug);
+            
+            $spanishSlug = $translatedSlugs['es'] ?? $productSlug;
+            $englishSlug = $translatedSlugs['en'] ?? $productSlug;
+            
+            $this->paramsSpanish = ["locale" => "es", 'productSlug' => $spanishSlug];
+            $this->paramsEnglish = ["locale" => "en", 'productSlug' => $englishSlug];
         }else{
             $this->paramsSpanish = ["locale" => "es"];
             $this->paramsEnglish = ["locale" => "en"];
@@ -64,6 +72,40 @@ class LanguageSelector extends Component
         $this->currentLanguage = $this->currentLanguage === 'en' ? 'es' : 'en';
 
         //return redirect()->route($newRouteName, ['locale' => $this->currentLanguage]);
+    }
+
+    private function getProductTranslatedSlugs($currentSlug)
+    {
+        try {
+            // Find the product by searching in both language slug fields
+            $product = ProductEloquentModel::where(function ($query) use ($currentSlug) {
+                $query->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.en")) = ?', [$currentSlug])
+                      ->orWhereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.es")) = ?', [$currentSlug]);
+            })->first();
+
+            if ($product && $product->slug) {
+                // If slug is stored as JSON, decode it
+                if (is_string($product->slug)) {
+                    $slugs = json_decode($product->slug, true);
+                } else {
+                    $slugs = $product->slug;
+                }
+
+                return [
+                    'en' => $slugs['en'] ?? $currentSlug,
+                    'es' => $slugs['es'] ?? $currentSlug
+                ];
+            }
+        } catch (\Exception $e) {
+            // If anything fails, return the current slug for both languages
+            \Log::warning('Failed to get translated product slugs: ' . $e->getMessage());
+        }
+
+        // Fallback: return current slug for both languages
+        return [
+            'en' => $currentSlug,
+            'es' => $currentSlug
+        ];
     }
 
     public function render()
