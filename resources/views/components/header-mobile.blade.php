@@ -28,12 +28,7 @@
     </div>
         
     <div id="hamburgerMenuOptions" class="hidden bg-background-color-4 w-full pt-4 mt-4">
-        <div class="relative w-5/6 mx-auto mb-4">
-            <img src="{{ asset('images/icons/vector_search_icon.svg') }}"  
-                    class="absolute left-5 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" 
-                    alt="Search Icon">
-            <input type="text" class="h-12 pl-12 placeholder:font-robotoCondensed placeholder:text-color-2  placeholder:font-light w-full p-2 bg-white text-color-2 rounded-full border border-gray-300 font-robotoCondensed" placeholder="{{ trans('components/header.placeholder-input-search-product') }}">
-        </div>
+        @livewire('shared.search-bar-mobile')
         <div class="flex items-center gap-3 justify-center">
             <a target="_blank" href="https://www.instagram.com/bags.and.tea?igsh=NTgwcGU2a21paGxk&utm_source=qr">
                 <img src="{{asset('images/icons/mobile_header_instagram.svg') }}" 
@@ -63,7 +58,7 @@
                 @livewire('shared/language-selector')
             </div>
         </div>
-        <div class="mt-6">
+        <div class="mt-4">
             <a href="{{ route(app()->getLocale() === 'es' ? 'certify-your-bag.show.es' : 'certify-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('certify-your-bag.show.es') || request()->routeIs('certify-your-bag.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-2xl hover:underline py-4 font-robotoCondensed text-center border-b border-t border-[#E6D4CB]">{{ trans('components/header.menu-option-1') }}</a>
             <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('we-buy-your-bag.show.es') || request()->routeIs('we-buy-your-bag.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-2xl hover:underline py-4 font-robotoCondensed text-center border-b border-[#E6D4CB]">{{ trans('components/header.menu-option-2') }}</a>
             <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('shop.show.es') || request()->routeIs('shop.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-2xl hover:underline py-4 font-robotoCondensed text-center border-b border-[#E6D4CB]">{{ trans('components/header.menu-option-3') }}</a>

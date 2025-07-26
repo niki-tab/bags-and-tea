@@ -16,7 +16,7 @@ return [
     
     'returns' => 'Returns',
     'return_policy' => 'Return policy:',
-    'defects_only' => 'Only returns are accepted in case of defects that have not been visible or detailed in the product photos.',
+    'defects_only' => 'Returns are only accepted for products with defects that were not clearly visible or mentioned in the product photos or description.',
     'contact_for_label' => 'The customer must contact us to obtain a free return shipping label.',
     'free_return_shipping' => 'Free return shipping.',
 ];

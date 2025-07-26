@@ -83,6 +83,35 @@ final class EloquentProductRepository implements ProductRepository
                 continue;
             }
 
+            // Handle search functionality
+            if ($field === 'search') {
+                $locale = app()->getLocale();
+                $query->where(function ($q) use ($value, $locale) {
+                    // Search in product name (JSON translatable field)
+                    $q->whereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%'])
+                      // Search in SKU
+                      ->orWhere('sku', 'LIKE', '%' . $value . '%')
+                      // Search in description fields (JSON translatable)
+                      ->orWhereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(description_1, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%'])
+                      ->orWhereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(description_2, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%'])
+                      // Search in brand name (through relationship)
+                      ->orWhereHas('brand', function ($brandQuery) use ($value, $locale) {
+                          $brandQuery->whereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%']);
+                      })
+                      // Search in category names (through relationship)
+                      ->orWhereHas('categories', function ($categoryQuery) use ($value, $locale) {
+                          $categoryQuery->whereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%']);
+                      })
+                      // Search in attribute names (through relationship)
+                      ->orWhereHas('attributes', function ($attributeQuery) use ($value, $locale) {
+                          $attributeQuery->whereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%']);
+                      })
+                      // SOUNDEX for typo tolerance on product name
+                      ->orWhereRaw("SOUNDEX(JSON_UNQUOTE(JSON_EXTRACT(`name`, '$.{$locale}'))) = SOUNDEX(?)", [$value]);
+                });
+                continue;
+            }
+
             // Handle standard filters
             if ($operator === 'like') {
                 $value = '%' . $value . '%';
@@ -172,6 +201,35 @@ final class EloquentProductRepository implements ProductRepository
                 continue;
             }
 
+            // Handle search functionality
+            if ($field === 'search') {
+                $locale = app()->getLocale();
+                $query->where(function ($q) use ($value, $locale) {
+                    // Search in product name (JSON translatable field)
+                    $q->whereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%'])
+                      // Search in SKU
+                      ->orWhere('sku', 'LIKE', '%' . $value . '%')
+                      // Search in description fields (JSON translatable)
+                      ->orWhereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(description_1, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%'])
+                      ->orWhereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(description_2, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%'])
+                      // Search in brand name (through relationship)
+                      ->orWhereHas('brand', function ($brandQuery) use ($value, $locale) {
+                          $brandQuery->whereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%']);
+                      })
+                      // Search in category names (through relationship)
+                      ->orWhereHas('categories', function ($categoryQuery) use ($value, $locale) {
+                          $categoryQuery->whereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%']);
+                      })
+                      // Search in attribute names (through relationship)
+                      ->orWhereHas('attributes', function ($attributeQuery) use ($value, $locale) {
+                          $attributeQuery->whereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%']);
+                      })
+                      // SOUNDEX for typo tolerance on product name
+                      ->orWhereRaw("SOUNDEX(JSON_UNQUOTE(JSON_EXTRACT(`name`, '$.{$locale}'))) = SOUNDEX(?)", [$value]);
+                });
+                continue;
+            }
+
             // Handle standard filters
             if ($operator === 'like') {
                 $value = '%' . $value . '%';
@@ -254,6 +312,35 @@ final class EloquentProductRepository implements ProductRepository
                     } else {
                         $q->where('attributes.id', $operator, $value);
                     }
+                });
+                continue;
+            }
+
+            // Handle search functionality
+            if ($field === 'search') {
+                $locale = app()->getLocale();
+                $query->where(function ($q) use ($value, $locale) {
+                    // Search in product name (JSON translatable field)
+                    $q->whereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%'])
+                      // Search in SKU
+                      ->orWhere('sku', 'LIKE', '%' . $value . '%')
+                      // Search in description fields (JSON translatable)
+                      ->orWhereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(description_1, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%'])
+                      ->orWhereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(description_2, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%'])
+                      // Search in brand name (through relationship)
+                      ->orWhereHas('brand', function ($brandQuery) use ($value, $locale) {
+                          $brandQuery->whereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%']);
+                      })
+                      // Search in category names (through relationship)
+                      ->orWhereHas('categories', function ($categoryQuery) use ($value, $locale) {
+                          $categoryQuery->whereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%']);
+                      })
+                      // Search in attribute names (through relationship)
+                      ->orWhereHas('attributes', function ($attributeQuery) use ($value, $locale) {
+                          $attributeQuery->whereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%']);
+                      })
+                      // SOUNDEX for typo tolerance on product name
+                      ->orWhereRaw("SOUNDEX(JSON_UNQUOTE(JSON_EXTRACT(`name`, '$.{$locale}'))) = SOUNDEX(?)", [$value]);
                 });
                 continue;
             }

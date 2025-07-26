@@ -37,6 +37,8 @@ class AppServiceProvider extends ServiceProvider
         Livewire::component('shared/pagination', \Src\Shared\Frontend\Pagination::class);
         Livewire::component('crm/forms/show', \Src\Crm\Forms\Frontend\Form::class);
         Livewire::component('shared/whatsapp-widget', \Src\Shared\Frontend\WhatsappWidget::class);
+        Livewire::component('shared.search-bar', \Src\Shared\Frontend\SearchBar::class);
+        Livewire::component('shared.search-bar-mobile', \Src\Shared\Frontend\SearchBarMobile::class);
         Livewire::component('products/show', \Src\Admin\Product\Frontend\ShowAllProduct::class);
         Livewire::component('admin.products.product-form', \App\Livewire\Admin\Products\ProductForm::class);
         Livewire::component('src.products.product.show', \Src\Products\Product\Frontend\ProductDetail::class);

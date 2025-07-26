@@ -465,13 +465,21 @@
     <div class="bg-color-4 py-16 md:py-28 px-14 md:px-32">
             <h2 class="text-center md:text-left text-xl font-bold robotoCondensed text-color-2">
                 @if(app()->getLocale() === 'es')
-                    Descripción 2
+                    @if($categorySlug)
+                        Todo Sobre Nuestros {{$pageTitle}}
+                    @else
+                        Todo Sobre Nuestros Bolsos
+                    @endif
                 @else
-                    Description 2
+                    @if($categorySlug)
+                        All About Our {{$pageTitle}}
+                    @else
+                        All About Our Bags 
+                    @endif
                 @endif
             </h2>
             <p class="text-center md:text-left text-sm robotoCondensed mt-8 text-color-2">
-                {{ $pageDescription2 }}
+                {!! $pageDescription2 !!}
             </p>
     </div>
 </div>

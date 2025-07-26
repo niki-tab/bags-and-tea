@@ -79,4 +79,5 @@ final class EloquentCategoryRepository implements CategoryRepository
         ->get()
         ->all();
     }
+
 }

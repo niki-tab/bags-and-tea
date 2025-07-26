@@ -28,11 +28,11 @@ class DatabaseSeeder extends Seeder
       
       // Existing Seeders
       BrandTableSeeder::class,
+      BagsCategorySeeder::class,
       FakeEnvironmentSeeder::class,
       UserTableSeeder::class,
       FormTableSeeder::class,
       FormSubmissionTableSeeder::class,
-      BagsCategorySeeder::class,
       
     ]);
 
