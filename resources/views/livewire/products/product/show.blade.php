@@ -26,10 +26,23 @@
             </div>
         </div>
         
-        <div class="grid grid-cols-1 lg:grid-cols-[10%_45%_35%] gap-8 mb-16 mt-14">
+        <div class="grid grid-cols-1 lg:grid-cols-[10%_45%_35%] gap-8 mb-16 mt-14" 
+             x-data="{ 
+                 mainImageHeight: 0,
+                 updateHeight() {
+                     this.mainImageHeight = this.$refs.mainImage.offsetHeight;
+                 }
+             }" 
+             x-init="
+                 $nextTick(() => { updateHeight(); });
+                 window.addEventListener('resize', () => { updateHeight(); });
+                 new ResizeObserver(() => { updateHeight(); }).observe($refs.mainImage);
+             ">
             <!-- Column 1: Thumbnail Carousel (20%) -->
             <div class="flex flex-col">
-                <div class="flex lg:flex-col gap-3 lg:h-96 overflow-x-auto lg:overflow-y-auto lg:overflow-x-visible">
+                <div class="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-y-auto lg:overflow-x-visible" 
+                     :style="`height: ${mainImageHeight}px`" 
+                     style="height: 24rem;" x-ref="thumbnailContainer">
                     @if(!empty($productImages))
                         @foreach($productImages as $index => $image)
                             <div class="flex-shrink-0 cursor-pointer transition-all duration-200 hover:opacity-75 {{ $currentImageIndex === $index ? 'border-2 border-color-2' : 'border-2 border-transparent' }}"
@@ -45,7 +58,7 @@
 
             <!-- Column 2: Main Image Display (50%) -->
             <div class="relative">
-                <div class="relative bg-transparent aspect-square mx-auto">
+                <div class="relative bg-transparent aspect-square mx-auto" x-ref="mainImage">
                     @if(!empty($productImages) && isset($productImages[$currentImageIndex]))
                         <img src="{{ str_starts_with($productImages[$currentImageIndex]['file_path'], 'https://') || str_contains($productImages[$currentImageIndex]['file_path'], 'r2.cloudflarestorage.com') ? $productImages[$currentImageIndex]['file_path'] : asset($productImages[$currentImageIndex]['file_path']) }}" 
                              alt="{{ $product->getTranslation('name', app()->getLocale()) }}" 
