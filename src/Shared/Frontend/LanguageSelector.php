@@ -3,7 +3,7 @@
 namespace Src\Shared\Frontend;
 
 use Livewire\Component;
-use Src\Products\Product\Infrastructure\Eloquent\ProductEloquentModel;
+use Illuminate\Support\Facades\DB;
 
 class LanguageSelector extends Component
 {
@@ -77,19 +77,17 @@ class LanguageSelector extends Component
     private function getProductTranslatedSlugs($currentSlug)
     {
         try {
-            // Find the product by searching in both language slug fields
-            $product = ProductEloquentModel::where(function ($query) use ($currentSlug) {
-                $query->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.en")) = ?', [$currentSlug])
-                      ->orWhereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.es")) = ?', [$currentSlug]);
-            })->first();
+            // Find the product by searching in both language slug fields using raw DB query
+            $product = DB::table('products')
+                ->where(function ($query) use ($currentSlug) {
+                    $query->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.en")) = ?', [$currentSlug])
+                          ->orWhereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.es")) = ?', [$currentSlug]);
+                })
+                ->first();
 
             if ($product && $product->slug) {
                 // If slug is stored as JSON, decode it
-                if (is_string($product->slug)) {
-                    $slugs = json_decode($product->slug, true);
-                } else {
-                    $slugs = $product->slug;
-                }
+                $slugs = json_decode($product->slug, true);
 
                 return [
                     'en' => $slugs['en'] ?? $currentSlug,
