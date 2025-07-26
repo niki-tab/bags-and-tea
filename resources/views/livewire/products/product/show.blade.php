@@ -8,15 +8,15 @@
         
         <!-- Product Specifications - Below title, above grid -->
         <div class="grid grid-cols-2 gap-10 lg:flex lg:justify-center mb-8 text-sm w-96 lg:w-auto max-w-6xl mx-auto mt-10">
-            <div class="text-left whitespace-nowrap lg:mr-12">
+            <div class="text-left whitespace-nowrap lg:mr-8">
                 <span class="text-color-2 font-medium text-base lg:text-lg">{{ app()->getLocale() === 'es' ? 'Estado:' : 'Condition:' }}</span>
                 <span class="font-medium text-base lg:text-lg text-[#AC2231]"> {{ $specifications['estado'] ?? 'N/A' }}</span>
             </div>
-            <div class="text-left whitespace-nowrap lg:mr-12">
+            <div class="text-left whitespace-nowrap lg:mr-8">
                 <span class="text-color-2 font-medium text-base lg:text-lg">{{ app()->getLocale() === 'es' ? 'Año:' : 'Year:' }}</span>
                 <span class="font-medium text-base lg:text-lg text-[#AC2231]"> {{ $specifications['ano'] ?? 'N/A' }}</span>
             </div>
-            <div class="text-left whitespace-nowrap lg:mr-12">
+            <div class="text-left whitespace-nowrap lg:mr-8">
                 <span class="text-color-2 font-medium text-base lg:text-lg">{{ app()->getLocale() === 'es' ? 'Color:' : 'Color:' }}</span>
                 <span class="font-medium text-base lg:text-lg text-[#AC2231]"> {{ $specifications['color'] ?? 'N/A' }}</span>
             </div>
