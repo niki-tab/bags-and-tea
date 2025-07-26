@@ -76,6 +76,9 @@ class Shop extends Component
     #[Url(as: 'page')]
     public $currentPage = 1;
 
+    #[Url]
+    public $search = '';
+
     public $perPage = 16;
 
     public $totalProducts = 0;
@@ -657,7 +660,7 @@ class Shop extends Component
         $offset = ($this->currentPage - 1) * $this->perPage;
 
         // Execute use case
-        $result = $getShopData->execute($this->appliedFilters, $this->selectedSortBy, $this->categorySlug, $offset, $this->perPage);
+        $result = $getShopData->execute($this->appliedFilters, $this->selectedSortBy, $this->categorySlug, $offset, $this->perPage, $this->search);
 
         $this->products = $result['products'];
         $this->totalProducts = $result['totalCount'] ?? 0;

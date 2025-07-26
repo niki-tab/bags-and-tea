@@ -37,10 +37,11 @@ return [
     
     // Page content
     'page_title' => 'LUXURY HANDBAGS',
-    'page_description' => 'Discover our curated collection of authentic luxury handbags from the world\'s most prestigious brands.',
+    'page_description' => "At Bags & Tea, we give you access to a carefully curated selection of second-hand luxury bags — original, verified, and full of soul. We work exclusively with the great luxury houses — such as Chanel, Hermès, Louis Vuitton, or Yves Saint Laurent, among others — to offer you iconic pieces, limited editions, and timeless designs. Each bag has been chosen for its authenticity, condition, and aesthetic value. If you're looking to buy a second-hand designer bag with guarantees, style, and exclusivity, you're in the right place.",
     'default_description_2' => 'Exceptional quality and timeless elegance in every piece.',
     
     // SEO content
-    'page-seo-title' => 'Pre-owned Luxury Handbags Shop- Authentic Designer Bags',
-    'page-seo-description' => 'Shop authentic luxury handbags from top designer brands. Curated collection of pre-owned and new designer bags with guaranteed authenticity.',
+    'page-seo-title' => 'Second-Hand Luxury Bags | Buy Authentic Designer Bags',
+    'page-seo-description' => 'Shop original second-hand luxury bags. Iconic, verified, and curated pieces from the world’s top brands.',
+
 ];

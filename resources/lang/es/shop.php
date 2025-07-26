@@ -37,10 +37,10 @@ return [
     
     // Page content
     'page_title' => 'BOLSOS DE LUJO',
-    'page_description' => 'Descubre nuestra colección curada de bolsos de lujo auténticos de las marcas más prestigiosas del mundo.',
+    'page_description' => 'En Bags & Tea te damos acceso a una cuidada selección de bolsos de lujo de segunda mano, originales, verificados y con alma. Trabajamos exclusivamente con las grandes casas del lujo —como Chanel, Hermès, Louis Vuitton o Yves Saint Laurent entre otros— para ofrecerte piezas icónicas, ediciones limitadas y diseños atemporales. Cada bolso ha sido elegido por su autenticidad, estado y valor estético. Si buscas comprar un bolso de marca de segunda mano con garantías, estilo y exclusividad, estás en el lugar adecuado.',
     'default_description_2' => 'Calidad excepcional y elegancia atemporal en cada pieza.',
     
     // SEO content
-    'page-seo-title' => 'Tienda de Bolsos de Lujo de segunda mano- Bolsos de Diseñador Auténticos',
-    'page-seo-description' => 'Compra bolsos de lujo auténticos de las mejores marcas de diseñadores. Colección curada de bolsos de diseñador nuevos y de segunda mano con autenticidad garantizada.',
+    'page-seo-title' => 'Bolsos de Lujo de Segunda Mano | Comprar bolsos de marca auténticos',
+    'page-seo-description' => 'Compra bolsos de lujo originales de segunda mano. Piezas icónicas, verificadas y seleccionadas de las mejores marcas del mundo.',
 ];

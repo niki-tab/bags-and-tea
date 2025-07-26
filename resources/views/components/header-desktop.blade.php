@@ -12,16 +12,7 @@
 
         <!-- Left Column -->
         <div class="bg-background-color-4 w-full flex items-center py-4 pl-16">
-            <div class="relative w-3/5">
-                <img src="{{ asset('images/icons/vector_search_icon.svg') }}" 
-                class="absolute left-5 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" 
-                alt="Search Icon">
-
-                <input type="text" 
-                    class="text-sm h-10 placeholder:font-robotoCondensed placeholder:text-color-2  placeholder:font-light font-robotoCondensed w-full p-3 pl-12 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400" 
-                    placeholder="{{ trans('components/header.placeholder-input-search-product') }}"
-                >
-            </div>
+            @livewire('shared.search-bar')
         </div>
         <!-- Right Column -->
         <div class="flex w-full bg-background-color-4">

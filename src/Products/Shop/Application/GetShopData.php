@@ -29,7 +29,7 @@ final class GetShopData
         private QualityRepository $qualityRepository
     ) {}
 
-    public function execute(array $appliedFilters = [], string $sortBy = '', ?string $categorySlug = null, ?int $offset = null, ?int $limit = 50): array
+    public function execute(array $appliedFilters = [], string $sortBy = '', ?string $categorySlug = null, ?int $offset = null, ?int $limit = 50, ?string $searchQuery = null): array
     {
         // Get active shop filters configuration
         $activeFilters = $this->shopFilterRepository->findActive();
@@ -43,10 +43,10 @@ final class GetShopData
         }
 
         // Get filtered products
-        $products = $this->getFilteredProducts($appliedFilters, $sortBy, $categorySlug, $offset, $limit);
+        $products = $this->getFilteredProducts($appliedFilters, $sortBy, $categorySlug, $offset, $limit, $searchQuery);
 
         // Get total count for pagination (without limit/offset)
-        $totalCount = count($this->getFilteredProducts($appliedFilters, $sortBy, $categorySlug, null, null));
+        $totalCount = count($this->getFilteredProducts($appliedFilters, $sortBy, $categorySlug, null, null, $searchQuery));
 
         return [
             'filters' => $activeFilters,
@@ -90,7 +90,7 @@ final class GetShopData
         return $this->sortOptionsAlphabetically($options);
     }
 
-    private function getFilteredProducts(array $appliedFilters, string $sortBy = '', ?string $categorySlug = null, ?int $offset = null, ?int $limit = 50): array
+    private function getFilteredProducts(array $appliedFilters, string $sortBy = '', ?string $categorySlug = null, ?int $offset = null, ?int $limit = 50, ?string $searchQuery = null): array
     {
         $filters = [];
         
@@ -246,6 +246,16 @@ final class GetShopData
                     }
                     break;
             }
+        }
+
+        // Add search functionality if search query is provided
+        if (!empty($searchQuery) && strlen(trim($searchQuery)) >= 2) {
+            $trimmedQuery = trim($searchQuery);
+            $filters[] = new Filter(
+                new FilterField('search'),
+                new FilterOperator('like'),
+                new FilterValue($trimmedQuery)
+            );
         }
 
         // Create sorting order
