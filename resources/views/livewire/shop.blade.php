@@ -108,7 +108,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
-                            <div class="dropdown-content absolute z-10 mt-1 bg-white border border-gray-300 rounded shadow-lg max-h-60 overflow-y-auto min-w-[200px] hidden">
+                            <div class="dropdown-content absolute z-50 mt-1 bg-white border border-gray-300 rounded shadow-lg max-h-60 overflow-y-auto min-w-[200px] hidden">
                                 @foreach($options as $option)
                                     <label class="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
                                         @php
@@ -221,7 +221,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
-                    <div class="dropdown-content absolute z-10 mt-1 bg-white border border-gray-300 rounded shadow-lg max-h-60 overflow-y-auto min-w-[200px] hidden">
+                    <div class="dropdown-content absolute z-50 mt-1 bg-white border border-gray-300 rounded shadow-lg max-h-60 overflow-y-auto min-w-[200px] hidden">
                         <label class="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
                             <input type="checkbox" 
                                    wire:change="toggleFilter('price', '0-100')"
