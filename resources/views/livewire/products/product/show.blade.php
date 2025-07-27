@@ -106,13 +106,13 @@
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="space-y-4 mb-10 flex flex-col items-center mx-10 lg:mx-0 lg:ml-10 px-0 lg:px-4">
-                    <button disabled class="w-full bg-gray-400 text-white py-4 px-6 text-lg font-medium cursor-not-allowed opacity-60 font-['Lora']">
-                        {{ app()->getLocale() === 'es' ? 'Web en construcción' : 'Website under construction' }}
-                    </button>
-                    <button disabled class="w-full border-2 border-gray-400 text-gray-400 py-4 px-6 text-lg font-medium cursor-not-allowed opacity-60 font-['Lora']">
-                        {{ app()->getLocale() === 'es' ? 'Web en construcción' : 'Website under construction' }}
-                    </button>
+                <div class="mb-10 w-full max-w-md mx-auto lg:mx-0 lg:ml-5 px-7 md:px-10">
+                    @livewire('cart.add-to-cart-button', [
+                        'productId' => $product->id, 
+                        'buttonText' => trans('components/cart.add-to-cart'),
+                        'isSoldOut' => $product->is_sold_out || $product->out_of_stock,
+                        'isHidden' => $product->is_hidden
+                    ])
                 </div>
 
                 <!-- Certificado Autenticidad -->

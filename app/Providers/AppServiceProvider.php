@@ -7,9 +7,11 @@ use Illuminate\Support\ServiceProvider;
 use Src\Crm\Forms\Domain\FormRepository;
 use Src\Products\Product\Domain\ProductRepository;
 use Src\Blog\Articles\Domain\ArticleRepository;
+use Src\Cart\Domain\CartRepository;
 use Src\Crm\Forms\Infrastructure\EloquentFormRepository;
 use Src\Products\Product\Infrastructure\EloquentProductRepository;
 use Src\Blog\Articles\Infrastructure\EloquentArticleRepository;
+use Src\Cart\Infrastructure\EloquentCartRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
          */
         ProductRepository::class => EloquentProductRepository::class,
         ArticleRepository::class => EloquentArticleRepository::class,
+        CartRepository::class => EloquentCartRepository::class,
 
     ];
 
@@ -43,6 +46,11 @@ class AppServiceProvider extends ServiceProvider
         Livewire::component('admin.products.product-form', \App\Livewire\Admin\Products\ProductForm::class);
         Livewire::component('src.products.product.show', \Src\Products\Product\Frontend\ProductDetail::class);
         Livewire::component('src.products.product.additional-information', \Src\Products\Product\Frontend\ProductAdditionalInformation::class);
+        
+        // Cart components
+        Livewire::component('cart.page', \Src\Cart\Frontend\CartPage::class);
+        Livewire::component('cart.icon', \Src\Cart\Frontend\CartIcon::class);
+        Livewire::component('cart.add-to-cart-button', \Src\Cart\Frontend\AddToCartButton::class);
 
         $this->app->bind(FormRepository::class, EloquentFormRepository::class);
     }

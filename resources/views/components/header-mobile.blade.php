@@ -48,12 +48,9 @@
                     onmouseover="this.src='{{ request()->routeIs('login.show.en-es') ? asset('images/icons/mobile_user_avatar_clicked.svg') : asset('images/icons/mobile_user_avatar_hover.svg') }}'"
                     onmouseout="this.src='{{ request()->routeIs('login.show.en-es') ? asset('images/icons/mobile_user_avatar_clicked.svg') : asset('images/icons/mobile_user_avatar.svg') }}'">
             </a>
-            <a class="mb-1" href="{{ route(app()->getLocale() === 'es' ? 'cart.edit.es' : 'cart.edit.en', ['locale' => app()->getLocale()]) }}">
-                <img src="{{ request()->routeIs('cart.edit.es') || request()->routeIs('cart.edit.en') ? asset('images/icons/mobile_cart_icon_clicked_2.svg') : asset('images/icons/mobile_cart_icon.svg') }}" 
-                    class="w-8 h-8 cursor-pointer"
-                    onmouseover="this.src='{{ request()->routeIs('cart.edit.es') || request()->routeIs('cart.edit.en') ? asset('images/icons/mobile_cart_icon_clicked_2.svg') : asset('images/icons/mobile_cart_icon_clicked.svg') }}'"
-                    onmouseout="this.src='{{ request()->routeIs('cart.edit.es') || request()->routeIs('cart.edit.en') ? asset('images/icons/mobile_cart_icon_clicked_2.svg') : asset('images/icons/mobile_cart_icon.svg') }}'">
-            </a>
+            <div class="mb-1">
+                @livewire('cart.icon')
+            </div>
             <div class="ml-[-8px] mt-[2px]">
                 @livewire('shared/language-selector')
             </div>

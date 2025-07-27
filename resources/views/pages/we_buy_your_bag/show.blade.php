@@ -8,6 +8,10 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
 bg-background-color-4  {{-- or any other Tailwind class you want for this specific page --}}
 @endsection
 
+@section('footer-mobile-class')
+bg-background-color-4  {{-- or any other Tailwind class you want for this specific page --}}
+@endsection
+
 @section('content')
 
 @php

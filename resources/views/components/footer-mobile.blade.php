@@ -1,5 +1,5 @@
-<div class="md:hidden relative items-center justify-content">
-    <div class="bg-white h-[160px]">
+<div class="md:hidden relative items-center justify-content @yield('footer-mobile-class', 'bg-white')">
+    <div class="h-[160px]">
         
     </div>
     <div class="bg-background-color-3 h-[1320px]">
