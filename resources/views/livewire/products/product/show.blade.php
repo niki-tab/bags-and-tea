@@ -40,9 +40,9 @@
              ">
             <!-- Column 1: Thumbnail Carousel (20%) -->
             <div class="flex flex-col">
-                <div class="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-y-auto lg:overflow-x-visible" 
-                     :style="`height: ${mainImageHeight}px`" 
-                     style="height: 24rem;" x-ref="thumbnailContainer">
+                <div class="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-y-auto lg:overflow-x-visible h-auto lg:h-auto" 
+                     :style="window.innerWidth >= 1024 ? `height: ${mainImageHeight}px` : ''"
+                     x-ref="thumbnailContainer">
                     @if(!empty($productImages))
                         @foreach($productImages as $index => $image)
                             <div class="flex-shrink-0 cursor-pointer transition-all duration-200 hover:opacity-75 {{ $currentImageIndex === $index ? 'border-2 border-color-2' : 'border-2 border-transparent' }}"
