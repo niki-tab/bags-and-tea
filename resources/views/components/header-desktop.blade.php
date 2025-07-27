@@ -34,12 +34,7 @@
                         </a>
                     </div>
                     <div class="flex-1 flex justify-center px-1">
-                        <a href="{{ route(app()->getLocale() === 'es' ? 'cart.edit.es' : 'cart.edit.en', ['locale' => app()->getLocale()]) }}">
-                            <img src="{{ request()->routeIs('cart.edit.es') || request()->routeIs('cart.edit.en') ? asset('images/icons/icon_cart_header_clicked.svg') : asset('images/icons/icon_cart_header.svg') }}" 
-                                class="w-7 h-5 cursor-pointer"
-                                onmouseover="this.src='{{ request()->routeIs('cart.edit.es') || request()->routeIs('cart.edit.en') ? asset('images/icons/icon_cart_header_clicked.svg') : asset('images/icons/icon_cart_header_hover.svg') }}'"
-                                onmouseout="this.src='{{ request()->routeIs('cart.edit.es') || request()->routeIs('cart.edit.en') ? asset('images/icons/icon_cart_header_clicked.svg') : asset('images/icons/icon_cart_header.svg') }}'">
-                        </a>
+                        @livewire('cart.icon')
                     </div>
                     <div class="flex-1 flex justify-center mr-3 pt-1">
                         @livewire('shared/language-selector')

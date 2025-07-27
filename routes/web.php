@@ -192,12 +192,12 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
     })->name('login.show.en-es')->where('locale', 'en|es');
 
     Route::get('/carrito', function () {
-        return view('pages/we_are_under_construction/show');
-    })->name('cart.edit.es')->where('locale', 'es');
+        return view('pages/cart/show');
+    })->name('cart.show.es')->where('locale', 'es');
 
     Route::get('/cart', function () {
-        return view('pages/we_are_under_construction/show');
-    })->name('cart.edit.en')->where('locale', 'en');
+        return view('pages/cart/show');
+    })->name('cart.show.en')->where('locale', 'en');
 
     Route::get('/privacidad', function () {
         return view('pages/legal/policy');

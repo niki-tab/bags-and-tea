@@ -1,3 +1,7 @@
+@section('footer-desktop-class')
+bg-background-color-4  {{-- or any other Tailwind class you want for this specific page --}}
+@endsection
+
 <div class="container mx-auto px-4 pl-16 md:py-8 py-12">
     <h1 class="text-4xl font-bold text-gray-800 mb-8">{{ trans('components/cart.title') }}</h1>
     @if(count($cartItems) > 0)
