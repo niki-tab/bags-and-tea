@@ -75,6 +75,16 @@ class AdminPanelController extends Controller
         return view('pages.admin-panel.dashboard.settings');
     }
 
+    public function formSubmissions(): View
+    {
+        return view('pages.admin-panel.forms.submissions');
+    }
+
+    public function formSubmissionDetail(string $id): View
+    {
+        return view('pages.admin-panel.forms.submission-detail', ['submissionId' => $id]);
+    }
+
     public function logout(): RedirectResponse
     {
         $this->adminAuthenticator->logout();

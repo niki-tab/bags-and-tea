@@ -101,6 +101,10 @@ Route::prefix('admin-panel')->name('admin.')->group(function () {
             
             // Settings & Configuration
             Route::get('/settings', [AdminPanelController::class, 'settings'])->name('settings');
+            
+            // Form Submissions Management
+            Route::get('/form-submissions', [AdminPanelController::class, 'formSubmissions'])->name('form-submissions');
+            Route::get('/form-submissions/{id}', [AdminPanelController::class, 'formSubmissionDetail'])->name('form-submissions.detail');
         });
     });
 });

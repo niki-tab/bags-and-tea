@@ -24,6 +24,11 @@ src/
 │   ├── Brands/              # Brands entity module
 │   ├── Quality/             # Quality entity module
 │   └── Shop/                # Shop frontend component
+├── Cart/                    # Shopping cart domain
+│   ├── Application/         # AddItemToCart, RemoveItemFromCart, UpdateCartItemQuantity, etc.
+│   ├── Domain/              # CartRepository interface
+│   ├── Infrastructure/      # EloquentCartRepository, CartEloquentModel, CartItemEloquentModel
+│   └── Frontend/           # CartPage, CartIcon, AddToCartButton
 ├── Categories/              # Categories domain
 │   ├── Infrastructure/      # CategoryEloquentModel
 │   └── Eloquent/           # Category models
@@ -63,8 +68,12 @@ src/
 
 ### 1. Use Cases & Application Layer
 - Use cases use `__invoke` method as single entry point when applicable
+- **IMPORTANT**: Use cases should contain only `__construct()` and `__invoke()` methods
+- **Reserved Words**: "Get" and "Post" are reserved for infrastructure layer naming only
+- Use descriptive verbs in use cases: "Retrieve", "Add", "Update", "Remove" (NOT "Get")
 - Application services handle complex business logic
 - Example: `ProductSearcher` handles search functionality with typo tolerance
+- Example: `AddItemToCart` handles cart item validation and duplicate prevention
 - Use cases are injected into Livewire components
 
 ### 2. Repository Pattern
@@ -83,6 +92,8 @@ src/
 - Products table with translatable fields (JSON columns)
 - UUID primary keys for some entities, auto-increment for others
 - Proper relationships: products → vendors, brands, categories, attributes
+- Cart tables: carts (UUID PK), cart_items (UUID PK) with proper foreign keys
+- Session-based carts with expires_at for guest users
 - Media table for product images (R2 CloudFlare + local storage)
 
 ### 5. Search Functionality
@@ -102,6 +113,7 @@ src/
 ## Current Features
 - **Marketplace Platform**: Single vendor (Bags & Tea) with multi-vendor architecture
 - **Product Management**: Full CRUD with categories, brands, attributes, and quality ratings
+- **Shopping Cart**: Full cart functionality with guest/user sessions, duplicate prevention
 - **Search Functionality**: Real-time search with typo tolerance and suggestions
 - **Multi-language Support**: English/Spanish with translatable content
 - **Shop Frontend**: Product catalog with filtering, sorting, and pagination
