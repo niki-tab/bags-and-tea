@@ -52,6 +52,10 @@ class AppServiceProvider extends ServiceProvider
         Livewire::component('cart.icon', \Src\Cart\Frontend\CartIcon::class);
         Livewire::component('cart.add-to-cart-button', \Src\Cart\Frontend\AddToCartButton::class);
 
+        // Admin CRM components
+        Livewire::component('admin.crm.show-all-form-submissions', \Src\Admin\Crm\Frontend\ShowAllFormSubmissions::class);
+        Livewire::component('admin.crm.show-submission-detail', \Src\Admin\Crm\Frontend\ShowSubmissionDetail::class);
+
         $this->app->bind(FormRepository::class, EloquentFormRepository::class);
     }
 
