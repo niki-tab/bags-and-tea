@@ -25,6 +25,15 @@
             <div class="w-1/2 bg-background-color-4 flex items-center">
                 
                 <div class="ml-10 bg-background-color-4 flex items-center justify-center">
+                    <!-- Botón Vende tu bolso -->
+                    <div class="flex items-center">
+                        <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}"
+                            class="mt-2 px-4 h-7 py-[5px] font-robotoCondensed bg-background-color-2 text-white rounded-full text-xs font-regular hover:bg-background-color-3 transition whitespace-nowrap">
+                            {{ trans('components/header.button-sell-your-bag') }}
+                        </a>
+                    </div>
+                    <!-- Espaciador responsive -->
+                    <div class="w-4 md:w-6 lg:w-8"></div>
                     <div class="flex-1 flex justify-center px-1">
                         <a href="{{ route(app()->getLocale() === 'es' ? 'login.show.en-es' : 'login.show.en-es', ['locale' => app()->getLocale()]) }}">
                             <img src="{{ request()->routeIs('login.show.en-es') ? asset('images/icons/icon_user_avatar_header_clicked.svg') : asset('images/icons/icon_user_avatar_header.svg') }}" 
@@ -85,13 +94,8 @@
                 <a href="{{ route(app()->getLocale() === 'es' ? 'blog.show.en-es' : 'blog.show.en-es', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('blog.show.en-es') || request()->routeIs('article.show.es') || request()->routeIs('article.show.es') ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-14 flex items-center justify-center text-color-2 font-robotoCondensed text-base font-medium hover:text-color-3 pb-2 px-4 whitespace-nowrap">{{ trans('components/header.menu-option-5') }}</a>
                 <a href="{{ route(app()->getLocale() === 'es' ? 'contact.send.es' : 'contact.send.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('contact.send.es') || request()->routeIs('contact.send.en') ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-14 flex items-center justify-center text-color-2 font-robotoCondensed text-base font-medium hover:text-color-3 pb-2 px-4 whitespace-nowrap">{{ trans('components/header.menu-option-6') }}</a>
             </nav>
-            <!-- Botón alineado a la derecha -->
-            <div class="flex items-center w-[160px] justify-end mr-8">
-                <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}"
-                    class="mb-2 px-8 h-8 py-1.5 font-robotoCondensed bg-background-color-2 text-white rounded-full text-sm font-regular hover:bg-background-color-3 transition whitespace-nowrap">
-                    {{ trans('components/header.button-sell-your-bag') }}
-                </a>
-            </div>
+            <!-- Espacio vacío -->
+            <div class="w-[160px]"></div>
         </div>
     </div>
     </div>
