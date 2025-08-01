@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Src\Cart\Application;
 
 use Src\Cart\Domain\CartRepository;
+use Src\Products\Product\Infrastructure\EloquentProductRepository;
 
 final class UpdateCartItemQuantity
 {
     public function __construct(
-        private CartRepository $cartRepository
+        private CartRepository $cartRepository,
+        private EloquentProductRepository $productRepository = new EloquentProductRepository()
     ) {}
 
     public function __invoke(
@@ -36,6 +38,18 @@ final class UpdateCartItemQuantity
         
         if (!$cart) {
             throw new \InvalidArgumentException('Cart not found');
+        }
+
+        // Check product stock if quantity is being increased
+        if ($quantity > 0) {
+            $product = $this->productRepository->search($productId);
+            if (!$product) {
+                throw new \InvalidArgumentException('Product not found');
+            }
+
+            if ($quantity > $product->stock) {
+                throw new \InvalidArgumentException('Insufficient stock available. Only ' . $product->stock . ' units in stock.');
+            }
         }
 
         $this->cartRepository->updateItemQuantity($cart['id'], $productId, $quantity);

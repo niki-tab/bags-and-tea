@@ -48,7 +48,7 @@
                     <div class="space-y-6">
                         @foreach($cartItems as $item)
                             @if(isset($item['product']))
-                                <div class="bg-white rounded-lg shadow-sm border p-6">
+                                <div class="bg-white shadow-sm border p-6">
                                     <div class="flex flex-col md:flex-row gap-6">
                                         <!-- Product Image -->
                                         <div class="flex-shrink-0">
@@ -87,7 +87,8 @@
                                                     </button>
                                                     <span class="w-12 text-center font-medium">{{ $item['quantity'] }}</span>
                                                     <button wire:click="updateQuantity('{{ $item['product_id'] }}', {{ min(999, $item['quantity'] + 1) }})" 
-                                                            class="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-md hover:bg-gray-100">
+                                                            class="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-md hover:bg-gray-100 {{ $item['quantity'] >= ($item['product']['stock'] ?? 0) ? 'opacity-50 cursor-not-allowed' : '' }}"
+                                                            {{ $item['quantity'] >= ($item['product']['stock'] ?? 0) ? 'disabled' : '' }}>
                                                         <span class="text-sm font-medium">+</span>
                                                     </button>
                                                 </div>
@@ -123,14 +124,18 @@
 
                 <!-- Cart Summary (1/3 width) -->
                 <div class="lg:col-span-1">
-                    <div class="bg-white rounded-lg shadow-sm border p-6 sticky top-4">
+                    <div class="bg-white shadow-sm border p-6 sticky top-4">
                         <h2 class="text-xl font-medium text-color-2 mb-6">{{ trans('components/cart.summary') }}</h2>
                         
                         <div class="space-y-4">
-                            <div class="flex justify-between">
-                                <span class="text-color-2">{{ trans('components/cart.items') }} ({{ $totalItems }})</span>
-                                <span class="font-medium text-color-2">€{{ number_format($totalPrice, 2, ',', '.') }}</span>
-                            </div>
+                            @foreach($cartItems as $item)
+                                @if(isset($item['product']))
+                                    <div class="flex justify-between">
+                                        <span class="text-color-2">{{ $item['product']['name'][app()->getLocale()] ?? 'Product' }} ({{ $item['quantity'] }})</span>
+                                        <span class="font-medium text-color-2">€{{ number_format(($item['product']['price'] ?? 0) * $item['quantity'], 2, ',', '.') }}</span>
+                                    </div>
+                                @endif
+                            @endforeach
                             
                             <hr class="border-gray-200">
                             

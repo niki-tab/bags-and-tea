@@ -50,6 +50,13 @@ class CartPage extends Component
             $this->loadCart();
             $this->dispatch('cartUpdated');
             
+        } catch (\InvalidArgumentException $e) {
+            // Handle specific stock validation errors
+            if (str_contains($e->getMessage(), 'Insufficient stock')) {
+                session()->flash('cart-error', $e->getMessage());
+            } else {
+                session()->flash('cart-error', trans('components/cart.error-updating'));
+            }
         } catch (\Exception $e) {
             session()->flash('cart-error', trans('components/cart.error-updating'));
         } finally {

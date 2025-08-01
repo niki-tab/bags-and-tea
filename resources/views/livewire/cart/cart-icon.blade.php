@@ -17,7 +17,7 @@
          onmouseout="this.src='{{ request()->routeIs('cart.show.es') || request()->routeIs('cart.show.en') ? asset('images/icons/mobile_cart_icon_clicked_2.svg') : asset('images/icons/mobile_cart_icon.svg') }}'">
     
     @if($totalItems > 0)
-        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center min-w-[20px]">
+        <span class="absolute -top-2 -right-2 bg-color-2 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center min-w-[20px]">
             {{ $totalItems > 99 ? '99+' : $totalItems }}
         </span>
     @endif
