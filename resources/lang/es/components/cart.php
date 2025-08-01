@@ -28,4 +28,5 @@ return [
     'error-removing' => 'Error al eliminar artículo del carrito. Por favor, inténtalo de nuevo.',
     'error-updating' => 'Error al actualizar la cantidad del artículo. Por favor, inténtalo de nuevo.',
     'error-clearing' => 'Error al vaciar el carrito. Por favor, inténtalo de nuevo.',
+    'vat-included' => '(IVA incluido)',
 ];

@@ -28,4 +28,5 @@ return [
     'error-removing' => 'Error removing item from cart. Please try again.',
     'error-updating' => 'Error updating item quantity. Please try again.',
     'error-clearing' => 'Error clearing cart. Please try again.',
+    'vat-included' => '(VAT included)',
 ];
