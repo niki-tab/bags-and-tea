@@ -97,6 +97,7 @@
                                                 <div class="text-right">
                                                     <div class="text-lg font-bold text-[#CA2530]">
                                                         €{{ number_format(($item['product']['price'] ?? 0) * $item['quantity'], 2, ',', '.') }}
+                                                        <span class="text-xs font-normal align-baseline">{{ trans('components/cart.vat-included') }}</span>
                                                     </div>
                                                     @if($item['quantity'] > 1)
                                                         <div class="text-sm text-gray-500">
@@ -140,7 +141,10 @@
                             <hr class="border-gray-200">
                             
                             <div class="flex justify-between text-lg font-bold">
-                                <span class="text-color-2">{{ trans('components/cart.total') }}</span>
+                                <div class="text-color-2">
+                                    <span>{{ trans('components/cart.total') }}</span>
+                                    <span class="text-xs font-normal align-baseline">{{ trans('components/cart.vat-included') }}</span>
+                                </div>
                                 <span class="text-[#CA2530]">€{{ number_format($totalPrice, 2, ',', '.') }}</span>
                             </div>
                         </div>
