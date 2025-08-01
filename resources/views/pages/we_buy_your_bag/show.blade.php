@@ -211,7 +211,8 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
                 <p class="font-mixed text-white mt-6 md:mt-8">
                 {{ $stringSellYourbagDescription }}
                 </p>
-                <button onclick="document.getElementById('sell-your-bag-form').scrollIntoView({behavior: 'smooth'})" class="mt-6 md:mt-8 bg-black text-white px-8 md:px-12 py-2 md:py-3 rounded-full font-medium">
+                <button onclick="document.getElementById('sell-your-bag-form').scrollIntoView({behavior: 'smooth'})" 
+                        class="mt-6 md:mt-8 bg-background-color-2 text-white px-8 md:px-12 py-2 md:py-3 rounded-full font-medium hover:bg-background-color-3 transition">
                     {{ $stringSellYourbagButton }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
                 </button>
             </div>
@@ -263,7 +264,10 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
                 </p>
             </div>
         </div>
-        <button onclick="document.getElementById('sell-your-bag-form').scrollIntoView({behavior: 'smooth'})" class="bg-black text-white px-12 py-3 rounded-full font-medium mx-auto mt-12 md:mt-0">{{ $stringSellYourbagButton }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;></button>
+        <button onclick="document.getElementById('sell-your-bag-form').scrollIntoView({behavior: 'smooth'})" 
+                class="bg-background-color-2 text-white px-12 py-3 rounded-full font-medium mx-auto mt-12 md:mt-0 hover:bg-background-color-3 transition">
+            {{ $stringSellYourbagButton }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
+        </button>
         
     </div>
     <div class="bg-[#F8F3F0] py-20 hidden min-[1424px]:block">
