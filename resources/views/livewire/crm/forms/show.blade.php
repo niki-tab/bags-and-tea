@@ -115,7 +115,7 @@
                             </div>
                             
                             <!-- File input with better mobile styling -->
-                            <div class="mb-4 flex justify-center md:justify-start">
+                            <div class="flex justify-center md:justify-start">
                                 <input type="file"
                                     wire:model="files.{{ $field['name'] }}"
                                     class="font-robotoCondensed text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold hover:file:bg-background-color-3 file:transition"
@@ -123,16 +123,16 @@
                                     multiple>
                             </div>
                             
-                            <div wire:loading wire:target="files.{{ $field['name'] }}" class="text-sm text-gray-600 mb-2">
+                            <div wire:loading wire:target="files.{{ $field['name'] }}" class="text-sm text-gray-600">
                                 Uploading...
                             </div>
                             
                             @if ($field['image'])
                                 <!-- Fixed image container -->
-                                <div class="mt-4"> <!-- Consistent top margin -->
+                                <div> <!-- No top margin -->
                                     <img src="{{ asset($field['image']) }}" 
                                         alt="{{ trans($field['label']) }}" 
-                                        class="mx-auto md:mx-0 w-full max-w-xs md:w-1/2 md:h-1/2 object-contain {{ isset($files[$field['name']]) && $files[$field['name']] && count($files[$field['name']]) > 0 ? 'border-2 border-[#A2DEA2] p-2' : '' }}">
+                                        class="mx-auto md:mx-0 w-48 h-48 object-contain {{ isset($files[$field['name']]) && $files[$field['name']] && count($files[$field['name']]) > 0 ? 'border-2 border-[#A2DEA2] p-2' : '' }}">
                                 </div>
                             @endif
                         </div>
