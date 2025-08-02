@@ -46,9 +46,15 @@ src/
 ├── Admin/                   # Admin management domain
 │   ├── Product/            # Admin product management
 │   │   └── Frontend/       # ShowAllProduct
-│   └── Blog/               # Admin blog management
+│   ├── Blog/               # Admin blog management
+│   └── Crm/                # Admin CRM management
+│       └── Frontend/       # ShowAllFormSubmissions, ShowSubmissionDetail
 ├── Crm/                     # CRM functionality
 │   └── Forms/              # Contact forms
+│       ├── Application/    # RetrieveFormsList, RetrieveFormSubmissions, RetrieveSubmissionDetail
+│       ├── Domain/         # FormRepository interface
+│       ├── Infrastructure/ # EloquentFormRepository, FormEloquentModel, FormSubmissionEloquentModel
+│       └── Frontend/       # Form (contact form component)
 └── Shared/                  # Cross-cutting concerns
     └── Frontend/           # LanguageSelector, CookieBanner, Pagination, WhatsappWidget, SearchBar
 ```
@@ -117,8 +123,9 @@ src/
 - **Search Functionality**: Real-time search with typo tolerance and suggestions
 - **Multi-language Support**: English/Spanish with translatable content
 - **Shop Frontend**: Product catalog with filtering, sorting, and pagination
-- **Admin Panel**: Product, category, attribute, and blog management
+- **Admin Panel**: Product, category, attribute, blog, and CRM form submissions management
 - **Blog System**: Article management with multilingual support
+- **CRM System**: Contact form management with submission tracking and admin panel
 - **Responsive Design**: Desktop and mobile optimized components
 
 ## Important Notes
