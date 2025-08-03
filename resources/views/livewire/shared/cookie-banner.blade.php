@@ -118,7 +118,7 @@
                 </div>
 
                 <!-- Cookies Funcionales -->
-                <div class="pb-4">
+                <div class="border-b border-gray-100 pb-4">
                     <div class="flex justify-between items-center mb-2">
                         <h3 class="font-medium text-gray-800">{{ trans('components/cookie-banner.functional_title') }}</h3>
                         <label class="relative inline-flex items-center cursor-pointer">
@@ -127,6 +127,18 @@
                         </label>
                     </div>
                     <p class="text-sm text-gray-600">{{ trans('components/cookie-banner.functional_description') }}</p>
+                </div>
+
+                <!-- Cookies de Localización -->
+                <div class="pb-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-medium text-gray-800">{{ trans('components/cookie-banner.location_title') }}</h3>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" x-model="preferences.location" class="sr-only peer">
+                            <div class="w-12 h-6 bg-gray-200 rounded-full peer peer-checked:bg-[#482727] peer-checked:after:translate-x-6 after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                        </label>
+                    </div>
+                    <p class="text-sm text-gray-600">{{ trans('components/cookie-banner.location_description') }}</p>
                 </div>
             </div>
 
@@ -150,7 +162,8 @@ document.addEventListener('alpine:init', () => {
         preferences: {
             analytics: false,
             marketing: false,
-            functional: false
+            functional: false,
+            location: false
         },
         
         init() {
@@ -174,7 +187,8 @@ document.addEventListener('alpine:init', () => {
                 necessary: true,
                 analytics: true,
                 marketing: true,
-                functional: true
+                functional: true,
+                location: true
             }));
             this.shouldShowBanner = false;
             this.$wire.call('acceptAll');
@@ -186,7 +200,8 @@ document.addEventListener('alpine:init', () => {
                 necessary: true,
                 analytics: false,
                 marketing: false,
-                functional: false
+                functional: false,
+                location: false
             }));
             this.shouldShowBanner = false;
             this.$wire.call('rejectAll');

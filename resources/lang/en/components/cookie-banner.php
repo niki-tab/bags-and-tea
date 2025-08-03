@@ -21,6 +21,8 @@ return [
     'marketing_description' => 'Used to show you relevant and personalized advertising.',
     'functional_title' => 'Functional Cookies',
     'functional_description' => 'Enable enhanced and personalized website features.',
+    'location_title' => 'Location Cookies',
+    'location_description' => 'Allow us to detect your location to provide localized content and services.',
     'save_preferences' => 'Save preferences',
     'close' => 'Close',
 

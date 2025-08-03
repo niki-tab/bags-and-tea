@@ -115,7 +115,7 @@
                             </div>
                             
                             <!-- File input with better mobile styling -->
-                            <div class="flex justify-center md:justify-start">
+                            <div class="flex justify-center md:justify-start mb-6">
                                 <input type="file"
                                     wire:model="files.{{ $field['name'] }}"
                                     class="font-robotoCondensed text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold hover:file:bg-background-color-3 file:transition"
@@ -129,10 +129,22 @@
                             
                             @if ($field['image'])
                                 <!-- Fixed image container -->
-                                <div> <!-- No top margin -->
+                                <div class="relative mx-auto md:mx-0 w-48 h-48 {{ isset($files[$field['name']]) && $files[$field['name']] && count($files[$field['name']]) > 0 ? 'border-2 border-[#A2DEA2] shadow-lg shadow-green-400/25' : 'border-2 border-gray-200 rounded-lg overflow-hidden' }}">
                                     <img src="{{ asset($field['image']) }}" 
                                         alt="{{ trans($field['label']) }}" 
-                                        class="mx-auto md:mx-0 w-48 h-48 object-contain {{ isset($files[$field['name']]) && $files[$field['name']] && count($files[$field['name']]) > 0 ? 'border-2 border-[#A2DEA2] p-2' : '' }}">
+                                        class="w-full h-full object-contain {{ isset($files[$field['name']]) && $files[$field['name']] && count($files[$field['name']]) > 0 ? 'animate-pulse' : '' }}">
+                                    
+                                    @if(isset($files[$field['name']]) && $files[$field['name']] && count($files[$field['name']]) > 0)
+                                        <!-- Success checkmark overlay -->
+                                        <div class="absolute top-2 right-2 bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg animate-bounce">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                        </div>
+                                        
+                                        <!-- Glowing effect -->
+                                        <div class="absolute inset-0 bg-gradient-to-r from-green-400/20 to-emerald-400/20 animate-pulse"></div>
+                                    @endif
                                 </div>
                             @endif
                         </div>
