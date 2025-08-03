@@ -82,10 +82,11 @@ if(request()->route('bagName')){
                 </button>
             </div>
         </div>
-        <div class="w-full md:w-1/2 bg-[#ffffff] py-12 md:py-0">
+        <div class="w-full md:w-1/2 bg-[#ffffff] py-12 md:py-0 md:flex md:items-center md:justify-center">
             <img src="{{ asset('images/we_buy_your_bag/Bolso_YSL1.svg') }}" 
                 alt="Luxury YSL Bag" 
-                class="w-2/3 md:w-1/2 mx-auto md:mt-16">
+                class="w-2/3 md:w-1/2 mx-auto"
+            >
         </div>
     </div>
 

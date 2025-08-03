@@ -19,7 +19,8 @@ class CookieBanner extends Component
             'necessary' => true,
             'analytics' => false,
             'marketing' => false,
-            'functional' => false
+            'functional' => false,
+            'location' => false
         ];
     }
     
@@ -30,6 +31,7 @@ class CookieBanner extends Component
             'analytics' => true,
             'marketing' => true,
             'functional' => true,
+            'location' => true,
             'timestamp' => now()->toDateTimeString()
         ];
         
@@ -44,6 +46,7 @@ class CookieBanner extends Component
             'analytics' => false,
             'marketing' => false,
             'functional' => false,
+            'location' => false,
             'timestamp' => now()->toDateTimeString()
         ];
         

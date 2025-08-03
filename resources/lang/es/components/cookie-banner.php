@@ -21,6 +21,8 @@ return [
     'marketing_description' => 'Se utilizan para mostrarte publicidad relevante y personalizada.',
     'functional_title' => 'Cookies Funcionales',
     'functional_description' => 'Permiten funcionalidades mejoradas y personalizadas del sitio web.',
+    'location_title' => 'Cookies de Localización',
+    'location_description' => 'Permiten detectar tu ubicación para ofrecerte contenido y servicios localizados.',
     'save_preferences' => 'Guardar preferencias',
     'close' => 'Cerrar',
 
