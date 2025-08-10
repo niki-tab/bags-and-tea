@@ -34,6 +34,10 @@ class DatabaseSeeder extends Seeder
       FormTableSeeder::class,
       FormSubmissionTableSeeder::class,
       
+      // Marketplace Configuration
+      MarketplaceFeeSeeder::class,
+      ShippingRateSeeder::class,
+      
     ]);
 
     }

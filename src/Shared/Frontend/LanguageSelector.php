@@ -59,6 +59,11 @@ class LanguageSelector extends Component
             
             $this->paramsSpanish = ["locale" => "es", 'productSlug' => $spanishSlug];
             $this->paramsEnglish = ["locale" => "en", 'productSlug' => $englishSlug];
+        }elseif($this->currentRouteName == "checkout.success.es" || $this->currentRouteName == "checkout.success.en"){
+            $orderNumber = request()->route('order_number');
+            
+            $this->paramsSpanish = ["locale" => "es", 'order_number' => $orderNumber];
+            $this->paramsEnglish = ["locale" => "en", 'order_number' => $orderNumber];
         }else{
             $this->paramsSpanish = ["locale" => "es"];
             $this->paramsEnglish = ["locale" => "en"];

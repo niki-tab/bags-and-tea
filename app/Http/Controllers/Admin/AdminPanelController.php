@@ -75,6 +75,16 @@ class AdminPanelController extends Controller
         return view('pages.admin-panel.dashboard.settings');
     }
 
+    public function shipping(): View
+    {
+        return view('pages.admin-panel.dashboard.shipping');
+    }
+
+    public function marketplaceFees(): View
+    {
+        return view('pages.admin-panel.dashboard.marketplace-fees');
+    }
+
     public function formSubmissions(): View
     {
         return view('pages.admin-panel.forms.submissions');

@@ -25,7 +25,7 @@ class UserTableSeeder extends Seeder
             'email'          => 'admin@bagsandtea.com',
             'remember_token' => Str::random(60),
             'email_verified_at' => Carbon::now(),
-            'password'       =>  Hash::make("Bagsandtea2025!"),
+            'password'       =>  Hash::make("3?Eaj-6dj4DS_sO27"),
 
         ]);
 
@@ -34,7 +34,7 @@ class UserTableSeeder extends Seeder
             'email'          => 'nicolas.tabares.tech@gmail.com',
             'remember_token' => Str::random(60),
             'email_verified_at' => Carbon::now(),
-            'password'       =>  Hash::make("Bagsandtea2025!"),
+            'password'       =>  Hash::make("3?Eaj-6dj4DS_sO27"),
 
         ]);
     }

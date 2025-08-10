@@ -8,10 +8,12 @@ use Src\Crm\Forms\Domain\FormRepository;
 use Src\Products\Product\Domain\ProductRepository;
 use Src\Blog\Articles\Domain\ArticleRepository;
 use Src\Cart\Domain\CartRepository;
+use Src\Order\Domain\OrderRepository;
 use Src\Crm\Forms\Infrastructure\EloquentFormRepository;
 use Src\Products\Product\Infrastructure\EloquentProductRepository;
 use Src\Blog\Articles\Infrastructure\EloquentArticleRepository;
 use Src\Cart\Infrastructure\EloquentCartRepository;
+use Src\Order\Infrastructure\EloquentOrderRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
         ProductRepository::class => EloquentProductRepository::class,
         ArticleRepository::class => EloquentArticleRepository::class,
         CartRepository::class => EloquentCartRepository::class,
+        OrderRepository::class => EloquentOrderRepository::class,
 
     ];
 
@@ -52,9 +55,19 @@ class AppServiceProvider extends ServiceProvider
         Livewire::component('cart.icon', \Src\Cart\Frontend\CartIcon::class);
         Livewire::component('cart.add-to-cart-button', \Src\Cart\Frontend\AddToCartButton::class);
 
+        // Order/Checkout components
+        Livewire::component('order.checkout-page', \Src\Order\Frontend\CheckoutPage::class);
+        Livewire::component('order.order-success', \Src\Order\Frontend\OrderSuccess::class);
+
         // Admin CRM components
         Livewire::component('admin.crm.show-all-form-submissions', \Src\Admin\Crm\Frontend\ShowAllFormSubmissions::class);
         Livewire::component('admin.crm.show-submission-detail', \Src\Admin\Crm\Frontend\ShowSubmissionDetail::class);
+
+        // Admin Shipping components
+        Livewire::component('src.admin.order.shipping.frontend.shipping-management', \Src\Admin\Order\Shipping\Frontend\ShippingManagement::class);
+        
+        // Admin Fees components
+        Livewire::component('src.admin.order.fees.frontend.marketplace-fee-management', \Src\Admin\Order\Fees\Frontend\MarketplaceFeeManagement::class);
 
         $this->app->bind(FormRepository::class, EloquentFormRepository::class);
     }

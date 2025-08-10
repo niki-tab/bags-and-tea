@@ -8,13 +8,20 @@ use Src\Cart\Application\UpdateCartItemQuantity;
 use Src\Cart\Application\RemoveItemFromCart;
 use Src\Cart\Application\ClearCart;
 use Src\Cart\Infrastructure\EloquentCartRepository;
+use Src\Order\Application\CalculateOrderFees;
+use Src\Order\Application\DetectUserCountry;
 
 class CartPage extends Component
 {
     public array $cartItems = [];
+    public float $subtotal = 0;
     public float $totalPrice = 0;
     public int $totalItems = 0;
     public bool $isLoading = false;
+    public array $fees = [];
+    public ?array $shipping = null;
+    public float $totalFees = 0;
+    public bool $analyticsConsent = false;
 
     public function mount()
     {
@@ -33,6 +40,7 @@ class CartPage extends Component
         $this->cartItems = $cartData['items'] ?? [];
         $this->totalItems = $cartData['total_items'] ?? 0;
         $this->calculateTotalPrice();
+        $this->calculateFeesAndShipping();
     }
 
     public function updateQuantity(string $productId, int $quantity)
@@ -114,14 +122,52 @@ class CartPage extends Component
 
     private function calculateTotalPrice()
     {
-        $this->totalPrice = 0;
+        $this->subtotal = 0;
         
         foreach ($this->cartItems as $item) {
             if (isset($item['product']) && isset($item['quantity'])) {
                 $price = $item['product']['price'] ?? 0;
-                $this->totalPrice += $price * $item['quantity'];
+                $this->subtotal += $price * $item['quantity'];
             }
         }
+        
+        // Total includes subtotal + fees + shipping
+        $shippingAmount = $this->shipping['amount'] ?? 0;
+        $this->totalPrice = $this->subtotal + $this->totalFees + $shippingAmount;
+    }
+
+    private function calculateFeesAndShipping()
+    {
+        if ($this->subtotal <= 0) {
+            $this->fees = [];
+            $this->shipping = null;
+            $this->totalFees = 0;
+            return;
+        }
+
+        $calculateOrderFees = new CalculateOrderFees();
+        $detectUserCountry = new DetectUserCountry();
+        
+        // Set analytics consent in session so DetectUserCountry can access it
+        session()->put('analytics_consent', $this->analyticsConsent);
+        
+        // Detect user's country based on IP (if consent given) or use default
+        $userCountry = $detectUserCountry();
+        
+        $result = $calculateOrderFees($this->subtotal, $userCountry);
+        
+        $this->fees = $result['fees'];
+        $this->totalFees = $result['total_fees'];
+        $this->shipping = $result['shipping'];
+        
+        // Recalculate total price with fees and shipping
+        $this->calculateTotalPrice();
+    }
+
+    public function updateAnalyticsConsent(bool $consent)
+    {
+        $this->analyticsConsent = $consent;
+        $this->calculateFeesAndShipping();
     }
 
     public function render()

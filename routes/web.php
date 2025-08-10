@@ -102,6 +102,12 @@ Route::prefix('admin-panel')->name('admin.')->group(function () {
             // Settings & Configuration
             Route::get('/settings', [AdminPanelController::class, 'settings'])->name('settings');
             
+            // Shipping Management
+            Route::get('/shipping', [AdminPanelController::class, 'shipping'])->name('shipping');
+            
+            // Marketplace Fees Management
+            Route::get('/marketplace-fees', [AdminPanelController::class, 'marketplaceFees'])->name('marketplace-fees');
+            
             // Form Submissions Management
             Route::get('/form-submissions', [AdminPanelController::class, 'formSubmissions'])->name('form-submissions');
             Route::get('/form-submissions/{id}', [AdminPanelController::class, 'formSubmissionDetail'])->name('form-submissions.detail');
@@ -202,6 +208,22 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
     Route::get('/cart', function () {
         return view('pages/cart/show');
     })->name('cart.show.en')->where('locale', 'en');
+
+    Route::get('/finalizar-compra', function () {
+        return view('pages/checkout/show');
+    })->name('checkout.show.es')->where('locale', 'es');
+
+    Route::get('/checkout', function () {
+        return view('pages/checkout/show');
+    })->name('checkout.show.en')->where('locale', 'en');
+
+    Route::get('/pedido-confirmado/{order_number}', function ($locale, $order_number) {
+        return view('pages/checkout/success', ['order_number' => $order_number]);
+    })->name('checkout.success.es')->where('locale', 'es');
+
+    Route::get('/order-confirmed/{order_number}', function ($locale, $order_number) {
+        return view('pages/checkout/success', ['order_number' => $order_number]);
+    })->name('checkout.success.en')->where('locale', 'en');
 
     Route::get('/privacidad', function () {
         return view('pages/legal/policy');

@@ -412,7 +412,14 @@
                                 {{ $product->getTranslation('name', app()->getLocale()) ?? __('Modelo') }}
                             </h3>
                             <div class="text-lg font-bold text-gray-900">
-                                €{{ number_format($product->price ?? 450, 0) }}
+                                @php
+                                    $price = $product->price ?? 450;
+                                    // Show 2 decimals only if the price has decimal places
+                                    $formattedPrice = ($price == floor($price)) 
+                                        ? number_format($price, 0, ',', '.') 
+                                        : number_format($price, 2, ',', '.');
+                                @endphp
+                                {{ $formattedPrice }}€
                             </div>
                         </div>
                     </a>

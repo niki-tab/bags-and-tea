@@ -6,13 +6,11 @@ return [
     'credit_debit_cards' => 'Tarjetas de cr�dito y d�bito.',
     'ssl_protection' => 'Todas las transacciones est�n protegidas con certificado SSL',
     
-    'shipping' => 'Env�o',
-    'shipping_options' => 'Opciones de env�o:',
-    'standard_shipping' => 'Env�o est�ndar',
-    'standard_delivery' => '5-7 d�as laborables',
-    'express_shipping' => 'Env�o express',
-    'express_delivery' => '2-3 d�as laborables',
-    'free' => 'Gratis',
+    'shipping' => 'Envío',
+    'shipping_information' => 'Información de envío:',
+    'standard_shipping_info' => 'Envío estándar: 7-10 días, dependiendo del país.',
+    'europe_only' => 'Actualmente nuestros envíos se limitan a Europa.',
+    'shipping_cost_checkout' => 'Coste del envío calculado en el checkout.',
     
     'returns' => 'Devoluciones',
     'return_policy' => 'Pol�tica de devoluciones:',
