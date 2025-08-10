@@ -96,12 +96,12 @@
                                                 <!-- Price -->
                                                 <div class="text-right">
                                                     <div class="text-lg font-bold text-[#CA2530]">
-                                                        €{{ number_format(($item['product']['price'] ?? 0) * $item['quantity'], 2, ',', '.') }}
+                                                        {{ number_format(($item['product']['price'] ?? 0) * $item['quantity'], 2, ',', '.') }}€
                                                         <span class="text-xs font-normal align-baseline">{{ trans('components/cart.vat-included') }}</span>
                                                     </div>
                                                     @if($item['quantity'] > 1)
                                                         <div class="text-sm text-gray-500">
-                                                            €{{ number_format($item['product']['price'] ?? 0, 2, ',', '.') }} {{ trans('components/cart.each') }}
+                                                            {{ number_format($item['product']['price'] ?? 0, 2, ',', '.') }}€ {{ trans('components/cart.each') }}
                                                         </div>
                                                     @endif
                                                 </div>
@@ -129,31 +129,85 @@
                         <h2 class="text-xl font-medium text-color-2 mb-6">{{ trans('components/cart.summary') }}</h2>
                         
                         <div class="space-y-4">
+                            <!-- Cart Items -->
                             @foreach($cartItems as $item)
                                 @if(isset($item['product']))
                                     <div class="flex justify-between">
                                         <span class="text-color-2">{{ $item['product']['name'][app()->getLocale()] ?? 'Product' }} ({{ $item['quantity'] }})</span>
-                                        <span class="font-medium text-color-2">€{{ number_format(($item['product']['price'] ?? 0) * $item['quantity'], 2, ',', '.') }}</span>
+                                        <span class="font-medium text-color-2">{{ number_format(($item['product']['price'] ?? 0) * $item['quantity'], 2, ',', '.') }}€</span>
                                     </div>
                                 @endif
                             @endforeach
                             
-                            <hr class="border-gray-200">
-                            
-                            <div class="flex justify-between text-lg font-bold">
-                                <div class="text-color-2">
-                                    <span>{{ trans('components/cart.total') }}</span>
-                                    <span class="text-xs font-normal align-baseline">{{ trans('components/cart.vat-included') }}</span>
+                            <!-- Subtotal -->
+                            @if(count($cartItems) > 0)
+                                <hr class="border-gray-200">
+                                <div class="flex justify-between font-bold">
+                                    <div class="text-color-2">
+                                        <span>{{ trans('components/cart.subtotal') }}</span>
+                                        <span class="text-xs font-normal align-baseline">{{ trans('components/cart.vat-included') }}</span>
+                                    </div>
+                                    <span class="text-color-2">{{ number_format($subtotal, 2, ',', '.') }}€</span>
                                 </div>
-                                <span class="text-[#CA2530]">€{{ number_format($totalPrice, 2, ',', '.') }}</span>
-                            </div>
+                                
+                                <!-- Marketplace Fees -->
+                                @if(!empty($fees))
+                                    @foreach($fees as $fee)
+                                        <div class="flex justify-between">
+                                            <span class="text-color-2">{{ $fee['name'] }}</span>
+                                            <span class="font-medium text-color-2">{{ number_format($fee['amount'], 2, ',', '.') }}€</span>
+                                        </div>
+                                    @endforeach
+                                @endif
+                                
+                                <!-- Shipping -->
+                                @if($shipping)
+                                    <div class="flex justify-between">
+                                        <span class="text-color-2">
+                                            {{ trans('components/cart.shipping') }}
+                                            @if(!($shipping['is_default'] ?? false))
+                                                ({{ $shipping['zone_name'] }})
+                                                @if($shipping['delivery_days_min'] && $shipping['delivery_days_max'])
+                                                    <span class="text-xs text-gray-500">
+                                                        ({{ $shipping['delivery_days_min'] }}-{{ $shipping['delivery_days_max'] }} {{ trans('components/cart.delivery-days') }})
+                                                    </span>
+                                                @endif
+                                            @endif
+                                        </span>
+                                        <span class="font-medium text-color-2">
+                                            @if($shipping['is_default'] ?? false)
+                                                {{ trans('components/cart.shipping-calculated') }}
+                                            @else
+                                                {{ number_format($shipping['amount'], 2, ',', '.') }}€
+                                            @endif
+                                        </span>
+                                    </div>
+                                    @if($shipping['is_default'] ?? false)
+                                        <div class="text-xs text-gray-500 pl-0">
+                                            {{ trans('components/cart.shipping-calculated') }}
+                                        </div>
+                                    @endif
+                                @endif
+                                
+                                <hr class="border-gray-200">
+                                
+                                <!-- Total -->
+                                <div class="flex justify-between text-lg font-bold">
+                                    <div class="text-color-2">
+                                        <span>{{ trans('components/cart.total') }}</span>
+                                        <span class="text-xs font-normal align-baseline">{{ trans('components/cart.vat-included') }}</span>
+                                    </div>
+                                    <span class="text-[#CA2530]">{{ number_format($totalPrice, 2, ',', '.') }}€</span>
+                                </div>
+                            @endif
                         </div>
 
                         <!-- Checkout Button -->
                         <div class="mt-8">
-                            <button disabled class="w-full bg-gray-400 text-white py-4 px-6 text-lg font-medium cursor-not-allowed opacity-60 font-['Lora']">
-                                {{ app()->getLocale() === 'es' ? 'Web en construcción' : 'Website under construction' }}
-                            </button>
+                            <a href="{{ route(app()->getLocale() === 'es' ? 'checkout.show.es' : 'checkout.show.en', ['locale' => app()->getLocale()]) }}" 
+                               class="block w-full bg-[#CA2530] hover:bg-[#A01E28] text-white py-4 px-6 text-lg font-medium text-center font-['Lora'] transition-colors duration-200">
+                                {{ trans('components/cart.proceed-to-checkout') }}
+                            </a>
                         </div>
 
                         <!-- Continue Shopping -->
@@ -185,3 +239,43 @@
         @endif
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Check localStorage for consent settings
+    const consentData = localStorage.getItem('cookiePreferences');
+    
+    if (consentData) {
+        try {
+            const consent = JSON.parse(consentData);
+            const analyticsConsent = consent.analytics === true;
+            
+            console.log('Found cookiePreferences:', consent);
+            console.log('Analytics consent:', analyticsConsent);
+            
+            // Update the Livewire component with analytics consent
+            @this.call('updateAnalyticsConsent', analyticsConsent);
+        } catch (e) {
+            console.warn('Could not parse consent data from localStorage:', e);
+        }
+    } else {
+        console.log('No cookiePreferences found in localStorage');
+    }
+    
+    // Listen for storage changes (if consent is updated in another tab)
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'cookiePreferences') {
+            if (e.newValue) {
+                try {
+                    const consent = JSON.parse(e.newValue);
+                    const analyticsConsent = consent.analytics === true;
+                    console.log('Updated cookiePreferences:', consent);
+                    @this.call('updateAnalyticsConsent', analyticsConsent);
+                } catch (err) {
+                    console.warn('Could not parse updated consent data:', err);
+                }
+            }
+        }
+    });
+});
+</script>

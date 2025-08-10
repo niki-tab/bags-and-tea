@@ -7,12 +7,10 @@ return [
     'ssl_protection' => 'All transactions are protected with SSL certificate',
     
     'shipping' => 'Shipping',
-    'shipping_options' => 'Shipping options:',
-    'standard_shipping' => 'Standard shipping',
-    'standard_delivery' => '5-7 business days',
-    'express_shipping' => 'Express shipping',
-    'express_delivery' => '2-3 business days',
-    'free' => 'Free',
+    'shipping_information' => 'Shipping information:',
+    'standard_shipping_info' => 'Standard shipping: 7-10 days, depending on the country.',
+    'europe_only' => 'Currently, our shipments are limited to Europe.',
+    'shipping_cost_checkout' => 'Shipping cost calculated at checkout.',
     
     'returns' => 'Returns',
     'return_policy' => 'Return policy:',

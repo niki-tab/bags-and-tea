@@ -37,6 +37,12 @@
                                 </svg>
                                 PayPal.
                             </li>
+                            <li class="flex items-center text-robotoCondensed">
+                                <svg class="w-4 h-4 text-green-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Klarna.
+                            </li>
                         </ul>
                         <p class="text-sm text-gray-600 mt-3 text-robotoCondensed">
                             <svg class="w-4 h-4 text-green-600 inline mr-1 mb-1" fill="currentColor" viewBox="0 0 20 20">
@@ -69,22 +75,28 @@
                 class="overflow-hidden transition-all duration-300 ease-in-out {{ $openSection === 'envio' ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0' }}"
             >
                 <div class="px-6 pb-5 text-gray-700 leading-relaxed">
-                    <div class="space-y-4">
-                        <div>
-                            <p class="font-medium text-color-2 mb-2 text-robotoCondensed mt-2 lg:mt-4">{{ app()->getLocale() === 'es' ? 'Opciones de envío:' : 'Shipping options:' }}</p>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                <div class="bg-white p-3 rounded border">
-                                    <p class="font-medium text-sm text-robotoCondensed">{{ app()->getLocale() === 'es' ? 'Envío estándar' : 'Standard shipping' }}</p>
-                                    <p class="text-sm text-gray-600 text-robotoCondensed">{{ app()->getLocale() === 'es' ? '5-7 días laborables' : '5-7 business days' }}</p>
-                                    <p class="text-sm text-color-3 font-medium text-robotoCondensed">{{ app()->getLocale() === 'es' ? 'Gratis' : 'Free' }}</p>
-                                </div>
-                                <div class="bg-white p-3 rounded border">
-                                    <p class="font-medium text-sm text-robotoCondensed">{{ app()->getLocale() === 'es' ? 'Envío express' : 'Express shipping' }}</p>
-                                    <p class="text-sm text-gray-600 text-robotoCondensed">{{ app()->getLocale() === 'es' ? '2-3 días laborables' : '2-3 business days' }}</p>
-                                    <p class="text-sm text-color-3 font-medium text-robotoCondensed">€15.00</p>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="space-y-3">
+                        <p class="font-medium text-color-2 text-robotoCondensed mt-2 lg:mt-4">{{ trans('components/additional-information.shipping_information') }}</p>
+                        <ul class="space-y-2 ml-4">
+                            <li class="flex items-center text-robotoCondensed">
+                                <svg class="w-4 h-4 text-green-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                {{ trans('components/additional-information.standard_shipping_info') }}
+                            </li>
+                            <li class="flex items-center text-robotoCondensed">
+                                <svg class="w-4 h-4 text-green-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                {{ trans('components/additional-information.europe_only') }}
+                            </li>
+                            <li class="flex items-center text-robotoCondensed">
+                                <svg class="w-4 h-4 text-green-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                {{ trans('components/additional-information.shipping_cost_checkout') }}
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

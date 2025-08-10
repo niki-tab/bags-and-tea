@@ -8,7 +8,6 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
 bg-background-color-4  {{-- or any other Tailwind class you want for this specific page --}}
 @endsection
 
-<meta name="robots" content="noindex, nofollow" />
 @section('content')
         @livewire('src.products.product.show', ['productSlug' => $productSlug])
 @endsection
