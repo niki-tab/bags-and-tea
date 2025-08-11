@@ -135,7 +135,12 @@ final class EloquentProductRepository implements ProductRepository
             $orderBy = $order->orderBy();
             $orderType = $order->orderType();
             if ($orderBy && $orderType) {
-                $query->orderBy($orderBy->value(), $orderType->value());
+                if ($orderBy->value() === 'stock_status_and_created') {
+                    // Custom ordering: in-stock products first, then by newest created
+                    $query->orderByRaw('is_sold_out ASC, created_at DESC');
+                } else {
+                    $query->orderBy($orderBy->value(), $orderType->value());
+                }
             }
         }
 
@@ -252,7 +257,12 @@ final class EloquentProductRepository implements ProductRepository
             $orderBy = $order->orderBy();
             $orderType = $order->orderType();
             if ($orderBy && $orderType) {
-                $query->orderBy($orderBy->value(), $orderType->value());
+                if ($orderBy->value() === 'stock_status_and_created') {
+                    // Custom ordering: in-stock products first, then by newest created
+                    $query->orderByRaw('is_sold_out ASC, created_at DESC');
+                } else {
+                    $query->orderBy($orderBy->value(), $orderType->value());
+                }
             }
         }
 
@@ -367,7 +377,12 @@ final class EloquentProductRepository implements ProductRepository
             $orderBy = $order->orderBy();
             $orderType = $order->orderType();
             if ($orderBy && $orderType) {
-                $query->orderBy($orderBy->value(), $orderType->value());
+                if ($orderBy->value() === 'stock_status_and_created') {
+                    // Custom ordering: in-stock products first, then by newest created
+                    $query->orderByRaw('is_sold_out ASC, created_at DESC');
+                } else {
+                    $query->orderBy($orderBy->value(), $orderType->value());
+                }
             }
         }
 

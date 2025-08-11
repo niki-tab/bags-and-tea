@@ -283,10 +283,6 @@ final class GetShopData
 
     private function createOrder(string $sortBy): Order
     {
-        if (empty($sortBy)) {
-            return Order::none();
-        }
-
         switch ($sortBy) {
             case 'name_asc':
                 return Order::fromValues('name', 'asc');
@@ -297,7 +293,8 @@ final class GetShopData
             case 'price_desc':
                 return Order::fromValues('price', 'desc');
             default:
-                return Order::none();
+                // Default ordering: in-stock products first, then by newest created
+                return Order::fromValues('stock_status_and_created', 'desc');
         }
     }
 
