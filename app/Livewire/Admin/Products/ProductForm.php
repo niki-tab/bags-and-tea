@@ -258,12 +258,46 @@ class ProductForm extends Component
 
     public function updatedNameEn()
     {
-        $this->slug_en = Str::slug($this->name_en);
+        $this->slug_en = $this->generateUniqueSlug($this->name_en);
     }
 
     public function updatedNameEs()
     {
-        $this->slug_es = Str::slug($this->name_es);
+        $this->slug_es = $this->generateUniqueSlug($this->name_es);
+    }
+
+    private function generateUniqueSlug($name)
+    {
+        if (empty($name)) {
+            return '';
+        }
+
+        $baseSlug = Str::slug($name);
+        $slug = $baseSlug;
+        $counter = 1;
+
+        // Keep checking until we find a unique slug
+        while ($this->slugExists($slug)) {
+            $slug = $baseSlug . '-' . $counter;
+            $counter++;
+        }
+
+        return $slug;
+    }
+
+    private function slugExists($slug)
+    {
+        $query = ProductEloquentModel::where(function($q) use ($slug) {
+            $q->where('slug->en', $slug)
+              ->orWhere('slug->es', $slug);
+        });
+
+        // If editing, exclude current product from the check
+        if ($this->isEditing && $this->productId) {
+            $query->where('id', '!=', $this->productId);
+        }
+
+        return $query->exists();
     }
 
     public function updatedMedia()
