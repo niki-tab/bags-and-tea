@@ -16,6 +16,9 @@ class ProductDetail extends Component
     
     // Product specifications
     public $specifications = [];
+    
+    // Breadcrumb data
+    public $breadcrumbs = [];
 
     public function mount($productSlug = null)
     {   
@@ -33,6 +36,9 @@ class ProductDetail extends Component
                 
                 // Set up product specifications
                 $this->setupSpecifications();
+                
+                // Set up breadcrumbs
+                $this->setupBreadcrumbs();
                 
                 // Set up SEO
                 $this->setSeo();
@@ -93,6 +99,59 @@ class ProductDetail extends Component
             'ano' => $ano,
             'color' => $color,
             'tamano' => $tamano
+        ];
+    }
+    
+    public function setupBreadcrumbs()
+    {
+        $shopText = $this->lang === 'es' ? 'Tienda' : 'Shop';
+        $shopRoute = $this->lang === 'es' ? 'shop.show.es' : 'shop.show.en';
+        
+        $this->breadcrumbs = [
+            [
+                'text' => $shopText,
+                'url' => route($shopRoute, ['locale' => $this->lang])
+            ]
+        ];
+        
+        // Add bag category if product has categories
+        if ($this->product && $this->product->categories->isNotEmpty()) {
+            // Find the category that belongs to "Bolsos"/"Bags" parent category
+            $bagCategory = null;
+            
+            foreach ($this->product->categories as $category) {
+                if ($category->parent_id) {
+                    $parent = \Src\Categories\Infrastructure\Eloquent\CategoryEloquentModel::find($category->parent_id);
+                    if ($parent) {
+                        $parentNameEs = $parent->getTranslation('name', 'es');
+                        $parentNameEn = $parent->getTranslation('name', 'en');
+                        
+                        // Look specifically for "Bolsos" (Spanish) or "Bags" (English) parent category
+                        if ($parentNameEs === 'Bolsos' || $parentNameEn === 'Bags') {
+                            $bagCategory = $category;
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            // If we found a bag category, add it to breadcrumbs
+            if ($bagCategory) {
+                $categorySlug = $bagCategory->getTranslation('slug', $this->lang);
+                $categoryRoute = $this->lang === 'es' ? 'shop.show.es' : 'shop.show.en';
+                
+                $this->breadcrumbs[] = [
+                    'text' => $bagCategory->getTranslation('name', $this->lang),
+                    'url' => route($categoryRoute, ['locale' => $this->lang, 'slug' => $categorySlug])
+                ];
+            }
+        }
+        
+        // Add product name as final breadcrumb (no link, just text)
+        $this->breadcrumbs[] = [
+            'text' => $this->product->getTranslation('name', $this->lang),
+            'url' => null,
+            'is_current' => true
         ];
     }
     

@@ -6,6 +6,33 @@
             {{ strtoupper($product->brand ? $product->brand->name : '') }} {{ strtoupper($product->getTranslation('name', app()->getLocale())) }}
         </h1>
         
+        <!-- Breadcrumb Navigation -->
+        @if(!empty($breadcrumbs))
+            <nav class="flex justify-center mb-6">
+                <ol class="flex items-center space-x-2 text-sm">
+                    @foreach($breadcrumbs as $index => $breadcrumb)
+                        <li class="flex items-center">
+                            @if($index > 0)
+                                <svg class="w-4 h-4 mx-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            @endif
+                            
+                            @if($breadcrumb['url'] && !($breadcrumb['is_current'] ?? false))
+                                <a href="{{ $breadcrumb['url'] }}" class="text-color-2 hover:text-[#AC2231] transition-colors">
+                                    {{ $breadcrumb['text'] }}
+                                </a>
+                            @else
+                                <span class="text-color-2">
+                                    {{ $breadcrumb['text'] }}
+                                </span>
+                            @endif
+                        </li>
+                    @endforeach
+                </ol>
+            </nav>
+        @endif
+        
         <!-- Product Specifications - Below title, above grid -->
         <div class="grid grid-cols-2 gap-10 lg:flex lg:justify-center mb-8 text-sm w-96 lg:w-auto max-w-6xl mx-auto mt-10">
             <div class="text-left whitespace-nowrap lg:mr-8">
