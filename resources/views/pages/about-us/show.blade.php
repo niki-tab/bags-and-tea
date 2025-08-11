@@ -161,12 +161,12 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
         {{ __('pages/about-us.circular_fashion_title') }}
     </h2>
     <div class="flex flex-col md:flex-row justify-center items-center gap-4 mb-6">
-        <button class="bg-[#482626] text-white px-8 py-2 font-['Lora'] text-lg hover:bg-background-color-3 transition whitespace-nowrap">
+        <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="bg-[#482626] text-white px-8 py-2 font-['Lora'] text-lg hover:bg-background-color-3 transition whitespace-nowrap">
             {{ __('pages/about-us.sell_your_bag_button') }}
-        </button>
-        <button class="border border-[#B92334] text-[#B92334] px-8 py-2 font-['Lora'] text-lg hover:bg-background-color-3 hover:text-white transition whitespace-nowrap">
+        </a>
+        <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale()]) }}" class="border border-[#B92334] text-[#B92334] px-8 py-2 font-['Lora'] text-lg hover:bg-background-color-3 hover:text-white transition whitespace-nowrap">
             {{ __('pages/about-us.buy_your_bag_button') }}
-        </button>
+        </a>
     </div>
 </div>
 <div class="max-w-7xl mx-auto mt-8 px-4 mb-4">
