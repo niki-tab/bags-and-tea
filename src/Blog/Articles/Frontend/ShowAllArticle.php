@@ -4,6 +4,7 @@ namespace Src\Blog\Articles\Frontend;
 
 use Livewire\Component;
 use Src\Blog\Articles\Model\ArticleModel;
+use Src\Blog\Categories\Infrastructure\Eloquent\BlogCategoryEloquentModel;
 
 class ShowAllArticle extends Component
 {

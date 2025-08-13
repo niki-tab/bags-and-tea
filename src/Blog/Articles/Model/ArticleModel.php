@@ -5,6 +5,8 @@ use Ramsey\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Src\Blog\Categories\Infrastructure\Eloquent\BlogCategoryEloquentModel;
 
 class ArticleModel extends Model
 {
@@ -64,6 +66,16 @@ class ArticleModel extends Model
     protected static function newFactory()
     {
         return \Database\Factories\ArticleModelFactory::new();
+    }
+
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            BlogCategoryEloquentModel::class,
+            'blog_article_category',
+            'blog_article_id',
+            'blog_category_id'
+        )->withTimestamps();
     }
 
     public function getTranslatedAttributes(string $locale = 'en'): array

@@ -122,11 +122,23 @@ src/
 - **Shopping Cart**: Full cart functionality with guest/user sessions, duplicate prevention
 - **Search Functionality**: Real-time search with typo tolerance and suggestions
 - **Multi-language Support**: English/Spanish with translatable content
-- **Shop Frontend**: Product catalog with filtering, sorting, and pagination
+- **Shop Frontend**: Product catalog with filtering, sorting, and optimized stock-priority ordering
 - **Admin Panel**: Product, category, attribute, blog, and CRM form submissions management
 - **Blog System**: Article management with multilingual support
 - **CRM System**: Contact form management with submission tracking and admin panel
 - **Responsive Design**: Desktop and mobile optimized components
+- **Product Slug Generation**: Automatic unique slug generation for products in admin panel
+- **Breadcrumb Navigation**: Smart breadcrumb system for product detail pages
+- **Enhanced UX**: Functional buttons and improved navigation throughout the site
+
+## Documentation
+Recent feature implementations are documented in the `docs/` folder:
+- **product-slug-generation.md**: Unique slug generation system for products
+- **breadcrumb-navigation.md**: Smart breadcrumb navigation for product pages
+- **button-redirects-about-us.md**: Functional button implementations on About Us page
+- **shop-product-ordering.md**: Stock-priority product ordering system
+- **search-functionality.md**: Comprehensive search system documentation
+- **database-schema.md**: Complete database structure and relationships
 
 ## Important Notes
 - **CLAUDE.md file**: Contains project-specific instructions and Docker commands

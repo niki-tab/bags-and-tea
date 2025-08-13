@@ -60,6 +60,11 @@ class AdminPanelController extends Controller
         return view('pages.admin-panel.dashboard.blog.show');
     }
 
+    public function blogCategories(): View
+    {
+        return view('pages.admin-panel.dashboard.blog.categories');
+    }
+
     public function categories(): View
     {
         return view('pages.admin-panel.dashboard.categories');

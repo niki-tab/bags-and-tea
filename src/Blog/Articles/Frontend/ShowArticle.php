@@ -16,16 +16,17 @@ class ShowArticle extends Component
     public $articleMainImage;
     public $articleBody;
     public $lang;
+    public $breadcrumbs = [];
 
-    public bool $articleExists;
-    public string $articleNotFoundText;
-    public array $articleNotFoundTextTranslations;
+    public bool $articleExists = false;
+    public string $articleNotFoundText = '';
+    public array $articleNotFoundTextTranslations = [];
 
     public function mount($articleSlug)
     {   
         $this->lang = app()->getLocale();
         
-        $article = ArticleModel::where('slug', 'like', '%' . $articleSlug . '%')->first();
+        $article = ArticleModel::with('categories')->where('slug', 'like', '%' . $articleSlug . '%')->first();
 
         if ($article) {
             $correctSlug = $article->getTranslation('slug', $this->lang);
@@ -43,6 +44,7 @@ class ShowArticle extends Component
             $this->articleTitle = $article->title;
             $this->articleMainImage = $article->main_image;
             $this->articleBody = $this->removeEmptyPTags($article->body);
+            $this->setupBreadcrumbs();
             $this->setSeo();
         } else {
             $this->articleNotFoundTextTranslations = [
@@ -52,6 +54,42 @@ class ShowArticle extends Component
             $this->articleExists = false;
             $this->articleNotFoundText = $this->articleNotFoundTextTranslations[$this->lang];
         }
+    }
+
+    public function setupBreadcrumbs()
+    {
+        $blogText = $this->lang === 'es' ? 'Blog' : 'Blog';
+        
+        $this->breadcrumbs = [
+            [
+                'text' => $blogText,
+                'url' => route('blog.show.en-es', ['locale' => $this->lang])
+            ]
+        ];
+        
+        // Add categories if article has categories assigned
+        if ($this->articleModel && $this->articleModel->categories->isNotEmpty()) {
+            foreach ($this->articleModel->categories as $category) {
+                $categoryName = $category->getTranslation('name', $this->lang) ?: $category->getTranslation('name', 'en');
+                $categorySlug = $category->getTranslation('slug', $this->lang) ?: $category->getTranslation('slug', 'en');
+                
+                // Create URL to blog with category filter
+                $this->breadcrumbs[] = [
+                    'text' => $categoryName,
+                    'url' => route('blog.show.en-es', [
+                        'locale' => $this->lang,
+                        'blogCategory' => $categorySlug
+                    ])
+                ];
+            }
+        }
+        
+        // Add article title as final breadcrumb (no link, just text)
+        $this->breadcrumbs[] = [
+            'text' => $this->articleModel->getTranslation('title', $this->lang),
+            'url' => null,
+            'is_current' => true
+        ];
     }
 
     public function setSeo(){

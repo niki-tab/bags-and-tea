@@ -242,6 +242,53 @@
                     </div>
                 </div>
 
+                <!-- Categories -->
+                <div class="bg-white shadow-sm rounded-lg border border-gray-200 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+                        <h3 class="text-lg font-medium text-gray-900">Categories</h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-3">
+                            @forelse($this->getAvailableCategories() as $category)
+                                <label class="flex items-start space-x-3">
+                                    <input 
+                                        type="checkbox" 
+                                        value="{{ $category->id }}"
+                                        wire:model="selectedCategories"
+                                        class="mt-1 w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500"
+                                    >
+                                    <div class="flex-1 min-w-0">
+                                        <span class="text-sm font-medium text-gray-900">
+                                            {{ $category->getTranslation('name', $currentLocale) ?: $category->getTranslation('name', 'en') }}
+                                        </span>
+                                        @if($category->getTranslation('description_1', $currentLocale) ?: $category->getTranslation('description_1', 'en'))
+                                            <p class="text-xs text-gray-500 mt-1">
+                                                {{ Str::limit($category->getTranslation('description_1', $currentLocale) ?: $category->getTranslation('description_1', 'en'), 60) }}
+                                            </p>
+                                        @endif
+                                        @if($category->color)
+                                            <div class="flex items-center mt-1">
+                                                <div class="w-3 h-3 rounded-full mr-2" style="background-color: {{ $category->color }}"></div>
+                                                <span class="text-xs text-gray-400">{{ $category->color }}</span>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </label>
+                            @empty
+                                <p class="text-sm text-gray-500">No categories available. <a href="/admin-panel/blog/categories" class="text-indigo-600 hover:text-indigo-500">Create categories first</a>.</p>
+                            @endforelse
+                        </div>
+                        
+                        @if(count($selectedCategories) > 0)
+                            <div class="mt-4 pt-4 border-t border-gray-200">
+                                <p class="text-sm text-gray-600">
+                                    {{ count($selectedCategories) }} {{ count($selectedCategories) === 1 ? 'category' : 'categories' }} selected
+                                </p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
                 <!-- Action Buttons -->
                 <div class="bg-white shadow-sm rounded-lg border border-gray-200 overflow-hidden">
                     <div class="p-6 space-y-4">
