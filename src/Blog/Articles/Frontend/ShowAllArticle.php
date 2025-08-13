@@ -9,6 +9,7 @@ use Src\Blog\Categories\Infrastructure\Eloquent\BlogCategoryEloquentModel;
 class ShowAllArticle extends Component
 {
     public $lang;
+    public $selectedCategory;
 
     public $allArticles;
     public array $articlesNotFoundTextTranslations;
@@ -17,16 +18,35 @@ class ShowAllArticle extends Component
     {   
         
         $this->lang = app()->getLocale();
+        
+        // Check for blogCategory query parameter
+        $this->selectedCategory = request()->query('blogCategory');
 
+        // Build the base query
+        $query = ArticleModel::with('categories')
+            ->where(function($q) {
+                $q->where('state', 'live')->orWhere('state', 'published');
+            })
+            ->orderBy('created_at', 'desc');
+        
+        // Apply category filter if present
+        if ($this->selectedCategory) {
+            $category = BlogCategoryEloquentModel::where('slug->en', $this->selectedCategory)
+                ->orWhere('slug->es', $this->selectedCategory)
+                ->first();
+                
+            if ($category) {
+                $query->whereHas('categories', function($q) use ($category) {
+                    $q->where('blog_categories.id', $category->id);
+                });
+            }
+        }
 
-        $articleModel = ArticleModel::where('state', 'live')
-                                        ->orWhere('state', 'published')
-                                        ->orderBy('created_at', 'desc')
-                                        ->get()
-                                        ->map->getTranslatedAttributes($this->lang)
-                                        ->filter(function ($article) {
-                                            return !empty($article['slug']);
-                                        });
+        $articleModel = $query->get()
+            ->map->getTranslatedAttributes($this->lang)
+            ->filter(function ($article) {
+                return !empty($article['slug']);
+            });
 
         if($numberArticles){
             $this->allArticles = $articleModel->take($numberArticles);
