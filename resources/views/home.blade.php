@@ -93,7 +93,7 @@ if(request()->route('bagName')){
     <x-our-brands :title="$ourBrandsTitle"/>
     <div class="py-8 md:py-16 bg-color-3 px-8 md:px-32">
         <h2 class="text-center text-[#ffffff] text-2xl md:text-4xl mb-8 md:mb-14 font-['Lovera']">{{ trans('pages/home.title-avantage-buying-bags-and-tea') }} </h2>
-        <p class="text-center text-white text-robotoCondensed font-light px-12 md:px-20">{{ trans('pages/home.description-avantage-buying-bags-and-tea') }}</p>
+        <p class="text-center text-white text-robotoCondensed font-light px-8 md:px-20">{{ trans('pages/home.description-avantage-buying-bags-and-tea') }}</p>
     </div>
     <div class="py-8 md:py-16 bg-[#F8F3F0] px-4 lg:px-52">
         <h2 class="text-center text-color-2 text-2xl md:text-4xl mb-8 md:mb-14 font-['Lovera'] w-2/3 mx-auto">{{ trans('pages/home.title-featured-products') }} </h2>
