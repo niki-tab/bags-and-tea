@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Src\Blog\Articles\Model\ArticleModel;
 use Src\Blog\Articles\Infrastructure\EloquentArticleRepository;
+use Src\Blog\Categories\Infrastructure\Eloquent\BlogCategoryEloquentModel;
 use Ramsey\Uuid\Uuid;
 
 class AddEditArticle extends Component
@@ -28,6 +29,7 @@ class AddEditArticle extends Component
     public $meta_title = ['en' => '', 'es' => ''];
     public $meta_description = ['en' => '', 'es' => ''];
     public $meta_keywords = ['en' => '', 'es' => ''];
+    public $selectedCategories = [];
     
     // UI state
     public $isEditing = false;
@@ -51,6 +53,8 @@ class AddEditArticle extends Component
         'meta_description.es' => 'nullable|string',
         'meta_keywords.en' => 'nullable|string',
         'meta_keywords.es' => 'nullable|string',
+        'selectedCategories' => 'array',
+        'selectedCategories.*' => 'exists:blog_categories,id',
     ];
 
     protected $messages = [
@@ -114,6 +118,9 @@ class AddEditArticle extends Component
         // Load non-translatable fields
         $this->state = $this->article->state ?? 'draft';
         $this->main_image = $this->article->main_image ?? '';
+        
+        // Load categories
+        $this->selectedCategories = $this->article->categories->pluck('id')->toArray();
     }
 
     public function initializeEmptyArticle()
@@ -129,6 +136,7 @@ class AddEditArticle extends Component
         
         $this->state = 'draft';
         $this->main_image = '';
+        $this->selectedCategories = [];
     }
 
     public function switchLocale($locale)
@@ -200,6 +208,9 @@ class AddEditArticle extends Component
 
             $repository->save($article);
 
+            // Sync categories
+            $article->categories()->sync($this->selectedCategories);
+
             $this->showSuccessMessage = true;
             $this->successMessage = $this->isEditing ? 'Article updated successfully!' : 'Article created successfully!';
             $this->showErrorMessage = false;
@@ -251,6 +262,11 @@ class AddEditArticle extends Component
             'published' => 'Published',
             'archived' => 'Archived'
         ];
+    }
+
+    public function getAvailableCategories()
+    {
+        return BlogCategoryEloquentModel::active()->ordered()->get();
     }
 
     public function render()

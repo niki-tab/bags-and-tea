@@ -75,6 +75,18 @@ Route::prefix('admin-panel')->name('admin.')->group(function () {
                 })->name('edit');
             });
             
+            // Blog Categories Management
+            Route::get('/blog/categories', [AdminPanelController::class, 'blogCategories'])->name('blog.categories');
+            Route::prefix('blog/categories')->name('blog.categories.')->group(function () {
+                Route::get('/create', function () {
+                    return view('pages.admin-panel.dashboard.blog.categories.create');
+                })->name('create');
+                
+                Route::get('/edit/{id}', function ($id) {
+                    return view('pages.admin-panel.dashboard.blog.categories.edit', ['id' => $id]);
+                })->name('edit');
+            });
+            
             // Categories Management
             Route::get('/categories', [AdminPanelController::class, 'categories'])->name('categories');
             Route::prefix('categories')->name('categories.')->group(function () {

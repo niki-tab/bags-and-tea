@@ -38,6 +38,9 @@ class AppServiceProvider extends ServiceProvider
         Livewire::component('blog/show', \Src\Blog\Articles\Frontend\ShowAllArticle::class);
         Livewire::component('admin.blog.articles.show-all', \Src\Admin\Blog\Articles\Frontend\ShowAllArticle::class);
         Livewire::component('admin.blog.articles.add-edit', \Src\Blog\Articles\Frontend\AddEditArticle::class);
+        Livewire::component('admin.blog.categories.show-all', \Src\Admin\Blog\Categories\Frontend\ShowAllBlogCategory::class);
+        Livewire::component('admin.blog.categories.create-form', \Src\Admin\Blog\Categories\Frontend\CreateBlogCategoryForm::class);
+        Livewire::component('admin.blog.categories.edit-form', \Src\Admin\Blog\Categories\Frontend\EditBlogCategoryForm::class);
         Livewire::component('shared/language-selector', \Src\Shared\Frontend\LanguageSelector::class);
         Livewire::component('shared/cookie-banner', \Src\Shared\Frontend\CookieBanner::class);
         Livewire::component('shared/pagination', \Src\Shared\Frontend\Pagination::class);

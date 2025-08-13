@@ -57,6 +57,12 @@ class Sidebar extends Component
                 'roles' => ['admin'] // Only admin can see
             ],
             [
+                'name' => 'Blog Categories',
+                'route' => 'admin.blog.categories',
+                'icon' => 'M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z',
+                'roles' => ['admin'] // Only admin can see
+            ],
+            [
                 'name' => 'Categories',
                 'route' => 'admin.categories',
                 'icon' => 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10',
@@ -138,6 +144,20 @@ class Sidebar extends Component
 
     public function isActiveRoute(string $routeName): bool
     {
+        // Special handling for blog routes to prevent conflicts
+        $currentRoute = request()->route()->getName();
+        
+        // If we're on a blog categories route, only highlight blog categories
+        if (str_contains($currentRoute, 'blog.categories')) {
+            return $routeName === 'admin.blog.categories';
+        }
+        
+        // If we're on a blog articles route, only highlight blog (not blog categories)
+        if (str_contains($currentRoute, 'blog') && !str_contains($currentRoute, 'blog.categories')) {
+            return $routeName === 'admin.blog';
+        }
+        
+        // Default behavior for other routes
         return request()->routeIs($routeName) || request()->routeIs($routeName . '.*');
     }
 
