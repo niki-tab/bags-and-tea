@@ -11,9 +11,9 @@ class HomeController extends Controller
     public function index()
     {   
 
-        // Determine limit based on device (8 for mobile, 9 for desktop)
-        $isMobile = request()->header('User-Agent') && preg_match('/(Mobile|Android|iPhone|iPad)/', request()->header('User-Agent'));
-        $limit = $isMobile ? 8 : 9;
+        // Determine limit based on device (8 for mobile/tablet, 9 for desktop)
+        $isMobileOrTablet = request()->header('User-Agent') && preg_match('/(Mobile|Android|iPhone|iPad|Tablet)/', request()->header('User-Agent'));
+        $limit = $isMobileOrTablet ? 8 : 9;
 
         $featuredProducts = ProductEloquentModel::where('out_of_stock', false)
             ->where('is_sold_out', false)
