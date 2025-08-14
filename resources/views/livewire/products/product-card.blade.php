@@ -5,7 +5,7 @@
         : route('product.show.en', ['locale' => 'en', 'productSlug' => $productSlug]);
 @endphp
 
-<a href="{{ $productDetailRoute }}" class="bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 block">
+<a href="{{ $productDetailRoute }}" class="bg-white overflow-hidden hover:shadow-lg transition-shadow duration-300 block">
     {{-- Product Image Carousel --}}
     @php
         $productImages = $product->media ? $product->media->where('file_type', 'image')->map(function($media) {
