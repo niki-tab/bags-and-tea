@@ -1,21 +1,16 @@
 <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #F8F3F0;">
     <tr>
-        <td align="center" style="padding: 10px 20px;">
-            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 560px;">
+        <td align="center" style="padding: 0;">
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 560px; height: 100px;">
                 <tr>
-                    <td align="center">
+                    <td align="center" valign="middle" style="vertical-align: middle; height: 100px; line-height: 100px;">
                         <!-- Logo -->
                         <img src="https://bagsandtea.com/images/logo/bags_and_tea_logo_new.png" 
                              alt="Bags and Tea"
                              width="150" 
                              height="60"
-                             style="max-width: 150px; width: 150px; height: auto; display: block; margin: 0 auto; border: 0; outline: none; vertical-align: middle;"
+                             style="display: inline-block; vertical-align: middle; border: 0; outline: none;"
                              border="0">
-                        
-                        <!-- Tagline -->
-                        <p style="margin: 10px 0 0 0; color: #F8F3F0; font-size: 14px; text-align: center; font-family: 'Arial', sans-serif;">
-                            Luxury Bags & Premium Quality
-                        </p>
                     </td>
                 </tr>
             </table>
