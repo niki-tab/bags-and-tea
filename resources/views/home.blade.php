@@ -99,14 +99,7 @@ if(request()->route('bagName')){
         <h2 class="text-center text-color-2 text-2xl md:text-4xl mb-8 md:mb-14 font-['Lovera'] w-2/3 mx-auto">{{ trans('pages/home.title-featured-products') }} </h2>
         <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 lg:gap-10">
             @foreach($featuredProducts as $product)
-                <div class="bg-white shadow-lg overflow-hidden hover:shadow-xl transition flex flex-col">
-                    <div class="aspect-square relative">
-                        <img src="{{ $product['image'] }}" alt="{{ $product['name'] }}" class="absolute inset-0 w-full h-full object-cover">
-                    </div>
-                    <div class="p-3 md:p-6 mt-3 md:mt-6">
-                        <h2 class="text-center text-sm md:text-xl font-robotoCondensed font-light text-color-2 mb-2">{{ $product['name'] }}</h2>
-                    </div>
-                </div>
+                @livewire('products.product-card', ['product' => $product], key($product->id))
             @endforeach
         </div>
         <div class="flex justify-center">
