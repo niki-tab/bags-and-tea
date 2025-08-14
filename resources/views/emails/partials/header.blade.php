@@ -7,7 +7,10 @@
                         <!-- Logo -->
                         <img src="https://bagsandtea.com/images/logo/bags_and_tea_logo_new.png" 
                              alt="Bags and Tea"
-                             >
+                             width="150" 
+                             height="60"
+                             style="max-width: 150px; width: 150px; height: auto; display: block; margin: 0 auto; border: 0; outline: none; vertical-align: middle;"
+                             border="0">
                         
                         <!-- Tagline -->
                         <p style="margin: 10px 0 0 0; color: #F8F3F0; font-size: 14px; text-align: center; font-family: 'Arial', sans-serif;">
