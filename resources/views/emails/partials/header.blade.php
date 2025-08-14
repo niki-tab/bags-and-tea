@@ -5,9 +5,12 @@
                 <tr>
                     <td align="center">
                         <!-- Logo -->
-                        <img src="https://bagsandtea.com/images/logo/bags_and_tea_logo_new.svg" 
+                        <img src="https://bagsandtea.com/images/logo/bags_and_tea_logo_new.png" 
                              alt="Bags and Tea" 
-                             style="max-width: 150px; height: auto; display: block; margin: 0 auto 20px auto;">
+                             width="150" 
+                             height="60"
+                             style="max-width: 150px; width: 150px; height: auto; display: block; margin: 0 auto 20px auto; border: 0; outline: none;"
+                             border="0">
                         
                         <!-- Company Name -->
                         <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: normal; text-align: center; font-family: 'Arial', sans-serif;">
