@@ -43,7 +43,7 @@
                 {{-- Previous Arrow --}}
                 <button 
                     @click.stop.prevent="currentImage = currentImage > 0 ? currentImage - 1 : totalImages - 1"
-                    class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition-all duration-200 z-10"
+                    class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-[#F8F3F0] hover:bg-[#F8F3F0]/80 text-color-2 p-2 rounded-full transition-all duration-200 z-10"
                     title="Previous image"
                     onclick="event.stopPropagation(); event.preventDefault(); return false;">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -54,7 +54,7 @@
                 {{-- Next Arrow --}}
                 <button 
                     @click.stop.prevent="currentImage = currentImage < totalImages - 1 ? currentImage + 1 : 0"
-                    class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition-all duration-200 z-10"
+                    class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#F8F3F0] hover:bg-[#F8F3F0]/80 text-color-2 p-2 rounded-full transition-all duration-200 z-10"
                     title="Next image"
                     onclick="event.stopPropagation(); event.preventDefault(); return false;">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
