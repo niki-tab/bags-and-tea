@@ -52,6 +52,7 @@ class AppServiceProvider extends ServiceProvider
         Livewire::component('admin.products.product-form', \App\Livewire\Admin\Products\ProductForm::class);
         Livewire::component('src.products.product.show', \Src\Products\Product\Frontend\ProductDetail::class);
         Livewire::component('src.products.product.additional-information', \Src\Products\Product\Frontend\ProductAdditionalInformation::class);
+        Livewire::component('products.product-card', \Src\Products\Product\Frontend\ProductCard::class);
         
         // Cart components
         Livewire::component('cart.page', \Src\Cart\Frontend\CartPage::class);

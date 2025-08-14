@@ -11,25 +11,12 @@ class HomeController extends Controller
     public function index()
     {   
 
-        $featuredProducts = ProductEloquentModel::where('featured', true)
-            ->with(['primaryImage', 'media'])
-            ->orderBy('featured_position', 'asc')
+        $featuredProducts = ProductEloquentModel::where('out_of_stock', false)
+            ->where('is_sold_out', false)
+            ->with(['brand', 'media'])
+            ->orderBy('created_at', 'desc')
             ->limit(9)
             ->get();
-
-        $featuredProducts = $featuredProducts->map(function($product) {
-            // Use primary image from product_media table
-            $imageUrl = $product->primaryImage ? $product->primaryImage->file_path : null;
-            
-            return [
-                'id' => $product->id,
-                'name' => $product->name,
-                'brand' => $product->price,
-                'image' => $imageUrl,
-                'description' => $product->description,
-                // Add any other fields you need
-            ];
-        })->toArray();
 
         $this->setSeo();
 
