@@ -11,11 +11,15 @@ class HomeController extends Controller
     public function index()
     {   
 
+        // Determine limit based on device (8 for mobile, 9 for desktop)
+        $isMobile = request()->header('User-Agent') && preg_match('/(Mobile|Android|iPhone|iPad)/', request()->header('User-Agent'));
+        $limit = $isMobile ? 8 : 9;
+
         $featuredProducts = ProductEloquentModel::where('out_of_stock', false)
             ->where('is_sold_out', false)
             ->with(['brand', 'media'])
             ->orderBy('created_at', 'desc')
-            ->limit(9)
+            ->limit($limit)
             ->get();
 
         $this->setSeo();
