@@ -2,6 +2,7 @@
 
 use App\Mail\TestEmail;
 use App\Mail\OrderConfirmation;
+use App\Events\NewOrderCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -73,23 +74,46 @@ Route::get('/test-email', function (Request $request) {
 Route::get('/test-order-confirmation', function (Request $request) {
     try {
         $email = $request->query('email', 'nicolas.tabares.tech@gmail.com');
-        $orderNumber = $request->query('order', '#ORD-2025-001');
-        $customerName = $request->query('name', 'John Doe');
+        $orderNumber = $request->query('order', 'BT-2025-000006');
+        $locale = $request->query('locale'); // Optional locale override
         
-        Mail::to($email)->send(new OrderConfirmation($orderNumber, $customerName));
+        Mail::to($email)->send(new OrderConfirmation($orderNumber, $locale));
         
         return response()->json([
             'success' => true,
             'message' => 'Order confirmation email sent successfully!',
             'sent_to' => $email,
             'order_number' => $orderNumber,
-            'customer_name' => $customerName
+            'locale' => $locale ?: 'auto-detected'
         ]);
         
     } catch (\Exception $e) {
         return response()->json([
             'success' => false,
-            'message' => 'Failed to send order confirmation: ' . $e->getMessage()
+            'message' => 'Failed to send order confirmation: ' . $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ], 500);
+    }
+});
+
+Route::get('/test-new-order-event', function (Request $request) {
+    try {
+        $orderNumber = $request->query('order', 'BT-2025-000006');
+        
+        // Dispatch the NewOrderCreated event
+        NewOrderCreated::dispatch($orderNumber);
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'NewOrderCreated event dispatched successfully!',
+            'order_number' => $orderNumber
+        ]);
+        
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to dispatch NewOrderCreated event: ' . $e->getMessage(),
+            'trace' => $e->getTraceAsString()
         ], 500);
     }
 });
