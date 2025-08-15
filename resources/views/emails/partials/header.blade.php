@@ -5,7 +5,7 @@
                 <tr>
                     <td align="center" valign="middle" style="vertical-align: middle; height: 100px; line-height: 100px;">
                         <!-- Logo -->
-                        <img src="https://bagsandtea.com/images/logo/bags_and_tea_logo_new.png" 
+                        <img src="https://bagsandtea.com/images/logo/logo_new_bt.png" 
                              alt="Bags and Tea"
                              width="150" 
                              height="60"
