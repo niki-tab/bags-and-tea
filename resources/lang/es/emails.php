@@ -3,6 +3,7 @@
 return [
     'order_confirmation' => [
         'title' => 'Confirmación de Pedido',
+        'subject' => 'Confirmación de Pedido - :orderNumber',
         'hello' => 'Hola :name,',
         'thank_you' => '¡Gracias por tu pedido! Estamos emocionados de confirmar que hemos recibido tu pedido y se está procesando.',
         'order_number' => 'Número de Pedido',
