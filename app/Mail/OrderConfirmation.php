@@ -205,8 +205,11 @@ class OrderConfirmation extends Mailable
      */
     public function envelope(): Envelope
     {
+        // Set the locale for translation
+        app()->setLocale($this->locale);
+        
         return new Envelope(
-            subject: 'Order Confirmation - ' . $this->orderNumber,
+            subject: trans('emails.order_confirmation.subject', ['orderNumber' => $this->orderNumber]),
         );
     }
 
