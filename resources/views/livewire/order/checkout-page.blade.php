@@ -322,14 +322,14 @@
                                 {{ trans('components/checkout.shipping-not-available-button') }}
                             </button>
                         @else
-                            <button wire:click="processCompleteOrder" 
+                            <button wire:click="createPaymentIntentOnly" 
                                     class="w-full bg-[#CA2530] hover:bg-[#A01E28] text-white py-4 px-8 text-lg font-medium font-['Lora'] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                                     @if($totalAmount <= 0) disabled @endif
                                     wire:loading.attr="disabled">
-                                <span wire:loading.remove wire:target="processCompleteOrder" class="font-robotoCondensed">
+                                <span wire:loading.remove wire:target="createPaymentIntentOnly" class="font-robotoCondensed">
                                     {{ trans('components/checkout.select-payment-method') }}
                                 </span>
-                                <span wire:loading wire:target="processCompleteOrder">
+                                <span wire:loading wire:target="createPaymentIntentOnly">
                                     <svg class="animate-spin inline-block mr-2 h-5 w-5 text-white align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -508,7 +508,7 @@ document.addEventListener('livewire:init', () => {
         }
         
         try {
-            stripe = Stripe('{{ env('STRIPE_KEY') }}');
+            stripe = Stripe('{{ config('services.stripe.key') }}');
             console.log('Stripe instance created');
             
             elements = stripe.elements({
@@ -614,11 +614,9 @@ document.addEventListener('livewire:init', () => {
                         
                         console.log('Return URL:', returnUrl);
                         
-                        const {error} = await stripe.confirmPayment({
+                        const {error, paymentIntent} = await stripe.confirmPayment({
                             elements,
-                            confirmParams: {
-                                return_url: returnUrl
-                            }
+                            redirect: 'if_required'
                         });
                         
                         if (error) {
@@ -632,6 +630,40 @@ document.addEventListener('livewire:init', () => {
                                 textSpan.classList.remove('hidden');
                                 loadingSpan.classList.add('hidden');
                                 submitButton.disabled = false;
+                            }
+                        } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+                            console.log('Payment succeeded, creating order');
+                            
+                            // Call Livewire method to create the order
+                            try {
+                                const result = await @this.call('createOrderAfterPayment');
+                                console.log('Order creation call completed', result);
+                                
+                                // Use the order number from the result if available, otherwise use the temp one
+                                const realOrderNumber = result?.order_number || orderNumber;
+                                
+                                // Build the return URL properly for redirect after order creation
+                                const baseUrl = '{{ url('/') }}';
+                                const locale = '{{ app()->getLocale() }}';
+                                const returnUrl = locale === 'es' 
+                                    ? baseUrl + '/es/pedido-confirmado/' + realOrderNumber
+                                    : baseUrl + '/en/order-confirmed/' + realOrderNumber;
+                                
+                                console.log('Redirecting to success page with order number:', realOrderNumber, returnUrl);
+                                window.location.href = returnUrl;
+                                
+                            } catch (orderError) {
+                                console.error('Order creation failed:', orderError);
+                                alert('Payment succeeded but order creation failed. Please contact support with your payment details.');
+                                
+                                // Reset loading state
+                                const textSpan = document.getElementById('submit-payment-text');
+                                const loadingSpan = document.getElementById('submit-payment-loading');
+                                if (textSpan && loadingSpan) {
+                                    textSpan.classList.remove('hidden');
+                                    loadingSpan.classList.add('hidden');
+                                    submitButton.disabled = false;
+                                }
                             }
                         }
                     });

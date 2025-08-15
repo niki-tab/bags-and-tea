@@ -10,6 +10,7 @@ use Src\Order\Infrastructure\EloquentOrderRepository;
 use Src\Order\Application\ProcessStripePayment;
 use Src\Order\Application\CalculateOrderFees;
 use Src\Order\Shipping\Infrastructure\Eloquent\ShippingRateEloquentModel;
+use App\Events\NewOrderCreated;
 
 class CheckoutPage extends Component
 {
@@ -244,22 +245,55 @@ class CheckoutPage extends Component
         }
     }
 
-    private function createPaymentIntentOnly()
+    public function createPaymentIntentOnly()
     {
         try {
             \Log::info('Starting createPaymentIntentOnly');
+            
+            // First validate all fields
+            $this->validateAllFields();
+            
             $this->isLoading = true;
+
+            // Generate a temporary order number for the payment intent
+            $tempOrderNumber = 'TEMP-' . strtoupper(substr(md5(uniqid()), 0, 8));
+
+            // If same_as_billing is true, copy shipping to billing
+            if ($this->same_as_billing) {
+                $this->billing_first_name = $this->shipping_first_name;
+                $this->billing_last_name = $this->shipping_last_name;
+                $this->billing_line1 = $this->shipping_line1;
+                $this->billing_line2 = $this->shipping_line2;
+                $this->billing_city = $this->shipping_city;
+                $this->billing_postal_code = $this->shipping_postal_code;
+                $this->billing_country = $this->shipping_country;
+                $this->billing_state = $this->shipping_state;
+                \Log::info('Copied shipping address to billing address');
+            }
+
+            $shippingAddress = [
+                'first_name' => $this->shipping_first_name,
+                'last_name' => $this->shipping_last_name,
+                'line1' => $this->shipping_line1,
+                'line2' => $this->shipping_line2,
+                'city' => $this->shipping_city,
+                'postal_code' => $this->shipping_postal_code,
+                'country' => $this->shipping_country,
+                'state' => $this->shipping_state,
+            ];
 
             // Process payment with Stripe (create payment intent only)
             \Log::info('Creating Stripe payment intent without order');
             $stripePayment = new ProcessStripePayment();
             
             $orderData = [
+                'order_number' => $tempOrderNumber,
                 'total_amount' => $this->totalAmount,
                 'currency' => 'EUR',
                 'payment_method' => $this->payment_method,
                 'customer_email' => $this->customer_email,
                 'customer_name' => $this->customer_name,
+                'shipping_address' => $shippingAddress,
             ];
 
             $paymentResult = $stripePayment->createPaymentIntent($orderData);
@@ -273,11 +307,13 @@ class CheckoutPage extends Component
             // Store payment intent for frontend processing
             $this->paymentIntentId = $paymentResult['payment_intent_id'];
             $this->clientSecret = $paymentResult['client_secret'];
+            $this->orderNumber = $tempOrderNumber; // Store temp order number
             
             \Log::info('Payment intent created successfully', [
                 'payment_intent_id' => $this->paymentIntentId,
                 'client_secret_length' => strlen($this->clientSecret),
                 'total_amount' => $this->totalAmount,
+                'temp_order_number' => $tempOrderNumber,
             ]);
             
             // Dispatch event to frontend that clientSecret is ready
@@ -287,6 +323,10 @@ class CheckoutPage extends Component
                 'orderNumber' => $this->orderNumber
             ]);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \Log::error('Validation failed', ['errors' => $e->errors()]);
+            // Re-throw the validation exception so Livewire can display the errors
+            throw $e;
         } catch (\Exception $e) {
             \Log::error('Payment intent creation failed: ' . $e->getMessage(), [
                 'trace' => $e->getTraceAsString()
@@ -373,6 +413,15 @@ class CheckoutPage extends Component
                 'order_number' => $this->orderNumber,
                 'payment_intent_id' => $this->paymentIntentId,
             ]);
+
+            // Dispatch an event to update the frontend with the real order number
+            $this->dispatch('order-created', [
+                'orderNumber' => $this->orderNumber
+            ]);
+
+            // Dispatch the NewOrderCreated event to trigger notifications and other processes
+            \Log::info('Dispatching NewOrderCreated event for order: ' . $this->orderNumber);
+            NewOrderCreated::dispatch($this->orderNumber);
 
             return [
                 'success' => true,
