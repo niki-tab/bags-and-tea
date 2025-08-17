@@ -641,15 +641,21 @@ document.addEventListener('livewire:init', () => {
                                 
                                 // Use the order number from the result if available, otherwise use the temp one
                                 const realOrderNumber = result?.order_number || orderNumber;
+                                const securityToken = result?.security_token;
                                 
                                 // Build the return URL properly for redirect after order creation
                                 const baseUrl = '{{ url('/') }}';
                                 const locale = '{{ app()->getLocale() }}';
-                                const returnUrl = locale === 'es' 
+                                let returnUrl = locale === 'es' 
                                     ? baseUrl + '/es/pedido-confirmado/' + realOrderNumber
                                     : baseUrl + '/en/order-confirmed/' + realOrderNumber;
                                 
-                                console.log('Redirecting to success page with order number:', realOrderNumber, returnUrl);
+                                // Add security token if available
+                                if (securityToken) {
+                                    returnUrl += '?token=' + securityToken;
+                                }
+                                
+                                console.log('Redirecting to success page with order number and token:', realOrderNumber, securityToken, returnUrl);
                                 window.location.href = returnUrl;
                                 
                             } catch (orderError) {

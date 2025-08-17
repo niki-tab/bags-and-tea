@@ -103,6 +103,8 @@ class OrderConfirmation extends Mailable
             'total_amount' => $order->total_amount,
             'shipping_address' => $this->formatAddressForEmail(json_decode($order->shipping_address, true)),
             'billing_address' => $this->formatAddressForEmail(json_decode($order->billing_address, true)),
+            'order_id' => $order->id, // Full UUID for backend verification
+            'security_token' => substr($order->id, 0, 8), // First 8 chars as security token
         ];
     }
 

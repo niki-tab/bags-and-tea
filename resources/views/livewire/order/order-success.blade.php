@@ -1,6 +1,37 @@
-<div class="bg-background-color-4 min-h-screen">
-    <div class="container mx-auto px-4 lg:px-6 py-8 max-w-screen-2xl">
-        @if($orderFound && $order)
+<div class="bg-background-color-4">
+    @if(!$authorized)
+        <!-- Unauthorized Access Message -->
+        <div class="container mx-auto px-4 lg:px-6 pt-16 pb-8 max-w-screen-2xl">
+            <div class="text-center">
+                <div>
+                    <svg class="w-20 h-20 mx-auto text-red-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                    </svg>
+                    
+                    <h1 class="text-3xl font-light text-gray-800 mb-4 font-['Lovera']" style="color: #482626;">
+                        {{ trans('components/checkout.not-authorized') }}
+                    </h1>
+                    
+                    <p class="text-base text-gray-600 mb-6 font-robotoCondensed leading-relaxed max-w-md sm:max-w-lg lg:max-w-xl mx-auto">
+                        {{ trans('components/checkout.not-authorized-message') }}
+                    </p>
+                    
+                    <div class="space-y-3 max-w-md mx-auto">
+                        <a href="{{ app()->getLocale() === 'es' ? url('/es/tienda') : url('/en/shop') }}" 
+                           class="block w-full bg-[#CA2530] text-white py-3 px-6 rounded-lg font-medium hover:bg-[#A01E28] transition-colors text-center">
+                            {{ trans('components/checkout.return-to-shop') }}
+                        </a>
+                        
+                        <a href="mailto:info@bagsandtea.com" 
+                           class="block w-full bg-gray-100 text-gray-700 py-3 px-6 rounded-lg font-medium hover:bg-gray-200 transition-colors text-center">
+                            {{ app()->getLocale() === 'es' ? 'Contactar Soporte' : 'Contact Support' }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @elseif($orderFound && $order)
+        <div class="container mx-auto px-4 lg:px-6 py-8 max-w-screen-2xl">
             <!-- Success Message -->
             <div class="text-center mb-8">
                 <div class="mb-6">
@@ -228,7 +259,9 @@
                 </a>
             </div>
 
-        @else
+        </div>
+    @else
+        <div class="container mx-auto px-4 lg:px-6 py-8 max-w-screen-2xl">
             <!-- Order Not Found -->
             <div class="text-center">
                 <div class="mb-6">

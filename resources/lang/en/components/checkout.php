@@ -190,6 +190,9 @@ return [
     'pending' => 'Pending',
     'order-not-found' => 'Order Not Found',
     'order-not-found-message' => 'We could not find an order with that number. Please check your order confirmation email.',
+    'not-authorized' => 'Access Not Authorized',
+    'not-authorized-message' => 'You are not authorized to access this order confirmation page. Please check your email for the correct link or contact support if you need assistance.',
+    'return-to-shop' => 'Return to Shop',
     
     // Marketplace Fees Management
     'marketplace-fees' => 'Marketplace Fees',
