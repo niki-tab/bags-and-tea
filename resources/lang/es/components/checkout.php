@@ -190,6 +190,9 @@ return [
     'pending' => 'Pendiente',
     'order-not-found' => 'Pedido No Encontrado',
     'order-not-found-message' => 'No pudimos encontrar un pedido con ese número. Por favor, revisa tu email de confirmación.',
+    'not-authorized' => 'Acceso No Autorizado',
+    'not-authorized-message' => 'No tienes autorización para acceder a esta página de confirmación de pedido. Por favor, revisa tu email para obtener el enlace correcto o contacta con soporte si necesitas ayuda.',
+    'return-to-shop' => 'Volver a la Tienda',
     
     // Marketplace Fees Management
     'marketplace-fees' => 'Tasas del Marketplace',

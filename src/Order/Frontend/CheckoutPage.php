@@ -423,9 +423,14 @@ class CheckoutPage extends Component
             \Log::info('Dispatching NewOrderCreated event for order: ' . $this->orderNumber);
             NewOrderCreated::dispatch($this->orderNumber);
 
+            // Get the order to generate security token
+            $order = \DB::table('orders')->where('order_number', $this->orderNumber)->first();
+            $securityToken = $order ? substr($order->id, 0, 8) : null;
+
             return [
                 'success' => true,
-                'order_number' => $this->orderNumber
+                'order_number' => $this->orderNumber,
+                'security_token' => $securityToken
             ];
 
         } catch (\Exception $e) {
