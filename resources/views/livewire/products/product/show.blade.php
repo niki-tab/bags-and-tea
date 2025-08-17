@@ -3,7 +3,15 @@
     @if($product)
         <!-- Product Title - Above everything -->
         <h1 class="text-3xl lg:text-4xl font-light text-gray-800 mb-8 text-center font-['Lovera']" style="color: #482626;">
-            {{ strtoupper($product->brand ? $product->brand->name : '') }} {{ strtoupper($product->getTranslation('name', app()->getLocale())) }}
+            @php
+                $brand = strtoupper($product->brand ? $product->brand->name : '');
+                $name = strtoupper($product->getTranslation('name', app()->getLocale()));
+                $fullTitle = trim($brand . ' ' . $name);
+                
+                // Replace numbers with spans that use RobotoCondensed font and medium weight
+                $titleWithNumberFonts = preg_replace('/(\d+)/', '<span class="font-robotoCondensed font-medium">$1</span>', $fullTitle);
+            @endphp
+            {!! $titleWithNumberFonts !!}
         </h1>
         
         <!-- Breadcrumb Navigation -->
