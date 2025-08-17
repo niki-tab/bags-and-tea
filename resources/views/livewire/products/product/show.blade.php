@@ -4,7 +4,8 @@
         <!-- Product Title - Above everything -->
         <h1 class="text-3xl lg:text-4xl font-light text-gray-800 mb-8 text-center font-['Lovera']" style="color: #482626;">
             @php
-                $brand = strtoupper($product->brand ? $product->brand->name : '');
+                //$brand = strtoupper($product->brand ? $product->brand->name : '');
+                $brand = '';
                 $name = strtoupper($product->getTranslation('name', app()->getLocale()));
                 $fullTitle = trim($brand . ' ' . $name);
                 
