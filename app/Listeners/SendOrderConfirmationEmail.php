@@ -45,8 +45,10 @@ class SendOrderConfirmationEmail implements ShouldQueue
             
             Log::info('Sending order confirmation email to: ' . $order->customer_email);
             
-            // Send the order confirmation email
-            Mail::to($order->customer_email)->send(new OrderConfirmation($event->orderNumber));
+            // Send the order confirmation email with BCC
+            Mail::to($order->customer_email)
+                ->bcc('nicolas.tabares.tech@gmail.com')
+                ->send(new OrderConfirmation($event->orderNumber));
             
             Log::info('Order confirmation email sent successfully for order: ' . $event->orderNumber);
             
