@@ -52,7 +52,7 @@ class AdminPanelController extends Controller
 
     public function orders(): View
     {
-        return view('pages.admin-panel.dashboard.orders');
+        return view('pages.admin-panel.dashboard.orders.index');
     }
 
     public function blog(): View

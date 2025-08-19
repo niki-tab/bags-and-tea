@@ -61,4 +61,9 @@ class OrderEloquentModel extends Model
     {
         return $this->hasMany(OrderFeeEloquentModel::class, 'order_id');
     }
+
+    public function scopeOrdered($query)
+    {
+        return $query->orderBy('created_at');
+    }
 }
