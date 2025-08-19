@@ -14,6 +14,8 @@ interface OrderRepository
     
     public function createOrderFee(array $orderFeeData): array;
     
+    public function findAll(): array;
+    
     public function retrieveOrderByNumber(string $orderNumber): ?array;
     
     public function retrieveOrderById(string $orderId): ?array;

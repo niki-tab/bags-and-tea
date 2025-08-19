@@ -34,6 +34,13 @@ class EloquentOrderRepository implements OrderRepository
         $commission = VendorCommissionEloquentModel::create($commissionData);
         return $commission->toArray();
     }
+
+    public function findAll(): array
+    {
+        return OrderEloquentModel::with('suborders', 'orderFees')->ordered()->get()->all();
+
+        //return AttributeEloquentModel::with('children')->ordered()->get()->all();
+    }
     
     public function retrieveOrderByNumber(string $orderNumber): ?array
     {
