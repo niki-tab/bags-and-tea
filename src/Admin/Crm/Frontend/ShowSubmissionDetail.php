@@ -57,7 +57,7 @@ class ShowSubmissionDetail extends Component
         if (is_array($formFields)) {
             foreach ($formFields as $field) {
                 $fieldName = $field['name'] ?? $field['id'] ?? '';
-                $fieldLabel = $field['label'] ?? ucfirst(str_replace('_', ' ', $fieldName));
+                $fieldLabel = isset($field['label']) ? trans($field['label']) : ucfirst(str_replace('_', ' ', $fieldName));
                 $fieldType = $field['type'] ?? 'text';
                 
                 if (isset($answers[$fieldName])) {
@@ -72,7 +72,7 @@ class ShowSubmissionDetail extends Component
             // Fallback: just show all answers with basic formatting
             foreach ($answers as $key => $value) {
                 $formattedAnswers[] = [
-                    'label' => ucfirst(str_replace('_', ' ', $key)),
+                    'label' => trans($key),
                     'value' => $value,
                     'type' => 'text',
                 ];
