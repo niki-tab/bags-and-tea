@@ -74,6 +74,9 @@ class AppServiceProvider extends ServiceProvider
         // Admin Fees components
         Livewire::component('src.admin.order.fees.frontend.marketplace-fee-management', \Src\Admin\Order\Fees\Frontend\MarketplaceFeeManagement::class);
 
+        Livewire::component('src.auth.frontend.login', \Src\Auth\Frontend\Login::class);
+        Livewire::component('src.auth.frontend.register', \Src\Auth\Frontend\Register::class);
+
         $this->app->bind(FormRepository::class, EloquentFormRepository::class);
     }
 

@@ -210,7 +210,7 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
     })->name('certify-your-bag.show.en')->where('locale', 'en');
 
     Route::get('/login', function () {
-        return view('pages/we_are_under_construction/show');
+        return view('pages/auth/show');
     })->name('login.show.en-es')->where('locale', 'en|es');
 
     Route::get('/carrito', function () {
@@ -271,6 +271,10 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
     Route::get('/calendar-test', function () {
         return view('pages/calendar-test');
     })->name('calendar-test.en-es')->where('locale', 'en|es');
+
+    Route::get('/my-account', function () {
+        return view('pages/my-account');
+    })->name('my-account.show.en-es')->where('locale', 'en|es')->middleware('auth');
     
 });
 

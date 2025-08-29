@@ -15,19 +15,22 @@
 </div>
 
 <!-- Calendar Widget Scripts -->
-<script src="https://cm-staging.barcelonalocalexperiences.com/api/calendar-widget/script"></script>
+<script src="http://channel-manager-api.guides-portal-ble.local/api/calendar-widget/script"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const widget = new BLECalendarWidget({
-            apiBaseUrl: 'https://cm-staging.barcelonalocalexperiences.com/api/calendar-widget',
+        new BLECalendarWidget({
+            apiBaseUrl: 'http://channel-manager-api.guides-portal-ble.local/api/calendar-widget',
             containerId: 'calendar-widget',
-            productId: '1048163',
-            primaryColor: '#ff6b35', // Brand color
+            productId: '876524_01FZXY6W4DT1AZKZEMXFD8VN4G',
+            primaryColor: '#EF4444',
+            displayMode: 'modal',
             onReservationComplete: function(reservation) {
-                window.location.href = '/booking-success?id=' + reservation.reservation_id;
+                console.log('Reservation completed:', reservation);
+                // Customize: redirect to booking page with selected date
+                // window.location.href = '/booking?date=' + reservation.date;
             },
             onError: function(error) {
-                alert('Booking error: ' + error.message);
+                console.error('Calendar error:', error);
             }
         });
     });
