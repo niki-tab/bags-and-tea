@@ -3,7 +3,7 @@
 return [
 
     'company-name' => 'Bags & Tea',
-    'menu-option-1' => 'Certify your bag',
+    'menu-option-1' => 'Repair your bag',
     'menu-option-2' => 'We buy your bag',
     'menu-option-3' => 'Shop',
     'menu-option-4' => 'About us',

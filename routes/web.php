@@ -201,6 +201,14 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
 
     Route::get('/we-buy-your-bag/{bagName?}',[WeBuyYourBagController::class, 'index'])->name('we-buy-your-bag.show.en')->where('locale', 'en');
 
+    Route::get('/repara-tu-bolso', function () {
+        return view('pages/repair-your-bag/show');
+    })->name('repair-your-bag.show.es')->where('locale', 'es');
+
+    Route::get('/repair-your-bag', function () {
+        return view('pages/repair-your-bag/show');
+    })->name('repair-your-bag.show.en')->where('locale', 'en');
+
     Route::get('/certifica-tu-bolso', function () {
         return view('pages/we_are_under_construction/show');
     })->name('certify-your-bag.show.es')->where('locale', 'es');

@@ -107,8 +107,9 @@
                                     @elseif($answer['type'] === 'file')
                                         @php
                                             $filePath = is_array($answer['value']) ? $answer['value'][0] : $answer['value'];
+                                            $imageUrl = str_starts_with($filePath, 'http') ? $filePath : asset('storage/' . $filePath);
                                         @endphp
-                                        <a href="{{ asset('storage/' . $filePath) }}" target="_blank" class="text-indigo-600 hover:text-indigo-500 underline">
+                                        <a href="{{ $imageUrl }}" target="_blank" class="text-indigo-600 hover:text-indigo-500 underline">
                                             Ver imagen
                                         </a>
                                     @elseif(is_array($answer['value']))
