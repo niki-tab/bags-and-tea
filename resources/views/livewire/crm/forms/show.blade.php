@@ -1,5 +1,5 @@
 <div class="w-full bg-[#F6F0ED] px-6 md:px-20 py-12 md:py-20" id="form-container-{{ $formIdentifier }}">
-    <h2 class="text-3xl md:text-4xl font-['Lovera'] text-[#3A1515] mx-auto md:mx-0 text-center md:text-left">
+    <h2 class="{{ $formIdentifier === 'repair-your-bag' ? 'text-4xl md:text-5xl' : 'text-3xl md:text-4xl' }} font-['Lovera'] text-[#3A1515] mx-auto {{ $formIdentifier === 'repair-your-bag' ? 'text-center' : 'md:mx-0 text-center md:text-left' }}">
         {{ $formTitle }}
     </h2>
     @if ($showSuccessMessage)
@@ -32,6 +32,10 @@
                     @elseif ($field['type'] === 'section-title')
                     </div>
                     <p class="block font-robotoCondensed text-color-2 text-xl md:ml-3 ml-0 w-full font-regular text-center md:text-left">{{ trans($field['label']) }}</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-10 md:gap-y-4 mt-8 md:mt-10"> <!-- Added grid container -->
+                    @elseif ($field['type'] === 'section-paragraph')
+                    </div>
+                    <p class="block font-robotoCondensed text-color-2 text-base md:ml-3 ml-0 w-full font-regular text-center md:text-left mb-6 leading-relaxed">{{ trans($field['label']) }}</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-10 md:gap-y-4 mt-8 md:mt-10"> <!-- Added grid container -->
                     @else
                         <div class="relative">
