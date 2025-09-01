@@ -12,6 +12,8 @@ use Src\Blog\Articles\Model\ArticleModel;
 use App\Models\ProductQuantityVariationModel;
 use Src\Crm\Forms\Application\UseCases\FormSubmissionCreator;
 use App\Models\ProducSizeVariationQuantityVariationPriceModel;
+use Illuminate\Support\Facades\Storage;
+use Ramsey\Uuid\Uuid;
 
 class Form extends Component
 {
@@ -128,13 +130,48 @@ class Form extends Component
                 if (is_array($file)) {
                     // Handle multiple files
                     foreach ($file as $singleFile) {
-                        $path = $singleFile->store('form-submissions', 'public');
-                        $this->formData[$fieldName][] = $path;
+                        // Try to upload to R2 (Cloudflare), fallback to local storage
+                        $uuid = Uuid::uuid4()->toString();
+                        $filename = $uuid . '_' . time() . '.' . $singleFile->getClientOriginalExtension();
+                        
+                        try {
+                            // Try R2 first
+                            if (env('R2_BUCKET')) {
+                                $path = $singleFile->storeAs('form-submissions/' . $this->formIdentifier, $filename, ['disk' => 'r2', 'visibility' => 'public']);
+                                $baseUrl = Storage::disk('r2')->url('');
+                                $url = $baseUrl . 'bags-and-tea/' . $path;
+                            } else {
+                                throw new \Exception('R2 not configured');
+                            }
+                        } catch (\Exception $e) {
+                            // Fallback to local storage
+                            $path = $singleFile->storeAs('form-submissions/' . $this->formIdentifier, $filename, ['disk' => 'public', 'visibility' => 'public']);
+                            $url = Storage::disk('public')->url($path);
+                        }
+                        
+                        $this->formData[$fieldName][] = $url;
                     }
                 } else {
                     // Handle single file
-                    $path = $file->store('form-submissions', 'public');
-                    $this->formData[$fieldName] = $path;
+                    $uuid = Uuid::uuid4()->toString();
+                    $filename = $uuid . '_' . time() . '.' . $file->getClientOriginalExtension();
+                    
+                    try {
+                        // Try R2 first
+                        if (env('R2_BUCKET')) {
+                            $path = $file->storeAs('form-submissions/' . $this->formIdentifier, $filename, ['disk' => 'r2', 'visibility' => 'public']);
+                            $baseUrl = Storage::disk('r2')->url('');
+                            $url = $baseUrl . 'bags-and-tea/' . $path;
+                        } else {
+                            throw new \Exception('R2 not configured');
+                        }
+                    } catch (\Exception $e) {
+                        // Fallback to local storage
+                        $path = $file->storeAs('form-submissions/' . $this->formIdentifier, $filename, ['disk' => 'public', 'visibility' => 'public']);
+                        $url = Storage::disk('public')->url($path);
+                    }
+                    
+                    $this->formData[$fieldName] = $url;
                 }
             }
         }
