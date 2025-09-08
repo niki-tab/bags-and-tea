@@ -22,6 +22,15 @@
                 person_profiles: 'identified_only', // or 'always' to create profiles for anonymous users as well
             })
         </script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17541066386"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'AW-17541066386');
+        </script>
     @endif
 
     <!-- Google Tag Manager -->
