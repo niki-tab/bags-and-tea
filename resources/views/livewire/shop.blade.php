@@ -104,10 +104,12 @@
                                 @else
                                     {{ $filterLabel }}
                                 @endif
-                                <svg class="dropdown-arrow w-4 h-4 text-gray-400 float-right mt-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            </button>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                <svg class="dropdown-arrow w-4 h-4 text-gray-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
-                            </button>
+                            </div>
                             <div class="dropdown-content absolute z-50 mt-1 bg-white border border-gray-300 rounded shadow-lg max-h-60 overflow-y-auto min-w-[200px] hidden">
                                 @foreach($options as $option)
                                     <label class="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
@@ -217,10 +219,12 @@
                         @else
                             {{ $priceLabel }}
                         @endif
-                        <svg class="dropdown-arrow w-4 h-4 text-gray-400 float-right mt-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    </button>
+                    <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                        <svg class="dropdown-arrow w-4 h-4 text-gray-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
-                    </button>
+                    </div>
                     <div class="dropdown-content absolute z-50 mt-1 bg-white border border-gray-300 rounded shadow-lg max-h-60 overflow-y-auto min-w-[200px] hidden">
                         <label class="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
                             <input type="checkbox" 
@@ -282,7 +286,7 @@
         @endif
 
         {{-- Products Grid with Loading State --}}
-        <div class="relative {{ empty($products) && !$loading ? 'min-h-[400px]' : 'min-h-[600px] md:min-h-[800px]' }}">
+        <div class="relative {{ empty($products) && !$loading ? 'min-h-[400px]' : (count($products) < 10 ? 'min-h-[400px]' : 'min-h-[600px] md:min-h-[800px]') }}">
             {{-- Loading State --}}
             <div wire:loading.flex class="absolute inset-0 bg-gray-50 flex items-center justify-center z-10 rounded-lg">
                 <div class="text-center bg-white p-8 rounded-lg shadow-lg">
@@ -427,9 +431,31 @@
             @endif
             </div>
             
+            {{-- Few Results Call-to-Action --}}
+            @if(!empty($products) && count($products) < 10 && !$loading)
+                <div class="mt-8 text-center py-6 bg-gray-50 rounded-lg mx-4 md:mx-0">
+                    <p class="text-gray-600 mb-4 px-4">
+                        {{ __('shop.few_results_message', ['count' => count($products)]) }}
+                    </p>
+                    <div class="flex flex-col items-center gap-4">
+                        <a href="{{ app()->getLocale() === 'es' ? route('shop.show.es', ['locale' => 'es', 'slug' => null]) : route('shop.show.en', ['locale' => 'en', 'slug' => null]) }}" 
+                           class="inline-block bg-color-2 text-white px-6 py-3 font-semibold hover:bg-theme-color-2 transition-colors font-robotoCondensed">
+                            {{ __('shop.browse_all_products') }}
+                        </a>
+                        <div class="flex flex-col items-center gap-2">
+                            <span class="text-gray-400">{{ __('shop.or') }}</span>
+                            <a href="{{ app()->getLocale() === 'es' ? route('contact.send.es', ['locale' => 'es']) : route('contact.send.en', ['locale' => 'en']) }}" 
+                               class="inline-block border border-color-2 text-color-2 px-6 py-3 font-semibold hover:bg-color-2 hover:text-white transition-colors font-robotoCondensed mt-2">
+                                {{ __('shop.contact_us') }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            
             {{-- Empty State - Now positioned inside the grid container --}}
             @if(empty($products) && !$loading)
-                <div class="absolute inset-0 flex justify-center items-start pt-[0px] top-[60px] lg:top-[0px] mx-10 lg:mx-0">
+                <div class="inset-0 flex justify-center items-start pt-[0px] top-[60px] lg:top-[0px] mx-10 lg:mx-0">
                     <div class="text-center py-12">
                         <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
@@ -439,21 +465,32 @@
                             $selectedFiltersText = $this->getSelectedFiltersText();
                         @endphp
                         
+                        {{-- Enhanced message for no products found --}}
+                        <h3 class="mt-2 text-sm font-medium text-gray-900">{{ __('shop.no_products_found_with_filters') }}</h3>
                         @if(!empty($selectedFiltersText))
-                            {{-- Enhanced message with selected filters --}}
-                            <h3 class="mt-2 text-sm font-medium text-gray-900">{{ __('shop.no_products_found_with_filters') }}</h3>
-                            <p class="mt-1 text-sm text-gray-500">
+                            <p class="mt-1 text-sm text-gray-500 mb-6">
                                 {{ __('shop.no_products_found_message', ['filters' => $selectedFiltersText]) }}
-                                <a href="{{ app()->getLocale() === 'es' ? route('contact.send.es', ['locale' => 'es']) : route('contact.send.en', ['locale' => 'en']) }}" 
-                                   class="text-color-2 hover:text-color-2/80 underline font-medium">
-                                    {{ __('shop.contact_us_here') }}
-                                </a>.
                             </p>
                         @else
-                            {{-- Original fallback message --}}
-                            <h3 class="mt-2 text-sm font-medium text-gray-900">{{ __('shop.no_products_found') }}</h3>
-                            <p class="mt-1 text-sm text-gray-500">{{ __('shop.adjust_filters_message') }}</p>
+                            <p class="mt-1 text-sm text-gray-500 mb-6">
+                                {{ __('shop.no_products_found_category_message') }}
+                            </p>
                         @endif
+                        
+                        {{-- Browse All Products Button --}}
+                        <div class="flex flex-col items-center gap-4">
+                            <a href="{{ app()->getLocale() === 'es' ? route('shop.show.es', ['locale' => 'es', 'slug' => null]) : route('shop.show.en', ['locale' => 'en', 'slug' => null]) }}" 
+                               class="inline-block bg-color-2 text-white px-6 py-3 font-semibold hover:bg-theme-color-2 transition-colors font-robotoCondensed text-lg">
+                                {{ __('shop.browse_all_products') }}
+                            </a>
+                            <div class="flex flex-col items-center gap-2">
+                                <span class="text-gray-400">{{ __('shop.or') }}</span>
+                                <a href="{{ app()->getLocale() === 'es' ? route('contact.send.es', ['locale' => 'es']) : route('contact.send.en', ['locale' => 'en']) }}" 
+                                   class="inline-block border border-color-2 text-color-2 px-6 py-3 font-semibold hover:bg-color-2 hover:text-white transition-colors font-robotoCondensed mt-2">
+                                    {{ __('shop.contact_us') }}
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             @endif

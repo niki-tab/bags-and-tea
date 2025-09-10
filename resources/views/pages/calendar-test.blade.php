@@ -25,9 +25,8 @@
         new BLECalendarWidget({
             apiBaseUrl: 'http://channel-manager-api.guides-portal-ble.local/api/calendar-widget',
             containerId: 'calendar-widget',
-            productId: '876524_all',
-            primaryColor: '#EF4444',
-            displayMode: 'inline',
+            productId: '1048163',
+            primaryColor: '#ff6b35', // Brand color
             onReservationComplete: function(reservation) {
                 console.log('Reservation completed:', reservation);
                 // Customize: redirect to booking page with selected date

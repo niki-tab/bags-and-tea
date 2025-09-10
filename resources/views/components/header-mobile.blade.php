@@ -1,5 +1,5 @@
 <div class="md:hidden bg-background-color-4 text-white h-[112px] fixed top-0 w-full mb-20">
-    <div class="h-8 w-full bg-background-color-1 flex items-center justify-center"> 
+    <div class="h-8 w-full bg-background-color-1 flex items-center justify-center hidden"> 
         <div class="animate-marquee inline-block">
             <p class="text-theme-color-2 font-robotoCondensed font-regular text-sm">{{ trans('components/header.banner-text') }}</p>
         </div>
@@ -35,12 +35,6 @@
                     class="mt-[0.5px] w-6 h-7 cursor-pointer"
                     onmouseover="this.src='{{asset('images/icons/mobile_header_instagram_hover.svg') }}'"
                     onmouseout="this.src='{{asset('images/icons/mobile_header_instagram.svg') }}'">
-            </a>
-            <a target="_blank" href="https://www.vinted.es/member/250362636-bagsandtea">
-                <img src="{{asset('images/icons/mobile_header_vinted.svg') }}" 
-                    class="w-6 h-6 cursor-pointer"
-                    onmouseover="this.src='{{asset('images/icons/mobile_header_vinted_hover.svg') }}'"
-                    onmouseout="this.src='{{asset('images/icons/mobile_header_vinted.svg') }}'">
             </a>
             <a href="{{ route(app()->getLocale() === 'es' ? 'login.show.en-es' : 'login.show.en-es', ['locale' => app()->getLocale()]) }}" class="ml-6">
                 <img src="{{ request()->routeIs('login.show.en-es') ? asset('images/icons/mobile_user_avatar_clicked.svg') : asset('images/icons/mobile_user_avatar.svg') }}" 

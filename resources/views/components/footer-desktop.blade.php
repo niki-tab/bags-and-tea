@@ -12,7 +12,7 @@
             <div class="w-1/5 flex justify-center"> 
                 <nav class="flex flex-col space-y-4 w-full mt-10">
                     <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-1') }}</a>
-                    <a href="{{ route(app()->getLocale() === 'es' ? 'our-bags.show.es' : 'our-bags.show.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-2') }}</a>
+                    <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-2') }}</a>
                     <a href="{{ route(app()->getLocale() === 'es' ? 'about-us.show.es' : 'about-us.show.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-3') }}</a>
                     <a href="{{ route(app()->getLocale() === 'es' ? 'blog.show.en-es' : 'blog.show.en-es', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-4') }}</a>
                     <a href="{{ route(app()->getLocale() === 'es' ? 'contact.send.es' : 'contact.send.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-5') }}</a>
@@ -20,7 +20,6 @@
                     <!-- Ensure the image is centered properly -->
                     <div class="flex justify-center items-center pt-4 gap-4">
                         <a target="_blank" href="https://www.instagram.com/bags.and.tea?igsh=NTgwcGU2a21paGxk&utm_source=qr"><img src="{{ asset('images/icons/RRSS_insta_b_5.svg') }}" class="w-8 h-8 cursor-pointer"></a>  
-                        <a target="_blank" href="https://www.vinted.es/member/250362636-bagsandtea"><img src="{{ asset('images/icons/icon_vinted.svg') }}" class="w-8 h-8 cursor-pointer"></a>
                     </div>
                 </nav>
             </div>
