@@ -30,6 +30,8 @@ class Register extends Component
 
         Auth::login($user);
 
-        return redirect()->to('/my-account');
+        $locale = app()->getLocale();
+        $routeName = $locale === 'es' ? 'my-account.show.es' : 'my-account.show.en';
+        return redirect()->route($routeName, ['locale' => $locale]);
     }
 }

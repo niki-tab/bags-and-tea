@@ -14,6 +14,10 @@
     </div>
 </div>
 
+
+<!-- BLE Calendar Widget -->
+<div id="calendar-widget"></div>
+
 <!-- Calendar Widget Scripts -->
 <script src="http://channel-manager-api.guides-portal-ble.local/api/calendar-widget/script"></script>
 <script>
@@ -21,9 +25,8 @@
         new BLECalendarWidget({
             apiBaseUrl: 'http://channel-manager-api.guides-portal-ble.local/api/calendar-widget',
             containerId: 'calendar-widget',
-            productId: '876524_01FZXY6W4DT1AZKZEMXFD8VN4G',
-            primaryColor: '#EF4444',
-            displayMode: 'modal',
+            productId: '1048163',
+            primaryColor: '#ff6b35', // Brand color
             onReservationComplete: function(reservation) {
                 console.log('Reservation completed:', reservation);
                 // Customize: redirect to booking page with selected date
@@ -35,4 +38,5 @@
         });
     });
 </script>
+
 @endsection

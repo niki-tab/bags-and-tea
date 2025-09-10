@@ -75,7 +75,11 @@ class AppServiceProvider extends ServiceProvider
         Livewire::component('src.admin.order.fees.frontend.marketplace-fee-management', \Src\Admin\Order\Fees\Frontend\MarketplaceFeeManagement::class);
 
         Livewire::component('src.auth.frontend.login', \Src\Auth\Frontend\Login::class);
+        Livewire::component('src.auth.frontend.my-account', \Src\Auth\Frontend\MyAccount::class);
         Livewire::component('src.auth.frontend.register', \Src\Auth\Frontend\Register::class);
+        Livewire::component('src.auth.frontend.logout', \Src\Auth\Frontend\Logout::class);
+        Livewire::component('src.auth.frontend.update-profile', \Src\Auth\Frontend\UpdateProfile::class);
+        Livewire::component('src.auth.frontend.change-password', \Src\Auth\Frontend\ChangePassword::class);
 
         $this->app->bind(FormRepository::class, EloquentFormRepository::class);
     }

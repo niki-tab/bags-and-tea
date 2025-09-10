@@ -23,7 +23,9 @@ class Login extends Component
         ]);
 
         if ($loginUser($this->email, $this->password)) {
-            return redirect()->to('/my-account');
+            $locale = app()->getLocale();
+            $routeName = $locale === 'es' ? 'my-account.show.es' : 'my-account.show.en';
+            return redirect()->route($routeName, ['locale' => $locale]);
         }
 
         $this->addError('email', 'The provided credentials do not match our records.');

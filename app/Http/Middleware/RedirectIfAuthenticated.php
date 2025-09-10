@@ -21,7 +21,11 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                // Get the current locale
+                $locale = app()->getLocale();
+                
+                // Redirect to my-account page with proper locale
+                return redirect()->route('my-account.show.' . $locale, ['locale' => $locale]);
             }
         }
 
