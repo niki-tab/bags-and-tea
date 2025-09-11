@@ -58,7 +58,7 @@
         <x-header-mobile/>
     </header>
 
-    <main class="w-full md:flex-grow mt-28 md:mt-0 pb-12 z-0 @yield('main-tag-class', 'bg-white')">
+    <main class="w-full md:flex-grow mt-16 md:mt-0 pb-12 z-0 @yield('main-tag-class', 'bg-white')">
         @yield('content')
     </main>
 
