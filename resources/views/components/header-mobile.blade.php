@@ -1,4 +1,4 @@
-<div class="md:hidden bg-background-color-4 text-white h-[112px] fixed top-0 w-full mb-20">
+<div class="md:hidden bg-background-color-4 text-white h-[76px] fixed top-0 w-full">
     <div class="h-8 w-full bg-background-color-1 flex items-center justify-center hidden"> 
         <div class="animate-marquee inline-block">
             <p class="text-theme-color-2 font-robotoCondensed font-regular text-sm">{{ trans('components/header.banner-text') }}</p>

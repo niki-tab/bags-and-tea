@@ -18,11 +18,11 @@
         <!-- Breadcrumb Navigation -->
         @if(!empty($breadcrumbs))
             <nav class="flex justify-center mb-6">
-                <ol class="flex items-center space-x-2 text-sm">
+                <ol class="flex items-center space-x-1 lg:space-x-2 text-xs lg:text-sm">
                     @foreach($breadcrumbs as $index => $breadcrumb)
                         <li class="flex items-center">
                             @if($index > 0)
-                                <svg class="w-4 h-4 mx-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                <svg class="w-4 h-4 mx-1 lg:mx-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                                 </svg>
                             @endif
@@ -42,8 +42,8 @@
             </nav>
         @endif
         
-        <!-- Product Specifications - Below title, above grid -->
-        <div class="grid grid-cols-2 gap-10 lg:flex lg:justify-center mb-8 text-sm w-96 lg:w-auto max-w-6xl mx-auto mt-10">
+        <!-- Product Specifications - Below title, above grid (Desktop only) -->
+        <div class="hidden lg:flex lg:justify-center mb-8 text-sm w-96 lg:w-auto max-w-6xl mx-auto mt-10 gap-10">
             <div class="text-left whitespace-nowrap lg:mr-8">
                 <span class="text-color-2 font-medium text-base lg:text-lg">{{ app()->getLocale() === 'es' ? 'Estado:' : 'Condition:' }}</span>
                 <span class="font-medium text-base lg:text-lg text-[#AC2231]"> {{ $specifications['estado'] ?? 'N/A' }}</span>
@@ -62,7 +62,7 @@
             </div>
         </div>
         
-        <div class="grid grid-cols-1 lg:grid-cols-[10%_45%_35%] gap-8 mb-16 mt-14" 
+        <div class="grid grid-cols-1 lg:grid-cols-[10%_45%_35%] gap-8 mb-16 mt-10 lg:mt-14" 
              x-data="{ 
                  mainImageHeight: 0,
                  updateHeight() {
@@ -143,13 +143,33 @@
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="mb-10 w-full max-w-md mx-auto lg:mx-0 lg:ml-5 px-7 md:px-10">
+                <div class="mb-8 w-full max-w-md mx-auto lg:mx-0 lg:ml-5 px-7 md:px-10">
                     @livewire('cart.add-to-cart-button', [
                         'productId' => $product->id, 
                         'buttonText' => trans('components/cart.add-to-cart'),
                         'isSoldOut' => $product->is_sold_out || $product->out_of_stock,
                         'isHidden' => $product->is_hidden
                     ])
+                </div>
+
+                    <!-- Product Specifications - Mobile only, below add-to-cart button -->
+                <div class="lg:hidden grid grid-cols-1 gap-4 mb-8 text-sm w-full max-w-md mx-auto lg:mx-0 px-8 md:px-10">
+                    <div class="text-left whitespace-nowrap">
+                        <span class="text-color-2 font-medium text-base">{{ app()->getLocale() === 'es' ? 'Estado:' : 'Condition:' }}</span>
+                        <span class="font-medium text-base text-[#AC2231]"> {{ $specifications['estado'] ?? 'N/A' }}</span>
+                    </div>
+                    <div class="text-left whitespace-nowrap">
+                        <span class="text-color-2 font-medium text-base">{{ app()->getLocale() === 'es' ? 'Año:' : 'Year:' }}</span>
+                        <span class="font-medium text-base text-[#AC2231]"> {{ $specifications['ano'] ?? 'N/A' }}</span>
+                    </div>
+                    <div class="text-left whitespace-nowrap">
+                        <span class="text-color-2 font-medium text-base">{{ app()->getLocale() === 'es' ? 'Color:' : 'Color:' }}</span>
+                        <span class="font-medium text-base text-[#AC2231]"> {{ $specifications['color'] ?? 'N/A' }}</span>
+                    </div>
+                    <div class="text-left whitespace-nowrap">
+                        <span class="text-color-2 font-medium text-base">{{ app()->getLocale() === 'es' ? 'Tamaño (cm):' : 'Size (cm):' }}</span>
+                        <span class="font-medium text-base text-[#AC2231]"> {{ $specifications['tamano'] ?? 'N/A' }}</span>
+                    </div>
                 </div>
 
                 <!-- Certificado Autenticidad -->
