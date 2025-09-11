@@ -182,8 +182,8 @@
                 </div>
 
                 <!-- Product Description -->
-                <div class="prose prose-gray max-w-none ml-4">
-                    <p class="text-gray-600 leading-relaxed">
+                <div class="">
+                    <p class="text-gray-600 leading-relaxed mx-4 lg:mx-0 lg:ml-10">
                         {{ $product->getTranslation('description_1', app()->getLocale()) ?: $product->getTranslation('description_2', app()->getLocale()) }}
                     </p>
                 </div>
