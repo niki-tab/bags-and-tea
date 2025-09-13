@@ -522,9 +522,9 @@
                     @endif
                 @endif
             </h2>
-            <p class="text-center md:text-left text-sm robotoCondensed mt-8 text-color-2">
+            <div class="text-center md:text-left text-sm robotoCondensed mt-8 text-color-2 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:robotoCondensed [&_h2]:text-color-2 [&_h2]:text-center [&_h2]:md:text-left [&_h2]:mb-4 [&_p]:mb-4 [&_h3]:text-lg [&_h3]:font-bold [&_h3]:robotoCondensed [&_h3]:text-color-2 [&_h3]:text-center [&_h3]:md:text-left [&_h3]:mb-4">
                 {!! $pageDescription2 !!}
-            </p>
+            </div>
     </div>
 </div>
 
