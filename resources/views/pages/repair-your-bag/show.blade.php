@@ -59,11 +59,11 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
             </div>
 
             <!-- CTA móvil entre las dos imágenes -->
-            <div class="block md:hidden text-center mb-8 mx-5 mt-8">
+            <div class="block md:hidden text-center mb-8 mx-8 mt-8">
                 <h2 class="text-2xl font-['Lovera'] text-[#482626] mb-4 tracking-widest">
                     {{ __('pages/repair-your-bag.cta_title') }}
                 </h2>
-                <p class="text-base text-[#482626] font-robotoCondensed font-regular">
+                <p class="text-base text-[#482626] font-robotoCondensed font-regular text-justify">
                     {{ __('pages/repair-your-bag.cta_description') }}
                 </p>
             </div>
