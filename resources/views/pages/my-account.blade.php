@@ -31,39 +31,39 @@ bg-background-color-4
                 <div class="bg-white shadow-lg p-6">
                     <h3 class="text-lg font-semibold text-theme-color-2 font-robotoCondensed mb-4">{{ trans('my-account.menu') }}</h3>
                     <nav class="space-y-2 mb-6">
-                        <button 
-                            @click="activeSection = 'orders'" 
-                            :class="{ 
-                                'bg-color-2 text-white': activeSection === 'orders',
-                                'text-gray-700 hover:bg-background-color-4': activeSection !== 'orders'
+                        <button
+                            @click="activeSection = 'orders'"
+                            :class="{
+                                'border-4 border-color-2 text-color-2': activeSection === 'orders',
+                                'border-4 border-transparent text-gray-700': activeSection !== 'orders'
                             }"
-                            class="w-full text-left px-4 py-3 font-medium transition-colors font-robotoCondensed"
+                            class="w-full text-left px-4 py-3 font-medium transition-colors font-robotoCondensed hover:bg-background-color-2 hover:text-white"
                         >
                             <i class="fas fa-shopping-bag mr-3"></i>
                             {{ trans('my-account.orders') }}
                         </button>
                         
-                        <button 
-                            @click="activeSection = 'settings'" 
-                            :class="{ 
-                                'bg-color-2 text-white': activeSection === 'settings',
-                                'text-gray-700 hover:bg-background-color-4': activeSection !== 'settings'
+                        <button
+                            @click="activeSection = 'settings'"
+                            :class="{
+                                'border-4 border-color-2 text-color-2': activeSection === 'settings',
+                                'border-4 border-transparent text-gray-700': activeSection !== 'settings'
                             }"
-                            class="w-full text-left px-4 py-3 font-medium transition-colors font-robotoCondensed"
+                            class="w-full text-left px-4 py-3 font-medium transition-colors font-robotoCondensed hover:bg-background-color-2 hover:text-white"
                         >
                             <i class="fas fa-cog mr-3"></i>
                             {{ trans('my-account.settings') }}
                         </button>
                         
                         <!-- Future menu items can be added here -->
-                        <!-- 
-                        <button 
-                            @click="activeSection = 'profile'" 
-                            :class="{ 
-                                'bg-color-2 text-white': activeSection === 'profile',
-                                'text-gray-700 hover:bg-background-color-4': activeSection !== 'profile'
+                        <!--
+                        <button
+                            @click="activeSection = 'profile'"
+                            :class="{
+                                'border-4 border-color-2 text-color-2': activeSection === 'profile',
+                                'border-4 border-transparent text-gray-700': activeSection !== 'profile'
                             }"
-                            class="w-full text-left px-4 py-3 font-medium transition-colors font-robotoCondensed"
+                            class="w-full text-left px-4 py-3 font-medium transition-colors font-robotoCondensed hover:bg-background-color-2 hover:text-white"
                         >
                             <i class="fas fa-user mr-3"></i>
                             {{ trans('my-account.profile') }}
