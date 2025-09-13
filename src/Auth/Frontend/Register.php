@@ -5,6 +5,7 @@ namespace Src\Auth\Frontend;
 use Livewire\Component;
 use Src\Auth\Application\RegisterUser;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\Password;
 
 class Register extends Component
 {
@@ -23,7 +24,16 @@ class Register extends Component
         $this->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed',
+            'password' => [
+                'required',
+                'confirmed',
+                Password::min(8)
+                    ->letters()
+                    ->mixedCase()
+                    ->numbers()
+                    //->symbols()
+                    //->uncompromised()
+            ],
         ]);
 
         $user = $registerUser($this->name, $this->email, $this->password);
