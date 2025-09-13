@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'page-seo-title' => 'Repair your luxury bag | Expert service for luxury bag restoration',
+    'page-seo-description' => 'At Bags & Tea, we repair your luxury bag with the utmost care and precision. We restore pieces from Chanel, Hermès, Louis Vuitton, Dior, and more, returning them to their original beauty and value.',
     'repair_subtitle' => 'BAGS THAT TRANSCEND TIME',
     'repair_description' => 'At Bags and Tea, you can not only buy and sell your bags, but you can also have your bag repaired by our sector professionals.',
     'cta_title' => 'WE BRING LIFE BACK TO YOUR LUXURY BAG',
