@@ -27,9 +27,14 @@ return [
     'loading_products' => 'Cargando Productos...',
     
     // Enhanced no products found messages
-    'no_products_found_with_filters' => 'No se encontraron productos con los filtros aplicados',
-    'no_products_found_message' => 'Lamentablemente no hemos encontrado ningún producto que cumpla con lo que buscas: :filters. Puedes escribirnos tu petición haciendo click',
+    'no_products_found_with_filters' => 'No se encontraron productos',
+    'no_products_found_message' => 'Lamentablemente no hemos encontrado ningún producto que cumpla con lo que buscas: :filters.',
+    'no_products_found_category_message' => 'Lamentablemente no hay productos disponibles en esta categoría en este momento.',
     'contact_us_here' => 'aquí',
+    'contact_us' => 'Contáctanos',
+    'few_results_message' => 'Solo se encontraron :count resultado(s) con tus filtros actuales. ¿Quieres ver más opciones?',
+    'browse_all_products' => 'Ver Todos los Productos',
+    'or' => 'o',
     
     // Pagination
     'previous' => 'Anterior',

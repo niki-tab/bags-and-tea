@@ -92,12 +92,14 @@ final class GetShopData
 
     private function getFilteredProducts(array $appliedFilters, string $sortBy = '', ?string $categorySlug = null, ?int $offset = null, ?int $limit = 50, ?string $searchQuery = null): array
     {
+        
         $filters = [];
         
         // Get active filters to determine filter types dynamically
         $activeFilters = $this->shopFilterRepository->findActive();
         $categoryFilterSlugs = [];
         $attributeFilterSlugs = [];
+        
         
         // Build a map of category and attribute filter slugs for dynamic handling
         foreach ($activeFilters as $activeFilter) {
@@ -115,11 +117,13 @@ final class GetShopData
                 }
             }
         }
+        
 
         foreach ($appliedFilters as $filterType => $filterValues) {
             if (empty($filterValues)) {
                 continue;
             }
+            
 
             switch ($filterType) {
                 case 'brands':
@@ -219,34 +223,31 @@ final class GetShopData
                 default:
                     // Handle dynamic category filters based on filter_slug
                     if (in_array($filterType, $categoryFilterSlugs) && !empty($filterValues)) {
-                        // Convert category slugs to IDs
-                        $categoryIds = $this->convertCategorySlugsToIds($filterValues);
-                        if (!empty($categoryIds)) {
-                            $filterValueString = is_array($categoryIds) ? implode(',', $categoryIds) : $categoryIds;
-                            $filters[] = new Filter(
-                                new FilterField('categories'),
-                                new FilterOperator('in'),
-                                new FilterValue($filterValueString)
-                            );
-                        }
+                        // Filter values should already be IDs from Livewire component
+                        $filterValueString = is_array($filterValues) ? implode(',', $filterValues) : $filterValues;
+                        // Use unique field name to ensure each filter type gets its own whereHas clause
+                        $filters[] = new Filter(
+                            new FilterField("categories_{$filterType}"),
+                            new FilterOperator('in'),
+                            new FilterValue($filterValueString)
+                        );
                     }
                     
                     // Handle dynamic attribute filters based on filter_slug
                     if (in_array($filterType, $attributeFilterSlugs) && !empty($filterValues)) {
-                        // Convert attribute slugs to IDs
-                        $attributeIds = $this->convertAttributeSlugsToIds($filterValues);
-                        if (!empty($attributeIds)) {
-                            $filterValueString = is_array($attributeIds) ? implode(',', $attributeIds) : $attributeIds;
-                            $filters[] = new Filter(
-                                new FilterField('attributes'),
-                                new FilterOperator('in'),
-                                new FilterValue($filterValueString)
-                            );
-                        }
+                        // Filter values should already be IDs from Livewire component
+                        $filterValueString = is_array($filterValues) ? implode(',', $filterValues) : $filterValues;
+                        // Use unique field name to ensure each filter type gets its own whereHas clause
+                        $filters[] = new Filter(
+                            new FilterField("attributes_{$filterType}"),
+                            new FilterOperator('in'),
+                            new FilterValue($filterValueString)
+                        );
                     }
                     break;
             }
         }
+
 
         // Add search functionality if search query is provided
         if (!empty($searchQuery) && strlen(trim($searchQuery)) >= 2) {

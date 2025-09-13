@@ -27,9 +27,14 @@ return [
     'loading_products' => 'Loading Products...',
     
     // Enhanced no products found messages
-    'no_products_found_with_filters' => 'No products found with applied filters',
-    'no_products_found_message' => 'Unfortunately we haven\'t found any product that meets what you are looking for: :filters. You can write us your request by clicking',
+    'no_products_found_with_filters' => 'No products found',
+    'no_products_found_message' => 'Unfortunately we haven\'t found any product that meets what you are looking for: :filters.',
+    'no_products_found_category_message' => 'Unfortunately there are no products available in this category right now.',
     'contact_us_here' => 'here',
+    'contact_us' => 'Contact Us',
+    'few_results_message' => 'Only :count result(s) found with your current filters. Want to see more options?',
+    'browse_all_products' => 'Browse All Products',
+    'or' => 'or',
     
     // Pagination
     'previous' => 'Previous',

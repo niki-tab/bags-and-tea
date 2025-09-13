@@ -215,8 +215,8 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
     })->name('certify-your-bag.show.en')->where('locale', 'en');
 
     Route::get('/login', function () {
-        return view('pages/we_are_under_construction/show');
-    })->name('login.show.en-es')->where('locale', 'en|es');
+        return view('pages/auth/show');
+    })->name('login.show.en-es')->where('locale', 'en|es')->middleware('guest');
 
     Route::get('/carrito', function () {
         return view('pages/cart/show');
@@ -276,6 +276,14 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
     Route::get('/calendar-test', function () {
         return view('pages/calendar-test');
     })->name('calendar-test.en-es')->where('locale', 'en|es');
+
+    Route::get('/my-account', function () {
+        return view('pages/my-account');
+    })->name('my-account.show.en')->where('locale', 'en')->middleware('auth');
+
+    Route::get('/mi-cuenta', function () {
+        return view('pages/my-account');
+    })->name('my-account.show.es')->where('locale', 'es')->middleware('auth');
     
 });
 

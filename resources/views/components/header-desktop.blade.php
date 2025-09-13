@@ -1,5 +1,5 @@
 <div class="hidden md:block">
-    <div class="h-9 bg-[#D29289] pl-32 overflow-hidden">
+    <div class="h-9 bg-[#D29289] pl-32 overflow-hidden hidden">
         <div class="w-full h-full flex">
             <div class="animate-marquee whitespace-nowrap my-auto">
                 <p class="text-theme-color-2 font-robotoCondensed font-regular">
@@ -36,7 +36,7 @@
                     <div class="w-4 md:w-6 lg:w-8"></div>
                     <div class="flex-1 flex justify-center px-1">
                         <a href="{{ route(app()->getLocale() === 'es' ? 'login.show.en-es' : 'login.show.en-es', ['locale' => app()->getLocale()]) }}">
-                            <img src="{{ request()->routeIs('login.show.en-es') ? asset('images/icons/icon_user_avatar_header_clicked.svg') : asset('images/icons/icon_user_avatar_header.svg') }}" 
+                            <img src="{{ request()->routeIs('login.show.en-es') || request()->routeIs('my-account.show.en') || request()->routeIs('my-account.show.es') ? asset('images/icons/icon_user_avatar_header_clicked.svg') : asset('images/icons/icon_user_avatar_header.svg') }}" 
                                 class="w-7 h-5 cursor-pointer mt-[3px]"
                                 onmouseover="this.src='{{ request()->routeIs('login.show.en-es') ? asset('images/icons/icon_user_avatar_header_clicked.svg') : asset('images/icons/icon_user_avatar_header_hover.svg') }}'"
                                 onmouseout="this.src='{{ request()->routeIs('login.show.en-es') ? asset('images/icons/icon_user_avatar_header_clicked.svg') : asset('images/icons/icon_user_avatar_header.svg') }}'">
@@ -57,15 +57,6 @@
                                 onmouseout="this.style.filter='none'">
                         </a>
                     </div>
-                    <div class="flex-1 flex justify-center px-1">
-                        <a target="_blank" href="https://www.vinted.es/member/250362636-bagsandtea">
-                            <img src="{{ asset('images/icons/icon_vinted.svg') }}" 
-                                class="w-7 h-5 cursor-pointer mt-[3px]"
-                                onmouseover="this.style.filter='brightness(0) saturate(100%) invert(23%) sepia(98%) saturate(2074%) hue-rotate(353deg) brightness(83%) contrast(94%)'"
-                                onmouseout="this.style.filter='none'">
-                        </a>
-                    </div>
-                    
                 </div>
             </div>
         </div>

@@ -22,13 +22,15 @@ final class EloquentProductRepository implements ProductRepository
     {
         $query = ProductEloquentModel::query();
         
+        // Apply filters step by step to ensure proper AND logic
         foreach ($criteria->plainFilters() as $filter) {
             $field = $filter->field()->value();
             $operator = $filter->operator()->value();
             $value = $filter->value()->value();
+            
 
             // Handle special cases for relationships
-            if ($field === 'categories') {
+            if ($field === 'categories' || strpos($field, 'categories_') === 0) {
                 $query->whereHas('categories', function ($q) use ($operator, $value) {
                     if ($operator === 'in') {
                         // Handle comma-separated string values from FilterValue
@@ -41,7 +43,7 @@ final class EloquentProductRepository implements ProductRepository
                 continue;
             }
 
-            if ($field === 'attributes') {
+            if ($field === 'attributes' || strpos($field, 'attributes_') === 0) {
                 $query->whereHas('attributes', function ($q) use ($operator, $value) {
                     if ($operator === 'in') {
                         // Handle comma-separated string values from FilterValue
@@ -149,10 +151,15 @@ final class EloquentProductRepository implements ProductRepository
             $limit = 50;
         }
         
+        // Log the final SQL query
+        \Log::info('Final SQL query: ' . $query->toSql());
+        \Log::info('Query bindings:', $query->getBindings());
+        
         $results = $query->offset($criteria->offset() ?? 0)
             ->limit($limit)
             ->get()
             ->all();
+            
         
         return $results;
     }

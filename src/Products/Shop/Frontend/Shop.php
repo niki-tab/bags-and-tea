@@ -633,17 +633,9 @@ class Shop extends Component
                         $this->appliedFilters['priceRanges'] = array_merge($this->appliedFilters['priceRanges'] ?? [], $filterValues);
                         break;
                     default:
-                        // Check if this is a dynamic attribute or category filter
-                        if ($this->isAttributeFilterType($filterType)) {
-                            // Map dynamic attribute filters to 'attributes' key
-                            $this->appliedFilters['attributes'] = array_merge($this->appliedFilters['attributes'] ?? [], $filterValues);
-                        } elseif ($this->isCategoryFilterType($filterType)) {
-                            // Map dynamic category filters to 'categories' key  
-                            $this->appliedFilters['categories'] = array_merge($this->appliedFilters['categories'] ?? [], $filterValues);
-                        } else {
-                            // For other filter types, keep as-is
-                            $this->appliedFilters[$filterType] = $filterValues;
-                        }
+                        // Keep each filter type separate to maintain AND logic between different filter types
+                        // e.g. bags=chanel-bolsos,bottega-veneta (OR within bags) AND color=azul (separate filter)
+                        $this->appliedFilters[$filterType] = $filterValues;
                         break;
                 }
             }

@@ -4,7 +4,7 @@ return [
 
     'company-name' => 'Bags & Tea',
     'footer-option-1' => 'SELL YOUR BAG',
-    'footer-option-2' => 'OUR BAGS',
+    'footer-option-2' => 'SHOP',
     'footer-option-3' => 'ABOUT US',
     'footer-option-4' => 'BLOG',
     'footer-option-5' => 'CONTACT',

@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'title' => 'My Account',
+    'welcome' => 'Welcome',
+    'menu' => 'Menu',
+    'orders' => 'Orders',
+    'orders_description' => 'View and manage your order history',
+    'no_orders' => 'No orders yet',
+    'no_orders_description' => 'You haven\'t placed any orders yet. Start shopping to see your orders here.',
+    'start_shopping' => 'Start Shopping',
+    'logout' => 'Logout',
+    'confirm_logout' => 'Are you sure you want to logout?',
+    'settings' => 'Settings',
+    'settings_description' => 'Manage your account settings and preferences',
+    'profile_settings' => 'Profile Settings',
+    'name' => 'Name',
+    'email' => 'Email Address',
+    'password' => 'Password',
+    'current_password' => 'Current Password',
+    'new_password' => 'New Password',
+    'confirm_password' => 'Confirm New Password',
+    'update_profile' => 'Update Profile',
+    'change_password' => 'Change Password',
+    'profile_updated' => 'Profile updated successfully',
+    'password_updated' => 'Password updated successfully',
+    'current_password_incorrect' => 'The current password is incorrect',
+];
