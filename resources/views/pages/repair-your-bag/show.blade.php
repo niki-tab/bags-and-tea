@@ -22,7 +22,7 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
             <h1 class="text-4xl font-['Lovera'] text-[#482626] mb-6 tracking-widest">
                 {{ __('pages/repair-your-bag.repair_subtitle') }}
             </h1>
-            <p class="text-base text-[#482626] font-robotoCondensed font-regular max-w-4xl mx-auto">
+            <p class="text-base text-[#482626] font-robotoCondensed font-regular max-w-4xl md:mx-auto mx-8 md:text-center text-justify">
                 {{ __('pages/repair-your-bag.repair_description') }}
             </p>
         </div>
