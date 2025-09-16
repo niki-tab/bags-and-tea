@@ -3,6 +3,7 @@
 use App\Mail\TestEmail;
 use App\Mail\OrderConfirmation;
 use App\Events\NewOrderCreated;
+use App\Jobs\TestHorizonJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -99,16 +100,16 @@ Route::get('/test-order-confirmation', function (Request $request) {
 Route::get('/test-new-order-event', function (Request $request) {
     try {
         $orderNumber = $request->query('order', 'BT-2025-000006');
-        
+
         // Dispatch the NewOrderCreated event
         NewOrderCreated::dispatch($orderNumber);
-        
+
         return response()->json([
             'success' => true,
             'message' => 'NewOrderCreated event dispatched successfully!',
             'order_number' => $orderNumber
         ]);
-        
+
     } catch (\Exception $e) {
         return response()->json([
             'success' => false,
@@ -116,4 +117,69 @@ Route::get('/test-new-order-event', function (Request $request) {
             'trace' => $e->getTraceAsString()
         ], 500);
     }
+});
+
+// Horizon Test Routes
+Route::get('/test-horizon', function (Request $request) {
+    try {
+        $message = 'Job dispatched at ' . now()->toDateTimeString();
+
+        TestHorizonJob::dispatch($message);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Test job dispatched to Redis queue!',
+            'job_message' => $message,
+            'horizon_url' => url('/horizon'),
+            'instructions' => [
+                '1. Check /horizon to see the job in the dashboard',
+                '2. Start horizon with: docker compose exec app php artisan horizon',
+                '3. Check logs for job execution'
+            ]
+        ]);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to dispatch job: ' . $e->getMessage()
+        ], 500);
+    }
+});
+
+Route::get('/test-horizon-batch/{count?}', function (Request $request, $count = 5) {
+    try {
+        for ($i = 1; $i <= $count; $i++) {
+            $message = "Batch job #{$i} dispatched at " . now()->toDateTimeString();
+            TestHorizonJob::dispatch($message);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => "Dispatched {$count} test jobs to Redis queue!",
+            'horizon_url' => url('/horizon')
+        ]);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to dispatch batch jobs: ' . $e->getMessage()
+        ], 500);
+    }
+});
+
+Route::get('/horizon-status', function () {
+    try {
+        \Illuminate\Support\Facades\Redis::ping();
+        $redisConnected = true;
+    } catch (\Exception $e) {
+        $redisConnected = false;
+    }
+
+    return response()->json([
+        'redis_connected' => $redisConnected,
+        'horizon_url' => url('/horizon'),
+        'queue_connection' => config('queue.default'),
+        'redis_host' => config('database.redis.default.host'),
+        'redis_port' => config('database.redis.default.port'),
+    ]);
 });
