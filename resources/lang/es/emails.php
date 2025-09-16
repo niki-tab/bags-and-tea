@@ -29,6 +29,34 @@ return [
         'reason' => 'Recibiste este email porque realizaste una compra en Bags & Tea.'
     ],
     
+    'welcome' => [
+        'title' => 'Bienvenido a Bags & Tea',
+        'subject' => '¡Bienvenido a Bags & Tea!',
+        'hello' => 'Hola :name,',
+        'thank_you' => '¡Bienvenido a Bags & Tea! Estamos emocionados de tenerte en nuestra comunidad de entusiastas del té y bolsos.',
+        'email' => 'Email',
+        'join_date' => 'Miembro Desde',
+        'benefits_title' => 'Beneficios de tu Membresía',
+        'benefits' => [
+            'Acceso a productos exclusivos y colecciones',
+            'Notificaciones tempranas sobre nuevos productos',
+            'Descuentos especiales y promociones para miembros',
+            'Soporte al cliente prioritario'
+        ],
+        'getting_started' => 'Primeros Pasos',
+        'next_steps' => [
+            'Explora nuestra colección curada de tés y bolsos premium',
+            'Completa tu perfil para recibir recomendaciones personalizadas',
+            'Síguenos en redes sociales para las últimas actualizaciones'
+        ],
+        'start_shopping' => 'Comenzar a Comprar',
+        'follow_us' => 'Síguenos',
+        'social_text' => 'Mantente conectado para las últimas actualizaciones, nuevos productos y ofertas exclusivas.',
+        'questions' => 'Si tienes alguna pregunta, no dudes en contactarnos en',
+        'thank_you_closing' => '¡Bienvenido a bordo!',
+        'reason' => 'Recibiste este email porque creaste una cuenta en Bags & Tea.'
+    ],
+
     'footer' => [
         'contact_us' => 'Contáctanos',
         'email' => 'Email',
