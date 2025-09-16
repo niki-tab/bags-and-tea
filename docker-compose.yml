@@ -42,8 +42,19 @@ services:
     networks:
       - bags-and-tea-network
 
+  redis:
+    image: redis:7-alpine
+    container_name: bags_and_tea_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    networks:
+      - bags-and-tea-network
+
 networks:
   bags-and-tea-network:
 
 volumes:
   dbdata:
+  redisdata:
