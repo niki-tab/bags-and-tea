@@ -53,7 +53,8 @@ return [
         'follow_us' => 'Síguenos',
         'social_text' => 'Mantente conectado para las últimas actualizaciones, nuevos productos y ofertas exclusivas.',
         'questions' => 'Si necesitas ayuda o tienes alguna pregunta, escríbenos a',
-        'thank_you_closing' => 'Gracias por unirte a Bags & Tea.<br>Tu próximo bolso favorito te está esperando. ✨',
+        'thank_you_closing_1' => 'Gracias por unirte a Bags & Tea.',
+        'thank_you_closing_2' => 'Tu próximo bolso favorito te está esperando. ✨',
         'reason' => 'Recibiste este email porque creaste una cuenta en Bags & Tea.'
     ],
 

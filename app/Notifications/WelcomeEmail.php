@@ -37,7 +37,7 @@ class WelcomeEmail extends Notification implements ShouldQueue
         $locale = app()->getLocale();
 
         return (new MailMessage)
-            ->subject(trans('emails.welcome.subject'))
+            ->subject(trans('emails.welcome.subject', ['name' => $notifiable->name]))
             ->view('emails.auth.welcome', [
                 'userName' => $notifiable->name,
                 'userEmail' => $notifiable->email,
