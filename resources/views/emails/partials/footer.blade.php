@@ -30,7 +30,7 @@
                         <table cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 20px auto;">
                             <tr>
                                 <td style="padding: 0 15px;">
-                                    <a href="https://www.instagram.com/bags.and.tea?igsh=NTgwcGU2a21paGxk&utm_source=qr" target="_blank" style="color: #482626; text-decoration: none; font-size: 14px; font-family: 'Arial', sans-serif;">Instagram</a>
+                                    <a target="_blank" href="https://www.instagram.com/bags.and.tea?igsh=NTgwcGU2a21paGxk&utm_source=qr"><img src="{{ asset('images/icons/RRSS_insta_b_5.svg') }}" class="w-8 h-8 cursor-pointer"></a>  
                                 </td>
                             </tr>
                         </table>
