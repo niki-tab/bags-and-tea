@@ -57,7 +57,10 @@
             </p>
 
             <p style="margin: 20px 0 0 0; color: #482626; font-size: 14px; font-family: 'Arial', sans-serif;">
-                {{ trans('emails.welcome.thank_you_closing') }}
+                {{ trans('emails.welcome.thank_you_closing_1') }}
+            </p>
+            <p style="margin: 20px 0 0 0; color: #482626; font-size: 14px; font-family: 'Arial', sans-serif;">
+                {{ trans('emails.welcome.thank_you_closing_2') }}
             </p>
         </td>
     </tr>

@@ -53,7 +53,8 @@ return [
         'follow_us' => 'Follow Us',
         'social_text' => 'Stay connected for the latest updates, new arrivals, and exclusive offers.',
         'questions' => 'If you need help or have any questions, write to us at',
-        'thank_you_closing' => 'Thank you for joining Bags & Tea.<br>Your next favorite bag is waiting for you. ✨',
+        'thank_you_closing_1' => 'Thank you for joining Bags & Tea.',
+        'thank_you_closing_2' => 'Your next favorite bag is waiting for you. ✨',
         'reason' => 'You received this email because you created an account at Bags & Tea.'
     ],
 
