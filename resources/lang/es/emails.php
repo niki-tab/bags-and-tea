@@ -31,9 +31,9 @@ return [
     
     'welcome' => [
         'title' => 'Bienvenido a Bags & Tea',
-        'subject' => '¡Bienvenido a Bags & Tea!',
+        'subject' => 'Bienvenido a Bags & Tea, :name 🎉',
         'hello' => 'Hola :name,',
-        'thank_you' => '¡Bienvenido a Bags & Tea! Estamos emocionados de tenerte en nuestra comunidad de entusiastas del té y bolsos.',
+        'thank_you' => '¡Bienvenido a Bags & Tea! Nos alegra muchísimo tenerte en nuestra comunidad de amantes de los bolsos de lujo. Aquí encontrarás piezas únicas, seleccionadas con cuidado para que tu estilo hable por sí mismo.',
         'email' => 'Email',
         'join_date' => 'Miembro Desde',
         'benefits_title' => 'Beneficios de tu Membresía',
@@ -45,15 +45,15 @@ return [
         ],
         'getting_started' => 'Primeros Pasos',
         'next_steps' => [
-            'Explora nuestra colección curada de tés y bolsos premium',
+            'Descubre nuestra colección de bolsos de lujo, desde clásicos atemporales hasta diseños únicos.',
             'Completa tu perfil para recibir recomendaciones personalizadas',
-            'Síguenos en redes sociales para las últimas actualizaciones'
+            'Síguenos en redes sociales y sé el primero en enterarte de novedades y ediciones limitadas.'
         ],
         'start_shopping' => 'Comenzar a Comprar',
         'follow_us' => 'Síguenos',
         'social_text' => 'Mantente conectado para las últimas actualizaciones, nuevos productos y ofertas exclusivas.',
-        'questions' => 'Si tienes alguna pregunta, no dudes en contactarnos en',
-        'thank_you_closing' => '¡Bienvenido a bordo!',
+        'questions' => 'Si necesitas ayuda o tienes alguna pregunta, escríbenos a',
+        'thank_you_closing' => 'Gracias por unirte a Bags & Tea.<br>Tu próximo bolso favorito te está esperando. ✨',
         'reason' => 'Recibiste este email porque creaste una cuenta en Bags & Tea.'
     ],
 

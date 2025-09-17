@@ -32,10 +32,6 @@
                                 <td style="padding: 0 15px;">
                                     <a href="https://www.instagram.com/bags.and.tea?igsh=NTgwcGU2a21paGxk&utm_source=qr" target="_blank" style="color: #482626; text-decoration: none; font-size: 14px; font-family: 'Arial', sans-serif;">Instagram</a>
                                 </td>
-                                <td style="padding: 0 10px; color: #482626;">|</td>
-                                <td style="padding: 0 15px;">
-                                    <a href="https://www.vinted.es/member/250362636-bagsandtea" target="_blank" style="color: #482626; text-decoration: none; font-size: 14px; font-family: 'Arial', sans-serif;">Vinted</a>
-                                </td>
                             </tr>
                         </table>
                         

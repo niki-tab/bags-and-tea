@@ -51,17 +51,6 @@
                 </a>
             </div>
 
-            <!-- Social Media -->
-            <div style="text-align: center; margin: 30px 0; padding: 20px; background-color: #F9FAFB; border-radius: 8px;">
-                <h5 style="margin: 0 0 15px 0; color: #482626; font-size: 16px; font-weight: bold; font-family: 'Arial', sans-serif;">
-                    {{ trans('emails.welcome.follow_us') }}
-                </h5>
-                <p style="margin: 0 0 15px 0; color: #6B7280; font-size: 14px; font-family: 'Arial', sans-serif;">
-                    {{ trans('emails.welcome.social_text') }}
-                </p>
-                <!-- Add social media links here if needed -->
-            </div>
-
             <p style="margin: 20px 0 0 0; color: #482626; font-size: 14px; line-height: 1.6; font-family: 'Arial', sans-serif;">
                 {{ trans('emails.welcome.questions') }}
                 <a href="mailto:info@bagsandtea.com" style="color: #482626; text-decoration: underline;">info@bagsandtea.com</a>.

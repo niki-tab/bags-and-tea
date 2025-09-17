@@ -5,6 +5,7 @@ namespace Src\Auth\Frontend;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class ChangePassword extends Component
 {
@@ -12,11 +13,23 @@ class ChangePassword extends Component
     public $new_password;
     public $new_password_confirmation;
 
-    protected $rules = [
-        'current_password' => 'required',
-        'new_password' => 'required|min:8|confirmed',
-        'new_password_confirmation' => 'required',
-    ];
+    public function rules()
+    {
+        return [
+            'current_password' => 'required',
+            'new_password' => [
+                'required',
+                'confirmed',
+                Password::min(8)
+                    ->letters()
+                    ->mixedCase()
+                    ->numbers()
+                    //->symbols()
+                    //->uncompromised()
+            ],
+            'new_password_confirmation' => 'required',
+        ];
+    }
 
     public function render()
     {
