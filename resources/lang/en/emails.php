@@ -31,9 +31,9 @@ return [
     
     'welcome' => [
         'title' => 'Welcome to Bags & Tea',
-        'subject' => 'Welcome to Bags & Tea!',
+        'subject' => 'Welcome to Bags & Tea, Nicolas 🎉',
         'hello' => 'Hello :name,',
-        'thank_you' => 'Welcome to Bags & Tea! We\'re thrilled to have you join our community of tea and bag enthusiasts.',
+        'thank_you' => 'Welcome to Bags & Tea! We\'re thrilled to have you join our community of vintage bag enthusiasts. Here you\'ll find unique pieces, carefully curated to let your style speak for itself.',
         'email' => 'Email',
         'join_date' => 'Member Since',
         'benefits_title' => 'Your Membership Benefits',
@@ -45,15 +45,15 @@ return [
         ],
         'getting_started' => 'Getting Started',
         'next_steps' => [
-            'Explore our curated collection of premium teas and bags',
+            'Discover our collection of luxury bags, from timeless classics to unique designs',
             'Complete your profile to receive personalized recommendations',
-            'Follow us on social media for the latest updates'
+            'Follow us on social media and be the first to know about new arrivals and limited editions.'
         ],
         'start_shopping' => 'Start Shopping',
         'follow_us' => 'Follow Us',
         'social_text' => 'Stay connected for the latest updates, new arrivals, and exclusive offers.',
-        'questions' => 'If you have any questions, feel free to reach out to us at',
-        'thank_you_closing' => 'Welcome aboard!',
+        'questions' => 'If you need help or have any questions, write to us at',
+        'thank_you_closing' => 'Thank you for joining Bags & Tea.<br>Your next favorite bag is waiting for you. ✨',
         'reason' => 'You received this email because you created an account at Bags & Tea.'
     ],
 
