@@ -27,6 +27,8 @@ class Form extends Component
     public $files = [];
     public $showSuccessMessage = false;
     public $isTermsAndConditions;
+    public $isFormActive = true;
+    public $inactiveMessage = null;
     
     private FormSubmissionCreator $formSubmissionCreator;
     public function boot(FormSubmissionCreator $formSubmissionCreator)
@@ -105,14 +107,25 @@ class Form extends Component
         return $rules;
     }
     public function mount($formTitle, $formIdentifier, $formButtonText, $isTermsAndConditions = false)
-    {   
+    {
         $this->formTitle = $formTitle;
         $form = FormModel::where('form_identifier', $formIdentifier)->first();
         $this->crmFormId = $form->id;
         $this->formFields = $form->form_fields;
         $this->formButtonText = $formButtonText;
         $this->isTermsAndConditions = $isTermsAndConditions;
-        
+        $this->isFormActive = $form->is_active;
+
+        // Handle inactive message
+        if (!$this->isFormActive && $form->inactive_message) {
+            $locale = app()->getLocale();
+            $this->inactiveMessage = $form->inactive_message[$locale] ?? $form->inactive_message['es'] ?? $form->inactive_message['en'] ?? null;
+        }
+
+        // Fallback message if form is inactive but no custom message is set
+        if (!$this->isFormActive && !$this->inactiveMessage) {
+            $this->inactiveMessage = trans('components/form-show.form-not-available');
+        }
     }
 
     public function submit()

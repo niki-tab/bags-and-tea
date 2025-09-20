@@ -8,5 +8,7 @@ return [
     'success-message' => 'Thank you! One of our team members will contact you within the next 24 hours.',
     'label-optional' => '(optional)',
     'label-required' => '*',
+    'form-temporarily-unavailable' => 'Form Temporarily Unavailable',
+    'form-not-available' => 'This form is currently not available.',
 
 ];
