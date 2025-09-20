@@ -8,6 +8,23 @@
                 {{ trans('components/form-show.success-message') }}
             </p>
         </div>
+    @elseif (!$isFormActive)
+        <div class="text-center bg-yellow-50 border border-yellow-200 rounded-lg p-8 my-8">
+            <div class="mb-4">
+                <svg class="mx-auto h-12 w-12 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                </svg>
+            </div>
+            @if ($inactiveMessage)
+                <h3 class="text-lg font-semibold text-yellow-800 font-robotoCondensed mb-2">
+                    {{ $inactiveMessage }}
+                </h3>
+            @else
+                <h3 class="text-lg font-semibold text-yellow-800 font-robotoCondensed mb-2">
+                    {{ trans('components/form-show.form-temporarily-unavailable') }}
+                </h3>
+            @endif
+        </div>
     @else
         <form wire:submit.prevent="submit">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-10 md:gap-y-4 mt-8 md:mt-10"> <!-- Added grid container -->

@@ -20,7 +20,8 @@ class FormModel extends Model
         'form_identifier' => 'string',
         'form_description' => 'string',
         'form_fields' => 'json',
-        'is_active' => 'boolean'
+        'is_active' => 'boolean',
+        'inactive_message' => 'json'
     ];
     protected $fillable = [
         "id",
@@ -28,7 +29,8 @@ class FormModel extends Model
         "form_identifier",
         "form_description",
         "form_fields",
-        "is_active"
+        "is_active",
+        "inactive_message"
     ];
 
     protected static function newFactory()
