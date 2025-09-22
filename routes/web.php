@@ -137,6 +137,11 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
 
     Route::get('/shop', Shop::class)->name('shop.show.en')->where('locale', 'en');*/
 
+    // Redirect old category slug to new one
+    Route::get('/tienda/bolsos-louis-vuitton', function ($locale) {
+        return redirect('/es/tienda/louis-vuitton-bolsos', 301);
+    })->where('locale', 'es');
+
     Route::get('/tienda/{slug?}', function ($locale, $slug = null) {
         return view('pages/shop', ['categorySlug' => $slug]);
     })->name('shop.show.es')->where('locale', 'es');
