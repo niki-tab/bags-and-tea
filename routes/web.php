@@ -143,6 +143,10 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
         return redirect('/es/tienda/louis-vuitton-bolsos', 301);
     })->where('locale', 'es');
 
+    Route::get('/tienda/bolsos-gucci', function ($locale) {
+        return redirect('/es/tienda/gucci-bolsos', 301);
+    })->where('locale', 'es');
+
     Route::get('/tienda/{slug?}', function ($locale, $slug = null) {
         return view('pages/shop', ['categorySlug' => $slug]);
     })->name('shop.show.es')->where('locale', 'es');
