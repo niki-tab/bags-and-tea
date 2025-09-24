@@ -12,9 +12,21 @@
         <div x-show="open" 
              class="absolute right-0 mt-2 w-24 rounded-md shadow-lg bg-background-color-4 ring-1 ring-black ring-opacity-5">
             <div class="py-1">
-                <a href="{{ route($routeEnglish, $paramsEnglish) }}" 
+                @php
+                    $currentQueryString = request()->getQueryString();
+                    $englishQueryString = $currentQueryString ? $this->translateQueryParameters($currentQueryString, 'en') : '';
+                    $spanishQueryString = $currentQueryString ? $this->translateQueryParameters($currentQueryString, 'es') : '';
+
+                    // Debug logging
+                    \Log::info('Language Selector Debug', [
+                        'current_query' => $currentQueryString,
+                        'english_query' => $englishQueryString,
+                        'spanish_query' => $spanishQueryString
+                    ]);
+                @endphp
+                <a href="{{ route($routeEnglish, $paramsEnglish) . ($englishQueryString ? '?' . $englishQueryString : '') }}"
                    class="text-color-2 block px-4 py-2 text-sm hover:bg-gray-100">EN</a>
-                <a href="{{ route($routeSpanish, $paramsSpanish) }}" 
+                <a href="{{ route($routeSpanish, $paramsSpanish) . ($spanishQueryString ? '?' . $spanishQueryString : '') }}"
                    class="text-color-2 block px-4 py-2 text-sm hover:bg-gray-100">ES</a>
             </div>
         </div>
