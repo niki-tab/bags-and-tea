@@ -15,9 +15,6 @@
 </div>
 
 
-<!-- BLE Calendar Widget -->
-<div id="calendar-widget"></div>
-
 <!-- Calendar Widget Scripts -->
 <script src="http://channel-manager-api.guides-portal-ble.local/api/calendar-widget/script"></script>
 <script>
@@ -28,22 +25,9 @@
             productId: '876524_all',
             primaryColor: '#8B5CF6',
             displayMode: 'modal',
-            
-            // Stripe Payment Configuration
-            stripePublicKey: 'pk_test_51S6J0P42BHxseI9p5wJD5Mc6AcYdLWVCN2uaxGRett5eDQbcyOXeWUPXp8G3OBTqbjYQEwuQBgQdoecKc3ELz0YQ00WsQqlQje',
             paymentMode: 'stripe',
-            
+
             onReservationComplete: function(reservation) {
-                console.log('Reservation completed:', reservation);
-                if (reservation.status === 'paid') {
-                    // Payment successful - redirect to success page
-                    alert('Payment successful! 🎉\nSession ID: ' + reservation.sessionId);
-                    // window.location.href = '/booking-success?session=' + reservation.sessionId;
-                } else {
-                    // Regular reservation - redirect to booking page
-                    alert('Reservation completed! ID: ' + reservation.reservation_id);
-                    // window.location.href = '/booking?date=' + reservation.date;
-                }
             },
             onError: function(error) {
                 console.error('Calendar error:', error);
