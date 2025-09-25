@@ -14,7 +14,6 @@
     </div>
 </div>
 
-
 <!-- Calendar Widget Scripts -->
 <script src="http://channel-manager-api.guides-portal-ble.local/api/calendar-widget/script"></script>
 <script>
@@ -22,10 +21,11 @@
         new BLECalendarWidget({
             apiBaseUrl: 'http://channel-manager-api.guides-portal-ble.local/api/calendar-widget',
             containerId: 'calendar-widget',
-            productId: '876524_all',
+            productId: '876524_01FZXY6W4DT1AZKZEMXFD8VN8G',
             primaryColor: '#8B5CF6',
             displayMode: 'modal',
             paymentMode: 'stripe',
+            language: 'es',
 
             onReservationComplete: function(reservation) {
             },
@@ -36,5 +36,6 @@
         });
     });
 </script>
+
 
 @endsection
