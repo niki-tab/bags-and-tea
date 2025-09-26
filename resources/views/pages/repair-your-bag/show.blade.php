@@ -12,7 +12,6 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
 bg-background-color-4  {{-- or any other Tailwind class you want for this specific page --}}
 @endsection
 
-<meta name="robots" content="noindex, nofollow" />
 
 @section('content')
 
@@ -23,7 +22,7 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
             <h1 class="text-4xl font-['Lovera'] text-[#482626] mb-6 tracking-widest">
                 {{ __('pages/repair-your-bag.repair_subtitle') }}
             </h1>
-            <p class="text-base text-[#482626] font-robotoCondensed font-regular max-w-4xl mx-auto">
+            <p class="text-base text-[#482626] font-robotoCondensed font-regular max-w-4xl md:mx-auto mx-8 md:text-center text-justify">
                 {{ __('pages/repair-your-bag.repair_description') }}
             </p>
         </div>
@@ -39,8 +38,8 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
         </div>
         
         <!-- Sección inferior con título y descripción (desktop) -->
-        <div class="hidden md:block text-left mb-12 w-[65%] ml-[20%] md:order-3">
-            <h2 class="text-2xl font-['Lovera'] text-[#482626] mb-6 tracking-widest text-left">
+        <div class="hidden md:block text-center mb-12 w-[65%] mx-auto md:order-3">
+            <h2 class="text-3xl font-['Lovera'] text-[#482626] mb-6 tracking-widest text-center">
                 {{ __('pages/repair-your-bag.cta_title') }}
             </h2>
             <p class="text-base text-[#482626] font-robotoCondensed font-regular max-w-4xl mx-auto">
@@ -60,11 +59,11 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
             </div>
 
             <!-- CTA móvil entre las dos imágenes -->
-            <div class="block md:hidden text-left mb-8">
+            <div class="block md:hidden text-center mb-8 mx-8 mt-8">
                 <h2 class="text-2xl font-['Lovera'] text-[#482626] mb-4 tracking-widest">
                     {{ __('pages/repair-your-bag.cta_title') }}
                 </h2>
-                <p class="text-base text-[#482626] font-robotoCondensed font-regular">
+                <p class="text-base text-[#482626] font-robotoCondensed font-regular text-justify">
                     {{ __('pages/repair-your-bag.cta_description') }}
                 </p>
             </div>
@@ -82,7 +81,7 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
     
     <!-- Formulario de reparación -->
     <div id="repair-form" class="bg-[#F6F0ED] py-8 md:py-20">
-        <div class="w-4/5 mx-auto">
+        <div class="border-[4px] border-[#3A1515] w-4/5 mx-auto">
             @livewire('crm/forms/show', ['formTitle' => 'Contacto', 'formIdentifier' => 'repair-your-bag', 'formButtonText' => 'Enviar solicitud', 'isTermsAndConditions' => true, 'isReceiveComercialInformation' => true])
         </div>
     </div>
