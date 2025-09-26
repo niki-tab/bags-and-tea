@@ -41,9 +41,10 @@
             <!-- Call to Action -->
             <div style="text-align: center; margin: 30px 0;">
                 @php
+                    $baseUrl = rtrim(config('app.url'), '/');
                     $shopUrl = $locale === 'es'
-                        ? url('/es/tienda')
-                        : url('/en/shop');
+                        ? $baseUrl . '/es/tienda'
+                        : $baseUrl . '/en/shop';
                 @endphp
                 <a href="{{ $shopUrl }}"
                    style="background-color: #482626; color: #ffffff; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-size: 16px; font-weight: bold; display: inline-block; font-family: 'Arial', sans-serif;">

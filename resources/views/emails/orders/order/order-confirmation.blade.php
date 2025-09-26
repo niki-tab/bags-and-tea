@@ -218,9 +218,11 @@
             <!-- Call to Action -->
             <div style="text-align: center; margin: 30px 0;">
                 @php
-                    $orderUrl = $locale === 'es' 
-                        ? url('/es/pedido-confirmado/' . $orderNumber . '?token=' . $orderData['security_token'])
-                        : url('/en/order-confirmed/' . $orderNumber . '?token=' . $orderData['security_token']);
+                    // Force correct URL generation by using config('app.url')
+                    $baseUrl = rtrim(config('app.url'), '/');
+                    $orderUrl = $locale === 'es'
+                        ? $baseUrl . '/es/pedido-confirmado/' . $orderNumber . '?token=' . $orderData['security_token']
+                        : $baseUrl . '/en/order-confirmed/' . $orderNumber . '?token=' . $orderData['security_token'];
                 @endphp
                 <a href="{{ $orderUrl }}" 
                    style="background-color: #482626; color: #ffffff; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-size: 16px; font-weight: bold; display: inline-block; font-family: 'Arial', sans-serif;">

@@ -11,7 +11,7 @@
                         </h3>
                         <p style="margin: 0; color: #482626; font-size: 14px; text-align: center; line-height: 1.6; font-family: 'Arial', sans-serif;">
                             <strong>{{ trans('emails.footer.email') }}:</strong> info@bagsandtea.com<br>
-                            <strong>{{ trans('emails.footer.website') }}:</strong> <a href="{{ url('/') }}" style="color: #482626; text-decoration: underline;">www.bagsandtea.com</a>
+                            <strong>{{ trans('emails.footer.website') }}:</strong> <a href="{{ rtrim(config('app.url'), '/') }}" style="color: #482626; text-decoration: underline;">www.bagsandtea.com</a>
                         </p>
                     </td>
                 </tr>
@@ -39,10 +39,14 @@
                         <p style="margin: 0 0 10px 0; color: #482626; font-size: 12px; text-align: center; line-height: 1.5; font-family: 'Arial', sans-serif;">
                             {!! trans('emails.footer.copyright', ['year' => date('Y')]) !!}
                         </p>
+                        @php
+                            $baseUrl = rtrim(config('app.url'), '/');
+                            $privacyUrl = app()->getLocale() === 'es' ? $baseUrl . '/es/privacidad' : $baseUrl . '/en/privacy';
+                        @endphp
                         <p style="margin: 0; color: #482626; font-size: 12px; text-align: center; font-family: 'Arial', sans-serif;">
                             @yield('email-reason', trans('emails.order_confirmation.reason'))<br>
-                            <a href="#" style="color: #482626; text-decoration: underline;">{{ trans('emails.footer.unsubscribe') }}</a> | 
-                            <a href="{{ app()->getLocale() === 'es' ? url('/es/privacidad') : url('/en/privacy') }}" style="color: #482626; text-decoration: underline;">{{ trans('emails.footer.privacy_policy') }}</a>
+                            <a href="#" style="color: #482626; text-decoration: underline;">{{ trans('emails.footer.unsubscribe') }}</a> |
+                            <a href="{{ $privacyUrl }}" style="color: #482626; text-decoration: underline;">{{ trans('emails.footer.privacy_policy') }}</a>
                         </p>
                     </td>
                 </tr>
