@@ -276,7 +276,7 @@ class FormTableSeeder extends Seeder
                 [
                     'label' => 'Foto 1',
                     'placeholder' => '',
-                    'image' => null,
+                    'image' => '/images/icons/imgDefault.png',
                     'type' => 'file',
                     'name' => 'file-1',
                     'required' => true,
@@ -284,7 +284,7 @@ class FormTableSeeder extends Seeder
                 [
                     'label' => 'Foto 2',
                     'placeholder' => '',
-                    'image' => null,
+                    'image' => '/images/icons/imgDefault.png',
                     'type' => 'file',
                     'name' => 'file-2',
                     'required' => true,
@@ -292,7 +292,7 @@ class FormTableSeeder extends Seeder
                 [
                     'label' => 'Foto 3',
                     'placeholder' => '',
-                    'image' => null,
+                    'image' => '/images/icons/imgDefault.png',
                     'type' => 'file',
                     'name' => 'file-3',
                     'required' => true,
@@ -300,7 +300,7 @@ class FormTableSeeder extends Seeder
                 [
                     'label' => 'Foto 4',
                     'placeholder' => '',
-                    'image' => null,
+                    'image' => '/images/icons/imgDefault.png',
                     'type' => 'file',
                     'name' => 'file-4',
                     'required' => false,
@@ -308,7 +308,7 @@ class FormTableSeeder extends Seeder
                 [
                     'label' => 'Foto 5',
                     'placeholder' => '',
-                    'image' => null,
+                    'image' => '/images/icons/imgDefault.png',
                     'type' => 'file',
                     'name' => 'file-5',
                     'required' => false,
@@ -316,7 +316,7 @@ class FormTableSeeder extends Seeder
                 [
                     'label' => 'Foto 6',
                     'placeholder' => '',
-                    'image' => null,
+                    'image' => '/images/icons/imgDefault.png',
                     'type' => 'file',
                     'name' => 'file-6',
                     'required' => false,

@@ -91,7 +91,7 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
             <!-- Texto de Nosotros -->
             <div class="mb-8">
                 <h2 class="text-4xl font-['Lovera'] text-[#482626] mb-6 text-center tracking-widest">{{ __('pages/about-us.about_us_title') }}</h2>
-                <p class="text-base font-['Lora']">
+                <p class="text-base font-['Lora'] px-6">
                     {!! nl2br(e(__('pages/about-us.about_us_description'))) !!}
                 </p>
             </div>
@@ -170,7 +170,7 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
     </div>
 </div>
 <div class="max-w-7xl mx-auto mt-8 px-4 mb-4">
-    <p class="text-center font-['Lora'] text-base md:text-lg">
+    <p class="text-center md:text-center font-['Lora'] text-base md:text-lg px-6 text-justify md:text-center">
         {{ __('pages/about-us.circular_fashion_banner') }}
     </p>
 </div>

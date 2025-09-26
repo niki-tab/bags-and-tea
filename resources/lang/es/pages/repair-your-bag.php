@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'page-seo-title' => 'Reparar bolso de lujo | Servicio experto en restauración de bolsos',
+    'page-seo-description' => 'En Bags & Tea reparamos tu bolso de lujo con el máximo cuidado y precisión. Restauramos piezas de Chanel, Hermès, Louis Vuitton, Dior y más, devolviéndoles su belleza y valor original.',
     'repair_subtitle' => 'BOLSOS QUE TRASCIENDEN EL TIEMPO',
     'repair_description' => 'En Bags and Tea no sólo puedes comprar y vender tus bolsos, también puedes reparar tu bolso por nuestros profesionales del sector.',
     'cta_title' => 'DEVOLVEMOS LA VIDA A TU BOLSO DE LUJO',
