@@ -38,7 +38,7 @@ class ShopFilterEloquentModel extends Model
         'is_active' => 'boolean',
     ];
 
-    public $translatable = ['name'];
+    public $translatable = ['name', 'slug'];
 
     public function scopeActive($query)
     {
