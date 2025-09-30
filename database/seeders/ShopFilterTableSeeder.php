@@ -38,6 +38,10 @@ class ShopFilterTableSeeder extends Seeder
                     'en' => 'Bags',
                     'es' => 'Bolsos'
                 ]),
+                'slug' => json_encode([
+                    'en' => 'bags',
+                    'es' => 'bolsos'
+                ]),
                 'type' => 'category',
                 'reference_table' => 'categories',
                 'product_column' => null,
@@ -56,6 +60,10 @@ class ShopFilterTableSeeder extends Seeder
                 'name' => json_encode([
                     'en' => 'Color',
                     'es' => 'Color'
+                ]),
+                'slug' => json_encode([
+                    'en' => 'color',
+                    'es' => 'color'
                 ]),
                 'type' => 'category',
                 'reference_table' => 'categories',
@@ -76,6 +84,10 @@ class ShopFilterTableSeeder extends Seeder
                     'en' => 'Quality',
                     'es' => 'Condición'
                 ]),
+                'slug' => json_encode([
+                    'en' => 'quality',
+                    'es' => 'condicion'
+                ]),
                 'type' => 'quality',
                 'reference_table' => 'qualities',
                 'product_column' => 'quality_id',
@@ -93,6 +105,10 @@ class ShopFilterTableSeeder extends Seeder
                 'name' => json_encode([
                     'en' => 'Material',
                     'es' => 'Material'
+                ]),
+                'slug' => json_encode([
+                    'en' => 'material',
+                    'es' => 'material'
                 ]),
                 'type' => 'category',
                 'reference_table' => 'categories',
@@ -113,6 +129,10 @@ class ShopFilterTableSeeder extends Seeder
                     'en' => 'Bag Type',
                     'es' => 'Tipo de Bolso'
                 ]),
+                'slug' => json_encode([
+                    'en' => 'bag-type',
+                    'es' => 'tipo-de-bolso'
+                ]),
                 'type' => 'category',
                 'reference_table' => 'categories',
                 'product_column' => null,
@@ -132,6 +152,10 @@ class ShopFilterTableSeeder extends Seeder
                     'en' => 'Size',
                     'es' => 'Talla'
                 ]),
+                'slug' => json_encode([
+                    'en' => 'size',
+                    'es' => 'talla'
+                ]),
                 'type' => 'attribute',
                 'reference_table' => 'attributes',
                 'product_column' => null,
@@ -150,6 +174,10 @@ class ShopFilterTableSeeder extends Seeder
                 'name' => json_encode([
                     'en' => 'Price',
                     'es' => 'Precio'
+                ]),
+                'slug' => json_encode([
+                    'en' => 'price',
+                    'es' => 'precio'
                 ]),
                 'type' => 'price',
                 'reference_table' => null,

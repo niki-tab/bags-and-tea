@@ -534,7 +534,7 @@
 document.addEventListener('livewire:init', () => {
     Livewire.on('scrollToProducts', () => {
         const isMobile = window.innerWidth < 768;
-        
+
         if (isMobile) {
             // For mobile, scroll to 500px from the top with a small delay
             setTimeout(() => {
@@ -557,6 +557,16 @@ document.addEventListener('livewire:init', () => {
                 });
             }
         }
+    });
+
+    // Listen for URL update events with translated query parameters
+    Livewire.on('updateUrl', (queryString) => {
+        console.log('updateUrl event received:', queryString);
+        const url = new URL(window.location.href);
+        // queryString should be without '?' prefix
+        url.search = queryString ? '?' + queryString : '';
+        console.log('New URL:', url.toString());
+        window.history.pushState({}, '', url);
     });
 });
 

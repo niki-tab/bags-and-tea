@@ -1017,34 +1017,36 @@ class Shop extends Component
     private function parseUrlParameters()
     {
         $this->selectedFilters = [];
-        
-        // Map URL properties to selectedFilters with conversion
-        $urlMappings = [
-            'category' => $this->category,
-            'attribute' => $this->attribute,
-            'quality' => $this->quality,
-            'price' => $this->price,
-            'year-of-manufacture' => $this->yearOfManufacture,
-            'size' => $this->size,
-            'color' => $this->color,
-            'material' => $this->material,
-            'bag-type' => $this->bagType,
-            'bags' => $this->bags,
-        ];
-        
-        foreach ($urlMappings as $filterType => $urlValue) {
+
+        // Get translated slugs (current locale => English)
+        $translatedSlugs = $this->getTranslatedFilterSlugs();
+        // Reverse the mapping to go from current locale slug to English slug
+        $reverseTranslatedSlugs = array_flip($translatedSlugs);
+
+        // Read query parameters directly from request
+        $requestQuery = request()->query();
+
+        foreach ($requestQuery as $urlKey => $urlValue) {
+            // Skip pagination and sorting parameters
+            if (in_array($urlKey, ['page', 'sort', 'search'])) {
+                continue;
+            }
+
             if (empty($urlValue)) {
                 continue;
             }
-            
+
+            // Map the URL key (which might be translated) back to English filter type
+            $filterType = $reverseTranslatedSlugs[$urlKey] ?? $urlKey;
+
             // Convert comma-separated values to array
             $filterValues = explode(',', $urlValue);
             $filterValues = array_filter($filterValues); // Remove empty values
-            
+
             if (empty($filterValues)) {
                 continue;
             }
-            
+
             // Convert slugs/codes back to IDs for internal use
             switch ($filterType) {
                 case 'category':
@@ -1075,68 +1077,75 @@ class Shop extends Component
         }
     }
 
-    private function syncUrlParameters()
+    private function getTranslatedFilterSlugs(): array
     {
-        // Update individual URL properties based on selectedFilters
-        $this->category = '';
-        $this->attribute = '';
-        $this->quality = '';
-        $this->price = '';
-        $this->yearOfManufacture = '';
-        $this->size = '';
-        $this->color = '';
-        $this->material = '';
-        $this->bagType = '';
-        $this->bags = '';
-        
-        foreach ($this->selectedFilters as $filterType => $filterValues) {
-            if (empty($filterValues)) {
-                continue;
-            }
-            
-            // Convert IDs to slugs for URL
-            $urlValues = [];
-            switch ($filterType) {
-                case 'category':
-                    $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
-                    $this->category = implode(',', $urlValues);
-                    break;
-                case 'attribute':
-                    $urlValues = $this->convertAttributeIdsToSlugs($filterValues);
-                    $this->attribute = implode(',', $urlValues);
-                    break;
-                case 'quality':
-                    $urlValues = $this->convertQualityIdsToCodes($filterValues);
-                    $this->quality = implode(',', $urlValues);
-                    break;
-                case 'price':
-                    $this->price = implode(',', $filterValues);
-                    break;
-                case 'year-of-manufacture':
-                    $urlValues = $this->convertAttributeIdsToSlugs($filterValues);
-                    $this->yearOfManufacture = implode(',', $urlValues);
-                    break;
-                case 'size':
-                    $urlValues = $this->convertAttributeIdsToSlugs($filterValues);
-                    $this->size = implode(',', $urlValues);
-                    break;
-                case 'color':
-                    $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
-                    $this->color = implode(',', $urlValues);
-                    break;
-                case 'material':
-                    $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
-                    $this->material = implode(',', $urlValues);
-                    break;
-                case 'bag-type':
-                    $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
-                    $this->bagType = implode(',', $urlValues);
-                    break;
-                case 'bags':
-                    $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
-                    $this->bags = implode(',', $urlValues);
-                    break;
+        $shopFilterRepository = new EloquentShopFilterRepository;
+        $activeFilters = $shopFilterRepository->findActive();
+        $translatedSlugs = [];
+
+        foreach ($activeFilters as $filter) {
+            $englishSlug = $filter->getTranslation('slug', 'en');
+            $currentLocaleSlug = $filter->getTranslation('slug', app()->getLocale());
+
+            if ($englishSlug && $currentLocaleSlug) {
+                $translatedSlugs[$englishSlug] = $currentLocaleSlug;
             }
         }
+
+        return $translatedSlugs;
+    }
+
+    private function getTranslatedQueryString(): string
+    {
+        $translatedSlugs = $this->getTranslatedFilterSlugs();
+        $query = [];
+
+        foreach ($this->selectedFilters as $filterType => $filterValues) {
+            if (!empty($filterValues)) {
+                $urlValues = [];
+                switch ($filterType) {
+                    case 'category':
+                        $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
+                        break;
+                    case 'attribute':
+                        $urlValues = $this->convertAttributeIdsToSlugs($filterValues);
+                        break;
+                    case 'quality':
+                        $urlValues = $this->convertQualityIdsToCodes($filterValues);
+                        break;
+                    case 'price':
+                        $urlValues = $filterValues;
+                        break;
+                    default:
+                        if ($this->isAttributeFilterType($filterType)) {
+                            $urlValues = $this->convertAttributeIdsToSlugs($filterValues);
+                        } elseif ($this->isCategoryFilterType($filterType)) {
+                            $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
+                        }
+                        break;
+                }
+
+                // Use translated slug as the query parameter key
+                $key = $translatedSlugs[$filterType] ?? $filterType;
+                $query[$key] = implode(',', $urlValues);
+            }
+        }
+
+        if (!empty($this->selectedSortBy)) {
+            $query['sort'] = $this->selectedSortBy;
+        }
+
+        if ($this->currentPage > 1) {
+            $query['page'] = $this->currentPage;
+        }
+
+        return http_build_query($query);
+    }
+
+    private function syncUrlParameters()
+    {
+        // Generate translated query string and dispatch it to JavaScript for URL update
+        $queryString = $this->getTranslatedQueryString();
+        $this->dispatch('updateUrl', $queryString);
     }
 }
