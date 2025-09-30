@@ -81,6 +81,28 @@ class LanguageSelector extends Component
                 $this->paramsSpanish['slug'] = $spanishSlug;
                 $this->paramsEnglish['slug'] = $englishSlug;
             }
+
+            // Translate query parameters (filters, sort, page, search)
+            $queryParams = request()->query();
+            \Log::info('LanguageSelector - Query Params:', ['queryParams' => $queryParams]);
+
+            if (!empty($queryParams)) {
+                $translatedParamsSpanish = $this->translateShopQueryParams($queryParams, 'es');
+                $translatedParamsEnglish = $this->translateShopQueryParams($queryParams, 'en');
+
+                \Log::info('LanguageSelector - Translated Params:', [
+                    'spanish' => $translatedParamsSpanish,
+                    'english' => $translatedParamsEnglish
+                ]);
+
+                $this->paramsSpanish = array_merge($this->paramsSpanish, $translatedParamsSpanish);
+                $this->paramsEnglish = array_merge($this->paramsEnglish, $translatedParamsEnglish);
+            }
+
+            \Log::info('LanguageSelector - Final Params:', [
+                'paramsSpanish' => $this->paramsSpanish,
+                'paramsEnglish' => $this->paramsEnglish
+            ]);
         }else{
             $this->paramsSpanish = ["locale" => "es"];
             $this->paramsEnglish = ["locale" => "en"];
@@ -158,6 +180,108 @@ class LanguageSelector extends Component
             'en' => $currentSlug,
             'es' => $currentSlug
         ];
+    }
+
+    private function translateShopQueryParams($queryParams, $targetLocale)
+    {
+        $translatedParams = [];
+
+        // Get shop filter slug translations
+        $shopFilters = DB::table('shop_filters')
+            ->where('is_active', true)
+            ->get();
+
+        // Build a mapping of filter slugs: from all locales to target locale
+        $filterSlugMap = [];
+        foreach ($shopFilters as $filter) {
+            if ($filter->slug) {
+                $slugs = json_decode($filter->slug, true);
+                if ($slugs) {
+                    // Map from English slug to target locale
+                    if (isset($slugs['en']) && isset($slugs[$targetLocale])) {
+                        $filterSlugMap[$slugs['en']] = $slugs[$targetLocale];
+                    }
+                    // Map from Spanish slug to target locale
+                    if (isset($slugs['es']) && isset($slugs[$targetLocale])) {
+                        $filterSlugMap[$slugs['es']] = $slugs[$targetLocale];
+                    }
+                }
+            }
+        }
+
+        // Get category and attribute slug translations for filter values
+        $categories = DB::table('categories')->whereNotNull('slug')->get();
+        $attributes = DB::table('attributes')->whereNotNull('slug')->get();
+
+        $categorySlugMap = [];
+        foreach ($categories as $category) {
+            $slugs = json_decode($category->slug, true);
+            if ($slugs) {
+                // Map from each locale to target locale
+                foreach (['en', 'es'] as $locale) {
+                    if (isset($slugs[$locale]) && isset($slugs[$targetLocale])) {
+                        $categorySlugMap[$slugs[$locale]] = $slugs[$targetLocale];
+                    }
+                }
+            }
+        }
+
+        $attributeSlugMap = [];
+        foreach ($attributes as $attribute) {
+            $slugs = json_decode($attribute->slug, true);
+            if ($slugs) {
+                // Map from each locale to target locale
+                foreach (['en', 'es'] as $locale) {
+                    if (isset($slugs[$locale]) && isset($slugs[$targetLocale])) {
+                        $attributeSlugMap[$slugs[$locale]] = $slugs[$targetLocale];
+                    }
+                }
+            }
+        }
+
+        foreach ($queryParams as $key => $value) {
+            // Skip locale parameter
+            if ($key === 'locale') {
+                continue;
+            }
+
+            // Keep sort, page, search as-is
+            if (in_array($key, ['sort', 'page', 'search'])) {
+                $translatedParams[$key] = $value;
+                continue;
+            }
+
+            // Translate the filter key if it exists in our mapping
+            $translatedKey = $filterSlugMap[$key] ?? $key;
+
+            // Translate the filter values (category/attribute slugs)
+            if (!empty($value)) {
+                // Handle comma-separated values
+                $values = explode(',', $value);
+                $translatedValues = [];
+
+                foreach ($values as $val) {
+                    // Try to translate from category slugs
+                    if (isset($categorySlugMap[$val])) {
+                        $translatedValues[] = $categorySlugMap[$val];
+                    }
+                    // Try to translate from attribute slugs
+                    elseif (isset($attributeSlugMap[$val])) {
+                        $translatedValues[] = $attributeSlugMap[$val];
+                    }
+                    // Keep original if no translation found
+                    else {
+                        $translatedValues[] = $val;
+                    }
+                }
+
+                $translatedParams[$translatedKey] = implode(',', $translatedValues);
+            } else {
+                $translatedParams[$translatedKey] = $value;
+            }
+        }
+
+        return $translatedParams;
     }
 
 

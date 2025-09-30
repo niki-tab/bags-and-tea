@@ -156,21 +156,11 @@ class Shop extends Component
         $this->selectedSortBy = '';
         $this->currentPage = 1;
         $this->priceRange = ['min' => null, 'max' => null];
-        
-        // Clear all URL properties
-        // $this->brand = '';
-        $this->category = '';
-        $this->attribute = '';
-        $this->quality = '';
-        $this->price = '';
-        $this->yearOfManufacture = '';
-        $this->size = '';
-        $this->color = '';
-        $this->material = '';
-        $this->bagType = '';
-        $this->bags = '';
-        
+
         $this->loadShopData();
+
+        // Dispatch event to clear the URL completely (no query parameters)
+        $this->dispatch('updateUrl', '');
     }
 
     public function removeFilter($type, $value)
