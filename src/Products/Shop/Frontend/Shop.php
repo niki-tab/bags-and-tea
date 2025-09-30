@@ -52,7 +52,7 @@ class Shop extends Component
     #[Url]
     public $price = '';
     
-    #[Url(as: 'year-of-manufacture')]
+    #[Url]
     public $yearOfManufacture = '';
     
     #[Url]
@@ -64,7 +64,7 @@ class Shop extends Component
     #[Url]
     public $material = '';
     
-    #[Url(as: 'bag-type')]
+    #[Url]
     public $bagType = '';
 
     #[Url]
@@ -88,6 +88,11 @@ class Shop extends Component
     // UI state
     public $loading = false;
 
+    public function boot()
+    {
+        $this->parseUrlParameters();
+    }
+
     public function mount($categorySlug = null)
     {
         // Store the category slug for URL-based filtering
@@ -108,9 +113,6 @@ class Shop extends Component
         }
 
         $this->loadShopData();
-
-        // Parse URL parameters after shop data is loaded (so $this->filters is available)
-        $this->parseUrlParameters();
 
         // Parse price ranges if they come from URL
         if (! empty($this->selectedPriceRange)) {
@@ -758,7 +760,19 @@ class Shop extends Component
     public function render()
     {
         $this->setSeo();
-        return view('livewire.shop')->extends('layouts.app');
+        return view('livewire.shop')->extends('layouts.app')->with([
+            'updateUrlScript' => <<<'JS'
+                <script>
+                    document.addEventListener('livewire:init', () => {
+                        Livewire.on('updateUrl', (queryString) => {
+                            const url = new URL(window.location.href);
+                            url.search = queryString;
+                            window.history.pushState({}, '', url);
+                        });
+                    });
+                </script>
+            JS
+        ]);
     }
 
     
@@ -1017,35 +1031,22 @@ class Shop extends Component
     private function parseUrlParameters()
     {
         $this->selectedFilters = [];
-        
-        // Map URL properties to selectedFilters with conversion
-        $urlMappings = [
-            'category' => $this->category,
-            'attribute' => $this->attribute,
-            'quality' => $this->quality,
-            'price' => $this->price,
-            'year-of-manufacture' => $this->yearOfManufacture,
-            'size' => $this->size,
-            'color' => $this->color,
-            'material' => $this->material,
-            'bag-type' => $this->bagType,
-            'bags' => $this->bags,
-        ];
-        
-        foreach ($urlMappings as $filterType => $urlValue) {
-            if (empty($urlValue)) {
-                continue;
+        $translatedSlugs = $this->getTranslatedFilterSlugs();
+        $requestQuery = request()->query();
+
+        foreach ($requestQuery as $key => $value) {
+            $filterType = array_search($key, $translatedSlugs);
+            if ($filterType === false) {
+                $filterType = $key;
             }
-            
-            // Convert comma-separated values to array
-            $filterValues = explode(',', $urlValue);
-            $filterValues = array_filter($filterValues); // Remove empty values
-            
+
+            $filterValues = explode(',', $value);
+            $filterValues = array_filter($filterValues);
+
             if (empty($filterValues)) {
                 continue;
             }
-            
-            // Convert slugs/codes back to IDs for internal use
+
             switch ($filterType) {
                 case 'category':
                     $this->selectedFilters[$filterType] = $this->convertCategorySlugsToIds($filterValues);
@@ -1057,17 +1058,14 @@ class Shop extends Component
                     $this->selectedFilters[$filterType] = $this->convertQualityCodesToIds($filterValues);
                     break;
                 case 'price':
-                    // Price ranges stay as-is (they're already user-friendly)
                     $this->selectedFilters[$filterType] = $filterValues;
                     break;
                 default:
-                    // For dynamic category/attribute filters, check the filter type
                     if ($this->isAttributeFilterType($filterType)) {
                         $this->selectedFilters[$filterType] = $this->convertAttributeSlugsToIds($filterValues);
                     } elseif ($this->isCategoryFilterType($filterType)) {
                         $this->selectedFilters[$filterType] = $this->convertCategorySlugsToIds($filterValues);
                     } else {
-                        // Fallback for other filter types
                         $this->selectedFilters[$filterType] = $filterValues;
                     }
                     break;
@@ -1075,68 +1073,69 @@ class Shop extends Component
         }
     }
 
-    private function syncUrlParameters()
+    private function getTranslatedQueryString(): string
     {
-        // Update individual URL properties based on selectedFilters
-        $this->category = '';
-        $this->attribute = '';
-        $this->quality = '';
-        $this->price = '';
-        $this->yearOfManufacture = '';
-        $this->size = '';
-        $this->color = '';
-        $this->material = '';
-        $this->bagType = '';
-        $this->bags = '';
-        
+        $translatedSlugs = $this->getTranslatedFilterSlugs();
+        $query = [];
+
         foreach ($this->selectedFilters as $filterType => $filterValues) {
-            if (empty($filterValues)) {
-                continue;
-            }
-            
-            // Convert IDs to slugs for URL
-            $urlValues = [];
-            switch ($filterType) {
-                case 'category':
-                    $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
-                    $this->category = implode(',', $urlValues);
-                    break;
-                case 'attribute':
-                    $urlValues = $this->convertAttributeIdsToSlugs($filterValues);
-                    $this->attribute = implode(',', $urlValues);
-                    break;
-                case 'quality':
-                    $urlValues = $this->convertQualityIdsToCodes($filterValues);
-                    $this->quality = implode(',', $urlValues);
-                    break;
-                case 'price':
-                    $this->price = implode(',', $filterValues);
-                    break;
-                case 'year-of-manufacture':
-                    $urlValues = $this->convertAttributeIdsToSlugs($filterValues);
-                    $this->yearOfManufacture = implode(',', $urlValues);
-                    break;
-                case 'size':
-                    $urlValues = $this->convertAttributeIdsToSlugs($filterValues);
-                    $this->size = implode(',', $urlValues);
-                    break;
-                case 'color':
-                    $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
-                    $this->color = implode(',', $urlValues);
-                    break;
-                case 'material':
-                    $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
-                    $this->material = implode(',', $urlValues);
-                    break;
-                case 'bag-type':
-                    $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
-                    $this->bagType = implode(',', $urlValues);
-                    break;
-                case 'bags':
-                    $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
-                    $this->bags = implode(',', $urlValues);
-                    break;
+            if (!empty($filterValues)) {
+                $urlValues = [];
+                switch ($filterType) {
+                    case 'category':
+                        $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
+                        break;
+                    case 'attribute':
+                        $urlValues = $this->convertAttributeIdsToSlugs($filterValues);
+                        break;
+                    case 'quality':
+                        $urlValues = $this->convertQualityIdsToCodes($filterValues);
+                        break;
+                    case 'price':
+                        $urlValues = $filterValues;
+                        break;
+                    default:
+                        if ($this->isAttributeFilterType($filterType)) {
+                            $urlValues = $this->convertAttributeIdsToSlugs($filterValues);
+                        } elseif ($this->isCategoryFilterType($filterType)) {
+                            $urlValues = $this->convertCategoryIdsToSlugs($filterValues);
+                        }
+                        break;
+                }
+
+                $key = $translatedSlugs[$filterType] ?? $filterType;
+                $query[$key] = implode(',', $urlValues);
             }
         }
+
+        if (!empty($this->selectedSortBy)) {
+            $query['sort'] = $this->selectedSortBy;
+        }
+
+        if ($this->currentPage > 1) {
+            $query['page'] = $this->currentPage;
+        }
+
+        return http_build_query($query);
+    }
+
+    private function getTranslatedFilterSlugs(): array
+    {
+        $shopFilterRepository = new EloquentShopFilterRepository;
+        $activeFilters = $shopFilterRepository->findActive();
+        $translatedSlugs = [];
+
+        foreach ($activeFilters as $filter) {
+            $translatedSlugs[$filter->getTranslation('slug', 'en')] = $filter->getTranslation('slug', app()->getLocale());
+        }
+
+        return $translatedSlugs;
+    }
+
+    private function syncUrlParameters()
+    {
+        // Generate translated query string and dispatch event to update URL
+        $queryString = $this->getTranslatedQueryString();
+        $this->dispatch('updateUrl', $queryString);
     }
 }

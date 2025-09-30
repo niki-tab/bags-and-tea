@@ -71,5 +71,6 @@
         {{-- @endif --}}
 
         @livewire('shared/cookie-banner')
+        {!! $updateUrlScript ?? '' !!}
 </body>
 </html>
