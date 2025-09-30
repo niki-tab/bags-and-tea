@@ -415,16 +415,18 @@
                             <h3 class="text-sm font-medium text-gray-900 mb-2">
                                 {{ $product->getTranslation('name', app()->getLocale()) ?? __('Modelo') }}
                             </h3>
-                            <div class="text-lg font-bold text-gray-900">
-                                @php
-                                    $price = $product->price ?? 450;
-                                    // Show 2 decimals only if the price has decimal places
-                                    $formattedPrice = ($price == floor($price)) 
-                                        ? number_format($price, 0, ',', '.') 
-                                        : number_format($price, 2, ',', '.');
-                                @endphp
-                                {{ $formattedPrice }}€
-                            </div>
+                            @if($product->is_sold_out !== true)
+                                <div class="text-lg font-bold text-gray-900">
+                                    @php
+                                        $price = $product->price ?? 450;
+                                        // Show 2 decimals only if the price has decimal places
+                                        $formattedPrice = ($price == floor($price)) 
+                                            ? number_format($price, 0, ',', '.') 
+                                            : number_format($price, 2, ',', '.');
+                                    @endphp
+                                    {{ $formattedPrice }}€
+                                </div>
+                            @endif
                         </div>
                     </a>
                 @endforeach

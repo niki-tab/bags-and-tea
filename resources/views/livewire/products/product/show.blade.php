@@ -137,10 +137,12 @@
             <!-- Column 3: Product Information (30%) -->
             <div class="flex flex-col">
                 <!-- Price -->
-                <div class="text-3xl font-robotoCondensed text-[#CA2530] mb-8 lg:mb-10 text-left w-full max-w-md mx-auto lg:max-w-none lg:mx-0 lg:w-auto px-7 md:px-10 lg:px-0 lg:ml-14">
-                    € {{ number_format($product->price, 2, ',', '.') }}
-                    <span class="text-xs font-normal align-baseline">{{ trans('components/cart.vat-included') }}</span>
-                </div>
+                @if($product->is_sold_out !== true)
+                    <div class="text-3xl font-robotoCondensed text-[#CA2530] mb-8 lg:mb-10 text-left w-full max-w-md mx-auto lg:max-w-none lg:mx-0 lg:w-auto px-7 md:px-10 lg:px-0 lg:ml-14">
+                        € {{ number_format($product->price, 2, ',', '.') }}
+                        <span class="text-xs font-normal align-baseline">{{ trans('components/cart.vat-included') }}</span>
+                    </div>
+                @endif
 
                 <!-- Action Buttons -->
                 <div class="mb-8 w-full max-w-md mx-auto lg:mx-0 lg:ml-5 px-7 md:px-10">
