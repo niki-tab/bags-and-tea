@@ -294,21 +294,9 @@
                             <p class="text-red-700 font-medium">{{ trans('components/checkout.shipping-unavailable-payment') }}</p>
                         </div>
                     @else
-                        <div class="space-y-4">
-                            <div class="border rounded-lg p-4">
-                                <label class="flex items-center">
-                                    <input type="radio" wire:model="payment_method" value="stripe_card" class="text-[#CA2530] focus:ring-[#CA2530]">
-                                    <span class="ml-3 flex items-center">
-                                        <span class="text-sm font-medium text-color-2 mr-3">{{ trans('components/checkout.credit-debit-card') }}</span>
-                                        <div class="flex space-x-2">
-                                            <img src="{{ asset('images/checkout/visa.svg') }}" alt="Visa" class="h-6 w-auto">
-                                            <img src="{{ asset('images/checkout/mastercard.svg') }}" alt="Mastercard" class="h-6 w-auto">
-                                            <img src="{{ asset('images/checkout/american-express.svg') }}" alt="American Express" class="h-6 w-auto">
-                                        </div>
-                                    </span>
-                                </label>
-                            </div>
-                        </div>
+                        <p class="text-sm text-gray-600 mb-4">
+                            {{ trans('components/checkout.payment-methods-info') ?? 'Click the button below to proceed to payment. Available payment methods will be shown based on your location.' }}
+                        </p>
                     @endif
                     
                     @error('payment_method') 
@@ -625,14 +613,17 @@ document.addEventListener('livewire:init', () => {
                         // Build the return URL properly
                         const baseUrl = '{{ url('/') }}';
                         const locale = '{{ app()->getLocale() }}';
-                        const returnUrl = locale === 'es' 
+                        const returnUrl = locale === 'es'
                             ? baseUrl + '/es/pedido-confirmado/' + orderNumber
                             : baseUrl + '/en/order-confirmed/' + orderNumber;
-                        
+
                         console.log('Return URL:', returnUrl);
-                        
+
                         const {error, paymentIntent} = await stripe.confirmPayment({
                             elements,
+                            confirmParams: {
+                                return_url: returnUrl,
+                            },
                             redirect: 'if_required'
                         });
                         
