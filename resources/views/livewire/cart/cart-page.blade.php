@@ -68,7 +68,25 @@
                                         <!-- Product Details -->
                                         <div class="flex-grow">
                                             <h3 class="text-lg font-medium text-color-2 mb-2">
-                                                {{ $item['product']['name'][app()->getLocale()] ?? 'Product' }}
+                                                @php
+                                                    // Extract slug for current locale
+                                                    $productSlug = null;
+                                                    if (isset($item['product']['slug'])) {
+                                                        if (is_array($item['product']['slug'])) {
+                                                            $productSlug = $item['product']['slug'][app()->getLocale()] ?? $item['product']['slug']['en'] ?? null;
+                                                        } else {
+                                                            $productSlug = $item['product']['slug'];
+                                                        }
+                                                    }
+                                                @endphp
+                                                @if($productSlug)
+                                                    <a href="{{ route(app()->getLocale() === 'es' ? 'product.show.es' : 'product.show.en', ['locale' => app()->getLocale(), 'productSlug' => $productSlug]) }}"
+                                                       class="hover:text-[#CA2530] transition-colors duration-200">
+                                                        {{ $item['product']['name'][app()->getLocale()] ?? 'Product' }}
+                                                    </a>
+                                                @else
+                                                    {{ $item['product']['name'][app()->getLocale()] ?? 'Product' }}
+                                                @endif
                                             </h3>
                                             
                                             @if(isset($item['product']['brand']['name']))
@@ -132,8 +150,28 @@
                             <!-- Cart Items -->
                             @foreach($cartItems as $item)
                                 @if(isset($item['product']))
+                                    @php
+                                        // Extract slug for current locale
+                                        $productSlug = null;
+                                        if (isset($item['product']['slug'])) {
+                                            if (is_array($item['product']['slug'])) {
+                                                $productSlug = $item['product']['slug'][app()->getLocale()] ?? $item['product']['slug']['en'] ?? null;
+                                            } else {
+                                                $productSlug = $item['product']['slug'];
+                                            }
+                                        }
+                                    @endphp
                                     <div class="flex justify-between">
-                                        <span class="text-color-2">{{ $item['product']['name'][app()->getLocale()] ?? 'Product' }} ({{ $item['quantity'] }})</span>
+                                        <span class="text-color-2">
+                                            @if($productSlug)
+                                                <a href="{{ route(app()->getLocale() === 'es' ? 'product.show.es' : 'product.show.en', ['locale' => app()->getLocale(), 'productSlug' => $productSlug]) }}"
+                                                   class="hover:text-[#CA2530] transition-colors duration-200">
+                                                    {{ $item['product']['name'][app()->getLocale()] ?? 'Product' }} ({{ $item['quantity'] }})
+                                                </a>
+                                            @else
+                                                {{ $item['product']['name'][app()->getLocale()] ?? 'Product' }} ({{ $item['quantity'] }})
+                                            @endif
+                                        </span>
                                         <span class="font-medium text-color-2">{{ number_format(($item['product']['price'] ?? 0) * $item['quantity'], 2, ',', '.') }}€</span>
                                     </div>
                                 @endif

@@ -45,9 +45,9 @@ class SendOrderConfirmationEmail implements ShouldQueue
             
             Log::info('Sending order confirmation email to: ' . $order->customer_email);
             
-            // Send the order confirmation email with BCC
+            // Send the order confirmation email with BCC (including Trustpilot for review invitations)
             Mail::to($order->customer_email)
-                ->bcc('nicolas.tabares.tech@gmail.com')
+                ->bcc(['nicolas.tabares.tech@gmail.com', 'bagsandtea.com+d98660a3fa@invite.trustpilot.com'])
                 ->send(new OrderConfirmation($event->orderNumber));
             
             Log::info('Order confirmation email sent successfully for order: ' . $event->orderNumber);
