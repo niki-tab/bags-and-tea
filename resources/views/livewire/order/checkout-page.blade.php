@@ -405,8 +405,25 @@
                                             if (is_array($productName)) {
                                                 $productName = $productName[app()->getLocale()] ?? $productName['en'] ?? 'Product Name';
                                             }
+
+                                            // Extract slug for current locale
+                                            $productSlug = null;
+                                            if (isset($item['product']['slug'])) {
+                                                if (is_array($item['product']['slug'])) {
+                                                    $productSlug = $item['product']['slug'][app()->getLocale()] ?? $item['product']['slug']['en'] ?? null;
+                                                } else {
+                                                    $productSlug = $item['product']['slug'];
+                                                }
+                                            }
                                         @endphp
-                                        {{ $productName }}
+                                        @if($productSlug)
+                                            <a href="{{ route(app()->getLocale() === 'es' ? 'product.show.es' : 'product.show.en', ['locale' => app()->getLocale(), 'productSlug' => $productSlug]) }}"
+                                               class="hover:text-[#CA2530] transition-colors duration-200">
+                                                {{ $productName }}
+                                            </a>
+                                        @else
+                                            {{ $productName }}
+                                        @endif
                                     </h4>
                                     <p class="text-sm text-gray-500">{{ trans('components/checkout.quantity') }}: {{ $item['quantity'] }}</p>
                                     <p class="text-sm font-medium text-color-2">
