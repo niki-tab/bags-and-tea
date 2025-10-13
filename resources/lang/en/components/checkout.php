@@ -118,6 +118,7 @@ return [
     
     // Payment
     'payment-method' => 'Payment Method',
+    'payment-methods-info' => 'Click the button below to proceed to payment. Available payment methods will be shown based on your location.',
     'review-order' => 'Review Order',
     'place-order' => 'Place Order',
     'confirm-payment' => 'Confirm Payment',

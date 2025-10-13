@@ -20,7 +20,10 @@ class ProcessStripePayment
             $paymentIntent = PaymentIntent::create([
                 'amount' => intval($orderData['total_amount'] * 100), // Convert to cents
                 'currency' => strtolower($orderData['currency'] ?? 'EUR'),
-                'payment_method_types' => $this->getPaymentMethodTypes($orderData['payment_method']),
+                // Enable automatic payment methods - Stripe will show all available methods including Klarna
+                'automatic_payment_methods' => [
+                    'enabled' => true,
+                ],
                 'metadata' => [
                     'order_number' => $orderData['order_number'],
                     'customer_email' => $orderData['customer_email'],

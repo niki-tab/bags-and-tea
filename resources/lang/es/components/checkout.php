@@ -118,6 +118,7 @@ return [
     
     // Payment
     'payment-method' => 'Método de Pago',
+    'payment-methods-info' => 'Haz clic en el botón de abajo para proceder al pago. Los métodos de pago disponibles se mostrarán según tu ubicación.',
     'review-order' => 'Revisar Pedido',
     'place-order' => 'Realizar Pedido',
     'confirm-payment' => 'Confirmar Pago',
