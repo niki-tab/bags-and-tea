@@ -226,25 +226,25 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
         </div>
     </div>
     <x-our-brands :title="$stringBrandsTitle"/>
-    <div class="bg-[#C8928A] text-white pb-14 text-center">
+    <div class="bg-[#C8928A] text-white pb-16 text-center">
         <h2 class="mx-4 relative top-12 text-center text-4xl font-regular font-['Lovera']">{{ $stringStepsTitle }}</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 px-4 md:px-16 py-12 md:py-4 md:h-[500px] mt-0 md:mt-6">
             <!-- First item -->
             <div class="mt-6 text-center md:text-left mx-8 md:mx-0">
-            <div class="flex items-end gap-4 mb-8 md:mb-0"> <!-- Changed items-start to items-center -->
-                <span class="leading-[0.8] text-[180px] md:text-[245px] text-[#482626] font-['Lovelina'] leading-none">{{ trans('pages/we-buy-your-bag.step_1_number') }}</span>
-                <h3 class="pb-6 text-justify text-3xl md:text-4xl text-robotoCondensed font-regular w-3/5 md:w-3/5 mb-5 md:mb-6"> <!-- Removed mt-[40px] md:mt-28 -->
-                    {{ $stringStep1Title }}
-                </h3>
-            </div>
+                <div class="flex items-center gap-4 mb-8 md:mb-0">
+                    <span class="leading-[0.8] text-[180px] md:text-[245px] text-[#482626] font-['Lovelina'] leading-none">{{ trans('pages/we-buy-your-bag.step_1_number') }}</span>
+                    <h3 class="pb-0 text-center md:text-justify text-3xl md:text-4xl text-robotoCondensed font-regular md:w-3/5 mb-2 ">
+                        {{ $stringStep1Title }}
+                    </h3>
+                </div>
                 <p class="text-left text-[#482626] font-robotoCondensed font-regular mt-4 md:mt-[-60px] pt-0 md:pt-20">
                     {{ $stringStep1Description }}
                 </p>
             </div>
             <div class="mt-6 text-center md:text-left mx-8 md:mx-0">
-                <div class="flex items-end gap-4 mb-8 md:mb-0">
+                <div class="flex items-center gap-4 mb-8 md:mb-0">
                     <span class="leading-[0.8] text-[180px] md:text-[245px] text-[#482626] font-['Lovelina'] leading-none">{{ trans('pages/we-buy-your-bag.step_2_number') }}</span>
-                    <h3 class="pb-6 text-justify text-3xl md:text-4xl text-robotoCondensed font-regular w-3/5 md:w-3/5 mb-5 md:mb-6">
+                    <h3 class="pb-0 text-center md:text-justify text-3xl md:text-4xl text-robotoCondensed font-regular md:w-3/5 mb-2">
                         {{ $stringStep2Title }}
                     </h3>
                 </div>
@@ -253,19 +253,19 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
                 </p>
             </div>
             <div class="mt-6 text-center md:text-left mx-8 md:mx-0">
-                <div class="flex items-end gap-4 mb-8 md:mb-0">
+                <div class="flex items-center gap-4 mb-8 md:mb-0">
                     <span class="leading-[0.8] text-[180px] md:text-[245px] text-[#482626] font-['Lovelina'] leading-none">{{ trans('pages/we-buy-your-bag.step_3_number') }}</span>
-                    <h3 class="pb-6 text-justify text-3xl md:text-4xl text-robotoCondensed font-regular w-3/5 md:w-3/5 mb-5 md:mb-6">
+                    <h3 class="pb-0  text-center md:text-justify text-3xl md:text-4xl text-robotoCondensed font-regular md:w-3/5 mb-3 mr-1">
                         {{ $stringStep3Title }}
                     </h3>
                 </div>
-                <p class="text-left text-[#482626] font-robotoCondensed font-regular mt-4 md:mt-[-60px] pt-0 md:pt-20">
+                <p class="text-left text-[#482626] font-robotoCondensed font-regular mt-3 md:mt-[-60px] pt-0 md:pt-20">
                     {{ $stringStep3Description }}
                 </p>
             </div>
         </div>
         <button onclick="document.getElementById('sell-your-bag-form').scrollIntoView({behavior: 'smooth'})" 
-                class="bg-background-color-2 text-white px-12 py-3 rounded-full font-medium mx-auto mt-12 md:mt-0 hover:bg-background-color-3 transition">
+                class="bg-background-color-2 text-white px-12 py-3 rounded-full font-medium mx-auto mt-10 md:mt-[-30px] hover:bg-background-color-3 transition">
             {{ $stringSellYourbagButton }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
         </button>
         
