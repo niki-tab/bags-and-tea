@@ -233,7 +233,7 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
             <div class="mt-6 text-center md:text-left mx-8 md:mx-0">
                 <div class="flex items-center gap-4 mb-8 md:mb-0">
                     <span class="leading-[0.8] text-[180px] md:text-[245px] text-[#482626] font-['Lovelina'] leading-none">{{ trans('pages/we-buy-your-bag.step_1_number') }}</span>
-                    <h3 class="pb-0 text-center md:text-justify text-3xl md:text-4xl text-robotoCondensed font-regular md:w-3/5 mb-2 ">
+                    <h3 class="pb-0 text-center md:text-justify text-3xl md:text-4xl text-robotoCondensed font-regular md:w-3/5 mb-2">
                         {{ $stringStep1Title }}
                     </h3>
                 </div>
@@ -244,7 +244,7 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
             <div class="mt-6 text-center md:text-left mx-8 md:mx-0">
                 <div class="flex items-center gap-4 mb-8 md:mb-0">
                     <span class="leading-[0.8] text-[180px] md:text-[245px] text-[#482626] font-['Lovelina'] leading-none">{{ trans('pages/we-buy-your-bag.step_2_number') }}</span>
-                    <h3 class="pb-0 text-center md:text-justify text-3xl md:text-4xl text-robotoCondensed font-regular md:w-3/5 mb-2">
+                    <h3 class="pb-0 text-center md:text-left text-3xl md:text-4xl text-robotoCondensed font-regular md:w-3/5 mb-2">
                         {{ $stringStep2Title }}
                     </h3>
                 </div>
@@ -255,7 +255,7 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
             <div class="mt-6 text-center md:text-left mx-8 md:mx-0">
                 <div class="flex items-center gap-4 mb-8 md:mb-0">
                     <span class="leading-[0.8] text-[180px] md:text-[245px] text-[#482626] font-['Lovelina'] leading-none">{{ trans('pages/we-buy-your-bag.step_3_number') }}</span>
-                    <h3 class="pb-0  text-center md:text-justify text-3xl md:text-4xl text-robotoCondensed font-regular md:w-3/5 mb-3 mr-1">
+                    <h3 class="pb-0 text-center md:text-left text-3xl md:text-4xl text-robotoCondensed font-regular md:w-3/5 mb-2">
                         {{ $stringStep3Title }}
                     </h3>
                 </div>
