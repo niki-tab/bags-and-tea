@@ -310,7 +310,7 @@
                                 {{ trans('components/checkout.shipping-not-available-button') }}
                             </button>
                         @else
-                            <button wire:click="createPaymentIntentOnly" 
+                            <button wire:click="createPaymentIntentOnly"
                                     class="w-full bg-[#CA2530] hover:bg-[#A01E28] text-white py-4 px-8 text-lg font-medium font-['Lora'] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                                     @if($totalAmount <= 0) disabled @endif
                                     wire:loading.attr="disabled">
@@ -520,62 +520,70 @@ document.addEventListener('livewire:init', () => {
                 clientSecret: clientSecret
             });
             console.log('Stripe elements created');
-            
+
             paymentElement = elements.create('payment');
             console.log('Payment element created');
-            
-            // Show the stripe payment section
-            const stripeSection = document.getElementById('stripe-payment-section');
-            if (stripeSection) {
-                stripeSection.style.display = 'block';
-                console.log('Stripe payment section made visible');
-                const computedStyles = window.getComputedStyle(stripeSection);
-                const rect = stripeSection.getBoundingClientRect();
-                
-                console.log('Stripe section styles:', {
-                    display: stripeSection.style.display,
-                    visibility: computedStyles.visibility,
-                    height: computedStyles.height,
-                    opacity: computedStyles.opacity,
-                    position: computedStyles.position,
-                    zIndex: computedStyles.zIndex,
-                    transform: computedStyles.transform,
-                    overflow: computedStyles.overflow
-                });
-                
-                console.log('Stripe section position:', {
-                    top: rect.top,
-                    left: rect.left,
-                    right: rect.right,
-                    bottom: rect.bottom,
-                    width: rect.width,
-                    height: rect.height,
-                    windowHeight: window.innerHeight,
-                    windowWidth: window.innerWidth,
-                    scrollY: window.scrollY
-                });
-                
-                // Apply normal styling to ensure visibility
-                stripeSection.style.zIndex = '1';
-                stripeSection.style.position = 'relative';
-                console.log('Applied normal visibility styles');
-                
-                // Scroll to the payment section
-                stripeSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                console.log('Scrolled to payment section');
-            } else {
-                console.error('stripe-payment-section element not found in DOM');
-            }
-            
+
             const paymentElementContainer = document.getElementById('payment-element');
             if (paymentElementContainer) {
                 console.log('Payment element container found:', paymentElementContainer);
                 console.log('Container innerHTML before mount:', paymentElementContainer.innerHTML);
-                
+
                 try {
                     paymentElement.mount('#payment-element');
                     console.log('✅ Payment element mount called successfully');
-                    
+
+                    // Wait for Stripe to fully load before showing the section
+                    paymentElement.on('ready', () => {
+                        console.log('Payment element is ready - now showing section');
+
+                        // Small additional delay to ensure auto-selection is complete
+                        setTimeout(() => {
+                            const stripeSection = document.getElementById('stripe-payment-section');
+                            if (stripeSection) {
+                                stripeSection.style.display = 'block';
+                                console.log('Stripe payment section made visible after ready event');
+
+                                const computedStyles = window.getComputedStyle(stripeSection);
+                                const rect = stripeSection.getBoundingClientRect();
+
+                                console.log('Stripe section styles:', {
+                                    display: stripeSection.style.display,
+                                    visibility: computedStyles.visibility,
+                                    height: computedStyles.height,
+                                    opacity: computedStyles.opacity,
+                                    position: computedStyles.position,
+                                    zIndex: computedStyles.zIndex,
+                                    transform: computedStyles.transform,
+                                    overflow: computedStyles.overflow
+                                });
+
+                                console.log('Stripe section position:', {
+                                    top: rect.top,
+                                    left: rect.left,
+                                    right: rect.right,
+                                    bottom: rect.bottom,
+                                    width: rect.width,
+                                    height: rect.height,
+                                    windowHeight: window.innerHeight,
+                                    windowWidth: window.innerWidth,
+                                    scrollY: window.scrollY
+                                });
+
+                                // Apply normal styling to ensure visibility
+                                stripeSection.style.zIndex = '1';
+                                stripeSection.style.position = 'relative';
+                                console.log('Applied normal visibility styles');
+
+                                // Scroll to the payment section
+                                stripeSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                console.log('Scrolled to payment section');
+                            } else {
+                                console.error('stripe-payment-section element not found in DOM');
+                            }
+                        }, 2000); // Wait 2 seconds after ready event for auto-selection to complete and loading to show
+                    });
+
                     // Check if mounting actually worked
                     setTimeout(() => {
                         console.log('Container innerHTML after mount:', paymentElementContainer.innerHTML);
@@ -695,10 +703,10 @@ document.addEventListener('livewire:init', () => {
     Livewire.on('stripe-ready', (event) => {
         console.log('Received stripe-ready event:', event);
         const data = event[0] || event;
-        
+
         if (data.clientSecret && data.orderNumber) {
             console.log('Initializing Stripe with clientSecret and orderNumber from event');
-            
+
             // Small delay to ensure DOM is ready
             setTimeout(() => {
                 initializeStripe(data.clientSecret, data.orderNumber);
