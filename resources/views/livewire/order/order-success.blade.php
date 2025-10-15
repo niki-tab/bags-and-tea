@@ -176,8 +176,29 @@
                                                 @endif
                                             </div>
                                             <div class="flex-1">
+                                                @php
+                                                    $productName = $item['product_name'][app()->getLocale()] ?? $item['product_name']['en'] ?? 'Product';
+                                                    $productSlug = null;
+
+                                                    // Try to get slug from product_snapshot
+                                                    if (isset($item['product_snapshot']['slug'])) {
+                                                        if (is_array($item['product_snapshot']['slug'])) {
+                                                            $productSlug = $item['product_snapshot']['slug'][app()->getLocale()] ?? $item['product_snapshot']['slug']['en'] ?? null;
+                                                        } else {
+                                                            $productSlug = $item['product_snapshot']['slug'];
+                                                        }
+                                                    }
+                                                @endphp
+
                                                 <h4 class="font-medium text-color-2 font-robotoCondensed">
-                                                    {{ $item['product_name'][app()->getLocale()] ?? $item['product_name']['en'] ?? 'Product' }}
+                                                    @if($productSlug)
+                                                        <a href="{{ route(app()->getLocale() === 'es' ? 'product.show.es' : 'product.show.en', ['locale' => app()->getLocale(), 'productSlug' => $productSlug]) }}"
+                                                           class="hover:text-[#CA2530] transition-colors duration-200">
+                                                            {{ $productName }}
+                                                        </a>
+                                                    @else
+                                                        {{ $productName }}
+                                                    @endif
                                                 </h4>
                                                 @if(!empty($item['product_sku']))
                                                     <p class="text-sm text-gray-600 font-robotoCondensed">SKU: {{ $item['product_sku'] }}</p>
