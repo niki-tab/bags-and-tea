@@ -123,14 +123,19 @@ class CartPage extends Component
     private function calculateTotalPrice()
     {
         $this->subtotal = 0;
-        
+
         foreach ($this->cartItems as $item) {
             if (isset($item['product']) && isset($item['quantity'])) {
                 $price = $item['product']['price'] ?? 0;
-                $this->subtotal += $price * $item['quantity'];
+                $discountedPrice = $item['product']['discounted_price'] ?? 0;
+
+                // Use discounted price if it's set and valid (greater than 0 and less than regular price)
+                $finalPrice = ($discountedPrice > 0 && $discountedPrice < $price) ? $discountedPrice : $price;
+
+                $this->subtotal += $finalPrice * $item['quantity'];
             }
         }
-        
+
         // Total includes subtotal + fees + shipping
         $shippingAmount = $this->shipping['amount'] ?? 0;
         $this->totalPrice = $this->subtotal + $this->totalFees + $shippingAmount;

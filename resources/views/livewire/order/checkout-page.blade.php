@@ -414,9 +414,32 @@
                                         @endif
                                     </h4>
                                     <p class="text-sm text-gray-500">{{ trans('components/checkout.quantity') }}: {{ $item['quantity'] }}</p>
-                                    <p class="text-sm font-medium text-color-2">
-                                        {{ number_format(($item['product']['price'] ?? 0) * $item['quantity'], 2, ',', '.') }}€
-                                    </p>
+                                    @php
+                                        $checkoutPrice = $item['product']['price'] ?? 0;
+                                        $checkoutDiscountedPrice = $item['product']['discounted_price'] ?? 0;
+                                        $checkoutHasDiscount = $checkoutDiscountedPrice > 0 && $checkoutDiscountedPrice < $checkoutPrice;
+                                        $checkoutFinalPrice = $checkoutHasDiscount ? $checkoutDiscountedPrice : $checkoutPrice;
+                                    @endphp
+                                    @if($checkoutHasDiscount)
+                                        @php
+                                            $checkoutDiscountPercentage = round((($checkoutPrice - $checkoutDiscountedPrice) / $checkoutPrice) * 100);
+                                        @endphp
+                                        <div class="flex items-center gap-2 flex-wrap">
+                                            <p class="text-sm font-medium text-color-3">
+                                                {{ number_format($checkoutFinalPrice * $item['quantity'], 2, ',', '.') }}€
+                                            </p>
+                                            <p class="text-xs text-gray-500 line-through">
+                                                {{ number_format($checkoutPrice * $item['quantity'], 2, ',', '.') }}€
+                                            </p>
+                                            <span class="bg-color-3 text-white text-xs font-bold px-2 py-1 rounded relative" style="top: -1px;">
+                                                -{{ $checkoutDiscountPercentage }}%
+                                            </span>
+                                        </div>
+                                    @else
+                                        <p class="text-sm font-medium text-color-2">
+                                            {{ number_format($checkoutPrice * $item['quantity'], 2, ',', '.') }}€
+                                        </p>
+                                    @endif
                                 </div>
                             </div>
                         @endforeach

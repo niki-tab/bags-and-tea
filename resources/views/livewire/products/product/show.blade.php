@@ -138,10 +138,36 @@
             <div class="flex flex-col">
                 <!-- Price -->
                 @if($product->is_sold_out !== true)
-                    <div class="text-3xl font-robotoCondensed text-[#CA2530] mb-8 lg:mb-10 text-left w-full max-w-md mx-auto lg:max-w-none lg:mx-0 lg:w-auto px-7 md:px-10 lg:px-0 lg:ml-14">
-                        € {{ number_format($product->price, 2, ',', '.') }}
-                        <span class="text-xs font-normal align-baseline">{{ trans('components/cart.vat-included') }}</span>
-                    </div>
+                    @php
+                        $price = $product->price;
+                        $discountedPrice = $product->discounted_price ?? 0;
+                        $hasDiscount = $discountedPrice > 0 && $discountedPrice < $price;
+                    @endphp
+
+                    @if($hasDiscount)
+                        @php
+                            $discountPercentage = round((($price - $discountedPrice) / $price) * 100);
+                        @endphp
+                        <div class="mb-8 lg:mb-10 text-left w-full max-w-md mx-auto lg:max-w-none lg:mx-0 lg:w-auto px-7 md:px-10 lg:px-0 lg:ml-14">
+                            <div class="flex items-center gap-3 flex-wrap">
+                                <div class="text-3xl font-robotoCondensed text-color-3">
+                                    € {{ number_format($discountedPrice, 2, ',', '.') }}
+                                </div>
+                                <div class="text-xl font-robotoCondensed text-gray-500 line-through">
+                                    € {{ number_format($price, 2, ',', '.') }}
+                                </div>
+                                <span class="bg-color-3 text-white text-sm font-bold px-3 py-1 rounded relative" style="top: -1px;">
+                                    -{{ $discountPercentage }}%
+                                </span>
+                            </div>
+                            <span class="text-xs font-normal">{{ trans('components/cart.vat-included') }}</span>
+                        </div>
+                    @else
+                        <div class="text-3xl font-robotoCondensed text-[#CA2530] mb-8 lg:mb-10 text-left w-full max-w-md mx-auto lg:max-w-none lg:mx-0 lg:w-auto px-7 md:px-10 lg:px-0 lg:ml-14">
+                            € {{ number_format($product->price, 2, ',', '.') }}
+                            <span class="text-xs font-normal align-baseline">{{ trans('components/cart.vat-included') }}</span>
+                        </div>
+                    @endif
                 @endif
 
                 <!-- Action Buttons -->
