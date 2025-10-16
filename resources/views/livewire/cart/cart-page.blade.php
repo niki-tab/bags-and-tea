@@ -112,15 +112,46 @@
                                                 </div>
 
                                                 <!-- Price -->
+                                                @php
+                                                    $price = $item['product']['price'] ?? 0;
+                                                    $discountedPrice = $item['product']['discounted_price'] ?? 0;
+                                                    $hasDiscount = $discountedPrice > 0 && $discountedPrice < $price;
+                                                    $finalPrice = $hasDiscount ? $discountedPrice : $price;
+                                                @endphp
                                                 <div class="text-right">
-                                                    <div class="text-lg font-bold text-[#CA2530]">
-                                                        {{ number_format(($item['product']['price'] ?? 0) * $item['quantity'], 2, ',', '.') }}€
-                                                        <span class="text-xs font-normal align-baseline">{{ trans('components/cart.vat-included') }}</span>
-                                                    </div>
-                                                    @if($item['quantity'] > 1)
-                                                        <div class="text-sm text-gray-500">
-                                                            {{ number_format($item['product']['price'] ?? 0, 2, ',', '.') }}€ {{ trans('components/cart.each') }}
+                                                    @if($hasDiscount)
+                                                        @php
+                                                            $discountPercentage = round((($price - $discountedPrice) / $price) * 100);
+                                                        @endphp
+                                                        <div class="flex flex-col items-end gap-1">
+                                                            <div class="flex items-center gap-2 flex-wrap justify-end">
+                                                                <div class="text-lg font-bold text-color-3">
+                                                                    {{ number_format($finalPrice * $item['quantity'], 2, ',', '.') }}€
+                                                                    <span class="text-xs font-normal align-baseline">{{ trans('components/cart.vat-included') }}</span>
+                                                                </div>
+                                                                <span class="bg-color-3 text-white text-xs font-bold px-2 py-1 rounded">
+                                                                    -{{ $discountPercentage }}%
+                                                                </span>
+                                                            </div>
+                                                            <div class="text-sm text-gray-500 line-through">
+                                                                {{ number_format($price * $item['quantity'], 2, ',', '.') }}€
+                                                            </div>
                                                         </div>
+                                                        @if($item['quantity'] > 1)
+                                                            <div class="text-sm text-gray-500 mt-1">
+                                                                {{ number_format($finalPrice, 2, ',', '.') }}€ {{ trans('components/cart.each') }}
+                                                            </div>
+                                                        @endif
+                                                    @else
+                                                        <div class="text-lg font-bold text-[#CA2530]">
+                                                            {{ number_format($price * $item['quantity'], 2, ',', '.') }}€
+                                                            <span class="text-xs font-normal align-baseline">{{ trans('components/cart.vat-included') }}</span>
+                                                        </div>
+                                                        @if($item['quantity'] > 1)
+                                                            <div class="text-sm text-gray-500">
+                                                                {{ number_format($price, 2, ',', '.') }}€ {{ trans('components/cart.each') }}
+                                                            </div>
+                                                        @endif
                                                     @endif
                                                 </div>
                                             </div>
@@ -161,6 +192,12 @@
                                             }
                                         }
                                     @endphp
+                                    @php
+                                        $summaryPrice = $item['product']['price'] ?? 0;
+                                        $summaryDiscountedPrice = $item['product']['discounted_price'] ?? 0;
+                                        $summaryHasDiscount = $summaryDiscountedPrice > 0 && $summaryDiscountedPrice < $summaryPrice;
+                                        $summaryFinalPrice = $summaryHasDiscount ? $summaryDiscountedPrice : $summaryPrice;
+                                    @endphp
                                     <div class="flex justify-between">
                                         <span class="text-color-2">
                                             @if($productSlug)
@@ -172,7 +209,7 @@
                                                 {{ $item['product']['name'][app()->getLocale()] ?? 'Product' }} ({{ $item['quantity'] }})
                                             @endif
                                         </span>
-                                        <span class="font-medium text-color-2">{{ number_format(($item['product']['price'] ?? 0) * $item['quantity'], 2, ',', '.') }}€</span>
+                                        <span class="font-medium text-color-2">{{ number_format($summaryFinalPrice * $item['quantity'], 2, ',', '.') }}€</span>
                                     </div>
                                 @endif
                             @endforeach

@@ -107,16 +107,42 @@
             {{ $product->getTranslation('name', app()->getLocale()) ?? __('Modelo') }}
         </h3>
         @if($product->is_sold_out !== true)
-            <div class="text-lg font-bold text-gray-900">
+            @php
+                $price = $product->price ?? 450;
+                $discountedPrice = $product->discounted_price ?? 0;
+                $hasDiscount = $discountedPrice > 0 && $discountedPrice < $price;
+
+                // Format original price
+                $formattedPrice = ($price == floor($price))
+                    ? number_format($price, 0, ',', '.')
+                    : number_format($price, 2, ',', '.');
+
+                // Format discounted price
+                $formattedDiscountedPrice = ($discountedPrice == floor($discountedPrice))
+                    ? number_format($discountedPrice, 0, ',', '.')
+                    : number_format($discountedPrice, 2, ',', '.');
+            @endphp
+
+            @if($hasDiscount)
                 @php
-                    $price = $product->price ?? 450;
-                    // Show 2 decimals only if the price has decimal places
-                    $formattedPrice = ($price == floor($price)) 
-                        ? number_format($price, 0, ',', '.') 
-                        : number_format($price, 2, ',', '.');
+                    $discountPercentage = round((($price - $discountedPrice) / $price) * 100);
                 @endphp
-                {{ $formattedPrice }}€
-            </div>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <div class="text-lg font-bold text-color-3">
+                        {{ $formattedDiscountedPrice }}€
+                    </div>
+                    <div class="text-sm text-gray-500 line-through">
+                        {{ $formattedPrice }}€
+                    </div>
+                    <span class="bg-color-3 text-white text-xs font-bold px-2 py-1 rounded relative" style="top: -1px;">
+                        -{{ $discountPercentage }}%
+                    </span>
+                </div>
+            @else
+                <div class="text-lg font-bold text-gray-900">
+                    {{ $formattedPrice }}€
+                </div>
+            @endif
         @endif
     </div>
 </a>
