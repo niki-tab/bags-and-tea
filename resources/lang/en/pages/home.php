@@ -17,7 +17,7 @@ return [
     'label-product-no-stock-available' => 'Out of Stock',
 
     'title-sell-your-bag' => 'Sell your luxury bag',  
-    'description-sell-your-bag' => 'Welcome to B&T, the perfect place to sell, buy or rent exclusive luxury items, from an timeless icon to the latest it bag.',
+    'description-sell-your-bag' => 'Welcome to Bags & Tea, the perfect place to sell, buy, or rent exclusive second-hand luxury bags, from timeless icons to the latest “it” bags.',
     'button-sell-your-bag' => 'Go to the form',
 
     'title-avantage-buying-bags-and-tea' => 'ADVANTAGES OF BUYING YOUR LUXURY BAG IN BAGS AND TEA',

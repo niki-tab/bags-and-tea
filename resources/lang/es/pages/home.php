@@ -17,7 +17,7 @@ return [
     'label-product-no-stock-available' => 'No hay existencias',
 
     'title-sell-your-bag' => 'Vende tu bolso de lujo',   
-    'description-sell-your-bag' => 'Bienvenida a B&T, el lugar perfecto para vender, comprar o alquilar artículos de lujo exclusivos, desde un icono atemporal hasta el último it bag.',    
+    'description-sell-your-bag' => 'Bienvenida a Bags & Tea, el lugar perfecto para vender, comprar o alquilar exclusivos bolsos de lujo de segunda mano, desde iconos atemporales hasta el último it bag.',    
     'button-sell-your-bag' => 'Ir al formulario',
 
     'title-avantage-buying-bags-and-tea' => 'VENTAJAS DE COMPRAR TU BOLSO DE SEGUNDA MANO DE MARCA EN BAGS AND TEA',  
