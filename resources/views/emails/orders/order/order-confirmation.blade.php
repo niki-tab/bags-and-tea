@@ -94,7 +94,7 @@
                             @endphp
 
                             @if($emailHasDiscount)
-                                <div style="color: #D97706; font-size: 14px; font-weight: bold; font-family: 'Arial', sans-serif;">
+                                <div style="color: #CA2530; font-size: 14px; font-weight: bold; font-family: 'Arial', sans-serif;">
                                     €{{ number_format($emailDiscountedPrice, 2, ',', '.') }}
                                 </div>
                                 <div style="color: #9CA3AF; font-size: 12px; text-decoration: line-through; font-family: 'Arial', sans-serif;">
@@ -112,10 +112,10 @@
                                     $emailDiscountPercentage = round((($emailPrice - $emailDiscountedPrice) / $emailPrice) * 100);
                                     $emailCorrectTotal = $emailDiscountedPrice * $item['quantity'];
                                 @endphp
-                                <div style="color: #D97706; font-size: 16px; font-weight: bold; font-family: 'Arial', sans-serif;">
+                                <div style="color: #CA2530; font-size: 16px; font-weight: bold; font-family: 'Arial', sans-serif;">
                                     €{{ number_format($emailCorrectTotal, 2, ',', '.') }}
                                 </div>
-                                <div style="background-color: #D97706; color: #ffffff; font-size: 11px; font-weight: bold; padding: 3px 8px; border-radius: 3px; display: inline-block; margin-top: 4px; font-family: 'Arial', sans-serif;">
+                                <div style="background-color: #CA2530; color: #ffffff; font-size: 11px; font-weight: bold; padding: 3px 8px; border-radius: 3px; display: inline-block; margin-top: 4px; font-family: 'Arial', sans-serif;">
                                     -{{ $emailDiscountPercentage }}%
                                 </div>
                             @else
