@@ -89,6 +89,7 @@ class OrderConfirmation extends Mailable
                     'unit_price' => $item->unit_price,
                     'total_price' => $item->total_price,
                     'product_image' => $primaryImage ? $primaryImage->file_path : null,
+                    'product_snapshot' => json_decode($item->product_snapshot, true),
                 ];
             }
         }

@@ -134,11 +134,14 @@ class OrderCreator
     private function calculateOrderTotals(array $vendorGroups, string $country, ?string $discountCode): array
     {
         $subtotal = 0;
-        
-        // Calculate subtotal
+
+        // Calculate subtotal with discounted prices
         foreach ($vendorGroups as $items) {
             foreach ($items as $item) {
-                $subtotal += $item['product']['price'] * $item['quantity'];
+                $price = $item['product']['price'];
+                $discountedPrice = $item['product']['discounted_price'] ?? 0;
+                $finalPrice = ($discountedPrice > 0 && $discountedPrice < $price) ? $discountedPrice : $price;
+                $subtotal += $finalPrice * $item['quantity'];
             }
         }
         
@@ -172,7 +175,10 @@ class OrderCreator
     {
         $suborderSubtotal = 0;
         foreach ($items as $item) {
-            $suborderSubtotal += $item['product']['price'] * $item['quantity'];
+            $price = $item['product']['price'];
+            $discountedPrice = $item['product']['discounted_price'] ?? 0;
+            $finalPrice = ($discountedPrice > 0 && $discountedPrice < $price) ? $discountedPrice : $price;
+            $suborderSubtotal += $finalPrice * $item['quantity'];
         }
         
         // Get vendor commission rate (placeholder - should come from vendor settings)
@@ -210,18 +216,23 @@ class OrderCreator
 
     private function createOrderItem(string $suborderId, array $cartItem): void
     {
+        // Calculate the correct price (use discounted price if available and valid)
+        $price = $cartItem['product']['price'];
+        $discountedPrice = $cartItem['product']['discounted_price'] ?? 0;
+        $finalPrice = ($discountedPrice > 0 && $discountedPrice < $price) ? $discountedPrice : $price;
+
         $orderItemData = [
             'id' => Uuid::uuid4()->toString(),
             'suborder_id' => $suborderId,
             'product_id' => $cartItem['product_id'],
             'product_name' => $cartItem['product']['name'],
             'product_sku' => $cartItem['product']['sku'] ?? null,
-            'unit_price' => $cartItem['product']['price'],
+            'unit_price' => $finalPrice,
             'quantity' => $cartItem['quantity'],
-            'total_price' => $cartItem['product']['price'] * $cartItem['quantity'],
+            'total_price' => $finalPrice * $cartItem['quantity'],
             'product_snapshot' => $cartItem['product'], // Store full product data for history
         ];
-        
+
         $this->orderRepository->createOrderItem($orderItemData);
     }
 
