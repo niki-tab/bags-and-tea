@@ -33,9 +33,23 @@
                 <h4 style="margin: 0; padding: 20px; background-color: #F9FAFB; color: #482626; font-size: 18px; font-weight: bold; font-family: 'Arial', sans-serif; border-bottom: 1px solid #E5E7EB;">
                     {{ trans('emails.order_confirmation.order_details') }}
                 </h4>
-                
+
                 <!-- Order Items -->
                 <div style="padding: 20px;">
+                    @php
+                        // Recalculate subtotal from order items to account for discounts
+                        $emailCalculatedSubtotal = 0;
+                        foreach ($orderData['items'] as $emailItem) {
+                            $emailItemPrice = $emailItem['product_snapshot']['price'] ?? $emailItem['unit_price'];
+                            $emailItemDiscountedPrice = $emailItem['product_snapshot']['discounted_price'] ?? 0;
+                            $emailItemHasDiscount = $emailItemDiscountedPrice > 0 && $emailItemDiscountedPrice < $emailItemPrice;
+                            $emailItemFinalPrice = $emailItemHasDiscount ? $emailItemDiscountedPrice : $emailItemPrice;
+                            $emailCalculatedSubtotal += $emailItemFinalPrice * $emailItem['quantity'];
+                        }
+
+                        // Recalculate total with correct subtotal
+                        $emailCalculatedTotal = $emailCalculatedSubtotal + ($orderData['total_fees'] ?? 0) + ($orderData['shipping_amount'] ?? 0) + ($orderData['tax_amount'] ?? 0);
+                    @endphp
                     @foreach($orderData['items'] as $item)
                     <div style="display: table; width: 100%; border-bottom: 1px solid #F3F4F6; padding: 15px 0;">
                         <!-- Product Image -->
@@ -73,14 +87,42 @@
                             @endif
                         </div>
                         <div style="display: table-cell; vertical-align: middle; width: 20%; text-align: right;">
-                            <div style="color: #482626; font-size: 14px; font-family: 'Arial', sans-serif;">
-                                €{{ number_format($item['unit_price'], 2, ',', '.') }}
-                            </div>
+                            @php
+                                $emailPrice = $item['product_snapshot']['price'] ?? $item['unit_price'];
+                                $emailDiscountedPrice = $item['product_snapshot']['discounted_price'] ?? 0;
+                                $emailHasDiscount = $emailDiscountedPrice > 0 && $emailDiscountedPrice < $emailPrice;
+                            @endphp
+
+                            @if($emailHasDiscount)
+                                <div style="color: #D97706; font-size: 14px; font-weight: bold; font-family: 'Arial', sans-serif;">
+                                    €{{ number_format($emailDiscountedPrice, 2, ',', '.') }}
+                                </div>
+                                <div style="color: #9CA3AF; font-size: 12px; text-decoration: line-through; font-family: 'Arial', sans-serif;">
+                                    €{{ number_format($emailPrice, 2, ',', '.') }}
+                                </div>
+                            @else
+                                <div style="color: #482626; font-size: 14px; font-family: 'Arial', sans-serif;">
+                                    €{{ number_format($item['unit_price'], 2, ',', '.') }}
+                                </div>
+                            @endif
                         </div>
                         <div style="display: table-cell; vertical-align: middle; width: 20%; text-align: right;">
-                            <div style="color: #482626; font-size: 16px; font-weight: bold; font-family: 'Arial', sans-serif;">
-                                €{{ number_format($item['total_price'], 2, ',', '.') }}
-                            </div>
+                            @if($emailHasDiscount)
+                                @php
+                                    $emailDiscountPercentage = round((($emailPrice - $emailDiscountedPrice) / $emailPrice) * 100);
+                                    $emailCorrectTotal = $emailDiscountedPrice * $item['quantity'];
+                                @endphp
+                                <div style="color: #D97706; font-size: 16px; font-weight: bold; font-family: 'Arial', sans-serif;">
+                                    €{{ number_format($emailCorrectTotal, 2, ',', '.') }}
+                                </div>
+                                <div style="background-color: #D97706; color: #ffffff; font-size: 11px; font-weight: bold; padding: 3px 8px; border-radius: 3px; display: inline-block; margin-top: 4px; font-family: 'Arial', sans-serif;">
+                                    -{{ $emailDiscountPercentage }}%
+                                </div>
+                            @else
+                                <div style="color: #482626; font-size: 16px; font-weight: bold; font-family: 'Arial', sans-serif;">
+                                    €{{ number_format($item['total_price'], 2, ',', '.') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     @endforeach
@@ -92,7 +134,7 @@
                                 {{ trans('emails.order_confirmation.subtotal') }}:
                             </div>
                             <div style="display: table-cell; text-align: right; color: #482626; font-size: 14px; font-family: 'Arial', sans-serif;">
-                                €{{ number_format($orderData['subtotal'], 2, ',', '.') }}
+                                €{{ number_format($emailCalculatedSubtotal, 2, ',', '.') }}
                             </div>
                         </div>
                         
@@ -134,7 +176,7 @@
                                 {{ trans('emails.order_confirmation.total') }}:
                             </div>
                             <div style="display: table-cell; text-align: right; color: #482626; font-size: 16px; font-weight: bold; font-family: 'Arial', sans-serif;">
-                                €{{ number_format($orderData['total_amount'], 2, ',', '.') }}
+                                €{{ number_format($emailCalculatedTotal, 2, ',', '.') }}
                             </div>
                         </div>
                     </div>

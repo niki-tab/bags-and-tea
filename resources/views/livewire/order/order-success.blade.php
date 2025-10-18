@@ -31,6 +31,26 @@
             </div>
         </div>
     @elseif($orderFound && $order)
+        @php
+            // Recalculate subtotal from order items to account for discounts
+            $calculatedSubtotal = 0;
+            if (isset($order['suborders'])) {
+                foreach ($order['suborders'] as $suborder) {
+                    if (isset($suborder['order_items'])) {
+                        foreach ($suborder['order_items'] as $item) {
+                            $itemPrice = $item['product_snapshot']['price'] ?? $item['unit_price'];
+                            $itemDiscountedPrice = $item['product_snapshot']['discounted_price'] ?? 0;
+                            $itemHasDiscount = $itemDiscountedPrice > 0 && $itemDiscountedPrice < $itemPrice;
+                            $itemFinalPrice = $itemHasDiscount ? $itemDiscountedPrice : $itemPrice;
+                            $calculatedSubtotal += $itemFinalPrice * $item['quantity'];
+                        }
+                    }
+                }
+            }
+
+            // Recalculate total with correct subtotal
+            $calculatedTotal = $calculatedSubtotal + ($order['total_fees'] ?? 0) + ($order['shipping_amount'] ?? 0) + ($order['tax_amount'] ?? 0);
+        @endphp
         <div class="container mx-auto px-4 lg:px-6 py-8 max-w-screen-2xl">
             <!-- Success Message -->
             <div class="text-center mb-8">
@@ -60,7 +80,7 @@
                         
                         <div class="flex justify-between py-2 border-b border-gray-200">
                             <span class="text-color-2 font-robotoCondensed">{{ trans('components/checkout.order-total') }}</span>
-                            <span class="text-lg font-bold text-[#CA2530] font-robotoCondensed">{{ number_format($order['total_amount'], 2, ',', '.') }}€</span>
+                            <span class="text-lg font-bold text-[#CA2530] font-robotoCondensed">{{ number_format($calculatedTotal, 2, ',', '.') }}€</span>
                         </div>
                         
                         <div class="flex justify-between py-2 border-b border-gray-200">
@@ -206,13 +226,42 @@
                                                 <p class="text-sm text-gray-600 font-robotoCondensed">{{ trans('components/checkout.quantity') }}: {{ $item['quantity'] }}</p>
                                             </div>
                                             <div class="text-right">
-                                                <div class="text-lg font-medium text-[#CA2530] font-robotoCondensed">
-                                                    {{ number_format($item['total_price'], 2, ',', '.') }}€
-                                                </div>
-                                                @if($item['quantity'] > 1)
-                                                    <div class="text-sm text-gray-600 font-robotoCondensed">
-                                                        {{ number_format($item['unit_price'], 2, ',', '.') }}€ {{ trans('components/cart.each') }}
+                                                @php
+                                                    $orderPrice = $item['product_snapshot']['price'] ?? $item['unit_price'];
+                                                    $orderDiscountedPrice = $item['product_snapshot']['discounted_price'] ?? 0;
+                                                    $orderHasDiscount = $orderDiscountedPrice > 0 && $orderDiscountedPrice < $orderPrice;
+                                                @endphp
+
+                                                @if($orderHasDiscount)
+                                                    @php
+                                                        $orderDiscountPercentage = round((($orderPrice - $orderDiscountedPrice) / $orderPrice) * 100);
+                                                        $orderCorrectTotal = $orderDiscountedPrice * $item['quantity'];
+                                                    @endphp
+                                                    <div class="flex items-center gap-2 flex-wrap justify-end">
+                                                        <div class="text-lg font-medium text-color-3 font-robotoCondensed">
+                                                            {{ number_format($orderCorrectTotal, 2, ',', '.') }}€
+                                                        </div>
+                                                        <span class="bg-color-3 text-white text-xs font-bold px-2 py-1 rounded relative" style="top: -1px;">
+                                                            -{{ $orderDiscountPercentage }}%
+                                                        </span>
                                                     </div>
+                                                    <div class="text-sm text-gray-500 line-through font-robotoCondensed">
+                                                        {{ number_format($orderPrice * $item['quantity'], 2, ',', '.') }}€
+                                                    </div>
+                                                    @if($item['quantity'] > 1)
+                                                        <div class="text-sm text-gray-600 font-robotoCondensed mt-1">
+                                                            {{ number_format($orderDiscountedPrice, 2, ',', '.') }}€ {{ trans('components/cart.each') }}
+                                                        </div>
+                                                    @endif
+                                                @else
+                                                    <div class="text-lg font-medium text-[#CA2530] font-robotoCondensed">
+                                                        {{ number_format($item['total_price'], 2, ',', '.') }}€
+                                                    </div>
+                                                    @if($item['quantity'] > 1)
+                                                        <div class="text-sm text-gray-600 font-robotoCondensed">
+                                                            {{ number_format($item['unit_price'], 2, ',', '.') }}€ {{ trans('components/cart.each') }}
+                                                        </div>
+                                                    @endif
                                                 @endif
                                             </div>
                                         </div>
@@ -223,11 +272,11 @@
                         
                         <!-- Order Pricing Breakdown -->
                         <div class="mt-6 pt-4 border-t border-gray-200">
-                            
+
                             <div class="space-y-2">
                                 <div class="flex justify-between">
                                     <span class="text-color-2 font-bold font-robotoCondensed">{{ trans('components/checkout.subtotal') }}</span>
-                                    <span class="text-color-2 font-robotoCondensed">{{ number_format($order['subtotal'] ?? 0, 2, ',', '.') }}€</span>
+                                    <span class="text-color-2 font-robotoCondensed">{{ number_format($calculatedSubtotal, 2, ',', '.') }}€</span>
                                 </div>
                                 
                                 <div class="flex justify-between">
@@ -264,7 +313,7 @@
                                 
                                 <div class="flex justify-between pt-2 border-t border-gray-200">
                                     <span class="text-lg font-bold text-color-2 font-robotoCondensed">{{ trans('components/checkout.total') }} <span class="text-sm text-gray-600 font-normal font-robotoCondensed">{{ trans('components/cart.vat-included') }}</span></span>
-                                    <span class="text-lg font-bold text-[#CA2530] font-robotoCondensed">{{ number_format($order['total_amount'], 2, ',', '.') }}€</span>
+                                    <span class="text-lg font-bold text-[#CA2530] font-robotoCondensed">{{ number_format($calculatedTotal, 2, ',', '.') }}€</span>
                                 </div>
                             </div>
                         </div>
