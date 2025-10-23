@@ -56,7 +56,17 @@ Route::prefix('admin-panel')->name('admin.')->group(function () {
         
         // Orders Management
         Route::get('/orders', [AdminPanelController::class, 'orders'])->name('orders');
-        
+        Route::prefix('orders')->name('orders.')->group(function () {
+            Route::get('/create', [\App\Http\Controllers\Admin\AdminOrderController::class, 'create'])->name('create');
+            Route::post('/store', [\App\Http\Controllers\Admin\AdminOrderController::class, 'store'])->name('store');
+            Route::get('/{orderNumber}/edit', [\App\Http\Controllers\Admin\AdminOrderController::class, 'edit'])->name('edit');
+            Route::put('/{orderNumber}', [\App\Http\Controllers\Admin\AdminOrderController::class, 'update'])->name('update');
+            Route::post('/{orderNumber}/send-confirmation', [\App\Http\Controllers\Admin\AdminOrderController::class, 'sendConfirmation'])->name('send-confirmation');
+        });
+
+        // API for product search (used in order creation)
+        Route::get('/api/products/search', [\App\Http\Controllers\Admin\AdminProductApiController::class, 'search'])->name('api.products.search');
+
         // Logout (POST)
         Route::post('/logout', [AdminPanelController::class, 'logout'])->name('logout');
         

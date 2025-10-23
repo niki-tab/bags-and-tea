@@ -127,13 +127,13 @@
                             <p class="font-medium text-color-2 mb-2 text-robotoCondensed mt-2 lg:mt-4">{{ app()->getLocale() === 'es' ? 'Política de devoluciones:' : 'Return policy:' }}</p>
                             <ul class="space-y-2 text-sm text-robotoCondensed">
                                 <li class="flex items-start pl-2">
-                                   - {{ app()->getLocale() === 'es' ? 'Solo se aceptan devoluciones en caso de defectos que no hayan sido visibles o detallados en las fotografías del producto.' : 'Only returns are accepted in case of defects that have not been visible or detailed in the product photos.' }}
+                                   - {{ app()->getLocale() === 'es' ? 'Aceptamos devoluciones.' : 'We accept returns.' }}
                                 </li>
                                 <li class="flex items-start pl-2 text-robotoCondensed">
-                                    - {{ app()->getLocale() === 'es' ? 'El cliente debe contactar con nosotros para obtener una etiqueta de envío de devolución gratuita.' : 'The customer must contact us to obtain a free return shipping label.' }}
+                                    - {{ app()->getLocale() === 'es' ? 'En caso de defectos que no hayan sido visibles o detallados en las fotografías del producto, nos hacemos cargo del coste del envío de devolución.' : 'In case of defects that were not visible or detailed in the product photos, we cover the return shipping cost.' }}
                                 </li>
-                                <li class="flex items-start pl-2 text-robotoCondensed">
-                                    - {{ app()->getLocale() === 'es' ? 'Envío de devolución gratuito.' : 'Free return shipping.' }}
+                        <li class="flex items-start pl-2 text-robotoCondensed">
+                                - {{ app()->getLocale() === 'es' ? 'Si la devolución se realiza por otro motivo no relacionado con defectos no visibles en las fotografías, el coste del envío de devolución corre a cargo del comprador.' : 'If the return is made for any other reason not related to unseen defects, the return shipping cost will be borne by the buyer.' }}
                                 </li>
                             </ul>
                         </div>

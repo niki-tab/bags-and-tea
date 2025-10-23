@@ -14,6 +14,7 @@ class OrderEloquentModel extends Model
     protected $table = 'orders';
 
     protected $fillable = [
+        'id',
         'user_id',
         'order_number',
         'status',
@@ -60,6 +61,18 @@ class OrderEloquentModel extends Model
     public function orderFees(): HasMany
     {
         return $this->hasMany(OrderFeeEloquentModel::class, 'order_id');
+    }
+
+    public function orderItems()
+    {
+        return $this->hasManyThrough(
+            OrderItemEloquentModel::class,
+            SuborderEloquentModel::class,
+            'order_id',
+            'suborder_id',
+            'id',
+            'id'
+        );
     }
 
     public function scopeOrdered($query)
