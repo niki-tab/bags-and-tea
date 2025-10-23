@@ -16,7 +16,7 @@ interface OrderRepository
     
     public function findAll(): array;
     
-    public function retrieveOrderByNumber(string $orderNumber): ?array;
+    public function retrieveOrderByNumber(string $orderNumber);
     
     public function retrieveOrderById(string $orderId): ?array;
     
@@ -25,8 +25,10 @@ interface OrderRepository
     public function retrieveOrderItemsBySuborderId(string $suborderId): array;
     
     public function updateOrderStatus(string $orderId, string $status): bool;
-    
+
     public function updateSuborderStatus(string $suborderId, string $status): bool;
-    
+
     public function updatePaymentStatus(string $orderId, string $paymentStatus, ?string $paymentIntentId = null): bool;
+
+    public function updateOrder(string $orderId, array $orderData): bool;
 }

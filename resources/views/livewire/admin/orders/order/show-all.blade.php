@@ -3,7 +3,7 @@
         <div class="p-6 bg-white border-b border-gray-200">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold text-gray-900">Order Management</h1>
-                <a href="{{ route('admin.categories.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <a href="{{ route('admin.orders.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Add New Order
                 </a>
             </div>
@@ -84,7 +84,7 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <div class="flex space-x-2">
-                                        <a href="" class="text-indigo-600 hover:text-indigo-900">
+                                        <a href="{{ route('admin.orders.edit', $order->order_number) }}" class="text-indigo-600 hover:text-indigo-900">
                                             Edit
                                         </a>
                                     </div>

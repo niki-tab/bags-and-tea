@@ -45,9 +45,9 @@ class EloquentOrderRepository implements OrderRepository
     public function retrieveOrderByNumber(string $orderNumber): ?array
     {
         $order = OrderEloquentModel::where('order_number', $orderNumber)
-            ->with(['suborders.orderItems', 'orderFees'])
+            ->with(['suborders.orderItems', 'orderFees', 'orderItems'])
             ->first();
-            
+
         return $order ? $order->toArray() : null;
     }
     
@@ -90,14 +90,19 @@ class EloquentOrderRepository implements OrderRepository
     public function updatePaymentStatus(string $orderId, string $paymentStatus, ?string $paymentIntentId = null): bool
     {
         $updateData = ['payment_status' => $paymentStatus];
-        
+
         if ($paymentIntentId) {
             $updateData['payment_intent_id'] = $paymentIntentId;
         }
-        
+
         return OrderEloquentModel::where('id', $orderId)->update($updateData);
     }
-    
+
+    public function updateOrder(string $orderId, array $orderData): bool
+    {
+        return OrderEloquentModel::where('id', $orderId)->update($orderData);
+    }
+
     public function createOrderFee(array $orderFeeData): array
     {
         $orderFee = OrderFeeEloquentModel::create($orderFeeData);

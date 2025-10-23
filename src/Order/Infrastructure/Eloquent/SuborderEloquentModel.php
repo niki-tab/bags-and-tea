@@ -16,6 +16,7 @@ class SuborderEloquentModel extends Model
     protected $table = 'suborders';
 
     protected $fillable = [
+        'id',
         'order_id',
         'vendor_id',
         'suborder_number',
