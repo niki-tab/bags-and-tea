@@ -27,7 +27,7 @@
         </div>
     </div>
         
-    <div id="hamburgerMenuOptions" class="hidden bg-background-color-4 w-full pt-4 mt-4">
+    <div id="hamburgerMenuOptions" class="hidden bg-background-color-4 w-full pt-4 mt-4 max-h-[calc(100vh-80px)] overflow-y-auto">
         @livewire('shared.search-bar-mobile')
         <div class="flex items-center gap-3 justify-center">
             <a target="_blank" href="https://www.instagram.com/bags.and.tea?igsh=NTgwcGU2a21paGxk&utm_source=qr">
@@ -49,10 +49,63 @@
                 @livewire('shared/language-selector')
             </div>
         </div>
+        @php
+            // Get the "Bags" parent category and its children
+            $bagsParentCategory = \DB::table('categories')
+                ->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(name, "$.en")) = ?', ['Bags'])
+                ->first();
+
+            $bagCategories = [];
+            if ($bagsParentCategory) {
+                $categories = \DB::table('categories')
+                    ->where('parent_id', $bagsParentCategory->id)
+                    ->get();
+
+                // Sort alphabetically by translated name
+                $bagCategories = $categories->sortBy(function($category) {
+                    $name = is_string($category->name) ? json_decode($category->name, true) : $category->name;
+                    return $name[app()->getLocale()] ?? $name['en'] ?? '';
+                })->values();
+            }
+        @endphp
+
         <div class="mt-4">
             <a href="{{ route(app()->getLocale() === 'es' ? 'repair-your-bag.show.es' : 'repair-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('repair-your-bag.show.es') || request()->routeIs('repair-your-bag.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-2xl hover:underline py-4 font-robotoCondensed text-center border-b border-t border-[#E6D4CB]">{{ trans('components/header.menu-option-1') }}</a>
             <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('we-buy-your-bag.show.es') || request()->routeIs('we-buy-your-bag.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-2xl hover:underline py-4 font-robotoCondensed text-center border-b border-[#E6D4CB]">{{ trans('components/header.menu-option-2') }}</a>
-            <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('shop.show.es') || request()->routeIs('shop.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-2xl hover:underline py-4 font-robotoCondensed text-center border-b border-[#E6D4CB]">{{ trans('components/header.menu-option-3') }}</a>
+
+            <!-- Shop menu with expandable dropdown -->
+            <div class="border-b border-[#E6D4CB]">
+                <div class="flex items-center justify-center py-4 relative">
+                    <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('shop.show.es') || request()->routeIs('shop.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} text-2xl hover:underline font-robotoCondensed flex-grow text-center">{{ trans('components/header.menu-option-3') }}</a>
+                    @if(count($bagCategories) > 0)
+                        <button id="shopDropdownToggle" class="absolute right-4 focus:outline-none p-2" aria-label="Toggle shop categories">
+                            <svg id="shopDropdownIcon" class="w-6 h-6 text-color-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                    @endif
+                </div>
+
+                @if(count($bagCategories) > 0)
+                    <div id="shopDropdownMenu" class="hidden overflow-hidden">
+                        <div class="pb-2">
+                            @foreach($bagCategories as $category)
+                                @php
+                                    $categoryName = is_string($category->name) ? json_decode($category->name, true) : $category->name;
+                                    $categorySlug = is_string($category->slug) ? json_decode($category->slug, true) : $category->slug;
+                                    $translatedName = $categoryName[app()->getLocale()] ?? $categoryName['en'] ?? '';
+                                    $translatedSlug = $categorySlug[app()->getLocale()] ?? $categorySlug['en'] ?? '';
+                                @endphp
+                                <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale(), 'slug' => $translatedSlug]) }}"
+                                   class="block text-color-2 font-robotoCondensed text-lg hover:text-color-3 py-2 text-center">
+                                    {{ $translatedName }}
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+            </div>
+
             <a href="{{ route(app()->getLocale() === 'es' ? 'about-us.show.es' : 'about-us.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('about-us.show.es') || request()->routeIs('about-us.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-2xl hover:underline py-4 font-robotoCondensed text-center border-b border-[#E6D4CB]">{{ trans('components/header.menu-option-4') }}</a>
             <a href="{{ route(app()->getLocale() === 'es' ? 'blog.show.en-es' : 'blog.show.en-es', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('blog.show.en-es') || request()->routeIs('article.show.es') || request()->routeIs('article.show.es') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-2xl hover:underline py-4 font-robotoCondensed text-center border-b border-[#E6D4CB]">{{ trans('components/header.menu-option-5') }}</a>
             <a href="{{ route(app()->getLocale() === 'es' ? 'contact.send.es' : 'contact.send.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('contact.send.es') || request()->routeIs('contact.send.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-2xl hover:underline py-4 font-robotoCondensed text-center border-b border-[#E6D4CB]">{{ trans('components/header.menu-option-6') }}</a>
@@ -64,9 +117,9 @@
     document.getElementById('hamburgerMenu').addEventListener('click', function() {
         const menu = document.getElementById('hamburgerMenuOptions');
         const icon = document.getElementById('menuIcon');
-        
+
         menu.classList.toggle('hidden');
-        
+
         // Toggle icon
         if (menu.classList.contains('hidden')) {
             icon.src = icon.dataset.menuClosed;
@@ -74,5 +127,26 @@
             icon.src = icon.dataset.menuOpen;
         }
     });
+
+    // JavaScript to toggle the shop dropdown
+    const shopDropdownToggle = document.getElementById('shopDropdownToggle');
+    if (shopDropdownToggle) {
+        shopDropdownToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const menu = document.getElementById('shopDropdownMenu');
+            const icon = document.getElementById('shopDropdownIcon');
+
+            menu.classList.toggle('hidden');
+
+            // Rotate the arrow icon
+            if (menu.classList.contains('hidden')) {
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                icon.style.transform = 'rotate(180deg)';
+            }
+        });
+    }
 
 </script>
