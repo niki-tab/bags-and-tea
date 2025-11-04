@@ -37,6 +37,7 @@ export default {
         robotoCondensed: ['"Roboto Condensed"', 'sans-serif'],
         lovera: ['Lovera', 'sans-serif'],
         lovelyna: ['Lovelina', 'sans-serif'],
+        rosaline: ['Rosaline', 'sans-serif'],
       },
       screens: {
         'mld': '900px', // Custom breakpoint between md and lg

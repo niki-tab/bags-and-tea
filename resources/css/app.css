@@ -19,6 +19,14 @@
     font-style: normal;
     font-display: swap;
 }
+
+@font-face {
+    font-family: 'Rosaline';
+    src: url('@/fonts/Rosaline.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
 @layer components {
     .article-content p {
         font-family: 'Roboto Condensed', sans-serif;
