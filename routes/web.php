@@ -210,11 +210,11 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
     })->name('about-us.show.en')->where('locale', 'en');
 
     Route::get('/nuestros-bolsos', function () {
-        return view('pages/we_are_under_construction/show');
+        return view('pages/our-bags/show');
     })->name('our-bags.show.es')->where('locale', 'es');
 
     Route::get('/our-bags', function () {
-        return view('pages/we_are_under_construction/show');
+        return view('pages/our-bags/show');
     })->name('our-bags.show.en')->where('locale', 'en');
 
     Route::get('/compramos-tu-bolso/{bagName?}',[WeBuyYourBagController::class, 'index'])->name('we-buy-your-bag.show.es')->where('locale', 'es');
