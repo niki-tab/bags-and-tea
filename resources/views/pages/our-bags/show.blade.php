@@ -18,7 +18,7 @@ bg-background-color-4
 
 <div class="bg-[#F6F0ED] py-12 px-2 md:px-4 lg:px-6">
 
-    <div class="max-w-6xl mx-auto">
+    <div class="max-w-6xl mx-auto px-4 md:px-0">
 
         
         <div class="text-center mb-12">
