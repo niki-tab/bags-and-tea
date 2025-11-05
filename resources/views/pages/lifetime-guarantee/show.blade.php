@@ -56,16 +56,16 @@ bg-background-color-4
                 {!! trans('pages/lifetime-guarantee.main_description_4') !!}
             </p>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 justify-center items-start">
+            <div class="flex flex-col md:flex-row gap-6 justify-center items-start">
                 <img
-                    src="{{ asset('images/lifetime-guarantee/MaskGroup_1.png') }}"
+                    src="{{ asset('images/lifetime-guarantee/MaskGroup_1.webp') }}"
                     alt="Bags & Tea"
-                    class="w-full h-auto"
+                    class="w-full md:w-[60%] h-[200px] md:h-[500px] object-cover"
                 >
                 <img
-                    src="{{ asset('images/lifetime-guarantee/MaskGroup_2.png') }}"
+                    src="{{ asset('images/lifetime-guarantee/MaskGroup_2.webp') }}"
                     alt="Bags & Tea"
-                    class="w-full h-auto"
+                    class="w-full md:w-[38%] h-[200px] md:h-[500px] object-cover"
                 >
             </div>
         </div>
