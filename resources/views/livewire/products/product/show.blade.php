@@ -205,7 +205,13 @@
                     <span style="color: white;" class="font-medium mb-2 ml-4">{{ __('pages/product-detail.certificate-title') }}</span>
                     <div class="flex ml-4">
                         <img src="{{ asset('images/icons/safe_icon.svg') }}" alt="Safe icon" class="w-10 h-10 mr-2">
-                        <span style="color: white;" class="text-sm font-normal">{{ __('pages/product-detail.certificate-text') }}</span>
+                        <span style="color: white;" class="text-sm font-normal">
+                            @if(app()->getLocale() === 'es')
+                                Este producto ha sido autentificado y está cubierto por nuestra <a href="/es/garantia-vitalicia" style="text-decoration: underline; font-weight: bold; color: white;">garantía de por vida</a>.
+                            @else
+                                This product has been authenticated and is covered by our <a href="/en/lifetime-guarantee" style="text-decoration: underline; font-weight: bold; color: white;">lifetime warranty</a>.
+                            @endif
+                        </span>
                     </div>
                 </div>
 

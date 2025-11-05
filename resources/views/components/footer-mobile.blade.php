@@ -39,19 +39,28 @@
     </div>
     <div class="bg-background-color-2 h-16 absolute bottom-14 w-full flex">
         <nav class="flex justify-between items-center gap-2 py-4 mx-auto w-full">
-            <a 
-                href="{{ route(app()->getLocale() === 'es' ? 'privacy.show.es' : 'privacy.show.en', ['locale' => app()->getLocale()]) }}" 
-                 class="mx-auto text-center font-robotoCondensed text-lg font-medium 
-                        {{ request()->routeIs('privacy.show.es', 'privacy.show.en') 
+            <a
+                href="{{ route(app()->getLocale() === 'es' ? 'privacy.show.es' : 'privacy.show.en', ['locale' => app()->getLocale()]) }}"
+                 class="mx-auto text-center font-robotoCondensed text-lg font-medium
+                        {{ request()->routeIs('privacy.show.es', 'privacy.show.en')
                         ? 'text-color-5' : 'text-color-1 hover:text-color-3' }}">
 
                 {{ trans('components/footer.subfooter-option-1') }}
             </a>
 
-            <a 
-                href="{{ route(app()->getLocale() === 'es' ? 'cookies.show.en-es' : 'cookies.show.en-es', ['locale' => app()->getLocale()]) }}" 
-                 class="mx-auto text-center font-robotoCondensed text-lg font-medium 
-                        {{ request()->routeIs('cookies.show.en-es') 
+            <a
+                href="{{ route(app()->getLocale() === 'es' ? 'lifetime-guarantee.show.es' : 'lifetime-guarantee.show.en', ['locale' => app()->getLocale()]) }}"
+                 class="mx-auto text-center font-robotoCondensed text-lg font-medium
+                        {{ request()->routeIs('lifetime-guarantee.show.es', 'lifetime-guarantee.show.en')
+                        ? 'text-color-5' : 'text-color-1 hover:text-color-3' }}">
+
+                {{ trans('components/footer.subfooter-option-3') }}
+            </a>
+
+            <a
+                href="{{ route(app()->getLocale() === 'es' ? 'cookies.show.en-es' : 'cookies.show.en-es', ['locale' => app()->getLocale()]) }}"
+                 class="mx-auto text-center font-robotoCondensed text-lg font-medium
+                        {{ request()->routeIs('cookies.show.en-es')
                         ? 'text-color-5' : 'text-color-1 hover:text-color-3' }}">
                 {{ trans('components/footer.subfooter-option-2') }}
             </a>

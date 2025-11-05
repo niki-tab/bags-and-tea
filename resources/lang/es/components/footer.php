@@ -11,7 +11,7 @@ return [
     'footer-option-6' => 'FAQs',
     'subfooter-option-1' => 'Privacidad',
     'subfooter-option-2' => 'Cookies',
-    'subfooter-option-3' => 'Nota Legal',
+    'subfooter-option-3' => 'Garantía vitalicia',
     'button-sell-your-bag' => 'VENDE TU BOLSO',
     'text-newsletter-title' => 'Únete a nuestro círculo exclusivo.',
     'text-newsletter-description' => 'Sé la primera en descubrir nuevas colecciones, piezas únicas y ofertas especiales en nuestros bolsos a través de nuestra newsletter.',
