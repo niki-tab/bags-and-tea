@@ -23,19 +23,19 @@ bg-background-color-4
         
         <div class="text-center mb-12">
             <h1 class="mt-[20px] mb-[40px] text-4xl md:text-5xl font-rosaline text-[#482626]">
-                {{ trans('pages/our-bags.main_title') }}
+                {{ trans('pages/lifetime-guarantee.main_title') }}
             </h1>
 
             <p class="text-left text-lg font-robotoCondensed text-[#482626] mb-8">
-                {{ trans('pages/our-bags.main_description') }}
+                {{ trans('pages/lifetime-guarantee.main_description') }}
             </p>
 
             <p class="text-left text-lg font-robotoCondensed text-[#482626] mb-8">
-                {{ trans('pages/our-bags.main_description_1') }}
+                {{ trans('pages/lifetime-guarantee.main_description_1') }}
             </p>
 
             <img
-                src="{{ asset('images/our-bags/MaskGroup.png') }}"
+                src="{{ asset('images/lifetime-guarantee/MaskGroup.png') }}"
                 alt="Bags & Tea"
                 class="mx-auto w-full h-auto"
             >
@@ -43,27 +43,27 @@ bg-background-color-4
 
         <div class="text-center mb-12">
             <h2 class="text-left mt-[70px] mb-[30px] text-3xl md:text-4xl font-rosaline text-[#AC2231]">
-                {{ trans('pages/our-bags.main_title_2') }}
+                {{ trans('pages/lifetime-guarantee.main_title_2') }}
             </h2>
 
             <p class="text-left text-lg font-robotoCondensed text-[#482626] mb-8">
-                {!! trans('pages/our-bags.main_description_2') !!}
+                {!! trans('pages/lifetime-guarantee.main_description_2') !!}
             </p>
             <p class="text-left text-lg font-robotoCondensed text-[#482626] mb-8">
-                {!! trans('pages/our-bags.main_description_3') !!}
+                {!! trans('pages/lifetime-guarantee.main_description_3') !!}
             </p>
             <p class="text-left text-lg font-robotoCondensed text-[#482626] mb-8">
-                {!! trans('pages/our-bags.main_description_4') !!}
+                {!! trans('pages/lifetime-guarantee.main_description_4') !!}
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 justify-center items-start">
                 <img
-                    src="{{ asset('images/our-bags/MaskGroup_1.png') }}"
+                    src="{{ asset('images/lifetime-guarantee/MaskGroup_1.png') }}"
                     alt="Bags & Tea"
                     class="w-full h-auto"
                 >
                 <img
-                    src="{{ asset('images/our-bags/MaskGroup_2.png') }}"
+                    src="{{ asset('images/lifetime-guarantee/MaskGroup_2.png') }}"
                     alt="Bags & Tea"
                     class="w-full h-auto"
                 >

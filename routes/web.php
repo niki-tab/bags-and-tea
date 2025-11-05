@@ -209,13 +209,13 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
         return view('pages/about-us/show');
     })->name('about-us.show.en')->where('locale', 'en');
 
-    Route::get('/nuestros-bolsos', function () {
-        return view('pages/our-bags/show');
-    })->name('our-bags.show.es')->where('locale', 'es');
+    Route::get('/garantia-vitalicia', function () {
+        return view('pages/lifetime-guarantee/show');
+    })->name('lifetime-guarantee.show.es')->where('locale', 'es');
 
-    Route::get('/our-bags', function () {
-        return view('pages/our-bags/show');
-    })->name('our-bags.show.en')->where('locale', 'en');
+    Route::get('/lifetime-guarantee', function () {
+        return view('pages/lifetime-guarantee/show');
+    })->name('lifetime-guarantee.show.en')->where('locale', 'en');
 
     Route::get('/compramos-tu-bolso/{bagName?}',[WeBuyYourBagController::class, 'index'])->name('we-buy-your-bag.show.es')->where('locale', 'es');
 
