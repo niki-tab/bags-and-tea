@@ -50,7 +50,7 @@
 
             <a
                 href="{{ route(app()->getLocale() === 'es' ? 'lifetime-guarantee.show.es' : 'lifetime-guarantee.show.en', ['locale' => app()->getLocale()]) }}"
-                 class="mx-auto text-center font-robotoCondensed text-lg font-medium
+                 class="mr-[35px] mx-auto text-center font-robotoCondensed text-lg font-medium
                         {{ request()->routeIs('lifetime-guarantee.show.es', 'lifetime-guarantee.show.en')
                         ? 'text-white' : 'text-white hover:text-color-3' }}">
 
