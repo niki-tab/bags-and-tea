@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Src\Shared\Domain\Criteria\Order;
 use Src\Shared\Domain\Criteria\Filters;
 use Src\Shared\Domain\Criteria\Criteria;
@@ -219,19 +220,26 @@ class ShowAllProduct extends Component
         $eloquentProductRepository = new EloquentProductRepository();
         $user = Auth::user();
 
-        // Get paginated products
-        if ($user && $user->hasRole('vendor')) {
-            $allProducts = $eloquentProductRepository->searchByCriteriaForUserPaginated($user->id, $criteria, $this->perPage);
-            // Get all products for stats (not paginated)
-            $allProductsForStats = $eloquentProductRepository->searchByCriteriaForUser($user->id, $criteria);
-        } else {
-            $allProducts = $eloquentProductRepository->searchByCriteriaPaginated($criteria, $this->perPage);
-            // Get all products for stats (not paginated)
-            $allProductsForStats = $eloquentProductRepository->searchByCriteria($criteria);
-        }
+        try {
+            // Get paginated products
+            if ($user && $user->hasRole('vendor')) {
+                $allProducts = $eloquentProductRepository->searchByCriteriaForUserPaginated($user->id, $criteria, $this->perPage);
+                // Get all products for stats (not paginated)
+                $allProductsForStats = $eloquentProductRepository->searchByCriteriaForUser($user->id, $criteria);
+            } else {
+                $allProducts = $eloquentProductRepository->searchByCriteriaPaginated($criteria, $this->perPage);
+                // Get all products for stats (not paginated)
+                $allProductsForStats = $eloquentProductRepository->searchByCriteria($criteria);
+            }
 
-        if (!$allProducts || $allProducts->isEmpty()) {
-            $this->productsNotFoundText = 'No products found.';
+            if (!$allProducts || $allProducts->isEmpty()) {
+                $this->productsNotFoundText = 'No products found.';
+            }
+        } catch (\Exception $e) {
+            \Log::error('Error loading products: ' . $e->getMessage());
+            $allProducts = new LengthAwarePaginator([], 0, $this->perPage);
+            $allProductsForStats = [];
+            $this->productsNotFoundText = 'Error loading products.';
         }
 
         return view('livewire.admin.products.show', [
