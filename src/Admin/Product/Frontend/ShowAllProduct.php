@@ -3,10 +3,8 @@
 namespace Src\Admin\Product\Frontend;
 
 use Livewire\Component;
-use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Src\Shared\Domain\Criteria\Order;
 use Src\Shared\Domain\Criteria\Filters;
 use Src\Shared\Domain\Criteria\Criteria;
@@ -15,10 +13,9 @@ use Src\Products\Product\Infrastructure\Eloquent\ProductEloquentModel;
 
 class ShowAllProduct extends Component
 {
-    use WithPagination;
-
     public $lang;
-    public $allProducts;
+    public $allProducts = [];
+    public $allProductsForStats = [];
     public $productsNotFoundText;
 
     // Sorting properties
@@ -26,12 +23,60 @@ class ShowAllProduct extends Component
     public $sortDirection = 'asc';
 
     // Pagination
-    protected $paginationTheme = 'tailwind';
     public $perPage = 20;
+    public $currentPage = 1;
+    public $totalProducts = 0;
+
+    // Pagination event listener
+    protected $listeners = ['pageChanged' => 'handlePageChanged'];
 
     public function mount($numberProduct = null)
     {
         $this->lang = app()->getLocale();
+        $this->loadProducts();
+    }
+
+    public function handlePageChanged($page)
+    {
+        $this->currentPage = $page;
+        $this->loadProducts();
+    }
+
+    public function loadProducts()
+    {
+        $filters = [];
+        $orderBy = $this->sortField;
+        $order = $this->sortDirection;
+
+        // Calculate offset for pagination
+        $offset = ($this->currentPage - 1) * $this->perPage;
+        $limit = $this->perPage;
+
+        $filters = Filters::fromValues($filters);
+        $order = Order::fromValues($orderBy, $order);
+        $criteria = new Criteria($filters, $order, $offset, $limit);
+
+        $eloquentProductRepository = new EloquentProductRepository();
+        $user = Auth::user();
+
+        // Get all products for total count (without pagination)
+        $allCriteria = new Criteria($filters, $order, null, null);
+
+        // If user is vendor, show only their products
+        if ($user && $user->hasRole('vendor')) {
+            $this->allProducts = $eloquentProductRepository->searchByCriteriaForUser($user->id, $criteria);
+            $this->allProductsForStats = $eloquentProductRepository->searchByCriteriaForUser($user->id, $allCriteria);
+            $this->totalProducts = count($this->allProductsForStats);
+        } else {
+            // If user is admin, show all products
+            $this->allProducts = $eloquentProductRepository->searchByCriteria($criteria);
+            $this->allProductsForStats = $eloquentProductRepository->searchByCriteria($allCriteria);
+            $this->totalProducts = count($this->allProductsForStats);
+        }
+
+        if (!$this->allProducts || empty($this->allProducts)) {
+            $this->productsNotFoundText = 'No products found.';
+        }
     }
 
     public function sortBy($field)
@@ -43,7 +88,9 @@ class ShowAllProduct extends Component
             $this->sortDirection = 'asc';
         }
 
-        $this->resetPage();
+        // Reset pagination when sorting changes
+        $this->currentPage = 1;
+        $this->loadProducts();
     }
 
     public function formatPrice($price)
@@ -121,6 +168,9 @@ class ShowAllProduct extends Component
             $product->delete();
 
             session()->flash('success', 'Product and all related data deleted successfully.');
+
+            // Reload products
+            $this->loadProducts();
 
         } catch (\Exception $e) {
             session()->flash('error', 'An error occurred while deleting the product.');
@@ -202,6 +252,9 @@ class ShowAllProduct extends Component
             
             session()->flash('success', 'Product duplicated successfully. You can now edit the copy.');
 
+            // Reload products
+            $this->loadProducts();
+
         } catch (\Exception $e) {
             session()->flash('error', 'An error occurred while duplicating the product.');
         }
@@ -209,42 +262,6 @@ class ShowAllProduct extends Component
 
     public function render()
     {
-        $filters = [];
-        $orderBy = $this->sortField;
-        $order = $this->sortDirection;
-
-        $filters = Filters::fromValues($filters);
-        $order = Order::fromValues($orderBy, $order);
-        $criteria = new Criteria($filters, $order, null, null);
-
-        $eloquentProductRepository = new EloquentProductRepository();
-        $user = Auth::user();
-
-        try {
-            // Get paginated products
-            if ($user && $user->hasRole('vendor')) {
-                $allProducts = $eloquentProductRepository->searchByCriteriaForUserPaginated($user->id, $criteria, $this->perPage);
-                // Get all products for stats (not paginated)
-                $allProductsForStats = $eloquentProductRepository->searchByCriteriaForUser($user->id, $criteria);
-            } else {
-                $allProducts = $eloquentProductRepository->searchByCriteriaPaginated($criteria, $this->perPage);
-                // Get all products for stats (not paginated)
-                $allProductsForStats = $eloquentProductRepository->searchByCriteria($criteria);
-            }
-
-            if (!$allProducts || $allProducts->isEmpty()) {
-                $this->productsNotFoundText = 'No products found.';
-            }
-        } catch (\Exception $e) {
-            \Log::error('Error loading products: ' . $e->getMessage());
-            $allProducts = new LengthAwarePaginator([], 0, $this->perPage);
-            $allProductsForStats = [];
-            $this->productsNotFoundText = 'Error loading products.';
-        }
-
-        return view('livewire.admin.products.show', [
-            'allProducts' => $allProducts,
-            'allProductsForStats' => $allProductsForStats
-        ]);
+        return view('livewire.admin.products.show');
     }
 }
