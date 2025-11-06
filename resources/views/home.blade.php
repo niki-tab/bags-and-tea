@@ -77,9 +77,11 @@ if(request()->route('bagName')){
                 <p class="font-mixed text-color-2 mt-6 md:mt-8">
                     {{ trans('pages/home.description-sell-your-bag') }}   
                 </p>
-                <button class="mt-6 md:mt-8 bg-color-2 text-white px-8 md:px-12 py-2 md:py-3 rounded-full font-medium block mx-auto md:mx-0">
-                    {{ trans('pages/home.button-sell-your-bag') }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
-                </button>
+                <div class="text-center md:text-left">
+                    <a href="{{ route('we-buy-your-bag.show.' . app()->getLocale(), ['locale' => app()->getLocale()]) }}" class="mt-6 md:mt-8 bg-color-2 text-white px-8 md:px-12 py-2 md:py-3 rounded-full font-medium inline-block">
+                        {{ trans('pages/home.button-sell-your-bag') }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
+                    </a>
+                </div>
             </div>
         </div>
         <div class="w-full md:w-1/2 bg-[#ffffff] py-12 md:py-0 md:flex md:items-center md:justify-center">
