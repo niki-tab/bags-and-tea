@@ -42,7 +42,7 @@
 
         </div>
         <div class="absolute w-full h-12 bg-background-color-2 left-1/2 transform -translate-x-1/2 bottom-8 flex items-center z-20">
-            <nav class="flex justify-between items-center gap-4 py-4 w-2/5 mx-auto">
+            <nav class="flex justify-between items-center py-4 px-8 w-2/5 mx-auto relative">
 
                 <a href="{{ route(app()->getLocale() === 'es' ? 'privacy.show.es' : 'privacy.show.en', ['locale' => app()->getLocale()]) }}"
                         class="text-center font-robotoCondensed text-lg font-medium
@@ -52,7 +52,7 @@
                 </a>
 
                 <a href="{{ route(app()->getLocale() === 'es' ? 'lifetime-guarantee.show.es' : 'lifetime-guarantee.show.en', ['locale' => app()->getLocale()]) }}"
-                        class="mr-[20px] text-center font-robotoCondensed text-lg font-medium
+                        class="absolute left-1/2 -translate-x-1/2 text-center font-robotoCondensed text-lg font-medium
                                 {{ request()->routeIs('lifetime-guarantee.show.es', 'lifetime-guarantee.show.en')
                                 ? 'text-white' : 'text-white hover:text-color-3' }}">
                         {{ trans('components/footer.subfooter-option-3') }}
