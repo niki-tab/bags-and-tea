@@ -31,7 +31,7 @@
                     <div class="ml-5 w-0 flex-1">
                         <dl>
                             <dt class="text-sm font-medium text-gray-500 truncate">Total Products</dt>
-                            <dd class="text-lg font-medium text-gray-900">{{ count($allProducts) }}</dd>
+                            <dd class="text-lg font-medium text-gray-900">{{ $allProducts->total() }}</dd>
                         </dl>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                         <dl>
                             <dt class="text-sm font-medium text-gray-500 truncate">In Stock</dt>
                             <dd class="text-lg font-medium text-gray-900">
-                                {{ $allProducts ? collect($allProducts)->where('out_of_stock', false)->count() : 0 }}
+                                {{ $allProductsForStats ? collect($allProductsForStats)->where('out_of_stock', false)->count() : 0 }}
                             </dd>
                         </dl>
                     </div>
@@ -74,7 +74,7 @@
                         <dl>
                             <dt class="text-sm font-medium text-gray-500 truncate">Out of Stock</dt>
                             <dd class="text-lg font-medium text-gray-900">
-                                {{ $allProducts ? collect($allProducts)->where('out_of_stock', true)->count() : 0 }}
+                                {{ $allProductsForStats ? collect($allProductsForStats)->where('out_of_stock', true)->count() : 0 }}
                             </dd>
                         </dl>
                     </div>
@@ -96,7 +96,7 @@
                         <dl>
                             <dt class="text-sm font-medium text-gray-500 truncate">Featured</dt>
                             <dd class="text-lg font-medium text-gray-900">
-                                {{ $allProducts ? collect($allProducts)->where('featured', true)->count() : 0 }}
+                                {{ $allProductsForStats ? collect($allProductsForStats)->where('featured', true)->count() : 0 }}
                             </dd>
                         </dl>
                     </div>
@@ -106,11 +106,11 @@
     </div>
     <!-- Products Table -->
     <div class="bg-white shadow-sm rounded-lg border border-gray-200 overflow-hidden">
-        @if($allProducts && !empty($allProducts))
+        @if($allProducts && $allProducts->count() > 0)
             <!-- Table Header -->
             <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
                 <h3 class="text-lg font-medium text-gray-900">Product List</h3>
-                <p class="mt-1 text-sm text-gray-600">{{ count($allProducts) }} products found</p>
+                <p class="mt-1 text-sm text-gray-600">{{ $allProducts->total() }} products found</p>
             </div>
 
             <!-- Table -->

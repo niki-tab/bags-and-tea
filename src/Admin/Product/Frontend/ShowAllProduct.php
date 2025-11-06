@@ -219,18 +219,24 @@ class ShowAllProduct extends Component
         $eloquentProductRepository = new EloquentProductRepository();
         $user = Auth::user();
 
-        // If user is vendor, show only their products
+        // Get paginated products
         if ($user && $user->hasRole('vendor')) {
             $allProducts = $eloquentProductRepository->searchByCriteriaForUserPaginated($user->id, $criteria, $this->perPage);
+            // Get all products for stats (not paginated)
+            $allProductsForStats = $eloquentProductRepository->searchByCriteriaForUser($user->id, $criteria);
         } else {
-            // If user is admin, show all products
             $allProducts = $eloquentProductRepository->searchByCriteriaPaginated($criteria, $this->perPage);
+            // Get all products for stats (not paginated)
+            $allProductsForStats = $eloquentProductRepository->searchByCriteria($criteria);
         }
 
         if (!$allProducts || $allProducts->isEmpty()) {
             $this->productsNotFoundText = 'No products found.';
         }
 
-        return view('livewire.admin.products.show', ['allProducts' => $allProducts]);
+        return view('livewire.admin.products.show', [
+            'allProducts' => $allProducts,
+            'allProductsForStats' => $allProductsForStats
+        ]);
     }
 }
