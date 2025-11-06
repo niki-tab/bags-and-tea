@@ -23,7 +23,7 @@ class ShowAllProduct extends Component
     public $sortDirection = 'asc';
 
     // Pagination
-    public $perPage = 5; // Temporarily set to 5 for testing
+    public $perPage = 30;
     public $currentPage = 1;
     public $totalProducts = 0;
 
