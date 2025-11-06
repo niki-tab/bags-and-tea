@@ -19,43 +19,18 @@ class ShowAllProduct extends Component
     public $lang;
     public $allProducts;
     public $productsNotFoundText;
-    
+
     // Sorting properties
     public $sortField = 'name';
     public $sortDirection = 'asc';
 
+    // Pagination
+    protected $paginationTheme = 'tailwind';
+    public $perPage = 20;
+
     public function mount($numberProduct = null)
-    {   
-        $this->lang = app()->getLocale();
-        $this->loadProducts($numberProduct);
-    }
-
-    public function loadProducts($numberProduct = null)
     {
-        $filters = [];
-        $orderBy = $this->sortField;
-        $order = $this->sortDirection;
-        $offset = null;
-        $limit = $numberProduct;
-        
-        $filters = Filters::fromValues($filters);
-        $order = Order::fromValues($orderBy, $order);
-        $criteria = new Criteria($filters, $order, $offset, $limit);
-
-        $eloquentProductRepository = new EloquentProductRepository();
-        $user = Auth::user();
-
-        // If user is vendor, show only their products
-        if ($user && $user->hasRole('vendor')) {
-            $this->allProducts = $eloquentProductRepository->searchByCriteriaForUser($user->id, $criteria);
-        } else {
-            // If user is admin, show all products
-            $this->allProducts = $eloquentProductRepository->searchByCriteria($criteria);
-        }
-
-        if (!$this->allProducts || empty($this->allProducts)) {
-            $this->productsNotFoundText = 'No products found.';
-        }
+        $this->lang = app()->getLocale();
     }
 
     public function sortBy($field)
@@ -67,7 +42,7 @@ class ShowAllProduct extends Component
             $this->sortDirection = 'asc';
         }
 
-        $this->loadProducts();
+        $this->resetPage();
     }
 
     public function formatPrice($price)
@@ -143,12 +118,9 @@ class ShowAllProduct extends Component
             
             // Delete the product itself
             $product->delete();
-            
+
             session()->flash('success', 'Product and all related data deleted successfully.');
-            
-            // Reload products
-            $this->loadProducts();
-            
+
         } catch (\Exception $e) {
             session()->flash('error', 'An error occurred while deleting the product.');
         }
@@ -228,10 +200,7 @@ class ShowAllProduct extends Component
             }
             
             session()->flash('success', 'Product duplicated successfully. You can now edit the copy.');
-            
-            // Reload products
-            $this->loadProducts();
-            
+
         } catch (\Exception $e) {
             session()->flash('error', 'An error occurred while duplicating the product.');
         }
@@ -239,6 +208,29 @@ class ShowAllProduct extends Component
 
     public function render()
     {
-        return view('livewire.admin.products.show');
+        $filters = [];
+        $orderBy = $this->sortField;
+        $order = $this->sortDirection;
+
+        $filters = Filters::fromValues($filters);
+        $order = Order::fromValues($orderBy, $order);
+        $criteria = new Criteria($filters, $order, null, null);
+
+        $eloquentProductRepository = new EloquentProductRepository();
+        $user = Auth::user();
+
+        // If user is vendor, show only their products
+        if ($user && $user->hasRole('vendor')) {
+            $allProducts = $eloquentProductRepository->searchByCriteriaForUserPaginated($user->id, $criteria, $this->perPage);
+        } else {
+            // If user is admin, show all products
+            $allProducts = $eloquentProductRepository->searchByCriteriaPaginated($criteria, $this->perPage);
+        }
+
+        if (!$allProducts || $allProducts->isEmpty()) {
+            $this->productsNotFoundText = 'No products found.';
+        }
+
+        return view('livewire.admin.products.show', ['allProducts' => $allProducts]);
     }
 }
