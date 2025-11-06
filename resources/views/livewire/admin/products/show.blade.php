@@ -347,7 +347,7 @@
             <!-- Pagination -->
             @if($totalProducts > $perPage)
                 <div class="px-6 py-4 border-t border-gray-200 bg-gray-50">
-                    <livewire:shared.pagination
+                    <livewire:shared/pagination
                         :currentPage="$currentPage"
                         :perPage="$perPage"
                         :totalItems="$totalProducts"
