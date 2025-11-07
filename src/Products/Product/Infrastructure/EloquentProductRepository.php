@@ -88,12 +88,6 @@ final class EloquentProductRepository implements ProductRepository
             // Handle search functionality
             if ($field === 'search') {
                 $locale = app()->getLocale();
-
-                // Exclude products that are out of stock, sold out, or have 0 stock
-                $query->where('stock', '>', 0)
-                      ->where('is_sold_out', false)
-                      ->where('out_of_stock', false);
-
                 $query->where(function ($q) use ($value, $locale) {
                     // Search in product name (JSON translatable field)
                     $q->whereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%'])
@@ -341,12 +335,6 @@ final class EloquentProductRepository implements ProductRepository
             // Handle search functionality
             if ($field === 'search') {
                 $locale = app()->getLocale();
-
-                // Exclude products that are out of stock, sold out, or have 0 stock
-                $query->where('stock', '>', 0)
-                      ->where('is_sold_out', false)
-                      ->where('out_of_stock', false);
-
                 $query->where(function ($q) use ($value, $locale) {
                     // Search in product name (JSON translatable field)
                     $q->whereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%'])
@@ -467,12 +455,6 @@ final class EloquentProductRepository implements ProductRepository
             // Handle search functionality
             if ($field === 'search') {
                 $locale = app()->getLocale();
-
-                // Exclude products that are out of stock, sold out, or have 0 stock
-                $query->where('stock', '>', 0)
-                      ->where('is_sold_out', false)
-                      ->where('out_of_stock', false);
-
                 $query->where(function ($q) use ($value, $locale) {
                     // Search in product name (JSON translatable field)
                     $q->whereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%'])
