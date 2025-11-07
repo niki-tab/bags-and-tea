@@ -16,7 +16,7 @@ bg-background-color-4
 
 @section('content')
 
-<div class="bg-[#F6F0ED] py-12 px-2 md:px-4 lg:px-6">
+<div class="bg-[#F6F0ED] pt-14 mb-2 md:mb-4 px-2 md:px-4 lg:px-6">
 
     <div class="max-w-6xl mx-auto px-4 md:px-0">
 
@@ -41,7 +41,7 @@ bg-background-color-4
             >
         </div>
 
-        <div class="text-center mb-12">
+        <div class="text-center mb-4">
             <h2 class="text-left mt-[70px] mb-[30px] text-3xl md:text-4xl font-rosaline text-[#AC2231]">
                 {{ trans('pages/lifetime-guarantee.main_title_2') }}
             </h2>
