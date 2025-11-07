@@ -37,6 +37,10 @@ final class ProductSearcher
         // Get quick suggestions based on name prefixes
         $suggestions = ProductEloquentModel::query()
             ->where('is_hidden', false)
+            // Exclude products that are out of stock, sold out, or have 0 stock
+            ->where('stock', '>', 0)
+            ->where('is_sold_out', false)
+            ->where('out_of_stock', false)
             ->where(function ($q) use ($query, $locale) {
                 $q->whereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, "$.'. $locale .'"))) LIKE LOWER(?)', [$query . '%'])
                   ->orWhereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, "$.'. $locale .'"))) LIKE LOWER(?)', ['% ' . $query . '%']);
@@ -58,7 +62,11 @@ final class ProductSearcher
     {
         $queryBuilder = ProductEloquentModel::query()
             ->with(['brand', 'vendor', 'quality', 'categories', 'attributes', 'primaryImage'])
-            ->where('is_hidden', false);
+            ->where('is_hidden', false)
+            // Exclude products that are out of stock, sold out, or have 0 stock
+            ->where('stock', '>', 0)
+            ->where('is_sold_out', false)
+            ->where('out_of_stock', false);
 
         // Multi-field search with different weights
         $queryBuilder->where(function ($q) use ($query, $locale) {
