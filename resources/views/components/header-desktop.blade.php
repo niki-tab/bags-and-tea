@@ -23,17 +23,17 @@
 
             <!-- Right Column with Two Inner Columns -->
             <div class="w-1/2 bg-background-color-4 flex items-center">
-                
+
                 <div class="ml-10 bg-background-color-4 flex items-center justify-center">
                     <!-- Botón Vende tu bolso -->
-                    <div class="flex items-center">
+                    <div class="flex items-center -ml-8">
                         <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}"
-                            class="flex items-center justify-center px-6 mt-1 h-8 font-robotoCondensed bg-background-color-2 text-white rounded-full text-sm font-regular hover:bg-background-color-3 transition whitespace-nowrap">
+                            class="flex items-center justify-center px-6 h-8 font-robotoCondensed bg-background-color-2 text-white rounded-full text-sm font-regular hover:bg-background-color-3 transition whitespace-nowrap">
                             {{ trans('components/header.button-sell-your-bag') }}
                         </a>
                     </div>
-                    <!-- Espaciador responsive -->
-                    <div class="w-4 md:w-6 lg:w-8"></div>
+                    <!-- Espaciador responsive (aumentado para compensar el -ml-8 del botón) -->
+                    <div class="w-12 md:w-14 lg:w-16"></div>
                     <div class="flex-1 flex justify-center px-1">
                         <a href="{{ route(app()->getLocale() === 'es' ? 'login.show.en-es' : 'login.show.en-es', ['locale' => app()->getLocale()]) }}">
                             <img src="{{ request()->routeIs('login.show.en-es') || request()->routeIs('my-account.show.en') || request()->routeIs('my-account.show.es') ? asset('images/icons/icon_user_avatar_header_clicked.svg') : asset('images/icons/icon_user_avatar_header.svg') }}" 
