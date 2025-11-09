@@ -52,7 +52,7 @@
                         <dl>
                             <dt class="text-sm font-medium text-gray-500 truncate">In Stock</dt>
                             <dd class="text-lg font-medium text-gray-900">
-                                {{ $allProductsForStats ? collect($allProductsForStats)->where('out_of_stock', false)->count() : 0 }}
+                                {{ $inStockCount }}
                             </dd>
                         </dl>
                     </div>
@@ -74,7 +74,7 @@
                         <dl>
                             <dt class="text-sm font-medium text-gray-500 truncate">Out of Stock</dt>
                             <dd class="text-lg font-medium text-gray-900">
-                                {{ $allProductsForStats ? collect($allProductsForStats)->where('out_of_stock', true)->count() : 0 }}
+                                {{ $outOfStockCount }}
                             </dd>
                         </dl>
                     </div>
@@ -96,7 +96,7 @@
                         <dl>
                             <dt class="text-sm font-medium text-gray-500 truncate">Featured</dt>
                             <dd class="text-lg font-medium text-gray-900">
-                                {{ $allProductsForStats ? collect($allProductsForStats)->where('featured', true)->count() : 0 }}
+                                {{ $featuredCount }}
                             </dd>
                         </dl>
                     </div>
