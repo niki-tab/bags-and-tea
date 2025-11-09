@@ -164,6 +164,115 @@ final class EloquentProductRepository implements ProductRepository
         return $results;
     }
 
+    public function countByCriteria(Criteria $criteria): int
+    {
+        $query = ProductEloquentModel::query();
+
+        // Apply filters step by step to ensure proper AND logic
+        foreach ($criteria->plainFilters() as $filter) {
+            $field = $filter->field()->value();
+            $operator = $filter->operator()->value();
+            $value = $filter->value()->value();
+
+            // Handle special cases for relationships
+            if ($field === 'categories' || strpos($field, 'categories_') === 0) {
+                $query->whereHas('categories', function ($q) use ($operator, $value) {
+                    if ($operator === 'in') {
+                        $values = is_string($value) ? explode(',', $value) : (is_array($value) ? $value : [$value]);
+                        $q->whereIn('categories.id', $values);
+                    } else {
+                        $q->where('categories.id', $operator, $value);
+                    }
+                });
+                continue;
+            }
+
+            if ($field === 'attributes' || strpos($field, 'attributes_') === 0) {
+                $query->whereHas('attributes', function ($q) use ($operator, $value) {
+                    if ($operator === 'in') {
+                        $values = is_string($value) ? explode(',', $value) : (is_array($value) ? $value : [$value]);
+                        $q->whereIn('attributes.id', $values);
+                    } else {
+                        $q->where('attributes.id', $operator, $value);
+                    }
+                });
+                continue;
+            }
+
+            // Handle special price ranges filter
+            if ($field === 'price_ranges') {
+                $priceRanges = explode(',', $value);
+                $query->where(function ($q) use ($priceRanges) {
+                    foreach ($priceRanges as $priceRange) {
+                        $q->orWhere(function ($subQ) use ($priceRange) {
+                            switch (trim($priceRange)) {
+                                case '0-100':
+                                    $subQ->whereBetween('price', [0, 100]);
+                                    break;
+                                case '100-500':
+                                    $subQ->whereBetween('price', [100, 500]);
+                                    break;
+                                case '500-1000':
+                                    $subQ->whereBetween('price', [500, 1000]);
+                                    break;
+                                case '1000-2000':
+                                    $subQ->whereBetween('price', [1000, 2000]);
+                                    break;
+                                case '2000+':
+                                    $subQ->where('price', '>=', 2000);
+                                    break;
+                            }
+                        });
+                    }
+                });
+                continue;
+            }
+
+            // Handle search functionality
+            if ($field === 'search') {
+                $locale = app()->getLocale();
+                $query->where(function ($q) use ($value, $locale) {
+                    // Search in product name (JSON translatable field)
+                    $q->whereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%'])
+                      // Search in SKU
+                      ->orWhere('sku', 'LIKE', '%' . $value . '%')
+                      // Search in description fields (JSON translatable)
+                      ->orWhereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(description_1, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%'])
+                      ->orWhereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(description_2, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%'])
+                      // Search in brand name (through relationship)
+                      ->orWhereHas('brand', function ($brandQuery) use ($value, $locale) {
+                          $brandQuery->whereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%']);
+                      })
+                      // Search in category names (through relationship)
+                      ->orWhereHas('categories', function ($categoryQuery) use ($value, $locale) {
+                          $categoryQuery->whereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%']);
+                      })
+                      // Search in attribute names (through relationship)
+                      ->orWhereHas('attributes', function ($attributeQuery) use ($value, $locale) {
+                          $attributeQuery->whereRaw('LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, "$.'. $locale .'"))) LIKE LOWER(?)', ['%' . $value . '%']);
+                      })
+                      // SOUNDEX for typo tolerance on product name
+                      ->orWhereRaw("SOUNDEX(JSON_UNQUOTE(JSON_EXTRACT(`name`, '$.{$locale}'))) = SOUNDEX(?)", [$value]);
+                });
+                continue;
+            }
+
+            // Handle standard filters
+            if ($operator === 'like') {
+                $value = '%' . $value . '%';
+            }
+
+            if ($operator === 'in') {
+                $values = is_string($value) ? explode(',', $value) : (is_array($value) ? $value : [$value]);
+                $query->whereIn($field, $values);
+            } else {
+                $query->where($field, $operator, $value);
+            }
+        }
+
+        return $query->count();
+    }
+
     public function searchByCriteriaPaginated(Criteria $criteria, int $perPage = 20)
     {
         $query = ProductEloquentModel::query();

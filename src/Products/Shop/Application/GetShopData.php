@@ -46,7 +46,7 @@ final class GetShopData
         $products = $this->getFilteredProducts($appliedFilters, $sortBy, $categorySlug, $offset, $limit, $searchQuery);
 
         // Get total count for pagination (without limit/offset)
-        $totalCount = count($this->getFilteredProducts($appliedFilters, $sortBy, $categorySlug, null, null, $searchQuery));
+        $totalCount = $this->getFilteredProductsCount($appliedFilters, $sortBy, $categorySlug, $searchQuery);
 
         return [
             'filters' => $activeFilters,
@@ -88,6 +88,170 @@ final class GetShopData
 
         // Sort options alphabetically by name (supporting translations)
         return $this->sortOptionsAlphabetically($options);
+    }
+
+    private function getFilteredProductsCount(array $appliedFilters, string $sortBy = '', ?string $categorySlug = null, ?string $searchQuery = null): int
+    {
+        $filters = [];
+
+        // Get active filters to determine filter types dynamically
+        $activeFilters = $this->shopFilterRepository->findActive();
+        $categoryFilterSlugs = [];
+        $attributeFilterSlugs = [];
+
+        // Build a map of category and attribute filter slugs for dynamic handling
+        foreach ($activeFilters as $activeFilter) {
+            if ($activeFilter->type === 'category' && !empty($activeFilter->config)) {
+                $config = is_array($activeFilter->config) ? $activeFilter->config : json_decode($activeFilter->config, true);
+                if (isset($config['filter_slug'])) {
+                    $categoryFilterSlugs[] = $config['filter_slug'];
+                }
+            }
+
+            if ($activeFilter->type === 'attribute' && !empty($activeFilter->config)) {
+                $config = is_array($activeFilter->config) ? $activeFilter->config : json_decode($activeFilter->config, true);
+                if (isset($config['filter_slug'])) {
+                    $attributeFilterSlugs[] = $config['filter_slug'];
+                }
+            }
+        }
+
+        foreach ($appliedFilters as $filterType => $filterValues) {
+            if (empty($filterValues)) {
+                continue;
+            }
+
+            switch ($filterType) {
+                case 'brands':
+                    if (! empty($filterValues)) {
+                        $filterValueString = is_array($filterValues) ? implode(',', $filterValues) : $filterValues;
+                        $filters[] = new Filter(
+                            new FilterField('brand_id'),
+                            new FilterOperator('in'),
+                            new FilterValue($filterValueString)
+                        );
+                    }
+                    break;
+
+                case 'categories':
+                    if (! empty($filterValues)) {
+                        $filterValueString = is_array($filterValues) ? implode(',', $filterValues) : $filterValues;
+                        $filters[] = new Filter(
+                            new FilterField('categories'),
+                            new FilterOperator('in'),
+                            new FilterValue($filterValueString)
+                        );
+                    }
+                    break;
+
+                case 'attributes':
+                    if (! empty($filterValues)) {
+                        $filterValueString = is_array($filterValues) ? implode(',', $filterValues) : $filterValues;
+                        $filters[] = new Filter(
+                            new FilterField('attributes'),
+                            new FilterOperator('in'),
+                            new FilterValue($filterValueString)
+                        );
+                    }
+                    break;
+
+                case 'qualities':
+                    if (! empty($filterValues)) {
+                        $filterValueString = is_array($filterValues) ? implode(',', $filterValues) : $filterValues;
+                        $filters[] = new Filter(
+                            new FilterField('quality_id'),
+                            new FilterOperator('in'),
+                            new FilterValue($filterValueString)
+                        );
+                    }
+                    break;
+
+                case 'priceRanges':
+                    if (! empty($filterValues) && is_array($filterValues)) {
+                        $filters[] = new Filter(
+                            new FilterField('price_ranges'),
+                            new FilterOperator('='),
+                            new FilterValue(implode(',', $filterValues))
+                        );
+                    }
+                    break;
+
+                case 'urlBasedCategories':
+                    if (! empty($filterValues)) {
+                        $filterValueString = is_array($filterValues) ? implode(',', $filterValues) : $filterValues;
+                        $filters[] = new Filter(
+                            new FilterField('categories'),
+                            new FilterOperator('in'),
+                            new FilterValue($filterValueString)
+                        );
+                    }
+                    break;
+
+                case 'urlBasedAttributes':
+                    if (! empty($filterValues)) {
+                        $filterValueString = is_array($filterValues) ? implode(',', $filterValues) : $filterValues;
+                        $filters[] = new Filter(
+                            new FilterField('attributes'),
+                            new FilterOperator('in'),
+                            new FilterValue($filterValueString)
+                        );
+                    }
+                    break;
+
+                case 'urlBasedBrands':
+                    if (! empty($filterValues)) {
+                        $filterValueString = is_array($filterValues) ? implode(',', $filterValues) : $filterValues;
+                        $filters[] = new Filter(
+                            new FilterField('brand_id'),
+                            new FilterOperator('in'),
+                            new FilterValue($filterValueString)
+                        );
+                    }
+                    break;
+
+                default:
+                    // Handle dynamic category filters based on filter_slug
+                    if (in_array($filterType, $categoryFilterSlugs) && !empty($filterValues)) {
+                        $filterValueString = is_array($filterValues) ? implode(',', $filterValues) : $filterValues;
+                        $filters[] = new Filter(
+                            new FilterField("categories_{$filterType}"),
+                            new FilterOperator('in'),
+                            new FilterValue($filterValueString)
+                        );
+                    }
+
+                    // Handle dynamic attribute filters based on filter_slug
+                    if (in_array($filterType, $attributeFilterSlugs) && !empty($filterValues)) {
+                        $filterValueString = is_array($filterValues) ? implode(',', $filterValues) : $filterValues;
+                        $filters[] = new Filter(
+                            new FilterField("attributes_{$filterType}"),
+                            new FilterOperator('in'),
+                            new FilterValue($filterValueString)
+                        );
+                    }
+                    break;
+            }
+        }
+
+        // Add search functionality if search query is provided
+        if (!empty($searchQuery) && strlen(trim($searchQuery)) >= 2) {
+            $trimmedQuery = trim($searchQuery);
+            $filters[] = new Filter(
+                new FilterField('search'),
+                new FilterOperator('like'),
+                new FilterValue($trimmedQuery)
+            );
+        }
+
+        // Create criteria for counting (no sorting, offset, or limit)
+        $criteria = new Criteria(
+            new Filters($filters),
+            Order::none(),
+            null,
+            null
+        );
+
+        return $this->productRepository->countByCriteria($criteria);
     }
 
     private function getFilteredProducts(array $appliedFilters, string $sortBy = '', ?string $categorySlug = null, ?int $offset = null, ?int $limit = 50, ?string $searchQuery = null): array
