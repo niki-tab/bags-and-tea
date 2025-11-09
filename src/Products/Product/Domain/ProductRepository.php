@@ -14,6 +14,7 @@ interface ProductRepository
     public function search(string $id): ?ProductEloquentModel;
     public function searchByCriteria(Criteria $criteria): array;
     public function countByCriteria(Criteria $criteria): int;
+    public function countByCriteriaForUser(string $userId, Criteria $criteria): int;
     public function addCategory(string $productId, string $categoryId): void;
     public function addAttribute(string $productId, string $attributeId): void;
 }
