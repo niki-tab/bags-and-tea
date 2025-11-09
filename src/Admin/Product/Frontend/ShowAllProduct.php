@@ -26,6 +26,11 @@ class ShowAllProduct extends Component
     public $currentPage = 1;
     public $totalProducts = 0;
 
+    // Stats
+    public $inStockCount = 0;
+    public $outOfStockCount = 0;
+    public $featuredCount = 0;
+
     // Pagination event listener
     protected $listeners = ['pageChanged' => 'handlePageChanged'];
 
@@ -65,15 +70,51 @@ class ShowAllProduct extends Component
         if ($user && $user->hasRole('vendor')) {
             $this->allProducts = $eloquentProductRepository->searchByCriteriaForUser($user->id, $criteria);
             $this->totalProducts = $eloquentProductRepository->countByCriteriaForUser($user->id, $countCriteria);
+
+            // Calculate stats for vendor
+            $this->calculateVendorStats($user->id);
         } else {
             // If user is admin, show all products
             $this->allProducts = $eloquentProductRepository->searchByCriteria($criteria);
             $this->totalProducts = $eloquentProductRepository->countByCriteria($countCriteria);
+
+            // Calculate stats for all products
+            $this->calculateAdminStats();
         }
 
         if (!$this->allProducts || empty($this->allProducts)) {
             $this->productsNotFoundText = 'No products found.';
         }
+    }
+
+    private function calculateAdminStats()
+    {
+        // Count in stock products (out_of_stock = false or is_sold_out = false)
+        $this->inStockCount = ProductEloquentModel::where('is_sold_out', false)->count();
+
+        // Count out of stock products
+        $this->outOfStockCount = ProductEloquentModel::where('is_sold_out', true)->count();
+
+        // Count featured products
+        $this->featuredCount = ProductEloquentModel::where('featured', true)->count();
+    }
+
+    private function calculateVendorStats($userId)
+    {
+        // Count in stock products for this vendor
+        $this->inStockCount = ProductEloquentModel::whereHas('vendor', function ($q) use ($userId) {
+            $q->where('user_id', $userId);
+        })->where('is_sold_out', false)->count();
+
+        // Count out of stock products for this vendor
+        $this->outOfStockCount = ProductEloquentModel::whereHas('vendor', function ($q) use ($userId) {
+            $q->where('user_id', $userId);
+        })->where('is_sold_out', true)->count();
+
+        // Count featured products for this vendor
+        $this->featuredCount = ProductEloquentModel::whereHas('vendor', function ($q) use ($userId) {
+            $q->where('user_id', $userId);
+        })->where('featured', true)->count();
     }
 
     public function sortBy($field)
