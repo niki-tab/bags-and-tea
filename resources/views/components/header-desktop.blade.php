@@ -28,7 +28,7 @@
                     <!-- Botón Vende tu bolso -->
                     <div class="flex items-center">
                         <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}"
-                            class="mt-2 px-5 h-8 py-[7px] font-robotoCondensed bg-background-color-2 text-white rounded-full text-xs font-regular hover:bg-background-color-3 transition whitespace-nowrap">
+                            class="flex items-center justify-center px-6 mt-1 h-8 font-robotoCondensed bg-background-color-2 text-white rounded-full text-sm font-regular hover:bg-background-color-3 transition whitespace-nowrap">
                             {{ trans('components/header.button-sell-your-bag') }}
                         </a>
                     </div>
