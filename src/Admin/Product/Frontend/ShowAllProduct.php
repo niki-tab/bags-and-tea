@@ -15,7 +15,6 @@ class ShowAllProduct extends Component
 {
     public $lang;
     public $allProducts = [];
-    public $allProductsForStats = [];
     public $productsNotFoundText;
 
     // Sorting properties
@@ -59,19 +58,17 @@ class ShowAllProduct extends Component
         $eloquentProductRepository = new EloquentProductRepository();
         $user = Auth::user();
 
-        // Get all products for total count (without pagination)
-        $allCriteria = new Criteria($filters, $order, null, null);
+        // Create criteria for counting (without pagination)
+        $countCriteria = new Criteria($filters, Order::none(), null, null);
 
         // If user is vendor, show only their products
         if ($user && $user->hasRole('vendor')) {
             $this->allProducts = $eloquentProductRepository->searchByCriteriaForUser($user->id, $criteria);
-            $this->allProductsForStats = $eloquentProductRepository->searchByCriteriaForUser($user->id, $allCriteria);
-            $this->totalProducts = count($this->allProductsForStats);
+            $this->totalProducts = $eloquentProductRepository->countByCriteriaForUser($user->id, $countCriteria);
         } else {
             // If user is admin, show all products
             $this->allProducts = $eloquentProductRepository->searchByCriteria($criteria);
-            $this->allProductsForStats = $eloquentProductRepository->searchByCriteria($allCriteria);
-            $this->totalProducts = count($this->allProductsForStats);
+            $this->totalProducts = $eloquentProductRepository->countByCriteria($countCriteria);
         }
 
         if (!$this->allProducts || empty($this->allProducts)) {
