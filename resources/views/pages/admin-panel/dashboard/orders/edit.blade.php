@@ -44,6 +44,7 @@
                             Send Confirmation (With Trustpilot)
                         </button>
                     </form>
+                    @livewire('admin.orders.send-certificate', ['order' => $order])
                 </div>
             </div>
 
@@ -237,15 +238,30 @@
                                             @foreach($items as $item)
                                                 @php
                                                     $itemObj = is_object($item) ? $item : (object) $item;
-                                                    $snapshot = is_string($itemObj->product_snapshot ?? null) ? json_decode($itemObj->product_snapshot, true) : (is_object($itemObj->product_snapshot ?? null) ? (array) $itemObj->product_snapshot : ($itemObj->product_snapshot ?? []));
+
+                                                    // Properly convert product_snapshot to array, handling nested objects
+                                                    if (is_string($itemObj->product_snapshot ?? null)) {
+                                                        $snapshot = json_decode($itemObj->product_snapshot, true);
+                                                    } elseif (is_object($itemObj->product_snapshot ?? null) || is_array($itemObj->product_snapshot ?? null)) {
+                                                        // Convert to JSON and back to ensure all nested objects become arrays
+                                                        $snapshot = json_decode(json_encode($itemObj->product_snapshot), true);
+                                                    } else {
+                                                        $snapshot = $itemObj->product_snapshot ?? [];
+                                                    }
+
+                                                    // Safely get the product name
+                                                    $productName = 'N/A';
+                                                    if (isset($snapshot['name'])) {
+                                                        if (is_array($snapshot['name'])) {
+                                                            $productName = $snapshot['name']['en'] ?? $snapshot['name'][array_key_first($snapshot['name'])] ?? 'N/A';
+                                                        } elseif (is_string($snapshot['name'])) {
+                                                            $productName = $snapshot['name'];
+                                                        }
+                                                    }
                                                 @endphp
                                                 <tr>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                        @if(is_array($snapshot['name'] ?? null))
-                                                            {{ $snapshot['name']['en'] ?? $snapshot['name'][array_key_first($snapshot['name'])] ?? 'N/A' }}
-                                                        @else
-                                                            {{ $snapshot['name'] ?? 'N/A' }}
-                                                        @endif
+                                                        {{ $productName }}
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $itemObj->quantity ?? 0 }}</td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">€{{ number_format($itemObj->unit_price ?? 0, 2) }}</td>
