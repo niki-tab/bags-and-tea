@@ -3,7 +3,7 @@
 return [
     // PDF Template
     'title' => 'Certificado de Autenticidad',
-    'subtitle' => 'Documento de Autenticación Oficial',
+    'subtitle' => 'Documento de Autenticación',
     'intro' => 'Este certificado confirma que :app_name ha autenticado<br>el artículo de lujo descrito a continuación y verifica su procedencia y autenticidad.',
     'brand' => 'Marca:',
     'sku' => 'SKU:',
@@ -13,7 +13,7 @@ return [
     'order_number' => 'Número de Pedido:',
     'authenticated_for' => 'Autenticado Para:',
     'issue_date' => 'Fecha de Emisión:',
-    'scan_to_verify' => 'Escanee para verificar la autenticidad',
+    'scan_to_verify' => 'Escanee para ver detalles del producto',
     'authentication_team' => 'Equipo de Autenticación de :app_name',
     'disclaimer' => 'Este certificado es emitido por :app_name como confirmación de la verificación de autenticidad<br>realizada en el artículo descrito anteriormente. Este documento debe guardarse con el artículo para referencia futura.',
 

@@ -8,6 +8,7 @@ use Src\Products\Certificates\Infrastructure\Eloquent\CertificateEloquentModel;
 use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
 
 final class CertificatePDFGenerator
 {
@@ -34,13 +35,19 @@ final class CertificatePDFGenerator
         // Get product snapshot data
         $snapshot = $certificate->product_snapshot;
 
+        // Get primary image from product_media table
+        $primaryImage = $this->getPrimaryProductImage($certificate->product_id);
+
+        // Get brand name from brands table
+        $brandName = $this->getBrandName($certificate->product_id, $locale);
+
         // Prepare data for the view
         $data = [
             'certificate' => $certificate,
             'qrCode' => $qrCode,
             'productName' => $this->getTranslatedValue($snapshot['name'] ?? 'N/A', $locale),
-            'productImage' => $snapshot['primary_image'] ?? null,
-            'brandName' => $this->extractName($snapshot['brand'] ?? null, $locale),
+            'productImage' => $primaryImage,
+            'brandName' => $brandName,
             'sku' => is_array($snapshot['sku'] ?? null) ? 'N/A' : ($snapshot['sku'] ?? 'N/A'),
             'qualityName' => $this->extractName($snapshot['quality'] ?? null, $locale),
             'categories' => $snapshot['categories'] ?? [],
@@ -102,5 +109,60 @@ final class CertificatePDFGenerator
         }
 
         return 'N/A';
+    }
+
+    /**
+     * Get primary product image from product_media table
+     */
+    private function getPrimaryProductImage(string $productId): ?string
+    {
+        $media = DB::table('product_media')
+            ->where('product_id', $productId)
+            ->where('is_primary', true)
+            ->first();
+
+        return $media ? $media->file_path : null;
+    }
+
+    /**
+     * Get brand name from brands table
+     */
+    private function getBrandName(string $productId, string $locale): string
+    {
+        // Get brand_id from products table
+        $product = DB::table('products')
+            ->where('id', $productId)
+            ->first();
+
+        if (!$product || !$product->brand_id) {
+            return 'N/A';
+        }
+
+        // Get brand from brands table
+        $brand = DB::table('brands')
+            ->where('id', $product->brand_id)
+            ->first();
+
+        if (!$brand || !$brand->name) {
+            return 'N/A';
+        }
+
+        // Parse JSON name field
+        $names = json_decode($brand->name, true);
+
+        if (!is_array($names)) {
+            return 'N/A';
+        }
+
+        // Return name in requested locale, fallback to English, then first available
+        if (isset($names[$locale])) {
+            return $names[$locale];
+        }
+
+        if (isset($names['en'])) {
+            return $names['en'];
+        }
+
+        return reset($names) ?: 'N/A';
     }
 }
