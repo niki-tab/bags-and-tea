@@ -13,7 +13,7 @@ return [
     'order_number' => 'Order Number:',
     'authenticated_for' => 'Authenticated For:',
     'issue_date' => 'Issue Date:',
-    'scan_to_verify' => 'Scan to verify authenticity',
+    'scan_to_verify' => 'Scan to view product details',
     'authentication_team' => ':app_name Authentication Team',
     'disclaimer' => 'This certificate is issued by :app_name as confirmation of the authenticity verification<br>performed on the item described above. This document should be kept with the item for future reference.',
 
