@@ -308,20 +308,20 @@ class ProductForm extends Component
             
             // Calculate current total images
             $currentTotal = count($this->existingMedia) + count($this->existingNewMedia ?? []);
-            $maxAllowed = 12;
+            $maxAllowed = 16;
             $remainingSlots = $maxAllowed - $currentTotal;
-            
+
             // If no remaining slots, show error and return
             if ($remainingSlots <= 0) {
-                $this->addError('media', 'Maximum of 12 images allowed. Please remove some images first.');
+                $this->addError('media', 'Maximum of 16 images allowed. Please remove some images first.');
                 $this->media = [];
                 return;
             }
-            
+
             // Limit new files to remaining slots
             if (count($newFiles) > $remainingSlots) {
                 $newFiles = array_slice($newFiles, 0, $remainingSlots);
-                $this->addError('media', "Only {$remainingSlots} more images can be added (12 max total). Some files were not included.");
+                $this->addError('media', "Only {$remainingSlots} more images can be added (16 max total). Some files were not included.");
             }
             
             // If this is the first upload, just use the new files

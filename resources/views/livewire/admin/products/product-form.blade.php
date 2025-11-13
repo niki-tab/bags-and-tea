@@ -409,7 +409,7 @@
                     <!-- All Images (Unified Display) -->
                     @if(!empty($unifiedMedia))
                         <div class="mb-6">
-                            <h5 class="text-xs font-medium text-gray-700 mb-3">Product Images ({{ count($unifiedMedia) }}/12)</h5>
+                            <h5 class="text-xs font-medium text-gray-700 mb-3">Product Images ({{ count($unifiedMedia) }}/16)</h5>
                             <p class="text-xs text-gray-500 mb-3">Drag images to reorder. First image will be the primary image.</p>
                             <div id="sortable-images" class="flex flex-wrap gap-4">
                                 @foreach($unifiedMedia as $index => $item)
@@ -481,7 +481,7 @@
                     <!-- Upload New Media -->
                     @php
                         $totalImages = count($unifiedMedia ?? []);
-                        $maxImages = 12;
+                        $maxImages = 16;
                         $canUpload = $totalImages < $maxImages;
                     @endphp
                     
