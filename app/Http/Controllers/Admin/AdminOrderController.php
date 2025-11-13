@@ -230,15 +230,15 @@ class AdminOrderController extends Controller
                     'id' => Uuid::uuid4()->toString(),
                     'suborder_id' => $suborderId,
                     'product_id' => $item['product_id'],
-                    'product_name' => json_encode($productName),
+                    'product_name' => $productName, // Don't json_encode - Laravel will do it automatically
                     'product_sku' => $product->sku ?? null,
                     'unit_price' => $item['price'],
                     'quantity' => $item['quantity'],
                     'total_price' => $item['quantity'] * $item['price'],
-                    'product_snapshot' => json_encode([
+                    'product_snapshot' => [
                         'name' => $productName,
                         'sku' => $product->sku ?? null,
-                    ]),
+                    ], // Don't json_encode - Laravel will do it automatically
                 ];
 
                 $this->orderRepository->createOrderItem($orderItem);
