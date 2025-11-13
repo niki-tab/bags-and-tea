@@ -80,16 +80,34 @@ class OrderConfirmation extends Mailable
                     ->where('product_id', $item->product_id)
                     ->where('is_primary', 1)
                     ->first();
-                
+
+                // Decode product_name properly - handle both JSON string and already decoded array
+                $productName = $item->product_name;
+                if (is_string($productName)) {
+                    $decodedName = json_decode($productName, true);
+                    $productName = is_array($decodedName) ? $decodedName : ['en' => $productName];
+                } elseif (!is_array($productName)) {
+                    $productName = ['en' => 'Product'];
+                }
+
+                // Decode product_snapshot
+                $productSnapshot = $item->product_snapshot;
+                if (is_string($productSnapshot)) {
+                    $decodedSnapshot = json_decode($productSnapshot, true);
+                    $productSnapshot = is_array($decodedSnapshot) ? $decodedSnapshot : [];
+                } elseif (!is_array($productSnapshot)) {
+                    $productSnapshot = [];
+                }
+
                 $orderItems[] = [
                     'product_id' => $item->product_id,
-                    'product_name' => json_decode($item->product_name, true),
+                    'product_name' => $productName,
                     'product_sku' => $item->product_sku,
                     'quantity' => $item->quantity,
                     'unit_price' => $item->unit_price,
                     'total_price' => $item->total_price,
                     'product_image' => $primaryImage ? $primaryImage->file_path : null,
-                    'product_snapshot' => json_decode($item->product_snapshot, true),
+                    'product_snapshot' => $productSnapshot,
                 ];
             }
         }
