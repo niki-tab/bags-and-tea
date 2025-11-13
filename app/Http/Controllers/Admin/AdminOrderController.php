@@ -366,18 +366,33 @@ class AdminOrderController extends Controller
         try {
             $includeTrustpilot = $request->input('include_trustpilot', 1);
 
+            // Detect the customer's locale from order data
+            $customerLocale = 'en';
+            // Try to get from user's preference first
+            $user = \DB::table('users')->where('email', $orderData['customer_email'])->first();
+            if ($user && isset($user->locale)) {
+                $customerLocale = $user->locale;
+            } else {
+                // Fallback to shipping address country
+                if (isset($orderData['shipping_address']['country']) && $orderData['shipping_address']['country'] === 'ES') {
+                    $customerLocale = 'es';
+                } else {
+                    $customerLocale = 'en';
+                }
+            }
+
             if ($includeTrustpilot) {
                 // Send with both admin and Trustpilot BCC (same as automatic orders)
                 \Mail::to($orderData['customer_email'])
                     ->bcc(['nicolas.tabares.tech@gmail.com', 'bagsandtea.com+d98660a3fa@invite.trustpilot.com'])
-                    ->send(new \App\Mail\OrderConfirmation($orderNumber));
+                    ->send(new \App\Mail\OrderConfirmation($orderNumber, $customerLocale));
 
                 $message = 'Order confirmation email sent successfully (with Trustpilot)!';
             } else {
                 // Send only with admin BCC (no Trustpilot)
                 \Mail::to($orderData['customer_email'])
                     ->bcc(['nicolas.tabares.tech@gmail.com'])
-                    ->send(new \App\Mail\OrderConfirmation($orderNumber));
+                    ->send(new \App\Mail\OrderConfirmation($orderNumber, $customerLocale));
 
                 $message = 'Order confirmation email sent successfully (without Trustpilot)!';
             }
