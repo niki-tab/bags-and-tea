@@ -55,9 +55,9 @@
                         <!-- Product Image -->
                         <div style="display: table-cell; vertical-align: middle; width: 80px; padding-right: 15px;">
                             @if(isset($item['product_image']) && $item['product_image'])
-                            <img src="{{ url($item['product_image']) }}" 
-                                 alt="{{ is_array($item['product_name']) ? ($item['product_name']['en'] ?? $item['product_name']['es'] ?? 'Product') : $item['product_name'] }}"
-                                 width="60" 
+                            <img src="{{ url($item['product_image']) }}"
+                                 alt="{{ is_array($item['product_name']) ? ($item['product_name'][$locale] ?? $item['product_name']['en'] ?? $item['product_name']['es'] ?? 'Product') : $item['product_name'] }}"
+                                 width="60"
                                  height="60"
                                  style="border-radius: 8px; object-fit: cover; display: block; border: 1px solid #E5E7EB;">
                             @else
@@ -71,8 +71,8 @@
                         <div style="display: table-cell; vertical-align: middle; width: calc(100% - 200px);">
                             <div style="color: #482626; font-size: 16px; font-weight: bold; margin-bottom: 5px; font-family: 'Arial', sans-serif;">
                                 @php
-                                    $productName = is_array($item['product_name']) 
-                                        ? ($item['product_name']['en'] ?? $item['product_name']['es'] ?? 'Product')
+                                    $productName = is_array($item['product_name'])
+                                        ? ($item['product_name'][$locale] ?? $item['product_name']['en'] ?? $item['product_name']['es'] ?? 'Product')
                                         : $item['product_name'];
                                 @endphp
                                 {{ $productName }}
