@@ -484,9 +484,17 @@ class ProductForm extends Component
      */
     private function isR2Url($filePath)
     {
-        return str_contains($filePath, 'r2.cloudflarestorage.com') || 
+        return str_contains($filePath, 'r2.cloudflarestorage.com') ||
                str_contains($filePath, 'cloudflare') ||
-               (str_starts_with($filePath, 'https://') && !str_contains($filePath, 'storage/'));
+               (str_starts_with($filePath, 'https://') && !str_contains($filePath, 'storage/') && !str_contains($filePath, 'digitaloceanspaces.com'));
+    }
+
+    /**
+     * Check if a file path is stored on DigitalOcean Spaces
+     */
+    private function isDoSpacesUrl($filePath)
+    {
+        return str_contains($filePath, 'digitaloceanspaces.com');
     }
 
     /**
@@ -496,7 +504,19 @@ class ProductForm extends Component
     {
         // Parse the URL to get the path component
         $parsedUrl = parse_url($url);
-        
+
+        // Remove the leading slash from the path
+        return ltrim($parsedUrl['path'], '/');
+    }
+
+    /**
+     * Extract the file path from DigitalOcean Spaces URL for deletion
+     */
+    private function extractPathFromDoSpacesUrl($url)
+    {
+        // Parse the URL to get the path component
+        $parsedUrl = parse_url($url);
+
         // Remove the leading slash from the path
         return ltrim($parsedUrl['path'], '/');
     }
@@ -585,8 +605,12 @@ class ProductForm extends Component
         // Handle media deletion
         if (!empty($this->mediaToDelete)) {
             ProductMediaModel::whereIn('id', $this->mediaToDelete)->each(function($media) {
-                // Check if the file is stored on R2 or local storage
-                if ($this->isR2Url($media->file_path)) {
+                // Check if the file is stored on R2, DO Spaces, or local storage
+                if ($this->isDoSpacesUrl($media->file_path)) {
+                    // Delete from DigitalOcean Spaces
+                    $path = $this->extractPathFromDoSpacesUrl($media->file_path);
+                    Storage::disk('do_spaces')->delete($path);
+                } elseif ($this->isR2Url($media->file_path)) {
                     // Delete from R2 (Cloudflare)
                     $path = $this->extractPathFromR2Url($media->file_path);
                     Storage::disk('r2')->delete($path);
@@ -617,20 +641,22 @@ class ProductForm extends Component
                     
                     if (isset($this->existingNewMedia[$newIndex])) {
                         $file = $this->existingNewMedia[$newIndex];
-                        
-                        // Upload to R2 (Cloudflare) instead of local storage
+
+                        // Upload to DigitalOcean Spaces
                         $uuid = Uuid::uuid4()->toString();
                         $filename = $uuid . '_' . time() . '.' . $file->getClientOriginalExtension();
-                        $path = $file->storeAs('products/' . $product->id, $filename, ['disk' => 'r2', 'visibility' => 'public']);
-                        
-                        // Get the R2 URL and ensure it has the bags-and-tea prefix
-                        $baseUrl = Storage::disk('r2')->url('');
-                        $url = $baseUrl . 'bags-and-tea/' . $path;
+                        $path = 'product-images/' . $filename;
+
+                        // Store file to DigitalOcean Spaces
+                        Storage::disk('do_spaces')->put($path, file_get_contents($file->getRealPath()), 'public');
+
+                        // Get the full URL
+                        $url = Storage::disk('do_spaces')->url($path);
                         
                         ProductMediaModel::create([
                             'id' => (string) Str::uuid(),
                             'product_id' => $product->id,
-                            'file_path' => $url, // Store the full R2 URL
+                            'file_path' => $url, // Store the full DigitalOcean Spaces URL
                             'file_name' => $file->getClientOriginalName(),
                             'file_type' => 'image',
                             'mime_type' => $file->getMimeType(),
@@ -659,6 +685,101 @@ class ProductForm extends Component
             // Redirect to edit page after creation
             return redirect()->route('admin.products.edit', $product->id);
         }
+    }
+
+    /**
+     * Check if the product has any Cloudflare R2 images
+     */
+    public function hasCloudflareImages()
+    {
+        if (!$this->product) {
+            return false;
+        }
+
+        foreach ($this->existingMedia as $media) {
+            if ($this->isR2Url($media['file_path'])) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Migrate all Cloudflare R2 images to DigitalOcean Spaces
+     */
+    public function migrateImagesToDigitalOcean()
+    {
+        if (!$this->product) {
+            session()->flash('error', 'Product not found.');
+            return;
+        }
+
+        $migratedCount = 0;
+        $failedCount = 0;
+
+        foreach ($this->product->media as $media) {
+            // Skip if already on DigitalOcean
+            if ($this->isDoSpacesUrl($media->file_path)) {
+                continue;
+            }
+
+            // Skip if not on Cloudflare
+            if (!$this->isR2Url($media->file_path)) {
+                continue;
+            }
+
+            try {
+                // Download image from Cloudflare
+                $imageContent = file_get_contents($media->file_path);
+
+                if ($imageContent === false) {
+                    $failedCount++;
+                    continue;
+                }
+
+                // Generate new filename
+                $uuid = Uuid::uuid4()->toString();
+                $extension = pathinfo($media->file_name, PATHINFO_EXTENSION);
+                $filename = $uuid . '_' . time() . '.' . $extension;
+                $path = 'product-images/' . $filename;
+
+                // Upload to DigitalOcean Spaces
+                Storage::disk('do_spaces')->put($path, $imageContent, 'public');
+
+                // Get the new URL
+                $newUrl = Storage::disk('do_spaces')->url($path);
+
+                // Update database record
+                $media->file_path = $newUrl;
+                $media->save();
+
+                $migratedCount++;
+
+            } catch (\Exception $e) {
+                \Log::error('Failed to migrate image: ' . $e->getMessage(), [
+                    'media_id' => $media->id,
+                    'file_path' => $media->file_path
+                ]);
+                $failedCount++;
+            }
+        }
+
+        // Reload the product media
+        $this->loadProduct();
+
+        // Show success message
+        if ($migratedCount > 0 && $failedCount === 0) {
+            session()->flash('success', "Successfully migrated {$migratedCount} image(s) to DigitalOcean Spaces!");
+        } elseif ($migratedCount > 0 && $failedCount > 0) {
+            session()->flash('success', "Migrated {$migratedCount} image(s). Failed to migrate {$failedCount} image(s).");
+        } elseif ($failedCount > 0) {
+            session()->flash('error', "Failed to migrate {$failedCount} image(s).");
+        } else {
+            session()->flash('info', 'No images needed to be migrated.');
+        }
+
+        $this->dispatch('scroll-to-top');
     }
 
     public function render()

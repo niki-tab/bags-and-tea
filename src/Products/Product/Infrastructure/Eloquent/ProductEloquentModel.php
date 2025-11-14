@@ -21,6 +21,7 @@ class ProductEloquentModel extends Model
     protected $table = 'products';
     public $incrementing = false;
     protected $primaryKey = 'id';
+    protected $keyType = 'string';
     protected $fillable = [
         'id',
         'name',
