@@ -318,9 +318,11 @@
                         {{-- Product Image Carousel --}}
                         @php
                             $productImages = $product->media ? $product->media->where('file_type', 'image')->map(function($media) {
-                                // Check if it's an R2 URL (full URL) or local storage path
-                                if (str_starts_with($media->file_path, 'https://') || str_contains($media->file_path, 'r2.cloudflarestorage.com')) {
-                                    return $media->file_path; // Use R2 URL directly
+                                // Check if it's a cloud storage URL (R2, DigitalOcean Spaces) or local storage path
+                                if (str_starts_with($media->file_path, 'https://') ||
+                                    str_contains($media->file_path, 'r2.cloudflarestorage.com') ||
+                                    str_contains($media->file_path, 'digitaloceanspaces.com')) {
+                                    return $media->file_path; // Use cloud storage URL directly
                                 } else {
                                     return asset($media->file_path); // Use asset() for local storage
                                 }

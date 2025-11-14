@@ -398,8 +398,21 @@
         <!-- Module 2: Media -->
         <div class="bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden">
             <div class="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-green-50 to-blue-50">
-                <h3 class="text-lg font-semibold text-gray-900">Media</h3>
-                <p class="mt-1 text-sm text-gray-600">Upload and manage product images</p>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900">Media</h3>
+                        <p class="mt-1 text-sm text-gray-600">Upload and manage product images</p>
+                    </div>
+                    @if($isEditing && $this->hasCloudflareImages())
+                        <button type="button"
+                                wire:click="migrateImagesToDigitalOcean"
+                                wire:loading.attr="disabled"
+                                class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <span wire:loading.remove wire:target="migrateImagesToDigitalOcean">Migrate to DigitalOcean</span>
+                            <span wire:loading wire:target="migrateImagesToDigitalOcean">Migrating...</span>
+                        </button>
+                    @endif
+                </div>
             </div>
             <div class="p-6 space-y-6">
                 <!-- Media Upload -->
@@ -416,7 +429,7 @@
                                     @if($item['type'] === 'existing')
                                         <!-- Existing Media -->
                                         <div class="relative group cursor-move w-40 h-40 flex-shrink-0" wire:key="media-{{ $item['data']['id'] }}" data-id="{{ $item['id'] }}">
-                                            <img src="{{ str_starts_with($item['data']['file_path'], 'https://') || str_contains($item['data']['file_path'], 'r2.cloudflarestorage.com') ? $item['data']['file_path'] : asset($item['data']['file_path']) }}" alt="{{ $item['data']['alt_text'] ?? '' }}" class="w-full h-40 object-cover rounded-lg shadow-sm border-2 {{ $item['is_primary'] ? 'border-indigo-500' : 'border-gray-200' }}">
+                                            <img src="{{ str_starts_with($item['data']['file_path'], 'https://') || str_contains($item['data']['file_path'], 'r2.cloudflarestorage.com') || str_contains($item['data']['file_path'], 'digitaloceanspaces.com') ? $item['data']['file_path'] : asset($item['data']['file_path']) }}" alt="{{ $item['data']['alt_text'] ?? '' }}" class="w-full h-40 object-cover rounded-lg shadow-sm border-2 {{ $item['is_primary'] ? 'border-indigo-500' : 'border-gray-200' }}">
                                             @if($item['is_primary'])
                                                 <div class="absolute top-2 left-2 bg-indigo-600 text-white text-xs px-2 py-1 rounded">
                                                     Primary

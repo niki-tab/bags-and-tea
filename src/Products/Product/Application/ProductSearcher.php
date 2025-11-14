@@ -119,9 +119,11 @@ final class ProductSearcher
             $imageUrl = null;
             if (isset($product['primary_image']['file_path'])) {
                 $filePath = $product['primary_image']['file_path'];
-                // Check if it's an R2 URL (full URL) or local storage path
-                if (str_starts_with($filePath, 'https://') || str_contains($filePath, 'r2.cloudflarestorage.com')) {
-                    $imageUrl = $filePath; // Use R2 URL directly
+                // Check if it's a cloud storage URL (R2, DigitalOcean Spaces) or local storage path
+                if (str_starts_with($filePath, 'https://') ||
+                    str_contains($filePath, 'r2.cloudflarestorage.com') ||
+                    str_contains($filePath, 'digitaloceanspaces.com')) {
+                    $imageUrl = $filePath; // Use cloud storage URL directly
                 } else {
                     $imageUrl = asset($filePath); // Use asset() for local storage
                 }

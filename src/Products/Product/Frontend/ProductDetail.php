@@ -29,11 +29,11 @@ class ProductDetail extends Component
             $this->product = ProductEloquentModel::with('media', 'brand', 'categories', 'attributes', 'quality')
                 ->where("slug->".$this->lang, $productSlug)
                 ->first();
-            
+
             if($this->product){
                 // Load product images from product_media table
                 $this->productImages = $this->product->media->sortBy('sort_order')->values()->toArray();
-                
+
                 // Set up product specifications
                 $this->setupSpecifications();
                 
@@ -201,13 +201,15 @@ class ProductDetail extends Component
     }
 
     /**
-     * Get the correct image URL for both R2 and local storage
+     * Get the correct image URL for cloud storage (R2, DigitalOcean Spaces) and local storage
      */
     private function getImageUrl($filePath)
     {
-        // Check if it's an R2 URL (full URL) or local storage path
-        if (str_starts_with($filePath, 'https://') || str_contains($filePath, 'r2.cloudflarestorage.com')) {
-            return $filePath; // Use R2 URL directly
+        // Check if it's a cloud storage URL (R2, DigitalOcean Spaces) or local storage path
+        if (str_starts_with($filePath, 'https://') ||
+            str_contains($filePath, 'r2.cloudflarestorage.com') ||
+            str_contains($filePath, 'digitaloceanspaces.com')) {
+            return $filePath; // Use cloud storage URL directly
         } else {
             return asset($filePath); // Use asset() for local storage
         }

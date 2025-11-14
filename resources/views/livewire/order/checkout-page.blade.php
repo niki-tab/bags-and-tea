@@ -375,7 +375,7 @@
                         @foreach($cartItems as $item)
                             <div class="flex items-center space-x-4">
                                 @if(isset($item['product']['primary_image']) && !empty($item['product']['primary_image']['file_path']))
-                                    <img src="{{ str_starts_with($item['product']['primary_image']['file_path'], 'https://') || str_contains($item['product']['primary_image']['file_path'], 'r2.cloudflarestorage.com') ? $item['product']['primary_image']['file_path'] : asset($item['product']['primary_image']['file_path']) }}" 
+                                    <img src="{{ str_starts_with($item['product']['primary_image']['file_path'], 'https://') || str_contains($item['product']['primary_image']['file_path'], 'r2.cloudflarestorage.com') || str_contains($item['product']['primary_image']['file_path'], 'digitaloceanspaces.com') ? $item['product']['primary_image']['file_path'] : asset($item['product']['primary_image']['file_path']) }}" 
                                          alt="{{ $item['product']['name'][app()->getLocale()] ?? 'Product' }}" 
                                          class="w-24 h-24 object-cover rounded">
                                 @else
