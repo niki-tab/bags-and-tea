@@ -1,7 +1,10 @@
 <div>
+    {{-- Trustpilot Reviews --}}
+
     <div class="mx-4 md:mx-12 px-4 md:px-10 py-8 bg-white">
         {{-- Header Section --}}
         <div class="text-center mb-8">
+        @livewire('shared.trustpilot-reviews')
             <h1 class="text-4xl {{ preg_match('/\d/', $pageTitle) ? 'font-robotoCondensed' : 'font-[\'Lovera\']' }} text-color-2 mb-8 mt-6">
                 {{ $pageTitle }}
             </h1>
