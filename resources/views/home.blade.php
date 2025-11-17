@@ -67,7 +67,6 @@ if(request()->route('bagName')){
             </h2>
         </div>
     </div>
-
     <div class="flex flex-col md:flex-row h-auto md:h-96">
         <div class="w-full md:w-1/2 bg-[#ffffff] flex items-center justify-center h-full py-12 md:py-0 pl-0 md:pl-10">
             <div class="w-3/4 mx-auto">
@@ -91,8 +90,10 @@ if(request()->route('bagName')){
             >
         </div>
     </div>
-
     <x-our-brands :title="$ourBrandsTitle"/>
+    <div class=" bg-[#F8F3F0] md:pb-20 pb-12">
+            @livewire('shared.trustpilot-reviews')   
+    </div>
     <div class="py-8 md:py-16 bg-color-3 px-8 md:px-32">
         <h2 class="text-center text-[#ffffff] text-2xl md:text-4xl mb-8 md:mb-14 font-['Lovera']">{{ trans('pages/home.title-avantage-buying-bags-and-tea') }} </h2>
         <p class="text-center text-white text-robotoCondensed font-light px-8 md:px-20">{{ trans('pages/home.description-avantage-buying-bags-and-tea') }}</p>
@@ -110,34 +111,7 @@ if(request()->route('bagName')){
             </a>
         </div>
     </div>
-
-    <div class="py-4 sm:py-6 md:py-8 lg:py-12 xl:py-16 bg-[#F8F3F0] px-2 sm:px-4 lg:px-52">
-        <div class="flex flex-col md:flex-row h-auto md:h-[250px] lg:h-[280px] xl:h-[320px] 2xl:h-[400px] w-full mx-auto mb-6 sm:mb-8 lg:mb-10">
-            <!-- Imagen -->
-            <div class="w-full md:w-1/2 bg-white flex items-center justify-center shadow-lg">
-                <img src="{{ asset('images/home/image49.png') }}" 
-                    alt="Luxury YSL Bag" 
-                    class="w-full h-48 sm:h-56 md:h-full object-cover">
-            </div>
-            <!-- Contenido de texto -->
-            <div class="w-full md:w-1/2 bg-white flex items-center justify-center shadow-lg">
-                <div class="w-full px-3 py-4 sm:px-4 sm:py-5 md:px-4 md:py-3 lg:px-6 lg:py-4 xl:px-8 xl:py-0 2xl:px-10">
-                    <h1 class="text-[#482626] text-lg sm:text-xl md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-['Lovera'] text-center leading-tight">
-                        {{ trans('pages/home.title-certify-your-bag') }}
-                    </h1>
-                    <p class="font-mixed text-color-2 mt-2 sm:mt-3 md:mt-2 lg:mt-3 xl:mt-4 2xl:mt-6 text-xs sm:text-sm md:text-xs lg:text-sm xl:text-base 2xl:text-lg text-center leading-relaxed">
-                        {{ trans('pages/home.description-certify-your-bag') }}   
-                    </p>
-                    <div class="flex justify-center mt-3 sm:mt-4 md:mt-3 lg:mt-4 xl:mt-5 2xl:mt-6">
-                        <button class="bg-color-2 text-white px-3 sm:px-4 md:px-4 lg:px-5 xl:px-8 2xl:px-12 py-1.5 sm:py-2 md:py-1.5 lg:py-2 xl:py-2.5 2xl:py-3 rounded-full font-medium flex items-center gap-1 sm:gap-1.5 md:gap-1 lg:gap-1.5 xl:gap-2 text-xs sm:text-sm md:text-xs lg:text-sm xl:text-base hover:bg-opacity-90 transition-colors">
-                            {{ trans('pages/home.button-certify-your-bag') }} <span class="text-xs sm:text-sm md:text-xs lg:text-sm xl:text-base 2xl:text-lg font-bold ml-0.5 sm:ml-1 md:ml-0.5 lg:ml-1 xl:ml-2">&gt;</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
+ 
     <!-- FAQs Section -->
     <div class="bg-[#3A1515] text-white py-12">
         <h2 class="mx-6 text-center text-4xl font-regular mb-10 md:mb-20 font-['Lovera']">{{ $stringFaqTitle }}</h2>
