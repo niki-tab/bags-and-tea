@@ -1,4 +1,4 @@
-<div class="bg-white py-4">
+<div class="bg-transparent py-4">
     <a href="https://www.trustpilot.com/review/bagsandtea.com" target="_blank">
     <div class="container mx-auto px-4">
         <div class="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-6">
