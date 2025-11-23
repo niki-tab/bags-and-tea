@@ -159,6 +159,7 @@ return [
     'shipping-unavailable-message' => 'Unfortunately, shipping is not available to the selected country. Please choose a different shipping address.',
     'shipping-unavailable-payment' => 'Payment methods are not available for countries where we do not ship.',
     'shipping-not-available-button' => 'We don\'t ship to the selected country',
+    'customs-notice' => 'This order will be subject to customs. Customs fees are not included in the price and are the responsibility of the customer.',
     'total' => 'Total',
     'discount-code' => 'Discount Code',
     'apply' => 'Apply',

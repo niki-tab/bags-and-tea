@@ -107,16 +107,49 @@ class CalculateOrderFees
             ->orderBy('priority')
             ->first();
 
-        // If no specific rate found, shipping is not available
+        // If no specific rate found, check if country is restricted
         if (!$shippingRate) {
+            // Countries we don't ship to due to sanctions, conflicts, or safety concerns
+            $restrictedCountries = [
+                'RU', // Russia
+                'BY', // Belarus
+                'KP', // North Korea
+                'SY', // Syria
+                'IR', // Iran
+                'CU', // Cuba
+                'VE', // Venezuela
+                'MM', // Myanmar
+                'AF', // Afghanistan
+                'YE', // Yemen
+                'SD', // Sudan
+                'SS', // South Sudan
+                'SO', // Somalia
+                'LY', // Libya
+            ];
+
+            // If country is restricted, shipping is not available
+            if (in_array(strtoupper($countryCode), $restrictedCountries)) {
+                return [
+                    'rate_name' => 'Shipping Unavailable',
+                    'zone_name' => 'Not Available',
+                    'amount' => 0,
+                    'delivery_days_min' => null,
+                    'delivery_days_max' => null,
+                    'is_available' => false,
+                    'error_message' => 'shipping_not_available',
+                ];
+            }
+
+            // For all other countries without specific rates, apply fixed 40 EUR international shipping
             return [
-                'rate_name' => 'Shipping Unavailable',
-                'zone_name' => 'Not Available',
-                'amount' => 0,
-                'delivery_days_min' => null,
-                'delivery_days_max' => null,
-                'is_available' => false,
-                'error_message' => 'shipping_not_available',
+                'rate_name' => 'International Shipping',
+                'zone_name' => $this->getCountryName($countryCode),
+                'amount' => 40.00,
+                'delivery_days_min' => 10,
+                'delivery_days_max' => 15,
+                'is_available' => true,
+                'is_default' => false,
+                'requires_customs_notice' => true,
             ];
         }
 

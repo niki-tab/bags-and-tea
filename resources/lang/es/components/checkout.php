@@ -159,6 +159,7 @@ return [
     'shipping-unavailable-message' => 'Desafortunadamente, el envío no está disponible para el país seleccionado. Por favor, elige una dirección de envío diferente.',
     'shipping-unavailable-payment' => 'Los métodos de pago no están disponibles para países a los que no enviamos.',
     'shipping-not-available-button' => 'No enviamos al país seleccionado',
+    'customs-notice' => 'El pedido estará sujeto a aduanas. Los costes de aduana no dependen de Bags & Tea y correrán por cuenta del cliente.',
     'total' => 'Total',
     'discount-code' => 'Código de Descuento',
     'apply' => 'Aplicar',

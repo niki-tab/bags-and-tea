@@ -479,6 +479,11 @@
                                 </span>
                                 <span class="text-color-2">{{ number_format($shippingCost, 2, ',', '.') }}€</span>
                             </div>
+                            @if(!empty($shippingDetails['requires_customs_notice']))
+                                <div class="text-xs text-amber-700 bg-amber-50 p-2 rounded mt-1">
+                                    ⚠️ {{ trans('components/checkout.customs-notice') }}
+                                </div>
+                            @endif
                         @endif
                         
                         <div class="flex justify-between text-lg font-medium text-color-2 border-t pt-2">
