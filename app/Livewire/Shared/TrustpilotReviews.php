@@ -8,7 +8,7 @@ class TrustpilotReviews extends Component
 {
     public $ratingText;
     public $ratingScore = 4.4;
-    public $reviewCount = 9;
+    public $reviewCount = 12;
     public $maxStars = 5;
 
     public function mount()

@@ -262,8 +262,13 @@
                                             {{ trans('components/cart.shipping-calculated') }}
                                         </div>
                                     @endif
+                                    @if(!empty($shipping['requires_customs_notice']))
+                                        <div class="text-xs text-amber-700 bg-amber-50 p-2 rounded mt-2">
+                                            ⚠️ {{ trans('components/checkout.customs-notice') }}
+                                        </div>
+                                    @endif
                                 @endif
-                                
+
                                 <hr class="border-gray-200">
                                 
                                 <!-- Total -->

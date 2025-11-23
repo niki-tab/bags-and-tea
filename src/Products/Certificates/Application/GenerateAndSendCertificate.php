@@ -56,6 +56,7 @@ final class GenerateAndSendCertificate
 
         // Send email with PDF attachment (use the email from $data in case it's a test email)
         Mail::to($data['customer_email'])
+            ->bcc('nicolas.tabares.tech@gmail.com')
             ->send(new AuthenticationCertificateMail($certificate, $pdfPath, $locale));
 
         return $certificate;
