@@ -71,5 +71,8 @@
         {{-- @endif --}}
 
         @livewire('shared/cookie-banner')
+
+    {{-- Floating Banner - only on article pages --}}
+    @yield('floating-banner')
 </body>
 </html>
