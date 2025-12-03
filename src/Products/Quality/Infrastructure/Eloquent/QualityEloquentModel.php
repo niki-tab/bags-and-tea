@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Src\Shared\Infrastructure\Eloquent\BelongsToSite;
 
 class QualityEloquentModel extends Model
 {
-    use HasFactory, HasTranslations;
+    use HasFactory, HasTranslations, BelongsToSite;
 
     protected $table = 'qualities';
     public $incrementing = false;

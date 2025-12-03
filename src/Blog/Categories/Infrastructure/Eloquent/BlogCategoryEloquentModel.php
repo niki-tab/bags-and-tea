@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Translatable\HasTranslations;
 use Src\Blog\Articles\Model\ArticleModel;
+use Src\Shared\Infrastructure\Eloquent\BelongsToSite;
 
 class BlogCategoryEloquentModel extends Model
 {
-    use HasUuids, HasTranslations, SoftDeletes;
+    use HasUuids, HasTranslations, SoftDeletes, BelongsToSite;
 
     protected $table = 'blog_categories';
 

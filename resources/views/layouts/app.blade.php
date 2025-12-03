@@ -5,6 +5,11 @@
     @vite('resources/js/app.js') <!-- Vite loading JS -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    @if(site_slug() === 'walletsandtea')
+        <meta name="robots" content="noindex, nofollow">
+    @endif
+    
     <link rel="alternate" href="{{ url()->current() }}" hreflang="{{app()->getLocale()}}">
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
@@ -45,7 +50,7 @@
     @livewireStyles
     @yield('styles')
 </head>
-<body class="min-h-screen flex flex-col">
+    <body class="min-h-screen flex flex-col">
     
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WH2F8KHS"

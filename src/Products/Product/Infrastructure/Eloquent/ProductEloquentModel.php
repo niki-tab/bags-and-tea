@@ -13,10 +13,11 @@ use Src\Categories\Infrastructure\Eloquent\CategoryEloquentModel;
 use Src\Attributes\Infrastructure\Eloquent\AttributeEloquentModel;
 use Src\Products\Quality\Infrastructure\Eloquent\QualityEloquentModel;
 use Src\Vendors\Infrastructure\Eloquent\VendorEloquentModel;
+use Src\Shared\Infrastructure\Eloquent\BelongsToSite;
 
 class ProductEloquentModel extends Model
 {
-    use HasFactory, HasTranslations;
+    use HasFactory, HasTranslations, BelongsToSite;
 
     protected $table = 'products';
     public $incrementing = false;

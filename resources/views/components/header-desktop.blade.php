@@ -27,9 +27,9 @@
                 <div class="ml-10 bg-background-color-4 flex items-center justify-center">
                     <!-- Botón Vende tu bolso -->
                     <div class="flex items-center">
-                        <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}"
+                        <a href="{{ route(app()->getLocale() === 'es' ? $siteConfig['button']['route_es'] : $siteConfig['button']['route_en'], ['locale' => app()->getLocale()]) }}"
                             class="mt-2 px-5 h-8 py-[7px] font-robotoCondensed bg-background-color-2 text-white rounded-full text-xs font-regular hover:bg-background-color-3 transition whitespace-nowrap">
-                            {{ trans('components/header.button-sell-your-bag') }}
+                            {{ __site('components/header.button-sell-your-bag') }}
                         </a>
                     </div>
                     <!-- Espaciador responsive -->
@@ -50,8 +50,8 @@
                     </div>
                     
                     <div class="flex-1 flex justify-center px-1">
-                        <a target="_blank" href="https://www.instagram.com/bags.and.tea?igsh=NTgwcGU2a21paGxk&utm_source=qr">
-                            <img src="{{ asset('images/icons/RRSS_insta_b_5.svg') }}" 
+                        <a target="_blank" href="{{ $siteConfig['social']['instagram'] }}">
+                            <img src="{{ asset('images/icons/RRSS_insta_b_5.svg') }}"
                                 class="w-7 h-5 cursor-pointer mt-[3px]"
                                 onmouseover="this.style.filter='brightness(0) saturate(100%) invert(23%) sepia(98%) saturate(2074%) hue-rotate(353deg) brightness(83%) contrast(94%)'"
                                 onmouseout="this.style.filter='none'">
@@ -63,8 +63,8 @@
 
         <!-- Centered Image -->
         <div class="absolute left-1/2 w-1/8 transform -translate-x-1/2">
-            <a href="{{ url(app()->getLocale() === 'es' ? '/es' : '/en') }}">  
-                <img src="{{ asset('images/logo/bags_and_tea_logo_new.svg') }}" class="mx-16 my-4 h-9 cursor-pointer"> 
+            <a href="{{ url(app()->getLocale() === 'es' ? '/es' : '/en') }}">
+                <img src="{{ $siteConfig['logo'] }}" class="mx-16 my-4 h-9 cursor-pointer">
             </a>
         </div>
 
@@ -78,23 +78,24 @@
             <div class="w-[160px]"></div>
             <!-- Menú centrado -->
             <nav class="flex flex-row items-center space-x-8 mx-auto">
-                <a href="{{ route(app()->getLocale() === 'es' ? 'repair-your-bag.show.es' : 'repair-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('repair-your-bag.show.es') || request()->routeIs('repair-your-bag.show.en') ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-14 flex items-center justify-center text-color-2 font-robotoCondensed text-base font-medium hover:text-color-3 pb-2 px-4 whitespace-nowrap">{{ trans('components/header.menu-option-1') }}</a>
-                <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('we-buy-your-bag.show.es') || request()->routeIs('we-buy-your-bag.show.en') ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-14 flex items-center justify-center text-color-2 font-robotoCondensed text-base font-medium hover:text-color-3 pb-2 px-4 whitespace-nowrap">{{ trans('components/header.menu-option-2') }}</a>
+                <a href="{{ route(app()->getLocale() === 'es' ? 'repair-your-bag.show.es' : 'repair-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('repair-your-bag.show.es') || request()->routeIs('repair-your-bag.show.en') ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-14 flex items-center justify-center text-color-2 font-robotoCondensed text-base font-medium hover:text-color-3 pb-2 px-4 whitespace-nowrap">{{ __site('components/header.menu-option-1') }}</a>
+                <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('we-buy-your-bag.show.es') || request()->routeIs('we-buy-your-bag.show.en') ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-14 flex items-center justify-center text-color-2 font-robotoCondensed text-base font-medium hover:text-color-3 pb-2 px-4 whitespace-nowrap">{{ __site('components/header.menu-option-2') }}</a>
 
                 @php
-                    // Get the "Bags" parent category and its children
-                    $bagsParentCategory = \DB::table('categories')
-                        ->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(name, "$.en")) = ?', ['Bags'])
+                    // Get the parent category for this site (Bags/Wallets) and its children
+                    $parentCategoryName = $siteConfig['menu']['parent_category'];
+                    $parentCategory = \DB::table('categories')
+                        ->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(name, "$.en")) = ?', [$parentCategoryName])
                         ->first();
 
-                    $bagCategories = [];
-                    if ($bagsParentCategory) {
+                    $shopCategories = [];
+                    if ($parentCategory) {
                         $categories = \DB::table('categories')
-                            ->where('parent_id', $bagsParentCategory->id)
+                            ->where('parent_id', $parentCategory->id)
                             ->get();
 
                         // Sort alphabetically by translated name
-                        $bagCategories = $categories->sortBy(function($category) {
+                        $shopCategories = $categories->sortBy(function($category) {
                             $name = is_string($category->name) ? json_decode($category->name, true) : $category->name;
                             return $name[app()->getLocale()] ?? $name['en'] ?? '';
                         })->values();
@@ -105,13 +106,13 @@
                 <div class="relative group h-14">
                     <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale()]) }}"
                        class="{{ request()->routeIs('shop.show.es') || request()->routeIs('shop.show.en') ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-14 flex items-center justify-center text-color-2 font-robotoCondensed text-base font-medium hover:text-color-3 pb-2 px-4 whitespace-nowrap">
-                        {{ trans('components/header.menu-option-3') }}
+                        {{ __site('components/header.menu-option-3') }}
                     </a>
 
                     <!-- Dropdown menu -->
-                    @if(count($bagCategories) > 0)
+                    @if(count($shopCategories) > 0)
                         <div class="absolute left-0 top-full hidden group-hover:block bg-background-color-4 shadow-lg z-50 pt-1 border-t border-l border-r border-gray-200">
-                            @foreach($bagCategories as $category)
+                            @foreach($shopCategories as $category)
                                 @php
                                     $categoryName = is_string($category->name) ? json_decode($category->name, true) : $category->name;
                                     $categorySlug = is_string($category->slug) ? json_decode($category->slug, true) : $category->slug;
@@ -127,9 +128,9 @@
                     @endif
                 </div>
 
-                <a href="{{ route(app()->getLocale() === 'es' ? 'about-us.show.es' : 'about-us.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('about-us.show.es') || request()->routeIs('about-us.show.en') ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-14 flex items-center justify-center text-color-2 font-robotoCondensed text-base font-medium hover:text-color-3 pb-2 px-4 whitespace-nowrap">{{ trans('components/header.menu-option-4') }}</a>
-                <a href="{{ route(app()->getLocale() === 'es' ? 'blog.show.en-es' : 'blog.show.en-es', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('blog.show.en-es') || request()->routeIs('article.show.es') || request()->routeIs('article.show.es') ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-14 flex items-center justify-center text-color-2 font-robotoCondensed text-base font-medium hover:text-color-3 pb-2 px-4 whitespace-nowrap">{{ trans('components/header.menu-option-5') }}</a>
-                <a href="{{ route(app()->getLocale() === 'es' ? 'contact.send.es' : 'contact.send.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('contact.send.es') || request()->routeIs('contact.send.en') ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-14 flex items-center justify-center text-color-2 font-robotoCondensed text-base font-medium hover:text-color-3 pb-2 px-4 whitespace-nowrap">{{ trans('components/header.menu-option-6') }}</a>
+                <a href="{{ route(app()->getLocale() === 'es' ? 'about-us.show.es' : 'about-us.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('about-us.show.es') || request()->routeIs('about-us.show.en') ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-14 flex items-center justify-center text-color-2 font-robotoCondensed text-base font-medium hover:text-color-3 pb-2 px-4 whitespace-nowrap">{{ __site('components/header.menu-option-4') }}</a>
+                <a href="{{ route(app()->getLocale() === 'es' ? 'blog.show.en-es' : 'blog.show.en-es', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('blog.show.en-es') || request()->routeIs('article.show.es') || request()->routeIs('article.show.es') ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-14 flex items-center justify-center text-color-2 font-robotoCondensed text-base font-medium hover:text-color-3 pb-2 px-4 whitespace-nowrap">{{ __site('components/header.menu-option-5') }}</a>
+                <a href="{{ route(app()->getLocale() === 'es' ? 'contact.send.es' : 'contact.send.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('contact.send.es') || request()->routeIs('contact.send.en') ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-14 flex items-center justify-center text-color-2 font-robotoCondensed text-base font-medium hover:text-color-3 pb-2 px-4 whitespace-nowrap">{{ __site('components/header.menu-option-6') }}</a>
             </nav>
             <!-- Espacio vacío -->
             <div class="w-[160px]"></div>

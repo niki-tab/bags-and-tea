@@ -9,10 +9,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Translatable\HasTranslations;
 use Src\Products\Product\Infrastructure\Eloquent\ProductEloquentModel;
+use Src\Shared\Infrastructure\Eloquent\BelongsToSite;
 
 class CategoryEloquentModel extends Model
 {
-    use HasUuids, HasTranslations;
+    use HasUuids, HasTranslations, BelongsToSite;
 
     protected $table = 'categories';
 

@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Src\Users\Infrastructure\Eloquent\UserEloquentModel;
+use Src\Shared\Infrastructure\Eloquent\BelongsToSite;
 
 class CartEloquentModel extends Model
 {
-    use HasUuids;
+    use HasUuids, BelongsToSite;
 
     protected $table = 'carts';
 

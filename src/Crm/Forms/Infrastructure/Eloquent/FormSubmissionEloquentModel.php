@@ -7,9 +7,12 @@ namespace Src\Crm\Forms\Infrastructure\Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Ramsey\Uuid\Uuid;
+use Src\Shared\Infrastructure\Eloquent\BelongsToSite;
 
 class FormSubmissionEloquentModel extends Model
 {
+    use BelongsToSite;
+
     protected $table = 'crm_form_submissions';
     public $incrementing = false;
     protected $primaryKey = 'id';

@@ -38,7 +38,11 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
             "Src\\": "src/"
-        }
+        },
+        "files": [
+            "app/Helpers/site_helpers.php",
+            "app/Helpers/translation_helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

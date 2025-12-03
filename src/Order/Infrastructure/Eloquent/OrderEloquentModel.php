@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Src\Shared\Infrastructure\Eloquent\BelongsToSite;
 
 class OrderEloquentModel extends Model
 {
-    use HasUuids;
+    use HasUuids, BelongsToSite;
 
     protected $table = 'orders';
 

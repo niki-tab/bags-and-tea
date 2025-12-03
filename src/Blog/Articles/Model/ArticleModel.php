@@ -7,10 +7,11 @@ use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Src\Blog\Categories\Infrastructure\Eloquent\BlogCategoryEloquentModel;
+use Src\Shared\Infrastructure\Eloquent\BelongsToSite;
 
 class ArticleModel extends Model
 {
-    use HasFactory, HasTranslations;
+    use HasFactory, HasTranslations, BelongsToSite;
     
     protected $table = 'blog_articles';
     public $incrementing = false;

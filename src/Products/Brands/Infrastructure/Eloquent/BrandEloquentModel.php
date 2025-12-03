@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 use Src\Products\Product\Infrastructure\Eloquent\ProductEloquentModel;
+use Src\Shared\Infrastructure\Eloquent\BelongsToSite;
 
 class BrandEloquentModel extends Model
 {
-    use HasUuids, HasTranslations;
+    use HasUuids, HasTranslations, BelongsToSite;
 
     protected $table = 'brands';
 
