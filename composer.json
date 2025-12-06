@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.8",
         "league/flysystem-aws-s3-v3": "^3.29",
         "livewire/livewire": "^3.5",
+        "openai-php/client": "^0.18.0",
         "ramsey/uuid": "^4.7",
         "sendgrid/sendgrid": "^8.1",
         "simplesoftwareio/simple-qrcode": "^4.2",

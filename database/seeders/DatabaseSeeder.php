@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
       UserTableSeeder::class,
       FormTableSeeder::class,
       FormSubmissionTableSeeder::class,
+      BagSearchQuerySeeder::class,
       
       // Marketplace Configuration
       MarketplaceFeeSeeder::class,
