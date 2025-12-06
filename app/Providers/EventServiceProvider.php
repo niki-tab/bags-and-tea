@@ -7,7 +7,9 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 use App\Events\NewOrderCreated;
+use App\Events\VintedScanCompleted;
 use App\Listeners\SendOrderConfirmationEmail;
+use App\Listeners\ProcessInterestingListingsListener;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         NewOrderCreated::class => [
             SendOrderConfirmationEmail::class,
+        ],
+        VintedScanCompleted::class => [
+            ProcessInterestingListingsListener::class,
         ],
     ];
 
