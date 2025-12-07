@@ -105,13 +105,27 @@ class ProcessStripePayment
         ]);
 
         try {
-            $paymentIntent = PaymentIntent::retrieve($paymentIntentId);
+            $paymentIntent = PaymentIntent::retrieve($paymentIntentId, [
+                'expand' => ['payment_method'],
+            ]);
+
+            // Get the actual payment method type used
+            $paymentMethodType = null;
+            if ($paymentIntent->payment_method) {
+                if (is_object($paymentIntent->payment_method)) {
+                    $paymentMethodType = $paymentIntent->payment_method->type;
+                } else {
+                    // If not expanded, try to get from latest_charge
+                    $paymentMethodType = $paymentIntent->payment_method_types[0] ?? null;
+                }
+            }
 
             \Log::info('=== STRIPE: PaymentIntent retrieved ===', [
                 'payment_intent_id' => $paymentIntentId,
                 'status' => $paymentIntent->status,
                 'amount_received' => $paymentIntent->amount_received,
                 'payment_method_types' => $paymentIntent->payment_method_types ?? [],
+                'actual_payment_method_type' => $paymentMethodType,
             ]);
 
             return [
@@ -119,6 +133,7 @@ class ProcessStripePayment
                 'status' => $paymentIntent->status,
                 'amount_received' => $paymentIntent->amount_received,
                 'charges' => $paymentIntent->charges->data ?? [],
+                'payment_method_type' => $paymentMethodType,
             ];
 
         } catch (ApiErrorException $e) {

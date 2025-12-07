@@ -117,8 +117,21 @@ class OrderSuccess extends Component
                 return;
             }
 
-            // Create the order now
-            \Log::info('=== ORDER SUCCESS: Creating order from pending checkout data ===');
+            // Get the actual payment method used from Stripe
+            $actualPaymentMethod = $paymentResult['payment_method_type'] ?? $pendingCheckout['payment_method'];
+
+            // Map Stripe payment method types to our internal names
+            $paymentMethodMap = [
+                'paypal' => 'stripe_paypal',
+                'card' => 'stripe_card',
+                'klarna' => 'stripe_klarna',
+            ];
+            $paymentMethodToStore = $paymentMethodMap[$actualPaymentMethod] ?? 'stripe_' . $actualPaymentMethod;
+
+            \Log::info('=== ORDER SUCCESS: Creating order from pending checkout data ===', [
+                'stripe_payment_method' => $actualPaymentMethod,
+                'stored_payment_method' => $paymentMethodToStore,
+            ]);
 
             $customerData = [
                 'email' => $pendingCheckout['customer_email'],
@@ -146,7 +159,7 @@ class OrderSuccess extends Component
                 auth()->id(),
                 session()->getId(),
                 $pendingCheckout['discount_code'] ?: null,
-                $pendingCheckout['payment_method']
+                $paymentMethodToStore
             );
 
             \Log::info('=== ORDER SUCCESS: Order created successfully ===', [

@@ -83,24 +83,6 @@
                             <span class="text-lg font-bold text-[#CA2530] font-robotoCondensed">{{ number_format($calculatedTotal, 2, ',', '.') }}€</span>
                         </div>
                         
-                        <div class="flex justify-between py-2 border-b border-gray-200">
-                            <span class="text-color-2 font-robotoCondensed">{{ trans('components/checkout.payment-method-used') }}</span>
-                            <span class="text-color-2 font-robotoCondensed">
-                                @switch($order['payment_method'] ?? 'pending')
-                                    @case('stripe_card')
-                                        {{ trans('components/checkout.credit-debit-card') }}
-                                        @break
-                                    @case('stripe_paypal')
-                                        PayPal
-                                        @break
-                                    @case('stripe_klarna')
-                                        Klarna
-                                        @break
-                                    @default
-                                        {{ trans('components/checkout.pending') }}
-                                @endswitch
-                            </span>
-                        </div>
                         
                         <div class="py-2">
                             <span class="text-color-2 font-medium font-robotoCondensed">{{ trans('components/checkout.estimated-delivery') }}</span>
