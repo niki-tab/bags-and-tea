@@ -403,6 +403,28 @@ class AdminOrderController extends Controller
         }
     }
 
+    public function sendTestConfirmation(Request $request, string $orderNumber): RedirectResponse
+    {
+        $orderData = $this->orderRepository->retrieveOrderByNumber($orderNumber);
+
+        if (!$orderData) {
+            abort(404, 'Order not found');
+        }
+
+        try {
+            // Use Spanish locale for test emails (can be changed as needed)
+            $testLocale = 'es';
+
+            // Send to test email only
+            \Mail::to('nicolas.tabares.tech@gmail.com')
+                ->send(new \App\Mail\OrderConfirmation($orderNumber, $testLocale));
+
+            return back()->with('success', 'Test order confirmation sent to nicolas.tabares.tech@gmail.com!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to send test confirmation email: ' . $e->getMessage());
+        }
+    }
+
     private function generateOrderNumber(): string
     {
         $year = date('Y');

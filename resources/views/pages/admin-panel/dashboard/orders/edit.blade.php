@@ -29,7 +29,13 @@
                     <h2 class="text-2xl font-semibold text-gray-900">Edit Order {{ $order->order_number }}</h2>
                     <p class="mt-1 text-sm text-gray-500">Created {{ \Carbon\Carbon::parse($order->created_at)->format('M d, Y H:i') }}</p>
                 </div>
-                <div class="flex gap-2">
+                <div class="flex gap-2 flex-wrap">
+                    <form action="{{ route('admin.orders.send-test-confirmation', $order->order_number) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700">
+                            Send TEST Confirmation
+                        </button>
+                    </form>
                     <form action="{{ route('admin.orders.send-confirmation', $order->order_number) }}" method="POST">
                         @csrf
                         <input type="hidden" name="include_trustpilot" value="0">

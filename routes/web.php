@@ -62,6 +62,7 @@ Route::prefix('admin-panel')->name('admin.')->group(function () {
             Route::get('/{orderNumber}/edit', [\App\Http\Controllers\Admin\AdminOrderController::class, 'edit'])->name('edit');
             Route::put('/{orderNumber}', [\App\Http\Controllers\Admin\AdminOrderController::class, 'update'])->name('update');
             Route::post('/{orderNumber}/send-confirmation', [\App\Http\Controllers\Admin\AdminOrderController::class, 'sendConfirmation'])->name('send-confirmation');
+            Route::post('/{orderNumber}/send-test-confirmation', [\App\Http\Controllers\Admin\AdminOrderController::class, 'sendTestConfirmation'])->name('send-test-confirmation');
         });
 
         // API for product search (used in order creation)
