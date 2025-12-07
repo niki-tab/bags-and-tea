@@ -6,6 +6,7 @@ use App\Events\VintedScanCompleted;
 use App\Jobs\ProcessInterestingVintedListingsJob;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
+use Src\ThirdPartyServices\Vinted\Domain\Models\VintedListingEloquentModel;
 
 class ProcessInterestingListingsListener implements ShouldQueue
 {
@@ -15,17 +16,24 @@ class ProcessInterestingListingsListener implements ShouldQueue
 
     public function handle(VintedScanCompleted $event): void
     {
-        Log::info('VintedScanCompleted event received, dispatching phase 2 job', [
+        // Check if there are any unverified listings to process
+        $unverifiedCount = VintedListingEloquentModel::where('is_interesting', true)
+            ->whereNull('is_verified_product')
+            ->count();
+
+        Log::info('VintedScanCompleted event received', [
             'queries_processed' => $event->queriesProcessed,
             'total_listings' => $event->totalListings,
             'new_interesting_deals' => $event->newInterestingDeals,
+            'unverified_listings' => $unverifiedCount,
         ]);
 
-        // Only process if there are new interesting deals
-        if ($event->newInterestingDeals > 0) {
+        // Dispatch phase 2 if there are unverified listings
+        if ($unverifiedCount > 0) {
             ProcessInterestingVintedListingsJob::dispatch();
+            Log::info('Phase 2 job dispatched', ['unverified_count' => $unverifiedCount]);
         } else {
-            Log::info('No new interesting deals, skipping phase 2');
+            Log::info('No unverified listings, skipping phase 2');
         }
     }
 }

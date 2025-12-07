@@ -34,20 +34,18 @@ final class ScrapeVintedListingDetails
             }
 
             $images = $this->extractImages($html);
-            $uploadedText = $this->extractUploadedText($html);
             $description = $this->extractDescription($html);
 
             Log::info('Successfully scraped listing details', [
                 'url' => $listingUrl,
                 'images_found' => count($images),
-                'uploaded_text' => $uploadedText,
                 'has_description' => !empty($description),
             ]);
 
             return [
                 'images' => $images,
-                'uploaded_text' => $uploadedText,
                 'description' => $description,
+                'html_content' => $html, // Pass to AI for upload date extraction
             ];
 
         } catch (Exception $e) {
@@ -103,34 +101,66 @@ final class ScrapeVintedListingDetails
 
     /**
      * Extract the upload date text (e.g., "Subido hace 5 horas")
+     *
+     * You will find information about the date in which the product was uploaded
+     * and information about the last visit. Always take the uploaded information
+     * and never the last visit information.
      */
     private function extractUploadedText(string $html): ?string
     {
-        // Pattern 1: "Subido hace X horas/días/semanas" (Spanish)
-        if (preg_match('/Subido hace\s+(\d+\s+(?:segundos?|minutos?|horas?|d[íi]as?|semanas?|meses?|a[ñn]os?))/ui', $html, $match)) {
-            return 'Subido hace ' . $match[1];
-        }
-
-        // Pattern 2: Just "hace X tiempo" in context
-        if (preg_match('/hace\s+(\d+\s+(?:segundos?|minutos?|horas?|d[íi]as?|semanas?|meses?|a[ñn]os?))/ui', $html, $match)) {
-            return 'Subido hace ' . $match[1];
-        }
-
-        // Pattern 3: Try English version too "Uploaded X ago"
-        if (preg_match('/Uploaded\s+(\d+\s+(?:seconds?|minutes?|hours?|days?|weeks?|months?|years?))\s+ago/i', $html, $match)) {
-            return 'Uploaded ' . $match[1] . ' ago';
-        }
-
-        // Pattern 4: "Added X ago"
-        if (preg_match('/Added\s+(\d+\s+(?:seconds?|minutes?|hours?|days?|weeks?|months?|years?))\s+ago/i', $html, $match)) {
-            return 'Added ' . $match[1] . ' ago';
-        }
-
-        // Pattern 5: Look in JSON data for timestamp
+        // First, try to get the timestamp from JSON data (most reliable)
         if (preg_match('/"created_at_ts":\s*(\d+)/', $html, $match)) {
             $timestamp = (int) $match[1];
             $diff = time() - $timestamp;
             return $this->formatTimeDiff($diff);
+        }
+
+        // Remove last visit/connection patterns to avoid confusion
+        // These patterns should NOT be matched:
+        // - "Última visita hace X" / "Última conexión hace X" (Spanish)
+        // - "Last seen X ago" / "Last active X ago" (English)
+        // - "Dernière visite il y a X" (French)
+        // - "Zuletzt online vor X" (German)
+        $htmlWithoutVisits = preg_replace(
+            '/([ÚU]ltima\s*(visita|conexi[óo]n)|Last\s*(seen|active|visit)|Derni[èe]re\s*visite|Zuletzt\s*online)[^<\n]*/ui',
+            '',
+            $html
+        );
+
+        // Now look for upload/added patterns in any language
+        // Spanish: "Subido hace X"
+        if (preg_match('/Subido\s+hace\s*(\d+\s*\w+)/ui', $htmlWithoutVisits, $match)) {
+            return 'Subido hace ' . trim($match[1]);
+        }
+
+        // Spanish: "Añadido hace X"
+        if (preg_match('/A[ñn]adido\s+hace\s*(\d+\s*\w+)/ui', $htmlWithoutVisits, $match)) {
+            return 'Subido hace ' . trim($match[1]);
+        }
+
+        // English: "Uploaded X ago" or "Added X ago"
+        if (preg_match('/(Uploaded|Added)\s+(\d+\s*\w+)\s*ago/i', $htmlWithoutVisits, $match)) {
+            return $match[1] . ' ' . trim($match[2]) . ' ago';
+        }
+
+        // French: "Ajouté il y a X"
+        if (preg_match('/Ajout[ée]\s+il\s+y\s+a\s+(\d+\s*\w+)/ui', $htmlWithoutVisits, $match)) {
+            return 'Ajouté il y a ' . trim($match[1]);
+        }
+
+        // German: "Hochgeladen vor X"
+        if (preg_match('/Hochgeladen\s+vor\s+(\d+\s*\w+)/ui', $htmlWithoutVisits, $match)) {
+            return 'Hochgeladen vor ' . trim($match[1]);
+        }
+
+        // Italian: "Aggiunto X fa"
+        if (preg_match('/Aggiunto\s+(\d+\s*\w+)\s*fa/ui', $htmlWithoutVisits, $match)) {
+            return 'Aggiunto ' . trim($match[1]) . ' fa';
+        }
+
+        // Generic fallback: look for "hace X" pattern (after removing last visit info)
+        if (preg_match('/hace\s+(\d+\s*\w+)/ui', $htmlWithoutVisits, $match)) {
+            return 'Subido hace ' . trim($match[1]);
         }
 
         return null;

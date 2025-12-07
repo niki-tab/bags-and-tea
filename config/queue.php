@@ -71,6 +71,15 @@ return [
             'after_commit' => false,
         ],
 
+        'redis-long-running' => [
+            'driver' => 'redis',
+            'connection' => 'default',
+            'queue' => 'long-running',
+            'retry_after' => 1500, // 25 minutes (should be longer than job timeout)
+            'block_for' => null,
+            'after_commit' => false,
+        ],
+
     ],
 
     /*
