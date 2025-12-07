@@ -7,8 +7,8 @@ use Livewire\Component;
 class TrustpilotReviews extends Component
 {
     public $ratingText;
-    public $ratingScore = 4.4;
-    public $reviewCount = 12;
+    public $ratingScore = 4.5;
+    public $reviewCount = 13;
     public $maxStars = 5;
 
     public function mount()
