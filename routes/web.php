@@ -134,6 +134,18 @@ Route::prefix('admin-panel')->name('admin.')->group(function () {
             // Form Submissions Management
             Route::get('/form-submissions', [AdminPanelController::class, 'formSubmissions'])->name('form-submissions');
             Route::get('/form-submissions/{id}', [AdminPanelController::class, 'formSubmissionDetail'])->name('form-submissions.detail');
+
+            // Bag Search Queries Management
+            Route::get('/bag-search-queries', [AdminPanelController::class, 'bagSearchQueries'])->name('bag-search-queries');
+            Route::prefix('bag-search-queries')->name('bag-search-queries.')->group(function () {
+                Route::get('/create', function () {
+                    return view('pages.admin-panel.dashboard.bag-search-queries.create');
+                })->name('create');
+
+                Route::get('/edit/{id}', function ($id) {
+                    return view('pages.admin-panel.dashboard.bag-search-queries.edit', ['id' => $id]);
+                })->name('edit');
+            });
         });
     });
 });

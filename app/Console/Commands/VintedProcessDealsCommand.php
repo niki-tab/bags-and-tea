@@ -19,10 +19,8 @@ class VintedProcessDealsCommand extends Command
             (new ProcessInterestingVintedListingsJob())->handle();
             $this->info('Done!');
         } else {
-            ProcessInterestingVintedListingsJob::dispatch()
-                ->onConnection('redis')
-                ->onQueue('default');
-            $this->info('Vinted process deals job dispatched to queue.');
+            ProcessInterestingVintedListingsJob::dispatch();
+            $this->info('Vinted process deals job dispatched to long-running queue.');
         }
 
         return Command::SUCCESS;

@@ -100,6 +100,11 @@ class AdminPanelController extends Controller
         return view('pages.admin-panel.forms.submission-detail', ['submissionId' => $id]);
     }
 
+    public function bagSearchQueries(): View
+    {
+        return view('pages.admin-panel.dashboard.bag-search-queries');
+    }
+
     public function logout(): RedirectResponse
     {
         $this->adminAuthenticator->logout();

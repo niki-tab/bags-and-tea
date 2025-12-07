@@ -20,7 +20,7 @@ bg-background-color-4  {{-- or any other Tailwind class you want for this specif
         buttonTextMobile="{{ app()->getLocale() === 'es' ? 'Síguenos' : 'Follow us' }}"
         buttonLink="https://www.instagram.com/bags.and.tea"
         :delay="10"
-        image="{{ asset('images/banners/louis-vuitton-banner-2.webp') }}"
+        image="{{ asset('images/banners/lv-test-banner.webp') }}"
         imageMobile="{{ asset('images/banners/fendi-banner.webp') }}"
     />
 @endsection
