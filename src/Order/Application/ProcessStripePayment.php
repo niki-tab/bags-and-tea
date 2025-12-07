@@ -16,6 +16,14 @@ class ProcessStripePayment
 
     public function createPaymentIntent(array $orderData): array
     {
+        \Log::info('=== STRIPE: createPaymentIntent START ===', [
+            'order_number' => $orderData['order_number'],
+            'total_amount' => $orderData['total_amount'],
+            'currency' => $orderData['currency'] ?? 'EUR',
+            'payment_method' => $orderData['payment_method'] ?? 'N/A',
+            'customer_email' => $orderData['customer_email'],
+        ]);
+
         try {
             $paymentIntent = PaymentIntent::create([
                 'amount' => intval($orderData['total_amount'] * 100), // Convert to cents
@@ -44,6 +52,13 @@ class ProcessStripePayment
                 ],
             ]);
 
+            \Log::info('=== STRIPE: PaymentIntent created successfully ===', [
+                'payment_intent_id' => $paymentIntent->id,
+                'amount' => $paymentIntent->amount,
+                'currency' => $paymentIntent->currency,
+                'status' => $paymentIntent->status,
+            ]);
+
             return [
                 'success' => true,
                 'payment_intent_id' => $paymentIntent->id,
@@ -54,6 +69,10 @@ class ProcessStripePayment
             ];
 
         } catch (CardException $e) {
+            \Log::error('=== STRIPE: Card error ===', [
+                'message' => $e->getError()->message,
+                'code' => $e->getError()->code,
+            ]);
             return [
                 'success' => false,
                 'error' => 'card_error',
@@ -81,9 +100,20 @@ class ProcessStripePayment
 
     public function confirmPayment(string $paymentIntentId): array
     {
+        \Log::info('=== STRIPE: confirmPayment START ===', [
+            'payment_intent_id' => $paymentIntentId,
+        ]);
+
         try {
             $paymentIntent = PaymentIntent::retrieve($paymentIntentId);
-            
+
+            \Log::info('=== STRIPE: PaymentIntent retrieved ===', [
+                'payment_intent_id' => $paymentIntentId,
+                'status' => $paymentIntent->status,
+                'amount_received' => $paymentIntent->amount_received,
+                'payment_method_types' => $paymentIntent->payment_method_types ?? [],
+            ]);
+
             return [
                 'success' => true,
                 'status' => $paymentIntent->status,
@@ -92,6 +122,11 @@ class ProcessStripePayment
             ];
 
         } catch (ApiErrorException $e) {
+            \Log::error('=== STRIPE: confirmPayment API error ===', [
+                'payment_intent_id' => $paymentIntentId,
+                'error' => $e->getMessage(),
+            ]);
+
             return [
                 'success' => false,
                 'error' => 'api_error',

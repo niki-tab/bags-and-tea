@@ -253,7 +253,13 @@ class CheckoutPage extends Component
     public function createPaymentIntentOnly()
     {
         try {
-            \Log::info('Starting createPaymentIntentOnly');
+            \Log::info('=== CHECKOUT: createPaymentIntentOnly START ===', [
+                'session_id' => session()->getId(),
+                'user_id' => auth()->id(),
+                'payment_method' => $this->payment_method,
+                'total_amount' => $this->totalAmount,
+                'customer_email' => $this->customer_email,
+            ]);
             
             // First validate all fields
             $this->validateAllFields();
@@ -314,15 +320,55 @@ class CheckoutPage extends Component
             $this->clientSecret = $paymentResult['client_secret'];
             $this->orderNumber = $tempOrderNumber; // Store temp order number
             
-            \Log::info('Payment intent created successfully', [
+            \Log::info('=== CHECKOUT: Payment intent created successfully ===', [
                 'payment_intent_id' => $this->paymentIntentId,
-                'client_secret_length' => strlen($this->clientSecret),
+                'client_secret_prefix' => substr($this->clientSecret, 0, 20) . '...',
                 'total_amount' => $this->totalAmount,
                 'temp_order_number' => $tempOrderNumber,
+                'payment_method' => $this->payment_method,
             ]);
-            
+
+            // Store temp order number in session for PayPal redirect recovery
+            session()->put('pending_checkout', [
+                'temp_order_number' => $tempOrderNumber,
+                'payment_intent_id' => $this->paymentIntentId,
+                'customer_email' => $this->customer_email,
+                'customer_name' => $this->customer_name,
+                'customer_phone' => $this->customer_phone,
+                'billing_address' => [
+                    'first_name' => $this->billing_first_name,
+                    'last_name' => $this->billing_last_name,
+                    'line1' => $this->billing_line1,
+                    'line2' => $this->billing_line2,
+                    'city' => $this->billing_city,
+                    'postal_code' => $this->billing_postal_code,
+                    'country' => $this->billing_country,
+                    'state' => $this->billing_state,
+                    'vat_id' => $this->billing_vat_id,
+                ],
+                'shipping_address' => [
+                    'first_name' => $this->shipping_first_name,
+                    'last_name' => $this->shipping_last_name,
+                    'line1' => $this->shipping_line1,
+                    'line2' => $this->shipping_line2,
+                    'city' => $this->shipping_city,
+                    'postal_code' => $this->shipping_postal_code,
+                    'country' => $this->shipping_country,
+                    'state' => $this->shipping_state,
+                ],
+                'same_as_billing' => $this->same_as_billing,
+                'discount_code' => $this->discount_code,
+                'payment_method' => $this->payment_method,
+                'created_at' => now()->toIso8601String(),
+            ]);
+
+            \Log::info('=== CHECKOUT: Stored pending checkout data in session ===', [
+                'temp_order_number' => $tempOrderNumber,
+                'session_id' => session()->getId(),
+            ]);
+
             // Dispatch event to frontend that clientSecret is ready
-            \Log::info('Dispatching stripe-ready event to frontend');
+            \Log::info('=== CHECKOUT: Dispatching stripe-ready event to frontend ===');
             $this->dispatch('stripe-ready', [
                 'clientSecret' => $this->clientSecret,
                 'orderNumber' => $this->orderNumber
@@ -344,8 +390,14 @@ class CheckoutPage extends Component
 
     public function createOrderAfterPayment()
     {
-        \Log::info('createOrderAfterPayment called');
-        
+        \Log::info('=== CHECKOUT: createOrderAfterPayment START ===', [
+            'session_id' => session()->getId(),
+            'user_id' => auth()->id(),
+            'payment_intent_id' => $this->paymentIntentId,
+            'payment_method' => $this->payment_method,
+            'total_amount' => $this->totalAmount,
+        ]);
+
         try {
             $this->isLoading = true;
 
