@@ -29,28 +29,70 @@
                     <h2 class="text-2xl font-semibold text-gray-900">Edit Order {{ $order->order_number }}</h2>
                     <p class="mt-1 text-sm text-gray-500">Created {{ \Carbon\Carbon::parse($order->created_at)->format('M d, Y H:i') }}</p>
                 </div>
-                <div class="flex gap-2 flex-wrap">
-                    <form action="{{ route('admin.orders.send-test-confirmation', $order->order_number) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700">
-                            Send TEST Confirmation
-                        </button>
-                    </form>
-                    <form action="{{ route('admin.orders.send-confirmation', $order->order_number) }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="include_trustpilot" value="0">
-                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-                            Send Confirmation (No Trustpilot)
-                        </button>
-                    </form>
-                    <form action="{{ route('admin.orders.send-confirmation', $order->order_number) }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="include_trustpilot" value="1">
-                        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
-                            Send Confirmation (With Trustpilot)
-                        </button>
-                    </form>
-                    @livewire('admin.orders.send-certificate', ['order' => $order])
+                <div class="flex flex-col gap-3">
+                    <!-- Test Confirmations -->
+                    <div class="flex gap-2 items-center">
+                        <span class="text-xs font-medium text-gray-500 w-20">TEST:</span>
+                        <form action="{{ route('admin.orders.send-test-confirmation', $order->order_number) }}" method="POST" class="inline">
+                            @csrf
+                            <input type="hidden" name="locale" value="en">
+                            <button type="submit" class="px-3 py-1.5 bg-yellow-600 text-white text-xs rounded-md hover:bg-yellow-700">
+                                🇬🇧 EN
+                            </button>
+                        </form>
+                        <form action="{{ route('admin.orders.send-test-confirmation', $order->order_number) }}" method="POST" class="inline">
+                            @csrf
+                            <input type="hidden" name="locale" value="es">
+                            <button type="submit" class="px-3 py-1.5 bg-yellow-600 text-white text-xs rounded-md hover:bg-yellow-700">
+                                🇪🇸 ES
+                            </button>
+                        </form>
+                    </div>
+                    <!-- Customer Confirmations (No Trustpilot) -->
+                    <div class="flex gap-2 items-center">
+                        <span class="text-xs font-medium text-gray-500 w-20">Customer:</span>
+                        <form action="{{ route('admin.orders.send-confirmation', $order->order_number) }}" method="POST" class="inline">
+                            @csrf
+                            <input type="hidden" name="include_trustpilot" value="0">
+                            <input type="hidden" name="locale" value="en">
+                            <button type="submit" class="px-3 py-1.5 bg-blue-600 text-white text-xs rounded-md hover:bg-blue-700">
+                                🇬🇧 EN
+                            </button>
+                        </form>
+                        <form action="{{ route('admin.orders.send-confirmation', $order->order_number) }}" method="POST" class="inline">
+                            @csrf
+                            <input type="hidden" name="include_trustpilot" value="0">
+                            <input type="hidden" name="locale" value="es">
+                            <button type="submit" class="px-3 py-1.5 bg-blue-600 text-white text-xs rounded-md hover:bg-blue-700">
+                                🇪🇸 ES
+                            </button>
+                        </form>
+                    </div>
+                    <!-- Customer Confirmations (With Trustpilot) -->
+                    <div class="flex gap-2 items-center">
+                        <span class="text-xs font-medium text-gray-500 w-20">+ Trustpilot:</span>
+                        <form action="{{ route('admin.orders.send-confirmation', $order->order_number) }}" method="POST" class="inline">
+                            @csrf
+                            <input type="hidden" name="include_trustpilot" value="1">
+                            <input type="hidden" name="locale" value="en">
+                            <button type="submit" class="px-3 py-1.5 bg-green-600 text-white text-xs rounded-md hover:bg-green-700">
+                                🇬🇧 EN
+                            </button>
+                        </form>
+                        <form action="{{ route('admin.orders.send-confirmation', $order->order_number) }}" method="POST" class="inline">
+                            @csrf
+                            <input type="hidden" name="include_trustpilot" value="1">
+                            <input type="hidden" name="locale" value="es">
+                            <button type="submit" class="px-3 py-1.5 bg-green-600 text-white text-xs rounded-md hover:bg-green-700">
+                                🇪🇸 ES
+                            </button>
+                        </form>
+                    </div>
+                    <!-- Certificate -->
+                    <div class="flex gap-2 items-center">
+                        <span class="text-xs font-medium text-gray-500 w-20">Certificate:</span>
+                        @livewire('admin.orders.send-certificate', ['order' => $order])
+                    </div>
                 </div>
             </div>
 
