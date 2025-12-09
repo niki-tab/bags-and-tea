@@ -55,8 +55,11 @@
                         <div class="flex gap-3">
                             <!-- Image -->
                             <div class="flex-shrink-0">
-                                @if($listing->main_image_url)
-                                    <img src="{{ $listing->main_image_url }}" alt="{{ $listing->title }}" class="w-20 h-20 object-cover rounded-lg">
+                                @php
+                                    $imageUrl = ($listing->images && count($listing->images) > 0) ? $listing->images[0] : $listing->main_image_url;
+                                @endphp
+                                @if($imageUrl)
+                                    <img src="{{ $imageUrl }}" alt="{{ $listing->title }}" class="w-20 h-20 object-cover rounded-lg">
                                 @else
                                     <div class="w-20 h-20 bg-gray-200 rounded-lg flex items-center justify-center">
                                         <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -154,8 +157,11 @@
                         @forelse($listings as $listing)
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-4 whitespace-nowrap">
-                                    @if($listing->main_image_url)
-                                        <img src="{{ $listing->main_image_url }}" alt="{{ $listing->title }}" class="w-16 h-16 object-cover rounded-lg">
+                                    @php
+                                        $imageUrl = ($listing->images && count($listing->images) > 0) ? $listing->images[0] : $listing->main_image_url;
+                                    @endphp
+                                    @if($imageUrl)
+                                        <img src="{{ $imageUrl }}" alt="{{ $listing->title }}" class="w-16 h-16 object-cover rounded-lg">
                                     @else
                                         <div class="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
                                             <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
