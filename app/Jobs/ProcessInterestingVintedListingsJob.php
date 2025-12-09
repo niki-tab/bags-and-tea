@@ -18,7 +18,7 @@ class ProcessInterestingVintedListingsJob implements ShouldQueue
     public int $tries = 2;
 
     // Maximum listings to process per run
-    private const MAX_LISTINGS = 50;
+    private const MAX_LISTINGS = 35;
 
     // Delay between each verification job (in seconds)
     private const DELAY_BETWEEN_JOBS = 30;

@@ -90,7 +90,7 @@
                         </div>
                         <!-- Dates -->
                         <div class="mt-3 text-xs text-gray-500 space-y-1">
-                            <p><span class="font-medium">Published in Marketplace:</span> {{ $listing->published_at ? $listing->published_at->format('M d, Y H:i') : '-' }}</p>
+                            <p><span class="font-medium">Published in Marketplace:</span> {{ $listing->uploaded_text ?? ($listing->published_at ? $listing->published_at->format('M d, Y H:i') : '-') }}</p>
                             <p><span class="font-medium">Found:</span> {{ $listing->created_at->format('M d, Y H:i') }}</p>
                         </div>
                     </div>
@@ -189,7 +189,7 @@
                                     </span>
                                 </td>
                                 <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $listing->published_at ? $listing->published_at->format('M d, Y H:i') : '-' }}
+                                    {{ $listing->uploaded_text ?? ($listing->published_at ? $listing->published_at->format('M d, Y H:i') : '-') }}
                                 </td>
                                 <td class="px-4 py-4 whitespace-nowrap">
                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $listing->notification_sent ? 'bg-purple-100 text-purple-800' : 'bg-yellow-100 text-yellow-800' }}">
