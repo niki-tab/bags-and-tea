@@ -118,13 +118,79 @@ PROMPT;
         }
 
         if ($htmlContent) {
-            // Send full HTML content to AI (GPT-4o-mini can handle large context)
-            $prompt .= "Page HTML content (find the upload date - look for 'Subido' or 'Uploaded', NOT 'Última visita'):\n{$htmlContent}\n\n";
+            // Extract only relevant parts of HTML to stay within token limits
+            $relevantHtml = $this->extractRelevantHtml($htmlContent);
+            $prompt .= "Page HTML content (find the upload date - look for 'Subido' or 'Uploaded', NOT 'Última visita'):\n{$relevantHtml}\n\n";
         }
 
         $prompt .= "Please verify if this listing matches the expected product and extract the EXACT upload date from the HTML.";
 
         return $prompt;
+    }
+
+    /**
+     * Extract only the relevant parts of HTML for AI verification
+     * This reduces token usage significantly while keeping important info
+     */
+    private function extractRelevantHtml(string $html): string
+    {
+        $relevantParts = [];
+
+        // 1. Try to extract JSON-LD structured data (contains product info)
+        if (preg_match('/<script[^>]*type=["\']application\/ld\+json["\'][^>]*>(.*?)<\/script>/si', $html, $match)) {
+            $relevantParts[] = "=== JSON-LD Data ===\n" . trim($match[1]);
+        }
+
+        // 2. Extract meta tags (title, description)
+        if (preg_match_all('/<meta[^>]+(name|property)=["\'][^"\']*["\'][^>]*>/i', $html, $matches)) {
+            $metaTags = implode("\n", array_slice($matches[0], 0, 20));
+            $relevantParts[] = "=== Meta Tags ===\n" . $metaTags;
+        }
+
+        // 3. Look for upload date patterns in HTML - extract surrounding context
+        $uploadPatterns = [
+            '/(.{0,200}Subido.{0,100})/ui',
+            '/(.{0,200}Uploaded.{0,100})/ui',
+            '/(.{0,200}Added.{0,100})/ui',
+            '/(.{0,200}Añadido.{0,100})/ui',
+            '/(.{0,200}created_at_ts.{0,100})/ui',
+            '/(.{0,200}hace\s+\d+\s+\w+.{0,50})/ui',
+        ];
+
+        $uploadContexts = [];
+        foreach ($uploadPatterns as $pattern) {
+            if (preg_match_all($pattern, $html, $matches)) {
+                foreach ($matches[1] as $match) {
+                    $clean = strip_tags($match);
+                    $clean = preg_replace('/\s+/', ' ', $clean);
+                    if (strlen($clean) > 10) {
+                        $uploadContexts[] = trim($clean);
+                    }
+                }
+            }
+        }
+
+        if (!empty($uploadContexts)) {
+            $relevantParts[] = "=== Upload Date Context ===\n" . implode("\n", array_unique(array_slice($uploadContexts, 0, 10)));
+        }
+
+        // 4. Extract the main content area (truncated to ~50k chars to stay safe)
+        if (preg_match('/<body[^>]*>(.*?)<\/body>/si', $html, $bodyMatch)) {
+            $bodyContent = $bodyMatch[1];
+            // Remove scripts and styles
+            $bodyContent = preg_replace('/<script[^>]*>.*?<\/script>/si', '', $bodyContent);
+            $bodyContent = preg_replace('/<style[^>]*>.*?<\/style>/si', '', $bodyContent);
+            // Clean up whitespace
+            $bodyContent = preg_replace('/\s+/', ' ', $bodyContent);
+            // Truncate to 50k chars (~12.5k tokens)
+            $bodyContent = mb_substr($bodyContent, 0, 50000);
+            $relevantParts[] = "=== Page Content (truncated) ===\n" . $bodyContent;
+        } else {
+            // Fallback: just truncate the whole HTML
+            $relevantParts[] = "=== Raw HTML (truncated) ===\n" . mb_substr($html, 0, 50000);
+        }
+
+        return implode("\n\n", $relevantParts);
     }
 
     private function getJsonSchema(): array
