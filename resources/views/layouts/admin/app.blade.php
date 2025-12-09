@@ -57,45 +57,42 @@
 <body class="h-full font-sans antialiased">
     <div class="min-h-screen bg-gray-50">
         <!-- Sidebar -->
-        <div x-data="{ sidebarOpen: false }">
-            @livewire('admin.dashboard.sidebar')
-        </div>
+        @livewire('admin.dashboard.sidebar')
 
         <!-- Main content area with proper left margin for sidebar -->
         <div class="lg:ml-64 min-h-screen">
             <!-- Top bar -->
-            <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-10">
-                <div class="flex items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-                    <div class="flex items-center">
-                        <!-- Mobile menu button spacer on large screens -->
-                        <div class="lg:hidden w-12"></div>
-                        <h1 class="text-xl font-semibold text-gray-900">
+            <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-20">
+                <div class="flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+                    <div class="flex items-center gap-3">
+                        <!-- Mobile menu button -->
+                        <button
+                            onclick="window.dispatchEvent(new CustomEvent('toggle-sidebar'))"
+                            class="lg:hidden p-2 -ml-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        >
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                        <h1 class="text-lg sm:text-xl font-semibold text-gray-900 truncate">
                             @yield('page-title', 'Dashboard')
                         </h1>
                     </div>
-                    
+
                     <!-- Top right actions -->
-                    <div class="flex items-center space-x-4">
-                        <!-- Current user display -->
-                        <div class="hidden md:flex items-center text-sm text-gray-700">
-                            <span>Welcome, {{ Auth::user()->name ?? 'Admin' }}</span>
+                    <div class="flex items-center space-x-2 sm:space-x-4">
+                        <!-- Current user display - hidden on small screens -->
+                        <div class="hidden sm:flex items-center text-sm text-gray-700">
+                            <span>{{ Auth::user()->name ?? 'Admin' }}</span>
                         </div>
-                        
-                        <!-- Notifications (optional) -->
-                        <button class="p-2 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-md">
-                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19H6.5A2.5 2.5 0 014 16.5v-9A2.5 2.5 0 016.5 5H18a2 2 0 012 2v3.5" />
-                            </svg>
-                        </button>
                     </div>
                 </div>
             </header>
 
             <!-- Page content -->
             <main class="flex-1">
-                <div class="py-6">
-                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="py-4 sm:py-6">
+                    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
                             <!-- Flash messages -->
                             @if(session('success'))
                                 <div class="mb-4 rounded-md bg-green-50 p-4">
