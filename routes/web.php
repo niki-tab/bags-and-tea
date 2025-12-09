@@ -147,6 +147,9 @@ Route::prefix('admin-panel')->name('admin.')->group(function () {
                     return view('pages.admin-panel.dashboard.bag-search-queries.edit', ['id' => $id]);
                 })->name('edit');
             });
+
+            // Bag Supply Hunting (Vinted Listings)
+            Route::get('/bag-supply-hunting', [AdminPanelController::class, 'bagSupplyHunting'])->name('bag-supply-hunting');
         });
     });
 });

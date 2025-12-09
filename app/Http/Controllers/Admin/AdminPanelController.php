@@ -105,6 +105,11 @@ class AdminPanelController extends Controller
         return view('pages.admin-panel.dashboard.bag-search-queries');
     }
 
+    public function bagSupplyHunting(): View
+    {
+        return view('pages.admin-panel.dashboard.bag-supply-hunting');
+    }
+
     public function logout(): RedirectResponse
     {
         $this->adminAuthenticator->logout();
