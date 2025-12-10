@@ -32,6 +32,11 @@ final class FetchWebpageContent
             'onlyMainContent' => false, // Get all content, not just main content
         ];
 
+        // Bypass cache for Vinted pages to get fresh results (maxAge: 0 = no cache)
+        if (str_contains($webUrl, 'vinted.')) {
+            $options['maxAge'] = 0;
+        }
+
         // Use premium proxy for sites with anti-bot protection (like idealista.com)
         if (str_contains($webUrl, 'idealista.com')) {
             $options['actions'] = [
