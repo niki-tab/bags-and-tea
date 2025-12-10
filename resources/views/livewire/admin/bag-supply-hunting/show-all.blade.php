@@ -81,8 +81,13 @@
                             <span class="px-2 py-1 text-xs font-semibold rounded-full {{ $listing->is_interesting ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600' }}">
                                 {{ $listing->is_interesting ? 'Interesting' : 'Not Interesting' }}
                             </span>
-                            <span class="px-2 py-1 text-xs font-semibold rounded-full {{ $listing->is_verified_product ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-600' }}">
-                                {{ $listing->is_verified_product ? 'Real Product' : 'Not Real' }}
+                            <span class="px-2 py-1 text-xs font-semibold rounded-full
+                                @if($listing->is_verified_product === true) bg-blue-100 text-blue-800
+                                @elseif($listing->is_verified_product === false) bg-red-100 text-red-800
+                                @else bg-gray-100 text-gray-600 @endif">
+                                @if($listing->is_verified_product === true) Real Product
+                                @elseif($listing->is_verified_product === false) Not Real
+                                @else Pending @endif
                             </span>
                             <span class="px-2 py-1 text-xs font-semibold rounded-full {{ $listing->notification_sent ? 'bg-purple-100 text-purple-800' : 'bg-yellow-100 text-yellow-800' }}">
                                 {{ $listing->notification_sent ? 'Sent' : 'Pending' }}
@@ -184,8 +189,13 @@
                                     </span>
                                 </td>
                                 <td class="px-4 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $listing->is_verified_product ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-600' }}">
-                                        {{ $listing->is_verified_product ? 'Real' : 'No' }}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                        @if($listing->is_verified_product === true) bg-blue-100 text-blue-800
+                                        @elseif($listing->is_verified_product === false) bg-red-100 text-red-800
+                                        @else bg-gray-100 text-gray-600 @endif">
+                                        @if($listing->is_verified_product === true) Real
+                                        @elseif($listing->is_verified_product === false) No
+                                        @else Pending @endif
                                     </span>
                                 </td>
                                 <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
