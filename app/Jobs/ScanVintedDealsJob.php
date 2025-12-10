@@ -2,21 +2,23 @@
 
 namespace App\Jobs;
 
-use App\Events\VintedScanCompleted;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
-use Src\ThirdPartyServices\Vinted\Application\ScanVintedDeals;
+use Src\ThirdPartyServices\Vinted\Domain\Models\BagSearchQueryEloquentModel;
 
 class ScanVintedDealsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public int $timeout = 600; // 10 minutes max
+    public int $timeout = 60; // Just dispatching jobs, should be quick
     public int $tries = 1;
+
+    // Delay between each query job dispatch (in seconds)
+    private const DELAY_BETWEEN_QUERIES = 5;
 
     public function __construct()
     {
@@ -24,25 +26,34 @@ class ScanVintedDealsJob implements ShouldQueue
 
     public function handle(): void
     {
-        Log::info('Starting Vinted deal scan job (Phase 1)');
+        Log::info('Starting Vinted deal scan - dispatching individual query jobs');
 
-        $openaiClient = \OpenAI::client(config('services.openai.api_key'));
-        $scanner = new ScanVintedDeals($openaiClient);
+        $queries = BagSearchQueryEloquentModel::where('is_active', true)->get();
 
-        $results = $scanner->scanAll(function ($message) {
-            Log::info($message);
-        });
+        if ($queries->isEmpty()) {
+            Log::info('No active queries to scan');
+            return;
+        }
 
-        Log::info('Vinted deal scan completed (Phase 1)', $results);
+        Log::info('Dispatching query scan jobs', ['count' => $queries->count()]);
 
-        // Fire event to trigger Phase 2 (detail scraping + email notification)
-        VintedScanCompleted::dispatch(
-            $results['queries_processed'],
-            $results['total_listings'],
-            $results['new_interesting_deals'],
-            $results['errors']
-        );
+        $delay = 0;
+        foreach ($queries as $query) {
+            ScanSingleVintedQueryJob::dispatch($query->id)
+                ->delay(now()->addSeconds($delay));
 
-        Log::info('VintedScanCompleted event dispatched');
+            Log::info('Dispatched scan job for query', [
+                'query_id' => $query->id,
+                'name' => $query->name,
+                'delay_seconds' => $delay,
+            ]);
+
+            $delay += self::DELAY_BETWEEN_QUERIES;
+        }
+
+        Log::info('All query scan jobs dispatched', [
+            'total_queries' => $queries->count(),
+            'total_delay_seconds' => $delay,
+        ]);
     }
 }

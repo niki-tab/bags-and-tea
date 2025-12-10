@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -10,12 +11,15 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Src\ThirdPartyServices\Vinted\Domain\Models\VintedListingEloquentModel;
 
-class ProcessInterestingVintedListingsJob implements ShouldQueue
+class ProcessInterestingVintedListingsJob implements ShouldQueue, ShouldBeUnique
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public int $timeout = 60;
     public int $tries = 2;
+
+    // Unique lock duration in seconds (prevents duplicate jobs for 5 minutes)
+    public int $uniqueFor = 300;
 
     // Maximum listings to process per run
     private const MAX_LISTINGS = 35;
