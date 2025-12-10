@@ -48,6 +48,8 @@ class BagSearchQueryEloquentModel extends Model
 
     /**
      * Build URL for a specific page number
+     *
+     * For page 1, returns base URL without page param to avoid stale cache
      */
     public function getUrlForPage(int $page): string
     {
@@ -58,7 +60,12 @@ class BagSearchQueryEloquentModel extends Model
         $url = preg_replace('/([&?])' . preg_quote($param, '/') . '=\d+/', '$1', $url);
         $url = rtrim($url, '&?');
 
-        // Add new page param
+        // For page 1, use base URL (avoids Firecrawl cache returning stale data)
+        if ($page === 1) {
+            return $url;
+        }
+
+        // Add page param for pages > 1
         $separator = str_contains($url, '?') ? '&' : '?';
         return $url . $separator . $param . '=' . $page;
     }
