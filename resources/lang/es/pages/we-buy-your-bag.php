@@ -812,22 +812,22 @@ return [
 
 
 
-    'final_section_description_1' => 'No esperes más y vende ese bolso de marca que llevas tiempo queriendo dejar ir. Rellena el formulario o, si lo prefieres, escríbenos directamente por WhatsApp al +34 629 793 047.',
-    'final_section_description_1-fendi' => 'Ha llegado el momento de dejar ir ese bolso Fendi que ya no usas. Puedes rellenar el formulario o, si lo prefieres, escribirnos directamente por WhatsApp al +34 629 793 047.',
-    'final_section_description_1-loewe' => 'Si ese bolso Loewe ya no forma parte de tu día a día, quizás es hora de darle una nueva vida. Puedes completar el formulario o, si lo prefieres, enviarnos un mensaje directo por WhatsApp al +34 629 793 047.',
-    'final_section_description_1-chanel' => 'Es el momento de despedirte de ese bolso Chanel que ya no usas. Puedes escribirnos directamente por WhatsApp al +34 629 793 047 o rellenar el formulario online.',
-    'final_section_description_1-louis-vuitton' => 'Es el momento perfecto para vender ese bolso Louis Vuitton que ya no utilizas. Rellena el formulario o envíanos un WhatsApp al +34 629 793 047.',
-    'final_section_description_1-gucci' => 'Ha llegado el momento de vender ese bolso Gucci que ya no utilizas. Escríbenos por WhatsApp al +34 629 793 047 o rellena nuestro formulario online.',
-    'final_section_description_1-dior' => 'Ese bolso Dior que ya no utilizas puede tener una nueva vida. Escríbenos por WhatsApp al +34 629 793 047 o completa nuestro formulario.',
-    'final_section_description_1-prada' => '¿Tienes un bolso Prada que ya no usas? Escríbenos por WhatsApp al +34 629 793 047 o completa el formulario online.',
-    'final_section_description_1-balenciaga' => 'Ese bolso Balenciaga que ya no forma parte de tu día a día puede tener una nueva historia. Contáctanos por WhatsApp o rellena el formulario.',
-    'final_section_description_1-saint-laurent' => 'Ha llegado el momento de dejar ir ese bolso Yves Saint Laurent. Puedes rellenar el formulario o escribirnos por WhatsApp al +34 629 793 047.',
-    'final_section_description_1-hermes' => '¿Quieres vender tu bolso Hermès? Rellena el formulario o contáctanos por WhatsApp al +34 629 793 047 y te ayudamos.',
-    'final_section_description_1-polene' => '¿Tienes un bolso Polène que ya no usas? Escríbenos por WhatsApp o rellena el formulario para comenzar el proceso.',
-    'final_section_description_1-celine' => 'Si estás lista para vender tu bolso Céline, puedes rellenar nuestro formulario o escribirnos directamente por WhatsApp.',
-    'final_section_description_1-bottega-veneta' => 'Rellena el formulario o escríbenos al WhatsApp +34 629 793 047 para vender tu bolso Bottega Veneta de forma rápida.',
-    'final_section_description_1-miu-miu' => 'Para vender tu bolso Miu Miu, puedes usar el formulario o escribirnos un WhatsApp al +34 629 793 047 sin compromiso.',
-    'final_section_description_1-chloe' => '¿Te planteas vender tu bolso Chloé? Rellena el formulario o escríbenos por WhatsApp. Estaremos encantados de ayudarte.',
+    'final_section_description_1' => 'No esperes más: rellena el formulario y vende ese bolso de marca que llevas tiempo queriendo dejar ir.',
+    'final_section_description_1-fendi' => 'Ha llegado el momento de dejar ir ese bolso Fendi que ya no usas. Rellena el formulario y comienza el proceso.',
+    'final_section_description_1-loewe' => 'Si ese bolso Loewe ya no forma parte de tu día a día, quizás es hora de darle una nueva vida. Completa el formulario para empezar.',
+    'final_section_description_1-chanel' => 'Es el momento de despedirte de ese bolso Chanel que ya no usas. Rellena el formulario y te contactaremos.',
+    'final_section_description_1-louis-vuitton' => 'Es el momento perfecto para vender ese bolso Louis Vuitton que ya no utilizas. Rellena el formulario para comenzar.',
+    'final_section_description_1-gucci' => 'Ha llegado el momento de vender ese bolso Gucci que ya no utilizas. Rellena el formulario y nos pondremos en contacto contigo.',
+    'final_section_description_1-dior' => 'Ese bolso Dior que ya no utilizas puede tener una nueva vida. Completa el formulario para dar el primer paso.',
+    'final_section_description_1-prada' => '¿Tienes un bolso Prada que ya no usas? Rellena el formulario y te ayudamos a venderlo.',
+    'final_section_description_1-balenciaga' => 'Ese bolso Balenciaga que ya no forma parte de tu día a día puede tener una nueva historia. Rellena el formulario para empezar.',
+    'final_section_description_1-saint-laurent' => 'Ha llegado el momento de dejar ir ese bolso Yves Saint Laurent. Rellena el formulario y comienza el proceso de venta.',
+    'final_section_description_1-hermes' => '¿Quieres vender tu bolso Hermès? Rellena el formulario y te ayudamos.',
+    'final_section_description_1-polene' => '¿Tienes un bolso Polène que ya no usas? Rellena el formulario para comenzar el proceso.',
+    'final_section_description_1-celine' => 'Si estás lista para vender tu bolso Céline, rellena el formulario y nos pondremos en contacto contigo.',
+    'final_section_description_1-bottega-veneta' => 'Rellena el formulario para vender tu bolso Bottega Veneta de forma rápida y sencilla.',
+    'final_section_description_1-miu-miu' => 'Para vender tu bolso Miu Miu, rellena el formulario sin compromiso.',
+    'final_section_description_1-chloe' => '¿Te planteas vender tu bolso Chloé? Rellena el formulario y estaremos encantados de ayudarte.',
 
 
 
