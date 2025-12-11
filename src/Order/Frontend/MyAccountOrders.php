@@ -17,13 +17,18 @@ class MyAccountOrders extends Component
     {
         $user = Auth::user();
 
-        $orders = OrderEloquentModel::where(function ($query) use ($user) {
-                $query->where('user_id', $user->id)
-                      ->orWhere('customer_email', $user->email);
-            })
-            ->with(['orderItems'])
-            ->orderBy('created_at', 'desc')
-            ->paginate(5);
+        $query = OrderEloquentModel::with(['orderItems'])
+            ->orderBy('created_at', 'desc');
+
+        // Super admin sees all orders
+        if (!$user->isAdmin()) {
+            $query->where(function ($q) use ($user) {
+                $q->where('user_id', $user->id)
+                  ->orWhere('customer_email', $user->email);
+            });
+        }
+
+        $orders = $query->paginate(5);
 
         return view('livewire.order.my-account-orders', [
             'orders' => $orders,
