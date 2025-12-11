@@ -5,7 +5,7 @@ namespace Src\Order\Infrastructure\Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Src\Products\Product\Infrastructure\ProductEloquentModel;
+use Src\Products\Product\Infrastructure\Eloquent\ProductEloquentModel;
 
 class OrderItemEloquentModel extends Model
 {

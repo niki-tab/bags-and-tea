@@ -17,7 +17,7 @@ class MyAccountOrders extends Component
     {
         $user = Auth::user();
 
-        $query = OrderEloquentModel::with(['orderItems'])
+        $query = OrderEloquentModel::with(['orderItems.product.media'])
             ->orderBy('created_at', 'desc');
 
         // Super admin sees all orders
