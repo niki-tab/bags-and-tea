@@ -29,18 +29,8 @@
                                 <div class="flex gap-4">
                                     <!-- Product Image -->
                                     <div class="w-20 h-20 flex-shrink-0 bg-gray-100 overflow-hidden">
-                                        @php
-                                            $imageUrl = null;
-                                            if (isset($item->product_snapshot['primary_image']['file_path'])) {
-                                                $imageUrl = asset('storage/' . $item->product_snapshot['primary_image']['file_path']);
-                                            } elseif (isset($item->product_snapshot['images']) && count($item->product_snapshot['images']) > 0) {
-                                                $imageUrl = $item->product_snapshot['images'][0];
-                                            } elseif (isset($item->product_snapshot['main_image'])) {
-                                                $imageUrl = $item->product_snapshot['main_image'];
-                                            }
-                                        @endphp
-                                        @if($imageUrl)
-                                            <img src="{{ $imageUrl }}" alt="{{ $item->product_name[app()->getLocale()] ?? $item->product_name['es'] ?? 'Product' }}" class="w-full h-full object-cover">
+                                        @if(isset($item->product_snapshot['primary_image']['file_path']))
+                                            <img src="{{ asset($item->product_snapshot['primary_image']['file_path']) }}" alt="{{ $item->product_name[app()->getLocale()] ?? $item->product_name['es'] ?? 'Product' }}" class="w-full h-full object-cover">
                                         @else
                                             <div class="w-full h-full flex items-center justify-center text-gray-400">
                                                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">

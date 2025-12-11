@@ -15,7 +15,12 @@ class MyAccountOrders extends Component
 
     public function render()
     {
-        $orders = OrderEloquentModel::where('user_id', Auth::id())
+        $user = Auth::user();
+
+        $orders = OrderEloquentModel::where(function ($query) use ($user) {
+                $query->where('user_id', $user->id)
+                      ->orWhere('customer_email', $user->email);
+            })
             ->with(['orderItems'])
             ->orderBy('created_at', 'desc')
             ->paginate(5);
