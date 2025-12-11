@@ -29,8 +29,12 @@
                                 <div class="flex gap-4">
                                     <!-- Product Image -->
                                     <div class="w-20 h-20 flex-shrink-0 bg-gray-100 overflow-hidden">
-                                        @if(isset($item->product_snapshot['primary_image']) && !empty($item->product_snapshot['primary_image']['file_path']))
-                                            <img src="{{ str_starts_with($item->product_snapshot['primary_image']['file_path'], 'https://') || str_contains($item->product_snapshot['primary_image']['file_path'], 'r2.cloudflarestorage.com') || str_contains($item->product_snapshot['primary_image']['file_path'], 'digitaloceanspaces.com') ? $item->product_snapshot['primary_image']['file_path'] : asset($item->product_snapshot['primary_image']['file_path']) }}"
+                                        @php
+                                            $primaryImage = $item->product?->media?->where('is_primary', true)->first()
+                                                         ?? $item->product?->media?->first();
+                                        @endphp
+                                        @if($primaryImage)
+                                            <img src="{{ $primaryImage->full_url }}"
                                                  alt="{{ $item->product_name[app()->getLocale()] ?? $item->product_name['es'] ?? 'Product' }}"
                                                  class="w-full h-full object-cover">
                                         @else
