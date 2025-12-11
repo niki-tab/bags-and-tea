@@ -64,6 +64,7 @@ class AppServiceProvider extends ServiceProvider
         // Order/Checkout components
         Livewire::component('order.checkout-page', \Src\Order\Frontend\CheckoutPage::class);
         Livewire::component('order.order-success', \Src\Order\Frontend\OrderSuccess::class);
+        Livewire::component('src.order.frontend.my-account-orders', \Src\Order\Frontend\MyAccountOrders::class);
 
         // Admin CRM components
         Livewire::component('admin.crm.show-all-form-submissions', \Src\Admin\Crm\Frontend\ShowAllFormSubmissions::class);

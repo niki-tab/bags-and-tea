@@ -89,28 +89,7 @@ bg-background-color-4
                         </div>
 
                         <!-- Orders Content -->
-                        <div class="space-y-4">
-                            <!-- Empty State -->
-                            <div class="text-center py-12">
-                                <div class="w-24 h-24 mx-auto mb-4 text-gray-300">
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M10 2L3 7v11a1 1 0 001 1h12a1 1 0 001-1V7l-7-5zM8 15a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd"></path>
-                                    </svg>
-                                </div>
-                                <h3 class="text-lg font-medium text-gray-900 mb-2">{{ trans('my-account.no_orders') }}</h3>
-                                <p class="text-gray-500 mb-6">{{ trans('my-account.no_orders_description') }}</p>
-                                <a href="{{ route('shop.show.' . app()->getLocale(), ['locale' => app()->getLocale()]) }}" class="inline-block bg-color-2 text-white px-6 py-3 font-semibold hover:bg-theme-color-2 transition-colors font-robotoCondensed">
-                                    {{ trans('my-account.start_shopping') }}
-                                </a>
-                            </div>
-
-                            <!-- Future: Order items will be displayed here when orders exist -->
-                            <!-- 
-                            <div class="border border-gray-200 p-4">
-                                Order item template
-                            </div>
-                            -->
-                        </div>
+                        @livewire('src.order.frontend.my-account-orders')
                     </div>
 
                     <!-- Settings Section -->
