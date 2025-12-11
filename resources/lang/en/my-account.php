@@ -25,4 +25,20 @@ return [
     'profile_updated' => 'Profile updated successfully',
     'password_updated' => 'Password updated successfully',
     'current_password_incorrect' => 'The current password is incorrect',
+    'order_number' => 'Order',
+    'quantity' => 'Quantity',
+    'order_total' => 'Order total',
+    'order_status' => [
+        'pending' => 'Pending',
+        'processing' => 'Processing',
+        'shipped' => 'Shipped',
+        'delivered' => 'Delivered',
+        'cancelled' => 'Cancelled',
+    ],
+    'payment_status' => [
+        'paid' => 'Paid',
+        'pending' => 'Pending',
+        'failed' => 'Failed',
+        'refunded' => 'Refunded',
+    ],
 ];

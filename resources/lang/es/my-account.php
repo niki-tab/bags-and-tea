@@ -25,4 +25,20 @@ return [
     'profile_updated' => 'Perfil actualizado exitosamente',
     'password_updated' => 'Contraseña actualizada exitosamente',
     'current_password_incorrect' => 'La contraseña actual es incorrecta',
+    'order_number' => 'Pedido',
+    'quantity' => 'Cantidad',
+    'order_total' => 'Total del pedido',
+    'order_status' => [
+        'pending' => 'Pendiente',
+        'processing' => 'En proceso',
+        'shipped' => 'Enviado',
+        'delivered' => 'Entregado',
+        'cancelled' => 'Cancelado',
+    ],
+    'payment_status' => [
+        'paid' => 'Pagado',
+        'pending' => 'Pendiente',
+        'failed' => 'Fallido',
+        'refunded' => 'Reembolsado',
+    ],
 ];
