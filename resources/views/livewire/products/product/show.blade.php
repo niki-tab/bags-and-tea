@@ -173,7 +173,8 @@
                 <!-- Action Buttons -->
                 <div class="mb-8 w-full max-w-md mx-auto lg:mx-0 lg:ml-5 px-7 md:px-10">
                     @livewire('cart.add-to-cart-button', [
-                        'productId' => $product->id, 
+                        'productId' => $product->id,
+                        'productName' => $product->getTranslation('name', app()->getLocale()),
                         'buttonText' => trans('components/cart.add-to-cart'),
                         'isSoldOut' => $product->is_sold_out || $product->out_of_stock,
                         'isHidden' => $product->is_hidden

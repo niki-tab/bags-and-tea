@@ -9,15 +9,17 @@ use Src\Cart\Infrastructure\EloquentCartRepository;
 class AddToCartButton extends Component
 {
     public ?string $productId = null;
+    public ?string $productName = null;
     public bool $isLoading = false;
     public string $buttonText;
     public bool $isDisabled = false;
     public bool $isSoldOut = false;
     public bool $isHidden = false;
 
-    public function mount(?string $productId = null, ?string $buttonText = null, bool $isSoldOut = false, bool $isHidden = false)
+    public function mount(?string $productId = null, ?string $productName = null, ?string $buttonText = null, bool $isSoldOut = false, bool $isHidden = false)
     {
         $this->productId = $productId;
+        $this->productName = $productName;
         $this->buttonText = $buttonText ?? trans('components/cart.add-to-cart');
         $this->isSoldOut = $isSoldOut;
         $this->isHidden = $isHidden;
