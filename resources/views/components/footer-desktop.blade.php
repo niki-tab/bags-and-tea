@@ -1,16 +1,20 @@
 <div class="relative hidden md:block @yield('footer-desktop-class', 'bg-white')">
     <div class="relative">
-        <div class="relative w-[94%] h-[480px] bg-background-color-1 left-1/2 transform -translate-x-1/2 bottom-[0] flex z-10">
+        <div class="relative w-[94%] h-[540px] bg-background-color-1 left-1/2 transform -translate-x-1/2 bottom-[0] flex z-10">
     
             <div class="w-2/5 flex flex-col justify-center items-center h-full">
-                <img src="{{ asset('images/logo/bags_and_tea_logo_2.svg') }}" class="w-64 h-64 -mt-6">    
+                <img src="{{ asset('images/logo/bags_and_tea_logo_2.svg') }}" class="w-64 h-64 -mt-6">
                 <!-- Rounded Button Below -->
                 <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="mb-24 px-12 pt-2 pb-1.5 font-robotoCondensed bg-background-color-2 text-color-4 rounded-full text-lg font-regular hover:bg-background-color-5 transition">
                     {{ trans('components/footer.button-sell-your-bag') }}
                 </a>
             </div>
-            <div class="w-1/5 flex justify-center"> 
+            <div class="w-1/5 flex justify-center">
                 <nav class="flex flex-col space-y-4 w-full mt-10">
+                    <!-- Trustpilot -->
+                    <div class="flex justify-center mb-2">
+                        <livewire:shared.trustpilot-footer />
+                    </div>
                     <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-1') }}</a>
                     <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-2') }}</a>
                     <a href="{{ route(app()->getLocale() === 'es' ? 'about-us.show.es' : 'about-us.show.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-3') }}</a>
@@ -38,7 +42,7 @@
             </div>
 
         </div>
-        <div class="absolute top-28 w-full h-[368px] bg-background-color-3 z-0">
+        <div class="absolute top-28 w-full h-[428px] bg-background-color-3 z-0">
 
         </div>
         <div class="absolute w-full h-12 bg-background-color-2 left-1/2 transform -translate-x-1/2 bottom-8 flex items-center z-20">
