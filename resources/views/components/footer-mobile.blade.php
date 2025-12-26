@@ -13,7 +13,7 @@
             {{ trans('components/footer.button-sell-your-bag') }}
             </a>
         </div>
-        <div class="w-11/12 flex flex-col items-start mb-16 mx-auto mt-14 bg-[#D29289] p-10">
+        <div class="w-11/12 flex flex-col items-start mb-12 mx-auto mt-14 bg-[#D29289] p-10">
             <p class="text-color-2 font-robotoCondensed text-xl font-bold">{{ trans('components/footer.text-newsletter-title') }}</p>
             <p class="mt-2 leading-loose">{{ trans('components/footer.text-newsletter-description') }}</p>
             <input type="text" class="font-robotoCondensed h-8 w-full mt-6 mb-6 bg-transparent border-b border-color-2 placeholder-color-2 placeholder-font-robotoCondensed pl-4 focus:outline-none focus:ring-0" 
@@ -24,6 +24,10 @@
                 </a>
             </div>
         </div>
+        <!-- Trustpilot -->
+        <div class="flex justify-center mt-10">
+            <livewire:shared.trustpilot-footer />
+        </div>
         <nav class="flex flex-col space-y-10 w-full mt-10">
             <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-1') }}</a>
             <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-2') }}</a>
@@ -33,7 +37,7 @@
             <a href="{{ route(app()->getLocale() === 'es' ? 'privacy.show.es' : 'privacy.show.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-6') }}</a>
             <!-- Ensure the image is centered properly -->
         </nav>
-        <div class="flex gap-4 justify-center items-center mt-14">
+        <div class="flex gap-4 justify-center items-center mt-8">
             <a target="_blank" href="https://www.instagram.com/bags.and.tea?igsh=NTgwcGU2a21paGxk&utm_source=qr"><img src="{{ asset('images/icons/RRSS_insta_b_5.svg') }}" class="w-7 h-7 cursor-pointer"></a>  
         </div>
     </div>
