@@ -278,17 +278,12 @@ class ShowAllProduct extends Component
             $attributeIds = $originalProduct->attributes()->pluck('attributes.id')->toArray();
             $newProduct->attributes()->attach($attributeIds);
             
-            // Copy media
-            foreach ($originalProduct->media as $media) {
-                $newMediaData = $media->toArray();
-                $newMediaData['id'] = (string) Str::uuid();
-                $newMediaData['product_id'] = $newProduct->id;
-                unset($newMediaData['created_at'], $newMediaData['updated_at']);
-                
-                \Src\Products\Product\Infrastructure\Eloquent\ProductMediaModel::create($newMediaData);
-            }
+            // Note: Media is intentionally NOT copied during duplication
+            // This prevents image corruption issues when the duplicate's images are later replaced
+            // (since both products would share the same file paths, deleting from one would affect the other)
+            // The user should upload new images for the duplicated product
             
-            session()->flash('success', 'Product duplicated successfully. You can now edit the copy.');
+            session()->flash('success', 'Product duplicated successfully (without images). Please add images to the new product.');
 
             // Reload products
             $this->loadProducts();
