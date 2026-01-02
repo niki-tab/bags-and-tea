@@ -20,12 +20,43 @@ class AdminIpRestriction
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $clientIp = $request->ip();
+        $clientIp = $this->getClientIp($request);
 
         if (!in_array($clientIp, $this->allowedIps)) {
-            abort(403, 'Access denied. Your IP address is not authorized.');
+            abort(403, 'Access denied. Your IP address is not authorized. IP: ' . $clientIp);
         }
 
         return $next($request);
+    }
+
+    /**
+     * Get the real client IP address, checking forwarded headers.
+     */
+    protected function getClientIp(Request $request): string
+    {
+        // Check X-Forwarded-For header first (most common for proxies)
+        $forwardedFor = $request->header('X-Forwarded-For');
+        if ($forwardedFor) {
+            // X-Forwarded-For can contain multiple IPs, the first one is the original client
+            $ips = array_map('trim', explode(',', $forwardedFor));
+            return $ips[0];
+        }
+
+        // Check other common headers
+        $headers = [
+            'X-Real-IP',
+            'CF-Connecting-IP', // Cloudflare
+            'True-Client-IP',   // Akamai
+        ];
+
+        foreach ($headers as $header) {
+            $ip = $request->header($header);
+            if ($ip) {
+                return $ip;
+            }
+        }
+
+        // Fall back to standard method
+        return $request->ip();
     }
 }
