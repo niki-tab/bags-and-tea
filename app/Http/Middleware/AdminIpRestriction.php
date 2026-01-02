@@ -23,7 +23,7 @@ class AdminIpRestriction
         $clientIp = $this->getClientIp($request);
 
         if (!in_array($clientIp, $this->allowedIps)) {
-            abort(403, 'Access denied. Your IP address is not authorized. IP: ' . $clientIp);
+            abort(403, 'Access denied.');
         }
 
         return $next($request);
