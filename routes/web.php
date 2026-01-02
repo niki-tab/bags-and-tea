@@ -29,7 +29,7 @@ use App\Http\Controllers\WeRepairYourBagController;
 // Add Livewire routes without locale prefix
 
 // Admin Authentication Routes
-Route::prefix('admin-panel')->name('admin.')->group(function () {
+Route::prefix('admin-panel')->middleware(['admin.ip'])->name('admin.')->group(function () {
     // Login page (GET)
     Route::get('/login', [AdminPanelController::class, 'login'])->name('login');
     

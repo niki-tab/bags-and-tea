@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'set.language' => \App\Http\Middleware\SetLanguage::class,
         'admin.auth' => \App\Http\Middleware\AdminAuthenticated::class,
         'admin.only' => \App\Http\Middleware\AdminOnlyAuthenticated::class,
+        'admin.ip' => \App\Http\Middleware\AdminIpRestriction::class,
     ];
 }
