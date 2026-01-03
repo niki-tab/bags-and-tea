@@ -150,6 +150,9 @@ Route::prefix('admin-panel')->middleware(['admin.ip'])->name('admin.')->group(fu
 
             // Bag Supply Hunting (Vinted Listings)
             Route::get('/bag-supply-hunting', [AdminPanelController::class, 'bagSupplyHunting'])->name('bag-supply-hunting');
+
+            // Activity Log
+            Route::get('/activity-log', [AdminPanelController::class, 'activityLog'])->name('activity-log');
         });
     });
 });

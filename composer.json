@@ -21,6 +21,7 @@
         "ramsey/uuid": "^4.7",
         "sendgrid/sendgrid": "^8.1",
         "simplesoftwareio/simple-qrcode": "^4.2",
+        "spatie/laravel-activitylog": "^4.10",
         "spatie/laravel-translatable": "^6.10",
         "stripe/stripe-php": "^16.6"
     },
