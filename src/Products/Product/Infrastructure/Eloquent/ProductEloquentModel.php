@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 use Src\Products\Brands\Infrastructure\Eloquent\BrandEloquentModel;
 use Src\Categories\Infrastructure\Eloquent\CategoryEloquentModel;
 use Src\Attributes\Infrastructure\Eloquent\AttributeEloquentModel;
@@ -16,7 +18,16 @@ use Src\Vendors\Infrastructure\Eloquent\VendorEloquentModel;
 
 class ProductEloquentModel extends Model
 {
-    use HasFactory, HasTranslations;
+    use HasFactory, HasTranslations, LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logAll()
+            ->logOnlyDirty()
+            ->setDescriptionForEvent(fn(string $eventName) => "Product {$eventName}")
+            ->useLogName('admin-products');
+    }
 
     protected $table = 'products';
     public $incrementing = false;

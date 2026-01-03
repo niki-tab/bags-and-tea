@@ -10,10 +10,22 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Auth\Role\Infrastructure\Eloquent\RoleEloquentModel;
 use Src\Vendors\Infrastructure\Eloquent\VendorEloquentModel;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class UserEloquentModel extends Authenticatable
 {
-    use HasUuids, Notifiable;
+    use HasUuids, Notifiable, LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['name', 'email'])
+            ->logOnlyDirty()
+            ->dontLogIfAttributesChangedOnly(['password', 'remember_token'])
+            ->setDescriptionForEvent(fn(string $eventName) => "User {$eventName}")
+            ->useLogName('admin-users');
+    }
 
     protected $table = 'users';
 

@@ -7,6 +7,7 @@ use App\Admin\Auth\Application\AdminAuthenticator;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Spatie\Activitylog\Models\Activity;
 
 class AdminPanelController extends Controller
 {
@@ -108,6 +109,31 @@ class AdminPanelController extends Controller
     public function bagSupplyHunting(): View
     {
         return view('pages.admin-panel.dashboard.bag-supply-hunting');
+    }
+
+    public function activityLog(Request $request): View
+    {
+        $query = Activity::with('causer')->latest();
+
+        if ($request->filled('log_name')) {
+            $query->where('log_name', $request->log_name);
+        }
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('description', 'like', "%{$search}%")
+                  ->orWhere('properties', 'like', "%{$search}%");
+            });
+        }
+
+        $activities = $query->paginate(50);
+        $logNames = Activity::distinct()->pluck('log_name');
+
+        return view('pages.admin-panel.dashboard.activity-log', [
+            'activities' => $activities,
+            'logNames' => $logNames,
+        ]);
     }
 
     public function logout(): RedirectResponse
