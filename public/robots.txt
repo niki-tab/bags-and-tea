@@ -1,2 +1,5 @@
 User-agent: *
-Disallow:
+Disallow: /*?m=
+Disallow: /shop/pg/
+
+Sitemap: https://bagsandtea.com/sitemap.xml
