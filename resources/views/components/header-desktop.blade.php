@@ -88,7 +88,11 @@
                         ->first();
 
                     $bagCategories = [];
+                    $bagsParentSlug = null;
                     if ($bagsParentCategory) {
+                        $bagsSlugData = is_string($bagsParentCategory->slug) ? json_decode($bagsParentCategory->slug, true) : $bagsParentCategory->slug;
+                        $bagsParentSlug = $bagsSlugData[app()->getLocale()] ?? $bagsSlugData['en'] ?? '';
+
                         $categories = \DB::table('categories')
                             ->where('parent_id', $bagsParentCategory->id)
                             ->get();
@@ -99,19 +103,95 @@
                             return $name[app()->getLocale()] ?? $name['en'] ?? '';
                         })->values();
                     }
+
+                    // Get the "Wallets" parent category and its children (only those with products)
+                    $walletsParentCategory = \DB::table('categories')
+                        ->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(name, "$.en")) = ?', ['Wallets'])
+                        ->first();
+
+                    $walletCategories = [];
+                    $walletsParentSlug = null;
+                    $allWalletSlugs = [];
+                    if ($walletsParentCategory) {
+                        $walletsSlugData = is_string($walletsParentCategory->slug) ? json_decode($walletsParentCategory->slug, true) : $walletsParentCategory->slug;
+                        $walletsParentSlug = $walletsSlugData[app()->getLocale()] ?? $walletsSlugData['en'] ?? '';
+
+                        // Collect all wallet slugs (parent + all children) for active state detection
+                        $allWalletSlugs[] = $walletsSlugData['en'] ?? '';
+                        $allWalletSlugs[] = $walletsSlugData['es'] ?? '';
+
+                        // Only get child categories that have at least one product
+                        $categories = \DB::table('categories')
+                            ->where('parent_id', $walletsParentCategory->id)
+                            ->whereExists(function ($query) {
+                                $query->select(\DB::raw(1))
+                                    ->from('product_category')
+                                    ->whereColumn('product_category.category_id', 'categories.id');
+                            })
+                            ->get();
+
+                        // Sort alphabetically by translated name
+                        $walletCategories = $categories->sortBy(function($category) {
+                            $name = is_string($category->name) ? json_decode($category->name, true) : $category->name;
+                            return $name[app()->getLocale()] ?? $name['en'] ?? '';
+                        })->values();
+
+                        // Also collect all children slugs for active state
+                        $allWalletChildren = \DB::table('categories')
+                            ->where('parent_id', $walletsParentCategory->id)
+                            ->get();
+                        foreach ($allWalletChildren as $child) {
+                            $childSlug = is_string($child->slug) ? json_decode($child->slug, true) : $child->slug;
+                            $allWalletSlugs[] = $childSlug['en'] ?? '';
+                            $allWalletSlugs[] = $childSlug['es'] ?? '';
+                        }
+                    }
+                    $allWalletSlugs = array_filter(array_unique($allWalletSlugs));
+
+                    // Determine active states based on current URL slug
+                    $currentSlug = request()->route('slug');
+                    $isOnShopPage = request()->routeIs('shop.show.es') || request()->routeIs('shop.show.en');
+                    $isWalletsActive = $isOnShopPage && in_array($currentSlug, $allWalletSlugs);
+                    $isBagsActive = $isOnShopPage && !$isWalletsActive;
                 @endphp
 
-                <!-- Shop menu with dropdown -->
+                <!-- Our Bags menu with dropdown -->
                 <div class="relative group h-14">
-                    <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale()]) }}"
-                       class="{{ request()->routeIs('shop.show.es') || request()->routeIs('shop.show.en') ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-14 flex items-center justify-center text-color-2 font-robotoCondensed text-base font-medium hover:text-color-3 pb-2 px-4 whitespace-nowrap">
-                        {{ trans('components/header.menu-option-3') }}
+                    <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale(), 'slug' => $bagsParentSlug]) }}"
+                       class="{{ $isBagsActive ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-14 flex items-center justify-center text-color-2 font-robotoCondensed text-base font-medium hover:text-color-3 pb-2 px-4 whitespace-nowrap">
+                        {{ trans('components/header.menu-option-4') }}
                     </a>
 
-                    <!-- Dropdown menu -->
+                    <!-- Dropdown menu for Bags -->
                     @if(count($bagCategories) > 0)
                         <div class="absolute left-0 top-full hidden group-hover:block bg-background-color-4 shadow-lg z-50 pt-1 border-t border-l border-r border-gray-200">
                             @foreach($bagCategories as $category)
+                                @php
+                                    $categoryName = is_string($category->name) ? json_decode($category->name, true) : $category->name;
+                                    $categorySlug = is_string($category->slug) ? json_decode($category->slug, true) : $category->slug;
+                                    $translatedName = $categoryName[app()->getLocale()] ?? $categoryName['en'] ?? '';
+                                    $translatedSlug = $categorySlug[app()->getLocale()] ?? $categorySlug['en'] ?? '';
+                                @endphp
+                                <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale(), 'slug' => $translatedSlug]) }}"
+                                   class="block px-4 py-2 text-color-2 font-robotoCondensed text-sm font-medium hover:text-color-3 whitespace-nowrap border-b border-gray-200">
+                                    {{ $translatedName }}
+                                </a>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+
+                <!-- Our Wallets menu with dropdown -->
+                <div class="relative group h-14">
+                    <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale(), 'slug' => $walletsParentSlug]) }}"
+                       class="{{ $isWalletsActive ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-14 flex items-center justify-center text-color-2 font-robotoCondensed text-base font-medium hover:text-color-3 pb-2 px-4 whitespace-nowrap">
+                        {{ trans('components/header.menu-option-8') }}
+                    </a>
+
+                    <!-- Dropdown menu for Wallets -->
+                    @if(count($walletCategories) > 0)
+                        <div class="absolute left-0 top-full hidden group-hover:block bg-background-color-4 shadow-lg z-50 pt-1 border-t border-l border-r border-gray-200">
+                            @foreach($walletCategories as $category)
                                 @php
                                     $categoryName = is_string($category->name) ? json_decode($category->name, true) : $category->name;
                                     $categorySlug = is_string($category->slug) ? json_decode($category->slug, true) : $category->slug;

@@ -56,7 +56,11 @@
                 ->first();
 
             $bagCategories = [];
+            $bagsParentSlug = null;
             if ($bagsParentCategory) {
+                $bagsSlugData = is_string($bagsParentCategory->slug) ? json_decode($bagsParentCategory->slug, true) : $bagsParentCategory->slug;
+                $bagsParentSlug = $bagsSlugData[app()->getLocale()] ?? $bagsSlugData['en'] ?? '';
+
                 $categories = \DB::table('categories')
                     ->where('parent_id', $bagsParentCategory->id)
                     ->get();
@@ -67,19 +71,69 @@
                     return $name[app()->getLocale()] ?? $name['en'] ?? '';
                 })->values();
             }
+
+            // Get the "Wallets" parent category and its children (only those with products)
+            $walletsParentCategory = \DB::table('categories')
+                ->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(name, "$.en")) = ?', ['Wallets'])
+                ->first();
+
+            $walletCategories = [];
+            $walletsParentSlug = null;
+            $allWalletSlugs = [];
+            if ($walletsParentCategory) {
+                $walletsSlugData = is_string($walletsParentCategory->slug) ? json_decode($walletsParentCategory->slug, true) : $walletsParentCategory->slug;
+                $walletsParentSlug = $walletsSlugData[app()->getLocale()] ?? $walletsSlugData['en'] ?? '';
+
+                // Collect all wallet slugs (parent + all children) for active state detection
+                $allWalletSlugs[] = $walletsSlugData['en'] ?? '';
+                $allWalletSlugs[] = $walletsSlugData['es'] ?? '';
+
+                // Only get child categories that have at least one product
+                $categories = \DB::table('categories')
+                    ->where('parent_id', $walletsParentCategory->id)
+                    ->whereExists(function ($query) {
+                        $query->select(\DB::raw(1))
+                            ->from('product_category')
+                            ->whereColumn('product_category.category_id', 'categories.id');
+                    })
+                    ->get();
+
+                // Sort alphabetically by translated name
+                $walletCategories = $categories->sortBy(function($category) {
+                    $name = is_string($category->name) ? json_decode($category->name, true) : $category->name;
+                    return $name[app()->getLocale()] ?? $name['en'] ?? '';
+                })->values();
+
+                // Also collect all children slugs for active state
+                $allWalletChildren = \DB::table('categories')
+                    ->where('parent_id', $walletsParentCategory->id)
+                    ->get();
+                foreach ($allWalletChildren as $child) {
+                    $childSlug = is_string($child->slug) ? json_decode($child->slug, true) : $child->slug;
+                    $allWalletSlugs[] = $childSlug['en'] ?? '';
+                    $allWalletSlugs[] = $childSlug['es'] ?? '';
+                }
+            }
+            $allWalletSlugs = array_filter(array_unique($allWalletSlugs));
+
+            // Determine active states based on current URL slug
+            $currentSlug = request()->route('slug');
+            $isOnShopPage = request()->routeIs('shop.show.es') || request()->routeIs('shop.show.en');
+            $isWalletsActive = $isOnShopPage && in_array($currentSlug, $allWalletSlugs);
+            $isBagsActive = $isOnShopPage && !$isWalletsActive;
         @endphp
 
         <div class="mt-4">
             <a href="{{ route(app()->getLocale() === 'es' ? 'repair-your-bag.show.es' : 'repair-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('repair-your-bag.show.es') || request()->routeIs('repair-your-bag.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-2xl hover:underline py-4 font-robotoCondensed text-center border-b border-t border-[#E6D4CB]">{{ trans('components/header.menu-option-1') }}</a>
             <a href="{{ route(app()->getLocale() === 'es' ? 'we-buy-your-bag.show.es' : 'we-buy-your-bag.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('we-buy-your-bag.show.es') || request()->routeIs('we-buy-your-bag.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} block text-2xl hover:underline py-4 font-robotoCondensed text-center border-b border-[#E6D4CB]">{{ trans('components/header.menu-option-2') }}</a>
 
-            <!-- Shop menu with expandable dropdown -->
+            <!-- Our Bags menu with expandable dropdown -->
             <div class="border-b border-[#E6D4CB]">
                 <div class="flex items-center justify-center py-4 relative">
-                    <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale()]) }}" class="{{ request()->routeIs('shop.show.es') || request()->routeIs('shop.show.en') ? 'font-bold text-theme-color-2' : 'text-color-2' }} text-2xl hover:underline font-robotoCondensed flex-grow text-center">{{ trans('components/header.menu-option-3') }}</a>
+                    <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale(), 'slug' => $bagsParentSlug]) }}" class="{{ $isBagsActive ? 'font-bold text-theme-color-2' : 'text-color-2' }} text-2xl hover:underline font-robotoCondensed flex-grow text-center">{{ trans('components/header.menu-option-4') }}</a>
                     @if(count($bagCategories) > 0)
-                        <button id="shopDropdownToggle" class="absolute right-4 focus:outline-none p-2" aria-label="Toggle shop categories">
-                            <svg id="shopDropdownIcon" class="w-6 h-6 text-color-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <button id="bagsDropdownToggle" class="absolute right-4 focus:outline-none p-2" aria-label="Toggle bag categories">
+                            <svg id="bagsDropdownIcon" class="w-6 h-6 text-color-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </button>
@@ -87,9 +141,42 @@
                 </div>
 
                 @if(count($bagCategories) > 0)
-                    <div id="shopDropdownMenu" class="hidden overflow-hidden">
+                    <div id="bagsDropdownMenu" class="hidden overflow-hidden">
                         <div class="pb-2">
                             @foreach($bagCategories as $category)
+                                @php
+                                    $categoryName = is_string($category->name) ? json_decode($category->name, true) : $category->name;
+                                    $categorySlug = is_string($category->slug) ? json_decode($category->slug, true) : $category->slug;
+                                    $translatedName = $categoryName[app()->getLocale()] ?? $categoryName['en'] ?? '';
+                                    $translatedSlug = $categorySlug[app()->getLocale()] ?? $categorySlug['en'] ?? '';
+                                @endphp
+                                <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale(), 'slug' => $translatedSlug]) }}"
+                                   class="block text-color-2 font-robotoCondensed text-lg hover:text-color-3 py-2 text-center">
+                                    {{ $translatedName }}
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+            </div>
+
+            <!-- Our Wallets menu with expandable dropdown -->
+            <div class="border-b border-[#E6D4CB]">
+                <div class="flex items-center justify-center py-4 relative">
+                    <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale(), 'slug' => $walletsParentSlug]) }}" class="{{ $isWalletsActive ? 'font-bold text-theme-color-2' : 'text-color-2' }} text-2xl hover:underline font-robotoCondensed flex-grow text-center">{{ trans('components/header.menu-option-8') }}</a>
+                    @if(count($walletCategories) > 0)
+                        <button id="walletsDropdownToggle" class="absolute right-4 focus:outline-none p-2" aria-label="Toggle wallet categories">
+                            <svg id="walletsDropdownIcon" class="w-6 h-6 text-color-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                    @endif
+                </div>
+
+                @if(count($walletCategories) > 0)
+                    <div id="walletsDropdownMenu" class="hidden overflow-hidden">
+                        <div class="pb-2">
+                            @foreach($walletCategories as $category)
                                 @php
                                     $categoryName = is_string($category->name) ? json_decode($category->name, true) : $category->name;
                                     $categorySlug = is_string($category->slug) ? json_decode($category->slug, true) : $category->slug;
@@ -127,15 +214,36 @@
         }
     });
 
-    // JavaScript to toggle the shop dropdown
-    const shopDropdownToggle = document.getElementById('shopDropdownToggle');
-    if (shopDropdownToggle) {
-        shopDropdownToggle.addEventListener('click', function(e) {
+    // JavaScript to toggle the bags dropdown
+    const bagsDropdownToggle = document.getElementById('bagsDropdownToggle');
+    if (bagsDropdownToggle) {
+        bagsDropdownToggle.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
 
-            const menu = document.getElementById('shopDropdownMenu');
-            const icon = document.getElementById('shopDropdownIcon');
+            const menu = document.getElementById('bagsDropdownMenu');
+            const icon = document.getElementById('bagsDropdownIcon');
+
+            menu.classList.toggle('hidden');
+
+            // Rotate the arrow icon
+            if (menu.classList.contains('hidden')) {
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                icon.style.transform = 'rotate(180deg)';
+            }
+        });
+    }
+
+    // JavaScript to toggle the wallets dropdown
+    const walletsDropdownToggle = document.getElementById('walletsDropdownToggle');
+    if (walletsDropdownToggle) {
+        walletsDropdownToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const menu = document.getElementById('walletsDropdownMenu');
+            const icon = document.getElementById('walletsDropdownIcon');
 
             menu.classList.toggle('hidden');
 
