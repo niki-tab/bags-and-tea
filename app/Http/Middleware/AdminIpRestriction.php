@@ -4,60 +4,45 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminIpRestriction
 {
     /**
      * Whitelisted IP addresses that can access the admin panel.
+     * Add your static IPs here. Consider using environment variables for flexibility.
      */
     protected array $allowedIps = [
         '88.8.191.153',
-
     ];
 
     /**
      * Handle an incoming request.
+     *
+     * SECURITY: This middleware uses Laravel's $request->ip() which respects
+     * the TrustProxies middleware configuration. Ensure TrustProxies is properly
+     * configured with your actual proxy IPs (e.g., Cloudflare, AWS ELB).
+     *
+     * DO NOT set TrustProxies $proxies = '*' in production as it allows
+     * attackers to spoof their IP address via X-Forwarded-For headers.
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $clientIp = $this->getClientIp($request);
+        // Use Laravel's built-in IP detection which respects TrustProxies
+        $clientIp = $request->ip();
 
+        // Log access attempts for security auditing
         if (!in_array($clientIp, $this->allowedIps)) {
+            Log::warning('Admin panel access denied', [
+                'ip' => $clientIp,
+                'path' => $request->path(),
+                'user_agent' => $request->userAgent(),
+            ]);
+
             abort(403, 'Access denied.');
         }
 
         return $next($request);
-    }
-
-    /**
-     * Get the real client IP address, checking forwarded headers.
-     */
-    protected function getClientIp(Request $request): string
-    {
-        // Check X-Forwarded-For header first (most common for proxies)
-        $forwardedFor = $request->header('X-Forwarded-For');
-        if ($forwardedFor) {
-            // X-Forwarded-For can contain multiple IPs, the first one is the original client
-            $ips = array_map('trim', explode(',', $forwardedFor));
-            return $ips[0];
-        }
-
-        // Check other common headers
-        $headers = [
-            'X-Real-IP',
-            'CF-Connecting-IP', // Cloudflare
-            'True-Client-IP',   // Akamai
-        ];
-
-        foreach ($headers as $header) {
-            $ip = $request->header($header);
-            if ($ip) {
-                return $ip;
-            }
-        }
-
-        // Fall back to standard method
-        return $request->ip();
     }
 }
