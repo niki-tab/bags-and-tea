@@ -88,14 +88,8 @@
                 $allWalletSlugs[] = $walletsSlugData['en'] ?? '';
                 $allWalletSlugs[] = $walletsSlugData['es'] ?? '';
 
-                // Only get child categories that have at least one product
                 $categories = \DB::table('categories')
                     ->where('parent_id', $walletsParentCategory->id)
-                    ->whereExists(function ($query) {
-                        $query->select(\DB::raw(1))
-                            ->from('product_category')
-                            ->whereColumn('product_category.category_id', 'categories.id');
-                    })
                     ->get();
 
                 // Sort alphabetically by translated name
@@ -130,7 +124,7 @@
             <!-- Our Bags menu with expandable dropdown -->
             <div class="border-b border-[#E6D4CB]">
                 <div class="flex items-center justify-center py-4 relative">
-                    <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale(), 'slug' => $bagsParentSlug]) }}" class="{{ $isBagsActive ? 'font-bold text-theme-color-2' : 'text-color-2' }} text-2xl hover:underline font-robotoCondensed flex-grow text-center">{{ trans('components/header.menu-option-4') }}</a>
+                    <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale()]) }}" class="{{ $isBagsActive ? 'font-bold text-theme-color-2' : 'text-color-2' }} text-2xl hover:underline font-robotoCondensed flex-grow text-center">{{ trans('components/header.menu-option-4') }}</a>
                     @if(count($bagCategories) > 0)
                         <button id="bagsDropdownToggle" class="absolute right-4 focus:outline-none p-2" aria-label="Toggle bag categories">
                             <svg id="bagsDropdownIcon" class="w-6 h-6 text-color-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">

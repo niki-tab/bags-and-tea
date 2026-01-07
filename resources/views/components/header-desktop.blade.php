@@ -120,14 +120,8 @@
                         $allWalletSlugs[] = $walletsSlugData['en'] ?? '';
                         $allWalletSlugs[] = $walletsSlugData['es'] ?? '';
 
-                        // Only get child categories that have at least one product
                         $categories = \DB::table('categories')
                             ->where('parent_id', $walletsParentCategory->id)
-                            ->whereExists(function ($query) {
-                                $query->select(\DB::raw(1))
-                                    ->from('product_category')
-                                    ->whereColumn('product_category.category_id', 'categories.id');
-                            })
                             ->get();
 
                         // Sort alphabetically by translated name
@@ -157,7 +151,7 @@
 
                 <!-- Our Bags menu with dropdown -->
                 <div class="relative group h-14">
-                    <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale(), 'slug' => $bagsParentSlug]) }}"
+                    <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale()]) }}"
                        class="{{ $isBagsActive ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-14 flex items-center justify-center text-color-2 font-robotoCondensed text-base font-medium hover:text-color-3 pb-2 px-4 whitespace-nowrap">
                         {{ trans('components/header.menu-option-4') }}
                     </a>

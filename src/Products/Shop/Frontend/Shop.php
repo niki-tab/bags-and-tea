@@ -470,7 +470,10 @@ class Shop extends Component
 
     private function setupUrlBasedFilters()
     {
+        // If no category slug provided, default to "Bags" category
+        // This preserves SEO for /shop and /tienda URLs while showing only bags
         if (! $this->categorySlug) {
+            $this->setupDefaultBagsFilter();
             return;
         }
 
@@ -577,6 +580,29 @@ class Shop extends Component
             $this->pageTitle = __('shop.page_title');
             $this->pageDescription = __('shop.page_description');
             $this->pageDescription2 = __('shop.default_description_2');
+        }
+    }
+
+    /**
+     * Set up default filter for Bags category when no slug is provided.
+     * This preserves SEO for /shop and /tienda URLs while showing only bags.
+     */
+    private function setupDefaultBagsFilter()
+    {
+        $categoryRepository = new EloquentCategoryRepository;
+        $currentLocale = app()->getLocale();
+
+        // Find the "Bags" parent category
+        $categories = $categoryRepository->findActive();
+        foreach ($categories as $category) {
+            // Check if this is the "Bags" category
+            if ($category->getTranslation('name', 'en') === 'Bags') {
+                $this->setCategoryData($category, $currentLocale);
+                // Include parent category and all its children for filtering
+                $categoryIds = $this->getCategoryAndChildrenIds($category);
+                $this->urlBasedFilters['urlBasedCategories'] = $categoryIds;
+                return;
+            }
         }
     }
 
