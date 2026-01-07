@@ -72,9 +72,9 @@
                 })->values();
             }
 
-            // Get the "Wallets" parent category and its children (only those with products)
+            // Get the "Luxury Wallets" parent category and its children
             $walletsParentCategory = \DB::table('categories')
-                ->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(name, "$.en")) = ?', ['Wallets'])
+                ->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(name, "$.en")) = ?', ['Luxury Wallets'])
                 ->first();
 
             $walletCategories = [];

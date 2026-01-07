@@ -17,8 +17,8 @@ return new class extends Migration
         DB::table('categories')->insert([
             'id' => $walletsCategoryId,
             'name' => json_encode([
-                'en' => 'Wallets',
-                'es' => 'Carteras'
+                'en' => 'Luxury Wallets',
+                'es' => 'Carteras de Lujo'
             ]),
             'slug' => json_encode([
                 'en' => 'wallets',
@@ -154,21 +154,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // First get the Wallets parent category ID
-        $walletsCategory = DB::table('categories')
-            ->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(name, "$.en")) = ?', ['Wallets'])
-            ->first();
 
-        if ($walletsCategory) {
-            // Delete all children first
-            DB::table('categories')
-                ->where('parent_id', $walletsCategory->id)
-                ->delete();
-
-            // Then delete the parent
-            DB::table('categories')
-                ->where('id', $walletsCategory->id)
-                ->delete();
-        }
     }
 };
