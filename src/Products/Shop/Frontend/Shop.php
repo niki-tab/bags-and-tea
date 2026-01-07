@@ -470,7 +470,10 @@ class Shop extends Component
 
     private function setupUrlBasedFilters()
     {
+        // If no category slug provided, default to "Bags" category
+        // This preserves SEO for /shop and /tienda URLs while showing only bags
         if (! $this->categorySlug) {
+            $this->setupDefaultBagsFilter();
             return;
         }
 
@@ -498,15 +501,19 @@ class Shop extends Component
             // Check if slug matches in current locale
             if ($category->getTranslation('slug', $currentLocale) === $this->categorySlug) {
                 $this->setCategoryData($category, $currentLocale);
-                $this->urlBasedFilters['urlBasedCategories'] = [$category->id];
+                // Include parent category and all its children for filtering
+                $categoryIds = $this->getCategoryAndChildrenIds($category);
+                $this->urlBasedFilters['urlBasedCategories'] = $categoryIds;
                 return;
             }
-            
+
             // Check if slug matches in any locale
             foreach (['en', 'es'] as $locale) {
                 if ($category->getTranslation('slug', $locale) === $this->categorySlug) {
                     $this->setCategoryData($category, $currentLocale);
-                    $this->urlBasedFilters['urlBasedCategories'] = [$category->id];
+                    // Include parent category and all its children for filtering
+                    $categoryIds = $this->getCategoryAndChildrenIds($category);
+                    $this->urlBasedFilters['urlBasedCategories'] = $categoryIds;
                     return;
                 }
             }
@@ -574,6 +581,51 @@ class Shop extends Component
             $this->pageDescription = __('shop.page_description');
             $this->pageDescription2 = __('shop.default_description_2');
         }
+    }
+
+    /**
+     * Set up default filter for Bags category when no slug is provided.
+     * This preserves SEO for /shop and /tienda URLs while showing only bags.
+     */
+    private function setupDefaultBagsFilter()
+    {
+        $categoryRepository = new EloquentCategoryRepository;
+        $currentLocale = app()->getLocale();
+
+        // Find the "Bags" parent category
+        $categories = $categoryRepository->findActive();
+        foreach ($categories as $category) {
+            // Check if this is the "Bags" category
+            if ($category->getTranslation('name', 'en') === 'Bags') {
+                $this->setCategoryData($category, $currentLocale);
+                // Include parent category and all its children for filtering
+                $categoryIds = $this->getCategoryAndChildrenIds($category);
+                $this->urlBasedFilters['urlBasedCategories'] = $categoryIds;
+                return;
+            }
+        }
+    }
+
+    /**
+     * Get category ID and all its children IDs for filtering.
+     * This ensures that filtering by a parent category also includes products in child categories.
+     */
+    private function getCategoryAndChildrenIds($category): array
+    {
+        $ids = [$category->id];
+
+        // Get all children of this category
+        $children = \DB::table('categories')
+            ->where('parent_id', $category->id)
+            ->where('is_active', true)
+            ->pluck('id')
+            ->toArray();
+
+        if (!empty($children)) {
+            $ids = array_merge($ids, $children);
+        }
+
+        return $ids;
     }
 
     private function setAttributeData($attribute = null, $locale = null)
