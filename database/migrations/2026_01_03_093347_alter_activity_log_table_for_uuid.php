@@ -22,9 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('activity_log', function (Blueprint $table) {
-            $table->unsignedBigInteger('subject_id')->nullable()->change();
-            $table->unsignedBigInteger('causer_id')->nullable()->change();
-        });
+
     }
 };
