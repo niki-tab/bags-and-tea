@@ -34,6 +34,8 @@ return [
     'contact_us' => 'Contáctanos',
     'few_results_message' => 'Solo se encontraron :count resultado(s) con tus filtros actuales. ¿Quieres ver más opciones?',
     'browse_all_products' => 'Ver Todos los Productos',
+    'browse_all_bags' => 'Ver todos los bolsos',
+    'browse_all_wallets' => 'Ver todas las carteras',
     'or' => 'o',
     
     // Pagination
