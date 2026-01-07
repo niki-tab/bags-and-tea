@@ -465,19 +465,79 @@
             </div>
             
             {{-- Few Results Call-to-Action --}}
-            @if(!empty($products) && count($products) < 10 && !$loading)
+            @php
+                // Determine if we're in wallets section
+                $walletsParent = \DB::table('categories')
+                    ->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(name, "$.en")) = ?', ['Luxury Wallets'])
+                    ->first();
+
+                $isInWalletsSection = false;
+                $isOnParentCategoryPage = false;
+                $walletsSlugs = [];
+                $walletsParentSlug = '';
+
+                if ($walletsParent) {
+                    $walletsSlugData = json_decode($walletsParent->slug, true);
+                    $walletsParentSlug = $walletsSlugData[app()->getLocale()] ?? $walletsSlugData['en'] ?? '';
+                    $walletsSlugs[] = $walletsParentSlug;
+
+                    // Get all wallet children slugs
+                    $walletChildren = \DB::table('categories')->where('parent_id', $walletsParent->id)->get();
+                    foreach ($walletChildren as $child) {
+                        $childSlug = json_decode($child->slug, true);
+                        $walletsSlugs[] = $childSlug[app()->getLocale()] ?? $childSlug['en'] ?? '';
+                    }
+
+                    // Check if current slug is in wallets section
+                    if ($categorySlug && in_array($categorySlug, $walletsSlugs)) {
+                        $isInWalletsSection = true;
+                        // Check if on parent category page
+                        $isOnParentCategoryPage = ($categorySlug === $walletsParentSlug);
+                    }
+                }
+
+                // For bags section - check if on parent bags page (no slug = bags, or slug = bolsos/bags)
+                $bagsParent = \DB::table('categories')
+                    ->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(name, "$.en")) = ?', ['Bags'])
+                    ->first();
+
+                $isOnBagsParentPage = false;
+                if ($bagsParent && !$isInWalletsSection) {
+                    $bagsSlugData = json_decode($bagsParent->slug, true);
+                    $bagsParentSlug = $bagsSlugData[app()->getLocale()] ?? $bagsSlugData['en'] ?? '';
+                    // No slug means we're on bags (default), or slug matches bags parent
+                    $isOnBagsParentPage = empty($categorySlug) || $categorySlug === $bagsParentSlug;
+                }
+
+                // Determine if we should show the "few results" message
+                // Only show when: filters are applied OR on a child category page (not parent)
+                $hasActiveFilters = !empty($selectedFilters);
+                $shouldShowFewResultsMessage = $hasActiveFilters || (!$isOnParentCategoryPage && !$isOnBagsParentPage && !empty($categorySlug));
+
+                // Determine button URL and text
+                if ($isInWalletsSection) {
+                    $browseAllUrl = route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale(), 'slug' => $walletsParentSlug]);
+                    $browseAllText = __('shop.browse_all_wallets');
+                } else {
+                    // Bags section - redirect to /tienda (no slug)
+                    $browseAllUrl = route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale()]);
+                    $browseAllText = __('shop.browse_all_bags');
+                }
+            @endphp
+
+            @if(!empty($products) && count($products) < 10 && !$loading && $shouldShowFewResultsMessage)
                 <div class="mt-8 text-center py-6 bg-gray-50 rounded-lg mx-4 md:mx-0">
                     <p class="text-gray-600 mb-4 px-4">
                         {{ __('shop.few_results_message', ['count' => count($products)]) }}
                     </p>
                     <div class="flex flex-col items-center gap-4">
-                        <a href="{{ app()->getLocale() === 'es' ? route('shop.show.es', ['locale' => 'es', 'slug' => null]) : route('shop.show.en', ['locale' => 'en', 'slug' => null]) }}" 
+                        <a href="{{ $browseAllUrl }}"
                            class="inline-block bg-color-2 text-white px-6 py-3 font-semibold hover:bg-theme-color-2 transition-colors font-robotoCondensed">
-                            {{ __('shop.browse_all_products') }}
+                            {{ $browseAllText }}
                         </a>
                         <div class="flex flex-col items-center gap-2">
                             <span class="text-gray-400">{{ __('shop.or') }}</span>
-                            <a href="{{ app()->getLocale() === 'es' ? route('contact.send.es', ['locale' => 'es']) : route('contact.send.en', ['locale' => 'en']) }}" 
+                            <a href="{{ app()->getLocale() === 'es' ? route('contact.send.es', ['locale' => 'es']) : route('contact.send.en', ['locale' => 'en']) }}"
                                class="inline-block border border-color-2 text-color-2 px-6 py-3 font-semibold hover:bg-color-2 hover:text-white transition-colors font-robotoCondensed mt-2">
                                 {{ __('shop.contact_us') }}
                             </a>
@@ -510,15 +570,15 @@
                             </p>
                         @endif
                         
-                        {{-- Browse All Products Button --}}
+                        {{-- Browse All Button - contextual based on section --}}
                         <div class="flex flex-col items-center gap-4">
-                            <a href="{{ app()->getLocale() === 'es' ? route('shop.show.es', ['locale' => 'es', 'slug' => null]) : route('shop.show.en', ['locale' => 'en', 'slug' => null]) }}" 
+                            <a href="{{ $browseAllUrl }}"
                                class="inline-block bg-color-2 text-white px-6 py-3 font-semibold hover:bg-theme-color-2 transition-colors font-robotoCondensed text-lg">
-                                {{ __('shop.browse_all_products') }}
+                                {{ $browseAllText }}
                             </a>
                             <div class="flex flex-col items-center gap-2">
                                 <span class="text-gray-400">{{ __('shop.or') }}</span>
-                                <a href="{{ app()->getLocale() === 'es' ? route('contact.send.es', ['locale' => 'es']) : route('contact.send.en', ['locale' => 'en']) }}" 
+                                <a href="{{ app()->getLocale() === 'es' ? route('contact.send.es', ['locale' => 'es']) : route('contact.send.en', ['locale' => 'en']) }}"
                                    class="inline-block border border-color-2 text-color-2 px-6 py-3 font-semibold hover:bg-color-2 hover:text-white transition-colors font-robotoCondensed mt-2">
                                     {{ __('shop.contact_us') }}
                                 </a>

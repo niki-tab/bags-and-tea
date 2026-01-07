@@ -34,6 +34,8 @@ return [
     'contact_us' => 'Contact Us',
     'few_results_message' => 'Only :count result(s) found with your current filters. Want to see more options?',
     'browse_all_products' => 'Browse All Products',
+    'browse_all_bags' => 'View all bags',
+    'browse_all_wallets' => 'View all wallets',
     'or' => 'or',
     
     // Pagination
