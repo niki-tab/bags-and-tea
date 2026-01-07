@@ -93,10 +93,9 @@ class Shop extends Component
         // Store the category slug for URL-based filtering
         $this->categorySlug = $categorySlug;
 
-        // Set up URL-based filters if categorySlug is provided
-        if ($this->categorySlug) {
-            $this->setupUrlBasedFilters();
-        }
+        // Set up URL-based filters (handles both with and without slug)
+        // When no slug is provided, it defaults to showing only Bags
+        $this->setupUrlBasedFilters();
 
         // Set default content if no specific content was set (no brand, category, or attribute match)
         if (empty($this->pageTitle)) {
