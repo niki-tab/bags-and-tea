@@ -14,7 +14,8 @@ class AdminIpRestriction
      * Add your static IPs here. Consider using environment variables for flexibility.
      */
     protected array $allowedIps = [
-        '88.8.191.153',
+        '88.8.189.253',
+        '79.116.237.154',
     ];
 
     /**

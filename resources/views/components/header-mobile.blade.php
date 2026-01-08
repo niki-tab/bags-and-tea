@@ -132,7 +132,8 @@
             $currentSlug = request()->route('slug');
             $isOnShopPage = request()->routeIs('shop.show.es') || request()->routeIs('shop.show.en');
             $isWalletsActive = $isOnShopPage && in_array($currentSlug, $allWalletSlugs);
-            $isBagsActive = $isOnShopPage && in_array($currentSlug, $allBagSlugs);
+            // Bags is active when on shop page with bag slug OR when on shop page without any slug (main shop = bags)
+            $isBagsActive = $isOnShopPage && (in_array($currentSlug, $allBagSlugs) || empty($currentSlug));
         @endphp
 
         <div class="mt-4">
