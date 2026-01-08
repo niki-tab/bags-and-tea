@@ -12,7 +12,7 @@ class AdminIpRestriction
      * Whitelisted IP addresses that can access the admin panel.
      */
     protected array $allowedIps = [
-        '88.8.189.253',
+        '88.8.191.153',
         '79.116.237.154',
     ];
 
