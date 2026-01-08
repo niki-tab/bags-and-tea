@@ -50,16 +50,25 @@
             </div>
         </div>
         @php
-            // Get the "Bags" parent category and its children
+            // Get the Bags parent category by slug (bags or bolsos)
             $bagsParentCategory = \DB::table('categories')
-                ->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(name, "$.en")) = ?', ['Bags'])
+                ->where(function($query) {
+                    $query->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.en")) = ?', ['bags'])
+                          ->orWhereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.es")) = ?', ['bolsos']);
+                })
+                ->whereNull('parent_id')
                 ->first();
 
             $bagCategories = [];
             $bagsParentSlug = null;
+            $allBagSlugs = [];
             if ($bagsParentCategory) {
                 $bagsSlugData = is_string($bagsParentCategory->slug) ? json_decode($bagsParentCategory->slug, true) : $bagsParentCategory->slug;
                 $bagsParentSlug = $bagsSlugData[app()->getLocale()] ?? $bagsSlugData['en'] ?? '';
+
+                // Collect all bag slugs for active state detection
+                $allBagSlugs[] = $bagsSlugData['en'] ?? '';
+                $allBagSlugs[] = $bagsSlugData['es'] ?? '';
 
                 $categories = \DB::table('categories')
                     ->where('parent_id', $bagsParentCategory->id)
@@ -70,11 +79,23 @@
                     $name = is_string($category->name) ? json_decode($category->name, true) : $category->name;
                     return $name[app()->getLocale()] ?? $name['en'] ?? '';
                 })->values();
-            }
 
-            // Get the "Luxury Wallets" parent category and its children
+                // Also collect all children slugs for active state
+                foreach ($categories as $child) {
+                    $childSlug = is_string($child->slug) ? json_decode($child->slug, true) : $child->slug;
+                    $allBagSlugs[] = $childSlug['en'] ?? '';
+                    $allBagSlugs[] = $childSlug['es'] ?? '';
+                }
+            }
+            $allBagSlugs = array_filter(array_unique($allBagSlugs));
+
+            // Get the Wallets parent category by slug (wallets or carteras)
             $walletsParentCategory = \DB::table('categories')
-                ->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(name, "$.en")) = ?', ['Luxury Wallets'])
+                ->where(function($query) {
+                    $query->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.en")) = ?', ['wallets'])
+                          ->orWhereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.es")) = ?', ['carteras']);
+                })
+                ->whereNull('parent_id')
                 ->first();
 
             $walletCategories = [];
@@ -84,7 +105,7 @@
                 $walletsSlugData = is_string($walletsParentCategory->slug) ? json_decode($walletsParentCategory->slug, true) : $walletsParentCategory->slug;
                 $walletsParentSlug = $walletsSlugData[app()->getLocale()] ?? $walletsSlugData['en'] ?? '';
 
-                // Collect all wallet slugs (parent + all children) for active state detection
+                // Collect all wallet slugs for active state detection
                 $allWalletSlugs[] = $walletsSlugData['en'] ?? '';
                 $allWalletSlugs[] = $walletsSlugData['es'] ?? '';
 
@@ -99,10 +120,7 @@
                 })->values();
 
                 // Also collect all children slugs for active state
-                $allWalletChildren = \DB::table('categories')
-                    ->where('parent_id', $walletsParentCategory->id)
-                    ->get();
-                foreach ($allWalletChildren as $child) {
+                foreach ($categories as $child) {
                     $childSlug = is_string($child->slug) ? json_decode($child->slug, true) : $child->slug;
                     $allWalletSlugs[] = $childSlug['en'] ?? '';
                     $allWalletSlugs[] = $childSlug['es'] ?? '';
@@ -114,7 +132,7 @@
             $currentSlug = request()->route('slug');
             $isOnShopPage = request()->routeIs('shop.show.es') || request()->routeIs('shop.show.en');
             $isWalletsActive = $isOnShopPage && in_array($currentSlug, $allWalletSlugs);
-            $isBagsActive = $isOnShopPage && !$isWalletsActive;
+            $isBagsActive = $isOnShopPage && in_array($currentSlug, $allBagSlugs);
         @endphp
 
         <div class="mt-4">
