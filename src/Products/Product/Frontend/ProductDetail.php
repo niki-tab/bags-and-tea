@@ -126,8 +126,8 @@ class ProductDetail extends Component
                         $parentNameEs = $parent->getTranslation('name', 'es');
                         $parentNameEn = $parent->getTranslation('name', 'en');
                         
-                        // Look specifically for "Bolsos" (Spanish) or "Bags" (English) parent category
-                        if ($parentNameEs === 'Bolsos' || $parentNameEn === 'Bags') {
+                        // Look specifically for "Bolsos de Lujo" (Spanish) or "Luxury Bags" (English) parent category
+                        if ($parentNameEs === 'Bolsos de Lujo' || $parentNameEn === 'Luxury Bags') {
                             $bagCategory = $category;
                             break;
                         }
