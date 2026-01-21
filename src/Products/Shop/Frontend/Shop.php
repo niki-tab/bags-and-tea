@@ -594,8 +594,8 @@ class Shop extends Component
         // Find the "Bags" parent category
         $categories = $categoryRepository->findActive();
         foreach ($categories as $category) {
-            // Check if this is the "Bags" category
-            if ($category->getTranslation('name', 'en') === 'Bags') {
+            // Check if this is the "Luxury Bags" category
+            if ($category->getTranslation('name', 'en') === 'Luxury Bags') {
                 $this->setCategoryData($category, $currentLocale);
                 // Include parent category and all its children for filtering
                 $categoryIds = $this->getCategoryAndChildrenIds($category);
