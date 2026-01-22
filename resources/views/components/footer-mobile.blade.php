@@ -34,7 +34,7 @@
             <a href="{{ route(app()->getLocale() === 'es' ? 'about-us.show.es' : 'about-us.show.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-3') }}</a>
             <a href="{{ route(app()->getLocale() === 'es' ? 'blog.show.en-es' : 'blog.show.en-es', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-4') }}</a>
             <a href="{{ route(app()->getLocale() === 'es' ? 'contact.send.es' : 'contact.send.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-5') }}</a>
-            <a href="{{ route(app()->getLocale() === 'es' ? 'privacy.show.es' : 'privacy.show.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-6') }}</a>
+            <a href="{{ route(app()->getLocale() === 'es' ? 'faq.show.es' : 'faq.show.en', ['locale' => app()->getLocale()]) }}" class="text-center text-text-color-4 font-robotoCondensed text-lg font-medium hover:text-color-5">{{ trans('components/footer.footer-option-6') }}</a>
             <!-- Ensure the image is centered properly -->
         </nav>
         <div class="flex gap-4 justify-center items-center mt-8">
