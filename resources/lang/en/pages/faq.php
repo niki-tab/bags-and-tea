@@ -33,6 +33,6 @@ return [
     'faq_10_question' => 'How can I contact customer support?',
     'faq_10_answer' => 'You can reach our customer support team through our contact form, by email, or through our social media channels. We typically respond within 24 hours.',
 
-    'page-seo-title' => 'FAQ - Frequently Asked Questions | Bags & Tea',
-    'page-seo-description' => 'Find answers to common questions about buying and selling luxury second-hand bags at Bags & Tea.',
+    'page-seo-title' => 'Frequently Asked Questions | Second-Hand Luxury Bags',
+    'page-seo-description' => 'Find answers to common questions about buying and selling second-hand luxury bags at Bags & Tea. Learn about authentication, shipping, returns and our lifetime guarantee.',
 ];

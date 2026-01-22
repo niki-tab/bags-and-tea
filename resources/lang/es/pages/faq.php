@@ -33,6 +33,6 @@ return [
     'faq_10_question' => '¿Como puedo contactar con atencion al cliente?',
     'faq_10_answer' => 'Puedes contactar con nuestro equipo de atencion al cliente a traves de nuestro formulario de contacto, por email o a traves de nuestras redes sociales. Normalmente respondemos en 24 horas.',
 
-    'page-seo-title' => 'FAQ - Preguntas Frecuentes | Bags & Tea',
-    'page-seo-description' => 'Encuentra respuestas a las preguntas mas comunes sobre comprar y vender bolsos de lujo de segunda mano en Bags & Tea.',
+    'page-seo-title' => 'Preguntas Frecuentes | Bolsos de Lujo de Segunda Mano',
+    'page-seo-description' => 'Encuentra respuestas a las preguntas mas frecuentes sobre comprar y vender bolsos de lujo de segunda mano en Bags & Tea. Informacion sobre autenticacion, envios, devoluciones y garantia vitalicia.',
 ];
