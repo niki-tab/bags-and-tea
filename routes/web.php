@@ -301,11 +301,11 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
     })->name('legal-notice.show.en')->where('locale', 'en');
 
     Route::get('/preguntas-frecuentes', function () {
-        return view('pages/we_are_under_construction/show');
+        return view('pages/faq/show');
     })->name('faq.show.es')->where('locale', 'es');
 
     Route::get('/frequently-asked-questions', function () {
-        return view('pages/we_are_under_construction/show');
+        return view('pages/faq/show');
     })->name('faq.show.en')->where('locale', 'en');
     
     
