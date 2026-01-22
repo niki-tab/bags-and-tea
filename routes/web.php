@@ -10,6 +10,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\WeBuyYourBagController;
 use App\Http\Controllers\Admin\AdminPanelController;
 use App\Http\Controllers\WeRepairYourBagController;
+use App\Http\Controllers\FaqController;
 
 /*
 |--------------------------------------------------------------------------
@@ -300,13 +301,9 @@ Route::group(['prefix' => '{locale}', 'middleware' => 'set.language'], function 
         return view('pages/legal/legal');
     })->name('legal-notice.show.en')->where('locale', 'en');
 
-    Route::get('/preguntas-frecuentes', function () {
-        return view('pages/faq/show');
-    })->name('faq.show.es')->where('locale', 'es');
+    Route::get('/preguntas-frecuentes', [FaqController::class, 'index'])->name('faq.show.es')->where('locale', 'es');
 
-    Route::get('/frequently-asked-questions', function () {
-        return view('pages/faq/show');
-    })->name('faq.show.en')->where('locale', 'en');
+    Route::get('/frequently-asked-questions', [FaqController::class, 'index'])->name('faq.show.en')->where('locale', 'en');
     
     
     Route::get('/', [HomeController::class, 'index'])->name('home.show.en-es');
