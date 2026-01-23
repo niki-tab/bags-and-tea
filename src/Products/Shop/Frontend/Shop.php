@@ -79,7 +79,7 @@ class Shop extends Component
     #[Url]
     public $search = '';
 
-    public $perPage = 16;
+    public $perPage = 32;
 
     public $totalProducts = 0;
 
