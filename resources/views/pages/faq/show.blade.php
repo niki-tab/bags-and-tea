@@ -12,6 +12,8 @@ bg-color-4  {{-- or any other Tailwind class you want for this specific page --}
 bg-color-4  {{-- or any other Tailwind class you want for this specific page --}}
 @endsection
 
+<meta name="robots" content="noindex, nofollow" />
+
 @section('content')
 
 <!-- Top white space -->
