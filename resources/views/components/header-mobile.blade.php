@@ -134,6 +134,42 @@
             $isWalletsActive = $isOnShopPage && in_array($currentSlug, $allWalletSlugs);
             // Bags is active when on shop page with bag slug OR when on shop page without any slug (main shop = bags)
             $isBagsActive = $isOnShopPage && (in_array($currentSlug, $allBagSlugs) || empty($currentSlug));
+
+            // Get all "Bag Models" parent categories and their children for Popular Models menu
+            $bagModelsParents = \DB::table('categories')
+                ->where(function($query) {
+                    $query->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.en")) = ?', ['louis-vuitton-bag-models'])
+                          ->orWhereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.en")) = ?', ['gucci-bag-models'])
+                          ->orWhereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.en")) = ?', ['fendi-bag-models']);
+                })
+                ->where('is_active', true)
+                ->get();
+
+            $popularModels = [];
+            $allPopularModelSlugs = [];
+            foreach ($bagModelsParents as $parent) {
+                $parentName = is_string($parent->name) ? json_decode($parent->name, true) : $parent->name;
+                $brandName = str_replace([' Bag Models', ' Bolsos'], '', $parentName['en'] ?? '');
+
+                $models = \DB::table('categories')
+                    ->where('parent_id', $parent->id)
+                    ->where('is_active', true)
+                    ->orderBy('display_order')
+                    ->get();
+
+                if ($models->count() > 0) {
+                    $popularModels[$brandName] = $models;
+                    foreach ($models as $model) {
+                        $modelSlug = is_string($model->slug) ? json_decode($model->slug, true) : $model->slug;
+                        $allPopularModelSlugs[] = $modelSlug['en'] ?? '';
+                        $allPopularModelSlugs[] = $modelSlug['es'] ?? '';
+                    }
+                }
+            }
+            $allPopularModelSlugs = array_filter(array_unique($allPopularModelSlugs));
+            $allPopularModelSlugs[] = 'popular-models';
+            $allPopularModelSlugs[] = 'modelos-populares';
+            $isPopularModelsActive = $isOnShopPage && in_array($currentSlug, $allPopularModelSlugs);
         @endphp
 
         <div class="mt-4">
@@ -167,6 +203,41 @@
                                    class="block text-color-2 font-robotoCondensed text-lg hover:text-color-3 py-2 text-center">
                                     {{ $translatedName }}
                                 </a>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+            </div>
+
+            <!-- Popular Models menu with expandable dropdown -->
+            <div class="border-b border-[#E6D4CB]">
+                <div class="flex items-center justify-center py-4 relative">
+                    <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale(), 'slug' => app()->getLocale() === 'es' ? 'modelos-populares' : 'popular-models']) }}" class="{{ $isPopularModelsActive ? 'font-bold text-theme-color-2' : 'text-color-2' }} text-2xl hover:underline font-robotoCondensed flex-grow text-center">{{ trans('components/header.menu-option-9') }}</a>
+                    @if(count($popularModels) > 0)
+                        <button id="popularModelsDropdownToggle" class="absolute right-4 focus:outline-none p-2" aria-label="Toggle popular models">
+                            <svg id="popularModelsDropdownIcon" class="w-6 h-6 text-color-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                    @endif
+                </div>
+
+                @if(count($popularModels) > 0)
+                    <div id="popularModelsDropdownMenu" class="hidden overflow-hidden">
+                        <div class="pb-2">
+                            @foreach($popularModels as $brandName => $models)
+                                @foreach($models as $model)
+                                    @php
+                                        $modelName = is_string($model->name) ? json_decode($model->name, true) : $model->name;
+                                        $modelSlug = is_string($model->slug) ? json_decode($model->slug, true) : $model->slug;
+                                        $translatedModelName = $modelName[app()->getLocale()] ?? $modelName['en'] ?? '';
+                                        $translatedModelSlug = $modelSlug[app()->getLocale()] ?? $modelSlug['en'] ?? '';
+                                    @endphp
+                                    <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale(), 'slug' => $translatedModelSlug]) }}"
+                                       class="block text-color-2 font-robotoCondensed text-lg hover:text-color-3 py-2 text-center">
+                                        {{ $translatedModelName }}
+                                    </a>
+                                @endforeach
                             @endforeach
                         </div>
                     </div>
@@ -257,6 +328,27 @@
 
             const menu = document.getElementById('walletsDropdownMenu');
             const icon = document.getElementById('walletsDropdownIcon');
+
+            menu.classList.toggle('hidden');
+
+            // Rotate the arrow icon
+            if (menu.classList.contains('hidden')) {
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                icon.style.transform = 'rotate(180deg)';
+            }
+        });
+    }
+
+    // JavaScript to toggle the popular models dropdown
+    const popularModelsDropdownToggle = document.getElementById('popularModelsDropdownToggle');
+    if (popularModelsDropdownToggle) {
+        popularModelsDropdownToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const menu = document.getElementById('popularModelsDropdownMenu');
+            const icon = document.getElementById('popularModelsDropdownIcon');
 
             menu.classList.toggle('hidden');
 

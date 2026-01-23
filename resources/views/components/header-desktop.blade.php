@@ -166,6 +166,42 @@
                     $isWalletsActive = $isOnShopPage && in_array($currentSlug, $allWalletSlugs);
                     // Bags is active when on shop page with bag slug OR when on shop page without any slug (main shop = bags)
                     $isBagsActive = $isOnShopPage && (in_array($currentSlug, $allBagSlugs) || empty($currentSlug));
+
+                    // Get all "Bag Models" parent categories and their children for Popular Models menu
+                    $bagModelsParents = \DB::table('categories')
+                        ->where(function($query) {
+                            $query->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.en")) = ?', ['louis-vuitton-bag-models'])
+                                  ->orWhereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.en")) = ?', ['gucci-bag-models'])
+                                  ->orWhereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.en")) = ?', ['fendi-bag-models']);
+                        })
+                        ->where('is_active', true)
+                        ->get();
+
+                    $popularModels = [];
+                    $allPopularModelSlugs = [];
+                    foreach ($bagModelsParents as $parent) {
+                        $parentName = is_string($parent->name) ? json_decode($parent->name, true) : $parent->name;
+                        $brandName = str_replace([' Bag Models', ' Bolsos'], '', $parentName['en'] ?? '');
+
+                        $models = \DB::table('categories')
+                            ->where('parent_id', $parent->id)
+                            ->where('is_active', true)
+                            ->orderBy('display_order')
+                            ->get();
+
+                        if ($models->count() > 0) {
+                            $popularModels[$brandName] = $models;
+                            foreach ($models as $model) {
+                                $modelSlug = is_string($model->slug) ? json_decode($model->slug, true) : $model->slug;
+                                $allPopularModelSlugs[] = $modelSlug['en'] ?? '';
+                                $allPopularModelSlugs[] = $modelSlug['es'] ?? '';
+                            }
+                        }
+                    }
+                    $allPopularModelSlugs = array_filter(array_unique($allPopularModelSlugs));
+                    $allPopularModelSlugs[] = 'popular-models';
+                    $allPopularModelSlugs[] = 'modelos-populares';
+                    $isPopularModelsActive = $isOnShopPage && in_array($currentSlug, $allPopularModelSlugs);
                 @endphp
 
                 <!-- Our Bags menu with dropdown -->
@@ -189,6 +225,33 @@
                                    class="block px-4 py-2 text-color-2 font-robotoCondensed text-sm font-medium hover:text-color-3 whitespace-nowrap border-b border-gray-200">
                                     {{ $translatedName }}
                                 </a>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+
+                <!-- Popular Models menu with dropdown -->
+                <div class="relative group h-14">
+                    <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale(), 'slug' => app()->getLocale() === 'es' ? 'modelos-populares' : 'popular-models']) }}"
+                       class="{{ $isPopularModelsActive ? 'text-white bg-background-color-3 hover:text-white' : 'text-color-2' }} h-14 flex items-center justify-center text-color-2 font-robotoCondensed text-base font-medium hover:text-color-3 pb-2 px-4 whitespace-nowrap">
+                        {{ trans('components/header.menu-option-9') }}
+                    </a>
+
+                    @if(count($popularModels) > 0)
+                        <div class="absolute left-0 top-full hidden group-hover:block bg-background-color-4 shadow-lg z-50 pt-1 border-t border-l border-r border-gray-200 min-w-[200px]">
+                            @foreach($popularModels as $brandName => $models)
+                                @foreach($models as $model)
+                                    @php
+                                        $modelName = is_string($model->name) ? json_decode($model->name, true) : $model->name;
+                                        $modelSlug = is_string($model->slug) ? json_decode($model->slug, true) : $model->slug;
+                                        $translatedModelName = $modelName[app()->getLocale()] ?? $modelName['en'] ?? '';
+                                        $translatedModelSlug = $modelSlug[app()->getLocale()] ?? $modelSlug['en'] ?? '';
+                                    @endphp
+                                    <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale(), 'slug' => $translatedModelSlug]) }}"
+                                       class="block px-4 py-2 text-color-2 font-robotoCondensed text-sm font-medium hover:text-color-3 whitespace-nowrap border-b border-gray-200">
+                                        {{ $translatedModelName }}
+                                    </a>
+                                @endforeach
                             @endforeach
                         </div>
                     @endif
