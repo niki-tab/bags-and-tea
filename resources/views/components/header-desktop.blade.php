@@ -175,27 +175,26 @@
                                   ->orWhereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.en")) = ?', ['fendi-bag-models']);
                         })
                         ->where('is_active', true)
-                        ->get();
+                        ->pluck('id');
 
                     $popularModels = [];
                     $allPopularModelSlugs = [];
-                    foreach ($bagModelsParents as $parent) {
-                        $parentName = is_string($parent->name) ? json_decode($parent->name, true) : $parent->name;
-                        $brandName = str_replace([' Bag Models', ' Bolsos'], '', $parentName['en'] ?? '');
-
+                    if ($bagModelsParents->count() > 0) {
                         $models = \DB::table('categories')
-                            ->where('parent_id', $parent->id)
+                            ->whereIn('parent_id', $bagModelsParents)
                             ->where('is_active', true)
-                            ->orderBy('display_order')
                             ->get();
 
-                        if ($models->count() > 0) {
-                            $popularModels[$brandName] = $models;
-                            foreach ($models as $model) {
-                                $modelSlug = is_string($model->slug) ? json_decode($model->slug, true) : $model->slug;
-                                $allPopularModelSlugs[] = $modelSlug['en'] ?? '';
-                                $allPopularModelSlugs[] = $modelSlug['es'] ?? '';
-                            }
+                        // Sort alphabetically by translated name
+                        $popularModels = $models->sortBy(function($model) {
+                            $name = is_string($model->name) ? json_decode($model->name, true) : $model->name;
+                            return $name[app()->getLocale()] ?? $name['en'] ?? '';
+                        })->values();
+
+                        foreach ($popularModels as $model) {
+                            $modelSlug = is_string($model->slug) ? json_decode($model->slug, true) : $model->slug;
+                            $allPopularModelSlugs[] = $modelSlug['en'] ?? '';
+                            $allPopularModelSlugs[] = $modelSlug['es'] ?? '';
                         }
                     }
                     $allPopularModelSlugs = array_filter(array_unique($allPopularModelSlugs));
@@ -239,19 +238,17 @@
 
                     @if(count($popularModels) > 0)
                         <div class="absolute left-0 top-full hidden group-hover:block bg-background-color-4 shadow-lg z-50 pt-1 border-t border-l border-r border-gray-200 min-w-[200px]">
-                            @foreach($popularModels as $brandName => $models)
-                                @foreach($models as $model)
-                                    @php
-                                        $modelName = is_string($model->name) ? json_decode($model->name, true) : $model->name;
-                                        $modelSlug = is_string($model->slug) ? json_decode($model->slug, true) : $model->slug;
-                                        $translatedModelName = $modelName[app()->getLocale()] ?? $modelName['en'] ?? '';
-                                        $translatedModelSlug = $modelSlug[app()->getLocale()] ?? $modelSlug['en'] ?? '';
-                                    @endphp
-                                    <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale(), 'slug' => $translatedModelSlug]) }}"
-                                       class="block px-4 py-2 text-color-2 font-robotoCondensed text-sm font-medium hover:text-color-3 whitespace-nowrap border-b border-gray-200">
-                                        {{ $translatedModelName }}
-                                    </a>
-                                @endforeach
+                            @foreach($popularModels as $model)
+                                @php
+                                    $modelName = is_string($model->name) ? json_decode($model->name, true) : $model->name;
+                                    $modelSlug = is_string($model->slug) ? json_decode($model->slug, true) : $model->slug;
+                                    $translatedModelName = $modelName[app()->getLocale()] ?? $modelName['en'] ?? '';
+                                    $translatedModelSlug = $modelSlug[app()->getLocale()] ?? $modelSlug['en'] ?? '';
+                                @endphp
+                                <a href="{{ route(app()->getLocale() === 'es' ? 'shop.show.es' : 'shop.show.en', ['locale' => app()->getLocale(), 'slug' => $translatedModelSlug]) }}"
+                                   class="block px-4 py-2 text-color-2 font-robotoCondensed text-sm font-medium hover:text-color-3 whitespace-nowrap border-b border-gray-200">
+                                    {{ $translatedModelName }}
+                                </a>
                             @endforeach
                         </div>
                     @endif
