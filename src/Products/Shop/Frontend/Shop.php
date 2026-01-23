@@ -476,6 +476,12 @@ class Shop extends Component
             return;
         }
 
+        // Check for special "popular-models" / "modelos-populares" slug
+        if (in_array($this->categorySlug, ['popular-models', 'modelos-populares'])) {
+            $this->setupPopularModelsFilter();
+            return;
+        }
+
         // Check if the slug corresponds to a brand, category or attribute (in that order)
         // $brandRepository = new EloquentBrandRepository;
         $categoryRepository = new EloquentCategoryRepository;
@@ -580,6 +586,43 @@ class Shop extends Component
             $this->pageDescription = __('shop.page_description');
             $this->pageDescription2 = __('shop.default_description_2');
         }
+    }
+
+    /**
+     * Set up filter for Popular Models - shows all products from bag model categories.
+     */
+    private function setupPopularModelsFilter()
+    {
+        $currentLocale = app()->getLocale();
+
+        // Get all "Bag Models" parent categories
+        $bagModelsParents = \DB::table('categories')
+            ->where(function($query) {
+                $query->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.en")) = ?', ['louis-vuitton-bag-models'])
+                      ->orWhereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.en")) = ?', ['gucci-bag-models'])
+                      ->orWhereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.en")) = ?', ['fendi-bag-models']);
+            })
+            ->where('is_active', true)
+            ->pluck('id');
+
+        // Get all child model categories
+        $modelCategoryIds = \DB::table('categories')
+            ->whereIn('parent_id', $bagModelsParents)
+            ->where('is_active', true)
+            ->pluck('id')
+            ->toArray();
+
+        if (!empty($modelCategoryIds)) {
+            $this->urlBasedFilters['urlBasedCategories'] = $modelCategoryIds;
+        }
+
+        // Set page content for Popular Models
+        $this->brandData = null;
+        $this->pageTitle = $currentLocale === 'es' ? 'Modelos Populares' : 'Popular Models';
+        $this->pageDescription = $currentLocale === 'es'
+            ? 'Descubre nuestra selección de los modelos de bolsos más icónicos y buscados. Speedy, Neverfull, Alma, Baguette y más diseños legendarios de las mejores marcas de lujo.'
+            : 'Discover our selection of the most iconic and sought-after bag models. Speedy, Neverfull, Alma, Baguette and more legendary designs from the best luxury brands.';
+        $this->pageDescription2 = '';
     }
 
     /**

@@ -7,6 +7,7 @@ return [
     'menu-option-2' => 'We buy your bag',
     'menu-option-3' => 'Shop',
     'menu-option-4' => 'Our Bags',
+    'menu-option-9' => 'Popular Models',
     'menu-option-5' => 'About us',
     'menu-option-6' => 'Blog',
     'menu-option-7' => 'Contact',
