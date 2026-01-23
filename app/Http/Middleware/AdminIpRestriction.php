@@ -31,6 +31,11 @@ class AdminIpRestriction
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // Skip IP restriction in local development
+        if (app()->environment('local')) {
+            return $next($request);
+        }
+
         // Use Laravel's built-in IP detection which respects TrustProxies
         $clientIp = $request->ip();
 
