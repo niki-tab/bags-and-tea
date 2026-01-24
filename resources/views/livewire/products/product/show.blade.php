@@ -44,22 +44,30 @@
         
         <!-- Product Specifications - Below title, above grid (Desktop only) -->
         <div class="hidden lg:flex lg:justify-center mb-8 text-sm w-96 lg:w-auto max-w-6xl mx-auto mt-10 gap-10">
+            @if(!empty($specifications['estado']) && $specifications['estado'] !== 'N/A')
             <div class="text-left whitespace-nowrap lg:mr-8">
                 <span class="text-color-2 font-medium text-base lg:text-lg">{{ app()->getLocale() === 'es' ? 'Estado:' : 'Condition:' }}</span>
-                <span class="font-medium text-base lg:text-lg text-[#AC2231]"> {{ $specifications['estado'] ?? 'N/A' }}</span>
+                <span class="font-medium text-base lg:text-lg text-[#AC2231]"> {{ $specifications['estado'] }}</span>
             </div>
+            @endif
+            @if(!empty($specifications['ano']) && $specifications['ano'] !== 'N/A')
             <div class="text-left whitespace-nowrap lg:mr-8">
                 <span class="text-color-2 font-medium text-base lg:text-lg">{{ app()->getLocale() === 'es' ? 'Año:' : 'Year:' }}</span>
-                <span class="font-medium text-base lg:text-lg text-[#AC2231]"> {{ $specifications['ano'] ?? 'N/A' }}</span>
+                <span class="font-medium text-base lg:text-lg text-[#AC2231]"> {{ $specifications['ano'] }}</span>
             </div>
+            @endif
+            @if(!empty($specifications['color']) && $specifications['color'] !== 'N/A')
             <div class="text-left whitespace-nowrap lg:mr-8">
                 <span class="text-color-2 font-medium text-base lg:text-lg">{{ app()->getLocale() === 'es' ? 'Color:' : 'Color:' }}</span>
-                <span class="font-medium text-base lg:text-lg text-[#AC2231]"> {{ $specifications['color'] ?? 'N/A' }}</span>
+                <span class="font-medium text-base lg:text-lg text-[#AC2231]"> {{ $specifications['color'] }}</span>
             </div>
+            @endif
+            @if(!empty($specifications['tamano']) && $specifications['tamano'] !== 'N/A')
             <div class="text-left whitespace-nowrap">
                 <span class="text-color-2 font-medium text-base lg:text-lg">{{ app()->getLocale() === 'es' ? 'Tamaño (cm):' : 'Size (cm):' }}</span>
-                <span class="font-medium text-base lg:text-lg text-[#AC2231]"> {{ $specifications['tamano'] ?? 'N/A' }}</span>
+                <span class="font-medium text-base lg:text-lg text-[#AC2231]"> {{ $specifications['tamano'] }}</span>
             </div>
+            @endif
         </div>
         
         <div class="grid grid-cols-1 lg:grid-cols-[10%_45%_35%] gap-8 mb-16 mt-10 lg:mt-14" 
@@ -183,22 +191,30 @@
 
                     <!-- Product Specifications - Mobile only, below add-to-cart button -->
                 <div class="lg:hidden grid grid-cols-1 gap-4 mb-8 text-sm w-full max-w-md mx-auto lg:mx-0 px-8 md:px-10">
+                    @if(!empty($specifications['estado']) && $specifications['estado'] !== 'N/A')
                     <div class="text-left whitespace-nowrap">
                         <span class="text-color-2 font-medium text-base">{{ app()->getLocale() === 'es' ? 'Estado:' : 'Condition:' }}</span>
-                        <span class="font-medium text-base text-[#AC2231]"> {{ $specifications['estado'] ?? 'N/A' }}</span>
+                        <span class="font-medium text-base text-[#AC2231]"> {{ $specifications['estado'] }}</span>
                     </div>
+                    @endif
+                    @if(!empty($specifications['ano']) && $specifications['ano'] !== 'N/A')
                     <div class="text-left whitespace-nowrap">
                         <span class="text-color-2 font-medium text-base">{{ app()->getLocale() === 'es' ? 'Año:' : 'Year:' }}</span>
-                        <span class="font-medium text-base text-[#AC2231]"> {{ $specifications['ano'] ?? 'N/A' }}</span>
+                        <span class="font-medium text-base text-[#AC2231]"> {{ $specifications['ano'] }}</span>
                     </div>
+                    @endif
+                    @if(!empty($specifications['color']) && $specifications['color'] !== 'N/A')
                     <div class="text-left whitespace-nowrap">
                         <span class="text-color-2 font-medium text-base">{{ app()->getLocale() === 'es' ? 'Color:' : 'Color:' }}</span>
-                        <span class="font-medium text-base text-[#AC2231]"> {{ $specifications['color'] ?? 'N/A' }}</span>
+                        <span class="font-medium text-base text-[#AC2231]"> {{ $specifications['color'] }}</span>
                     </div>
+                    @endif
+                    @if(!empty($specifications['tamano']) && $specifications['tamano'] !== 'N/A')
                     <div class="text-left whitespace-nowrap">
                         <span class="text-color-2 font-medium text-base">{{ app()->getLocale() === 'es' ? 'Tamaño (cm):' : 'Size (cm):' }}</span>
-                        <span class="font-medium text-base text-[#AC2231]"> {{ $specifications['tamano'] ?? 'N/A' }}</span>
+                        <span class="font-medium text-base text-[#AC2231]"> {{ $specifications['tamano'] }}</span>
                     </div>
+                    @endif
                 </div>
 
                 <!-- Certificado Autenticidad -->
