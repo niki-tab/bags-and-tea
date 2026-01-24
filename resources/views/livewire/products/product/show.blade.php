@@ -63,13 +63,19 @@
             </div>
             @endif
             @if(!empty($specifications['tamano']) && $specifications['tamano'] !== 'N/A')
-            <div class="text-left whitespace-nowrap">
+            <div class="text-left whitespace-nowrap lg:mr-8">
                 <span class="text-color-2 font-medium text-base lg:text-lg">{{ app()->getLocale() === 'es' ? 'Tamaño (cm):' : 'Size (cm):' }}</span>
                 <span class="font-medium text-base lg:text-lg text-[#AC2231]"> {{ $specifications['tamano'] }}</span>
             </div>
             @endif
+            @if(!empty($specifications['material']) && $specifications['material'] !== 'N/A')
+            <div class="text-left whitespace-nowrap">
+                <span class="text-color-2 font-medium text-base lg:text-lg">{{ app()->getLocale() === 'es' ? 'Material:' : 'Material:' }}</span>
+                <span class="font-medium text-base lg:text-lg text-[#AC2231]"> {{ $specifications['material'] }}</span>
+            </div>
+            @endif
         </div>
-        
+
         <div class="grid grid-cols-1 lg:grid-cols-[10%_45%_35%] gap-8 mb-16 mt-10 lg:mt-14" 
              x-data="{ 
                  mainImageHeight: 0,
@@ -213,6 +219,12 @@
                     <div class="text-left whitespace-nowrap">
                         <span class="text-color-2 font-medium text-base">{{ app()->getLocale() === 'es' ? 'Tamaño (cm):' : 'Size (cm):' }}</span>
                         <span class="font-medium text-base text-[#AC2231]"> {{ $specifications['tamano'] }}</span>
+                    </div>
+                    @endif
+                    @if(!empty($specifications['material']) && $specifications['material'] !== 'N/A')
+                    <div class="text-left whitespace-nowrap">
+                        <span class="text-color-2 font-medium text-base">{{ app()->getLocale() === 'es' ? 'Material:' : 'Material:' }}</span>
+                        <span class="font-medium text-base text-[#AC2231]"> {{ $specifications['material'] }}</span>
                     </div>
                     @endif
                 </div>

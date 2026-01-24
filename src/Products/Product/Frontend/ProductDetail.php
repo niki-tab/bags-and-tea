@@ -93,12 +93,29 @@ class ProductDetail extends Component
         $height = $this->product->height ?? 0;
         $depth = $this->product->depth ?? 0;
         $tamano = "{$width} x {$height} x {$depth}";
-        
+
+        // Get Material from categories - look for children of "Material" parent
+        $material = 'N/A';
+        if ($this->product->categories) {
+            foreach ($this->product->categories as $category) {
+                if ($category->parent_id) {
+                    $parent = \Src\Categories\Infrastructure\Eloquent\CategoryEloquentModel::find($category->parent_id);
+                    if ($parent && (
+                        stripos($parent->getTranslation('name', $this->lang), 'material') !== false
+                    )) {
+                        $material = $category->getTranslation('name', $this->lang);
+                        break;
+                    }
+                }
+            }
+        }
+
         $this->specifications = [
             'estado' => $estado,
             'ano' => $ano,
             'color' => $color,
-            'tamano' => $tamano
+            'tamano' => $tamano,
+            'material' => $material
         ];
     }
     
