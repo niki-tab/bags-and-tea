@@ -80,4 +80,17 @@ final class EloquentCategoryRepository implements CategoryRepository
         ->all();
     }
 
+    /**
+     * Find a category by slug in any locale.
+     */
+    public function findBySlug(string $slug): ?CategoryEloquentModel
+    {
+        return CategoryEloquentModel::query()
+            ->where(function ($query) use ($slug) {
+                $query->whereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.en")) = ?', [$slug])
+                      ->orWhereRaw('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.es")) = ?', [$slug]);
+            })
+            ->first();
+    }
+
 }
