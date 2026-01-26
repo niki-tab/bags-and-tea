@@ -616,13 +616,22 @@ class Shop extends Component
             $this->urlBasedFilters['urlBasedCategories'] = $modelCategoryIds;
         }
 
-        // Set page content for Popular Models
-        $this->brandData = null;
-        $this->pageTitle = $currentLocale === 'es' ? 'Modelos Populares' : 'Popular Models';
-        $this->pageDescription = $currentLocale === 'es'
-            ? 'Descubre nuestra selección de los modelos de bolsos más icónicos y buscados. Speedy, Neverfull, Alma, Baguette y más diseños legendarios de las mejores marcas de lujo.'
-            : 'Discover our selection of the most iconic and sought-after bag models. Speedy, Neverfull, Alma, Baguette and more legendary designs from the best luxury brands.';
-        $this->pageDescription2 = '';
+        // Try to fetch Popular Models category from database
+        $categoryRepository = new EloquentCategoryRepository;
+        $popularModelsCategory = $categoryRepository->findBySlug('popular-models');
+
+        if ($popularModelsCategory) {
+            $this->setCategoryData($popularModelsCategory, $currentLocale);
+        } else {
+            // Fallback to hardcoded values if category not found
+            \Log::warning('Popular Models category not found in database. Using hardcoded values.');
+            $this->brandData = null;
+            $this->pageTitle = $currentLocale === 'es' ? 'Modelos Populares' : 'Popular Models';
+            $this->pageDescription = $currentLocale === 'es'
+                ? 'Descubre nuestra selección de los modelos de bolsos más icónicos y buscados. Speedy, Neverfull, Alma, Baguette y más diseños legendarios de las mejores marcas de lujo.'
+                : 'Discover our selection of the most iconic and sought-after bag models. Speedy, Neverfull, Alma, Baguette and more legendary designs from the best luxury brands.';
+            $this->pageDescription2 = '';
+        }
     }
 
     /**
