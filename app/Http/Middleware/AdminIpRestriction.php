@@ -16,6 +16,7 @@ class AdminIpRestriction
     protected array $allowedIps = [
         '88.10.156.195',
         '79.116.225.215',
+        '81.33.107.67',
         
     ];
 
