@@ -76,76 +76,141 @@
             @endif
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-[10%_45%_35%] gap-8 mb-16 mt-10 lg:mt-14" 
-             x-data="{ 
+        <div class="grid grid-cols-1 lg:grid-cols-[10%_45%_35%] gap-8 mb-16 mt-10 lg:mt-14"
+             x-data="{
+                 currentIndex: 0,
+                 images: @js(collect($productImages)->map(fn($img) => str_starts_with($img['file_path'], 'https://') || str_contains($img['file_path'], 'r2.cloudflarestorage.com') || str_contains($img['file_path'], 'digitaloceanspaces.com') ? $img['file_path'] : asset($img['file_path']))->values()->toArray()),
                  mainImageHeight: 0,
+                 touchStartX: 0,
+                 touchStartY: 0,
+                 swiping: false,
                  updateHeight() {
-                     this.mainImageHeight = this.$refs.mainImage.offsetHeight;
+                     if (this.$refs.mainImage) {
+                         this.mainImageHeight = this.$refs.mainImage.offsetHeight;
+                     }
+                 },
+                 goTo(index) {
+                     this.currentIndex = index;
+                     this.scrollThumbnailIntoView();
+                 },
+                 next() {
+                     this.currentIndex = (this.currentIndex + 1) % this.images.length;
+                     this.scrollThumbnailIntoView();
+                 },
+                 prev() {
+                     this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+                     this.scrollThumbnailIntoView();
+                 },
+                 scrollThumbnailIntoView() {
+                     this.$nextTick(() => {
+                         const container = this.$refs.thumbnailContainer;
+                         const thumb = container?.children[this.currentIndex];
+                         if (thumb) {
+                             thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+                         }
+                     });
+                 },
+                 handleTouchStart(e) {
+                     this.touchStartX = e.touches[0].clientX;
+                     this.touchStartY = e.touches[0].clientY;
+                     this.swiping = false;
+                 },
+                 handleTouchMove(e) {
+                     if (!this.touchStartX) return;
+                     const diffX = this.touchStartX - e.touches[0].clientX;
+                     const diffY = this.touchStartY - e.touches[0].clientY;
+                     if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 10) {
+                         this.swiping = true;
+                         e.preventDefault();
+                     }
+                 },
+                 handleTouchEnd(e) {
+                     if (!this.swiping) return;
+                     const diffX = this.touchStartX - e.changedTouches[0].clientX;
+                     if (Math.abs(diffX) > 40) {
+                         diffX > 0 ? this.next() : this.prev();
+                     }
+                     this.touchStartX = 0;
+                     this.touchStartY = 0;
+                     this.swiping = false;
                  }
-             }" 
+             }"
              x-init="
                  $nextTick(() => { updateHeight(); });
                  window.addEventListener('resize', () => { updateHeight(); });
-                 new ResizeObserver(() => { updateHeight(); }).observe($refs.mainImage);
+                 if ($refs.mainImage) {
+                     new ResizeObserver(() => { updateHeight(); }).observe($refs.mainImage);
+                 }
              ">
-            <!-- Column 1: Thumbnail Carousel (20%) -->
+            <!-- Column 1: Thumbnail Carousel -->
             <div class="flex flex-col">
-                <div class="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-y-auto lg:overflow-x-visible h-auto lg:h-auto" 
+                <div class="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-y-auto lg:overflow-x-visible h-auto lg:h-auto"
                      :style="window.innerWidth >= 1024 ? `height: ${mainImageHeight}px` : ''"
                      x-ref="thumbnailContainer">
-                    @if(!empty($productImages))
-                        @foreach($productImages as $index => $image)
-                            <div class="flex-shrink-0 cursor-pointer transition-all duration-200 hover:opacity-75 {{ $currentImageIndex === $index ? 'border-2 border-color-2' : 'border-2 border-transparent' }}"
-                                 wire:click="setCurrentImage({{ $index }})">
-                                <img src="{{ str_starts_with($image['file_path'], 'https://') || str_contains($image['file_path'], 'r2.cloudflarestorage.com') || str_contains($image['file_path'], 'digitaloceanspaces.com') ? $image['file_path'] : asset($image['file_path']) }}" 
-                                     alt="Product image {{ $index + 1 }}" 
-                                     class="w-24 lg:w-full object-contain bg-transparent rounded-lg aspect-square">
-                            </div>
-                        @endforeach
-                    @endif
+                    <template x-for="(src, index) in images" :key="index">
+                        <div class="flex-shrink-0 cursor-pointer transition-all duration-200 hover:opacity-75 border-2"
+                             :class="currentIndex === index ? 'border-color-2' : 'border-transparent'"
+                             @click="goTo(index)">
+                            <img :src="src"
+                                 :alt="'Product image ' + (index + 1)"
+                                 class="w-24 lg:w-full object-contain bg-transparent rounded-lg aspect-square">
+                        </div>
+                    </template>
                 </div>
             </div>
 
-            <!-- Column 2: Main Image Display (50%) -->
+            <!-- Column 2: Main Image Display -->
             <div class="relative">
-                <div class="relative bg-transparent aspect-square mx-auto" x-ref="mainImage">
-                    @if(!empty($productImages) && isset($productImages[$currentImageIndex]))
-                        <img src="{{ str_starts_with($productImages[$currentImageIndex]['file_path'], 'https://') || str_contains($productImages[$currentImageIndex]['file_path'], 'r2.cloudflarestorage.com') || str_contains($productImages[$currentImageIndex]['file_path'], 'digitaloceanspaces.com') ? $productImages[$currentImageIndex]['file_path'] : asset($productImages[$currentImageIndex]['file_path']) }}" 
-                             alt="{{ $product->getTranslation('name', app()->getLocale()) }}" 
-                             class="w-full h-full object-contain">
-                    @else
+                <div class="relative bg-transparent aspect-square mx-auto" x-ref="mainImage"
+                     @touchstart="handleTouchStart($event)"
+                     @touchmove="handleTouchMove($event)"
+                     @touchend="handleTouchEnd($event)">
+                    <template x-if="images.length > 0">
+                        <div class="w-full h-full relative">
+                            <template x-for="(src, index) in images" :key="'main-' + index">
+                                <img :src="src"
+                                     alt="{{ $product->getTranslation('name', app()->getLocale()) }}"
+                                     class="absolute inset-0 w-full h-full object-contain transition-opacity duration-200"
+                                     :class="currentIndex === index ? 'opacity-100' : 'opacity-0 pointer-events-none'">
+                            </template>
+                        </div>
+                    </template>
+                    <template x-if="images.length === 0">
                         <div class="w-full h-full flex items-center justify-center bg-gray-100 rounded-lg">
                             <span class="text-gray-400">{{ app()->getLocale() === 'es' ? 'Sin imagen disponible' : 'No image available' }}</span>
                         </div>
-                    @endif
-                    
-                    <!-- Navigation arrows for main image -->
-                    @if(count($productImages) > 1)
-                        <button wire:click="previousImage" 
-                                class="absolute left-4 top-1/2 transform -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-black bg-opacity-70 text-white rounded-full hover:bg-opacity-90 transition-all">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                            </svg>
-                        </button>
-                        <button wire:click="nextImage" 
-                                class="absolute right-4 top-1/2 transform -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-black bg-opacity-70 text-white rounded-full hover:bg-opacity-90 transition-all">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </button>
-                    @endif
-                </div>
-                
-                <!-- Dot indicators -->
-                @if(count($productImages) > 1)
-                    <div class="flex justify-center mt-6 space-x-2">
-                        @foreach($productImages as $index => $image)
-                            <button wire:click="setCurrentImage({{ $index }})" 
-                                    class="w-3 h-3 rounded-full transition-all {{ $currentImageIndex === $index ? 'bg-color-2' : 'bg-gray-300' }}">
+                    </template>
+
+                    <!-- Navigation arrows -->
+                    <template x-if="images.length > 1">
+                        <div>
+                            <button @click="prev()"
+                                    class="absolute left-4 top-1/2 transform -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-black bg-opacity-70 text-white rounded-full hover:bg-opacity-90 transition-all">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                </svg>
                             </button>
-                        @endforeach
+                            <button @click="next()"
+                                    class="absolute right-4 top-1/2 transform -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-black bg-opacity-70 text-white rounded-full hover:bg-opacity-90 transition-all">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Dot indicators -->
+                <template x-if="images.length > 1">
+                    <div class="flex justify-center mt-6 space-x-2">
+                        <template x-for="(src, index) in images" :key="'dot-' + index">
+                            <button @click="goTo(index)"
+                                    class="w-3 h-3 rounded-full transition-all"
+                                    :class="currentIndex === index ? 'bg-color-2' : 'bg-gray-300'">
+                            </button>
+                        </template>
                     </div>
-                @endif
+                </template>
             </div>
 
             <!-- Column 3: Product Information (30%) -->

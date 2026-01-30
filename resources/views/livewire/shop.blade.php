@@ -332,11 +332,48 @@
                             })->toArray() : [];
                             $totalImages = count($productImages);
                         @endphp
-                        <div class="relative bg-transparent h-64 overflow-hidden" x-data="{ 
-                            currentImage: 0, 
+                        <div class="relative bg-transparent h-64 overflow-hidden" x-data="{
+                            currentImage: 0,
                             images: @js($productImages),
-                            totalImages: @js($totalImages)
-                        }">
+                            totalImages: @js($totalImages),
+                            touchStartX: 0,
+                            touchStartY: 0,
+                            swiping: false,
+                            init() {
+                                this.images.forEach(src => { new Image().src = src; });
+                            },
+                            handleTouchStart(e) {
+                                this.touchStartX = e.touches[0].clientX;
+                                this.touchStartY = e.touches[0].clientY;
+                                this.swiping = false;
+                            },
+                            handleTouchMove(e) {
+                                if (!this.touchStartX) return;
+                                const diffX = this.touchStartX - e.touches[0].clientX;
+                                const diffY = this.touchStartY - e.touches[0].clientY;
+                                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 10) {
+                                    this.swiping = true;
+                                    e.preventDefault();
+                                }
+                            },
+                            handleTouchEnd(e) {
+                                if (!this.swiping) return;
+                                e.preventDefault();
+                                e.stopPropagation();
+                                const diffX = this.touchStartX - e.changedTouches[0].clientX;
+                                if (Math.abs(diffX) > 40) {
+                                    this.currentImage = diffX > 0
+                                        ? (this.currentImage < this.totalImages - 1 ? this.currentImage + 1 : 0)
+                                        : (this.currentImage > 0 ? this.currentImage - 1 : this.totalImages - 1);
+                                }
+                                this.touchStartX = 0;
+                                this.touchStartY = 0;
+                                this.swiping = false;
+                            }
+                        }"
+                        @touchstart="handleTouchStart($event)"
+                        @touchmove="handleTouchMove($event)"
+                        @touchend="handleTouchEnd($event)">
                             {{-- Main Image Display --}}
                             <template x-if="totalImages > 0">
                                 <img :src="images[currentImage]" :alt="{{ json_encode($product->name) }}" class="w-full h-full object-contain">
