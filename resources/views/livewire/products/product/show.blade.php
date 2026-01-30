@@ -165,21 +165,21 @@
                      @touchstart="handleTouchStart($event)"
                      @touchmove="handleTouchMove($event)"
                      @touchend="handleTouchEnd($event)">
-                    <template x-if="images.length > 0">
-                        <div class="w-full h-full relative">
-                            <template x-for="(src, index) in images" :key="'main-' + index">
-                                <img :src="src"
-                                     alt="{{ $product->getTranslation('name', app()->getLocale()) }}"
-                                     class="absolute inset-0 w-full h-full object-contain transition-opacity duration-200"
-                                     :class="currentIndex === index ? 'opacity-100' : 'opacity-0 pointer-events-none'">
-                            </template>
-                        </div>
-                    </template>
-                    <template x-if="images.length === 0">
+                    @if(!empty($productImages))
+                        @foreach($productImages as $index => $image)
+                            @php
+                                $imgSrc = str_starts_with($image['file_path'], 'https://') || str_contains($image['file_path'], 'r2.cloudflarestorage.com') || str_contains($image['file_path'], 'digitaloceanspaces.com') ? $image['file_path'] : asset($image['file_path']);
+                            @endphp
+                            <img src="{{ $imgSrc }}"
+                                 alt="{{ $product->getTranslation('name', app()->getLocale()) }}"
+                                 class="absolute inset-0 w-full h-full object-contain transition-opacity duration-200"
+                                 :class="currentIndex === {{ $index }} ? 'opacity-100' : 'opacity-0 pointer-events-none'">
+                        @endforeach
+                    @else
                         <div class="w-full h-full flex items-center justify-center bg-gray-100 rounded-lg">
                             <span class="text-gray-400">{{ app()->getLocale() === 'es' ? 'Sin imagen disponible' : 'No image available' }}</span>
                         </div>
-                    </template>
+                    @endif
 
                     <!-- Navigation arrows -->
                     <template x-if="images.length > 1">
